@@ -1,0 +1,60 @@
+<div class="ui-g ui-fluid ">
+    <div class="ui-md-12">
+        <div class="pad-top0 tableStyle ref-table referenceDataListTable main-content">
+            <p-table class="main-content referenceDataListTable" [value]="referenceModel.tableContent" [pageLinks]="5" [scrollable]="referenceModel.noResultFoundFlag ? false : true" [columns]="referenceModel.noResultFoundFlag?'':referenceModel.tableColumns" [resizableColumns]="true"
+                [sortField]="referenceModel.sortField" [sortOrder]="1" selectionMode="single" datakey="referenceModel.sortField" columnResizeMode='fit' [scrollHeight]="screenHeight">
+                <ng-template pTemplate="caption">
+                    <div class="ui-g">
+                        <div [ngClass]="{'ui-md-6': referenceModel.isSplitView , 'ui-md-8': !referenceModel.isSplitView}">
+                            <span class="tableName">Rules</span>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                        <col>
+                        <col *ngFor="let col of columns" style='width:140px' [ngStyle]="col.width">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header"  let-columns>
+                    <tr *ngIf="!referenceModel.noResultFoundFlag " class="heading">
+                        <th class="width10">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th *ngFor="let thisCol of columns" class="min-col-width font-bold whitespace-style" pResizableColumn [pSortableColumn]="thisCol.property" tooltipPosition="top" pTooltip={{thisCol.name}} tooltipPosition="top">
+                            <span *ngIf="thisCol.property != 'accessorialFreeRuleQuantityTimeTypeName'">{{thisCol.name}}
+                </span>
+                            <span *ngIf="thisCol.property === 'accessorialFreeRuleQuantityTimeTypeName' && referenceModel.isTimeFrameFlag">
+                  Timeframe
+                </span>
+                            <span *ngIf="thisCol.property === 'accessorialFreeRuleQuantityTimeTypeName' && !referenceModel.isTimeFrameFlag">
+                  Distance
+                </span>
+                            <p-sortIcon [field]="thisCol.property"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr *ngIf="referenceModel.gridDataLength === 0 || referenceModel.noResultFoundFlag">
+                        <td class="noInfoMessage">
+                            <div class="displaymiddle ui-g-12 ui-md-12 ui-lg-12">
+                                <h4 class="emptyMsgText mar0 mar-bot10">No information</h4>
+                                <h4 class="emptyMsgText mar0 mar-bot20">was found to display</h4>
+                            </div>
+                        </td>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr *ngIf="!referenceModel.noResultFoundFlag" [pSelectableRow]="rowData" [class.row-hover]="rowData.hover">
+                            <td class="width10">
+                                <p-tableCheckbox [value]="rowData">
+                                </p-tableCheckbox>
+                            </td>
+                            <td *ngFor="let col of columns" class="row-column-width ui-resizable-column textWrap" pTooltip={{rowData[col.property]}} tooltipPosition="top">
+                                <span>{{rowData[col.property]}}</span>
+                                <span *ngIf="!rowData[col.property]">--</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

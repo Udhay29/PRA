@@ -1,0 +1,33 @@
+<div class="ui-g ui-md-12 pad-top0 ui-fluid carrier-section">
+  <div [ngClass]="{'ui-g-6': carrierSectionModel.isSplitView, 'ui-g-12': !carrierSectionModel.isSplitView}">
+    <p-table [value]="[]" >
+      <ng-template pTemplate="caption">
+        <div class="ui-g table-caption">
+          <div class="ui-g-12 table-name">
+            <span>Sections</span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" class="table-height">
+        <tr class="bottom-line">
+          <td colspan="2">
+            <div class="displaymiddle mar-bot20">
+              <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+              <button type="text" pButton label="Add Section" class="ui-button-primary mar-top10 mar-left5"
+                (click)="onAddSection()" *ngIf="!carrierSectionModel.isSplitView"></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="2" class="table-footer"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div [ngClass]="{'ui-g-6 split-wrapper': carrierSectionModel.isSplitView}">
+    <app-create-carrier-section  *ngIf="carrierSectionModel.isSplitView" (splitCloseEvent)="splitClose($event)"
+    [agreementDetails]="carrierSectionModel.agreement" (loaderEvent)="loader($event)"></app-create-carrier-section>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<div [ngClass]="{'loader': addCargoModel?.pageLoader}" [appJbhLoader]="addCargoModel?.pageLoader"></div>
+<div class="ui-g ui-fluid  cargo-custom-cls">
+    <div class="ui-md-12  pad-top0">
+        <div class="pad-top0"
+            [ngClass]="{'ui-g-6': addCargoModel.isSplitView, 'ui-g-12': !addCargoModel.isSplitView, 'no-Info': addCargoModel?.cargoList.length === 0 && !addCargoModel?.pageLoader}">
+            <p-table selectionMode="multiple" datakey="customerAgreementID"
+                [ngClass]="{'tableSplitWrapper': (addCargoModel?.cargoList?.length>0), 'tableWithSplit': (addCargoModel?.cargoList?.length>0 && addCargoModel?.isSplitView)}"
+                [value]="addCargoModel.cargoList"
+                [(selection)]="addCargoModel.selectedCargoList" (onRowSelect)="onRowSelect($event)" [rows]="25"
+                [rowsPerPageOptions]="[25,75,200]" [lazy]="false" [pageLinks]="5" [scrollable]="true"
+                scrollHeight="calc(100vh - 450px)"
+                (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" class="cargotable"
+                (onRowUnselect)="onRowUnselect($event)" sortMode="single" [resizableColumns]="true"
+                columnResizeMode="expand">
+                <ng-template pTemplate="caption">
+                    <div class="ui-g table-caption">
+                        <div class="ui-md-12 ui-lg-12  nopadding">
+                            <span class="title">Cargo Release</span>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup *ngIf="addCargoModel?.cargoList.length > 0">
+                        <col>
+                        <col *ngFor="let thisCol of addCargoModel.tableColumns">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr *ngIf="addCargoModel?.cargoList.length === 0 && !addCargoModel?.pageLoader">
+                        <td colspan="2">
+                            <div class="displaymiddle mar-bot20">
+                                <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                                <button data-attr="createagreement-addCargo-addAgreementCargoRelease-button" type="text" pButton label="Add Agreement Cargo Release"
+                                    class="ui-button-primary mar-top5 mar-left5" *ngIf="!addCargoModel.isSplitView"
+                                    (click)="onAddCargo()"></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="pad0 mar0 table-header" *ngIf="addCargoModel?.cargoList.length > 0">
+                        <th>
+                            <p-tableHeaderCheckbox data-attr="createagreement-addCargo-cargoTable-tableHeaderCheckbox"></p-tableHeaderCheckbox>
+                        </th>
+                        <th class="pad0 mar0 minimum-column-width header-bold" pResizableColumn
+                            *ngFor="let thisCol of addCargoModel.tableColumns" [pSortableColumn]="thisCol.field">
+                            {{thisCol.label}}
+                            <span>
+                                <p-sortIcon [field]="thisCol.field"></p-sortIcon>
+                            </span>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                    <tr  [attr.data-attr]="'createagreement-addCargo-cargoTable-tr-' +  rowIndex"  [pSelectableRow]="rowData">
+                        <td class="width13 ui-resizable-column">
+                            <p-tableCheckbox  [attr.data-attr]="'createagreement-addCargo-cargoTable-tableCheckbox-' +  rowIndex" [value]="rowData" name="checkBox" (click)="$event.stopPropagation()"
+                                (onChange)="onchang($event)"></p-tableCheckbox>
+                        </td>
+                        <td class="minimum-column-width" class="minimum-column-width tooltip ui-resizable-column"
+                            *ngFor="let thisCol of addCargoModel.tableColumns" pTooltip={{rowData[thisCol.field]}} tooltipPosition="top">
+                            <div *ngIf="thisCol.arrayBased">
+                                <div *ngFor="let col of rowData[thisCol.field] let k=index">
+                                        <span *ngIf="k<2">{{ col }}</span>
+                            </div>
+                            <span *ngIf="rowData[thisCol.field].length > 2">+{{(rowData[thisCol.field].length
+                                    - 2)}}</span>
+                            </div>
+                            <span *ngIf="!thisCol.arrayBased" class="capitalize-first-word">{{ rowData[thisCol.field]
+                                }}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer" class="tableFooter">
+                    <span class="pull-right pad-right10 button-pad"
+                        *ngIf="!addCargoModel.isSplitView && !addCargoModel.isCargoDelete && addCargoModel?.cargoList.length > 0">
+                        <button data-attr="createagreement-addCargo-createCargoRelease-button" type="text" pButton label="Create Cargo Release" (click)="onAddCargo()"
+                            class="ui-button-primary"></button>
+                    </span>
+                    <span class="pull-right pad-right10 button-pad" *ngIf="addCargoModel.isCargoDelete">
+                        <button data-attr="createagreement-addCargo-cancelText-button" type="text" pButton label="Cancel" class="ui-button-secondary"
+                            (click)="onCancel()"></button>
+                        <button data-attr="createagreement-addCargo-deleteText-button" type="text" pButton label="Delete" class="ui-button-primary mar-left15"
+                            (click)="onClickDelete()"></button>
+                    </span>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-6 pad-top0 split-wrapper" *ngIf="addCargoModel.isSplitView">
+            <app-create-cargo #createCargo (addCargoRelease)="closeSplitView()" (deleteGridRecord)="deleteUpdated()" (cargoFormCheck)="isCargoFormDirty($event)"
+                [defaultAgreementValue]="addCargoModel.isDefault" [screenName]="addCargoModel.screen"
+                [rowData]="addCargoModel.rowValue"></app-create-cargo>
+        </div>
+        <span class="pull-right pad-right10 pad10">
+            <a data-attr="createagreement-addCargo-save-a" class="inactivate-link mar-right20" (click)="onSave()" appShortcut="ctrl+alt+3">Save and Exit</a>
+            <a data-attr="createagreement-addCargo-previous-a" class="inactivate-link mar-right20" (click)="onBack()" appShortcut="ctrl+alt+2">Previous</a>
+            <a data-attr="createagreement-addCargo-createAgreement-a" class="inactivate-link" (click)="onCreateAgreement()" appShortcut="ctrl+alt+1">Create Agreement</a>
+        </span>
+    </div>
+</div>
+<p-dialog header="Save Changes?" [(visible)]="addCargoModel.confirmDialog" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You made changes to the agreement that was not saved</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-dontSave-button" type="button" pButton (click)="closeSplitView()" class="ui-button-secondary"
+            label="Don't Save"></button>
+        <button data-attr="createagreement-addCargo-save-button" type="button" pButton (click)="onClickSave()" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Delete Cargo Release" [(visible)]="addCargoModel.isDelete" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to delete the cargo releases. Do you want to proceed?</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-cancel-button" type="button" pButton (click)="onClickNo('delete')" class="ui-button-secondary" label="Cancel"></button>
+        <button data-attr="createagreement-addCargo-delete-button" type="button" pButton (click)="onClickYes('delete')" label="Delete" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Save Changes?" [(visible)]="addCargoModel.isCancel" [modal]="true" [responsive]="true" [width]="350"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You made changes to the agreement that was not saved</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-popupSave-button" type="button" pButton (click)="onClickNo('cancel')" class="ui-button-secondary"
+            label="Don't Save"></button>
+        <button data-attr="createagreement-addCargo-popupDontSave-button" type="button" pButton (click)="onClickYes('cancel')" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Save Changes?" [(visible)]="addCargoModel.isAgreementCancel" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You made changes to the agreement that was not saved</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-dontsaveButton-button" type="button" pButton (click)="onClickCancel()" class="ui-button-secondary" label="Don't Save"></button>
+        <button data-attr="createagreement-addCargo-saveButton-button" type="button" pButton (click)="onClickSave()" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,219 @@
+<div [ngClass]="{'loader': rulesDetailedViewModel.isLoading}" [appJbhLoader]="rulesDetailedViewModel.isLoading"></div>
+<div class="ui-g rulesDetailedViewWrapper pad10 rules-breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="rulesDetailedViewModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-top0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 class="text-uppercase headingAlign mar0">
+                {{rulesDetailedViewModel?.agreementDetails?.customerAgreementName}} - VIEW RULE
+                <button appShortcut="ctrl+alt+o" class="overFlowIcon icon-Menu_Overflow icon-button pad10  overFlowIconFont overflow-menu" (click)="onClickOverflowIcon(onMenu, $event)" data-attr="empty-plan-overflow-menu"></button>
+            </h1>
+            <p-menu #onMenu popup="popup" styleClass="rulesDetailsMenu menu-overlay arrowtopbox font12" [model]="rulesDetailedViewModel.overflowMenuList" appendTo="body"></p-menu>
+        </div>
+    </div>
+    <div class="ui-g-12 pad-top0 ruleDetailedViewscroll">
+        <div class="accordionHeight">
+            <p-accordion [multiple]="true">
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Overview" selected="true">
+                    <div class="ui-g">
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Status</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Status</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.status">{{rulesDetailedViewModel.rulesDetailedViewResponse.status}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.status">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Created</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0 ">
+                                <label class="label-style">Created By</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.createProgramName">{{rulesDetailedViewModel.rulesDetailedViewResponse.createProgramName}}
+                             </span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.createProgramName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Date Created</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel?.createTimestamp">{{rulesDetailedViewModel?.createTimestamp}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel?.createTimestamp">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Created Using</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.createdUsing">{{rulesDetailedViewModel.rulesDetailedViewResponse.createdUsing}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.createdUsing">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Modified</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Modified By</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.lastUpdateProgramName">{{rulesDetailedViewModel.rulesDetailedViewResponse.lastUpdateProgramName}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.lastUpdateProgramName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Date Modified</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel?.lastUpdateTimestamp">{{rulesDetailedViewModel?.lastUpdateTimestamp}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel?.lastUpdateTimestamp">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Modified Using</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.modifiedUsing">{{rulesDetailedViewModel.rulesDetailedViewResponse.modifiedUsing}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.modifiedUsing">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Setup" selected="true">
+                    <div class="ui-g" [ngClass]="{'mar-bot15' : (rulesDetailedViewModel.rulesDetailedViewResponse?.level==='contract' || rulesDetailedViewModel.rulesDetailedViewResponse?.level==='section')}">
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Rule Type</label>
+                                <span class="mar-left10 textColor wordBreak" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.pricingAveragePeriodTypeName">
+                  {{rulesDetailedViewModel.rulesDetailedViewResponse.pricingAveragePeriodTypeName}}</span>
+                                <span class="mar-left10 textColor wordBreak" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.pricingAveragePeriodTypeName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Rule Status</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.status">{{rulesDetailedViewModel.rulesDetailedViewResponse.status}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.status">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0 pad-top25">
+                            <h4 class="mar0"></h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0 ">
+                                <label class="label-style">Charge Type</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.chargeTypeName">{{rulesDetailedViewModel.rulesDetailedViewResponse.chargeTypeName}}
+                  ({{rulesDetailedViewModel.rulesDetailedViewResponse.chargeTypeCode}})
+                </span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.chargeTypeName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Level</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.level">{{rulesDetailedViewModel.rulesDetailedViewResponse.level}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.level">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Dates</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Effective Date</label>
+                                <span class="mar-left10 textColor">{{rulesDetailedViewModel.ruleEffectiveDate}}</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Expiration Date</label>
+                                <span class="mar-left10 textColor">{{rulesDetailedViewModel.ruleExpirationDate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g mar-top16 contractTable" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.contracts != ''&& rulesDetailedViewModel.rulesDetailedViewResponse.level=='Contract'">
+                        <app-contract-list #contract [detailedViewFlag]="rulesDetailedViewModel.rulesDetailedViewFlag" [contractDetail]="rulesDetailedViewModel['rulesDetailedViewResponse']?.contracts">
+                        </app-contract-list>
+                    </div>
+                    <div class="ui-g mar-top16 sectionTable" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.sections != '' && rulesDetailedViewModel.rulesDetailedViewResponse.level=='Section' ">
+                        <app-sections #section [detailedViewFlag]="rulesDetailedViewModel.rulesDetailedViewFlag" [sectionDetail]="rulesDetailedViewModel['rulesDetailedViewResponse']?.sections">
+                        </app-sections>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Additional Setup" selected="true">
+                    <div class="ui-g" [ngClass]="{'mar-bot15' : (rulesDetailedViewModel.rulesDetailedViewResponse.level==='contract' || rulesDetailedViewModel.rulesDetailedViewResponse.level==='section')}">
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Additional Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Business Unit and Service Offering</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.businessUnitServiceOffering!==''">{{rulesDetailedViewModel.businessUnitServiceOffering}}</span>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.businessUnitServiceOffering===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Carrier (Code)</label>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.carriers!==''">{{rulesDetailedViewModel.carriers}}</span>
+                                <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.carriers===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.billToAccounts">
+                                <label class="label-style">Bill to Accounts</label>
+                                <span class="mar-left10 textColor">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0 pad-left0">
+                                <h4 class="mar0">Service</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Service Level</label>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.serviceLevelList!==''">{{rulesDetailedViewModel.serviceLevelList}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.serviceLevelList===''">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Requested Service</label>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.reqService!==''">{{rulesDetailedViewModel.reqService}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.reqService ===''">--</span>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0">
+                                <h4 class="mar0">Equipment</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Category</label>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.equipmentCategoryCode">{{rulesDetailedViewModel.rulesDetailedViewResponse.equipmentCategoryCode}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.equipmentCategoryCode">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Type</label>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.equipmentType">{{rulesDetailedViewModel.rulesDetailedViewResponse.equipmentType}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.equipmentType">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Length</label>
+                                    <span class="mar-left10 textColor" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse.equipmentLength">
+                                      {{rulesDetailedViewModel.rulesDetailedViewResponse.equipmentLength}} {{rulesDetailedViewModel.rulesDetailedViewResponse.equipmentLengthDescription}}
+                                    in length</span>
+                                    <span class="mar-left10 textColor" *ngIf="!rulesDetailedViewModel.rulesDetailedViewResponse.equipmentLength">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g mar-top16 contractTable" *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse?.billToAccounts || rulesDetailedViewModel.rulesDetailedViewResponse?.billToAccounts !== 'null'">
+                            <app-billto-list #billTo [detailedViewFlag]="rulesDetailedViewModel.rulesDetailedViewFlag" [billToDetailsFromView]="rulesDetailedViewModel.rulesDetailedViewResponse?.billToAccounts">
+                            </app-billto-list>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color mar-bot10" header="Documentation" selected="true">
+                    <div class="ui-g">
+                        <div class="ui-g-6 pad-right11">
+                            <span class="docTextDiv">Legal</span>
+                            <div class="textAreaWrapper" *ngIf="rulesDetailedViewModel.documentation.docIsLegalText">
+                                <textarea [(ngModel)]="rulesDetailedViewModel.documentation.legalTextArea" [ngModelOptions]="{standalone: true}" class="textArea" maxlength="6000" disabled="true" rows="5" cols="100" pInputTextarea></textarea>
+                            </div>
+                        </div>
+                        <div class="ui-g-6 pad-left11">
+                            <span class="docTextDiv">Instructional</span>
+                            <div class="textAreaWrapper" *ngIf="rulesDetailedViewModel.documentation.docIsInstructionalText">
+                                <textarea [(ngModel)]="rulesDetailedViewModel.documentation.instructionalTextArea" class="textArea" maxlength="6000" [ngModelOptions]="{standalone: true}" disabled="true" rows="5" cols="100" pInputTextarea></textarea>
+                            </div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="ui-g-12 pad-bot10 pad-left0"><span class="docTextDiv pad-left0">Attachments</span></div>
+                            <div *ngIf="rulesDetailedViewModel.documentation.docIsLegalText">
+                                <a #fileAttachment></a>
+                                <div class="ui-g-12 pad0" *ngFor="let attach of rulesDetailedViewModel.documentation.attachments;let index=index" [ngClass]="{'attachment-container':index==rulesDetailedViewModel.documentation.attachments.length -1}">
+                                    <span class="ui-g-3 pad-left0 textwrap">{{attach['documentName']}}</span>
+                                    <span class="ui-g-3 attachment-field textwrap">{{attach['accessorialAttachmentTypeName']}}</span>
+                                    <span class="ui-g-3 attachment-field">Added on {{attach['createTimestamp']}}</span>
+                                    <span class="ui-g-2 attachment-field textwrap">Added by {{attach['createUserID']}}</span>
+                                    <div class="ui-g-1 pad0">
+                                        <button class="icon-text-button reset-color pull-right" (click)="viewAttachment(attach)">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab *ngIf="rulesDetailedViewModel.rulesDetailedViewResponse?.pricingAveragePeriodTypeName=='Free'" class="accord-color mar-bot10" header="Free" selected="true">
+                    <app-free-rules-detailed-view [detailedViewResponse]="rulesDetailedViewModel.rulesDetailedViewResponse">
+                    </app-free-rules-detailed-view>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        <p-footer class="pull-right footer clearfix">
+            <button appShortcut="ctrl+alt+1" type="text" pButton label="Close" class="ui-button-primary mar-left15" (click)="onClickClose()"></button>
+        </p-footer>
+    </div>
+</div>

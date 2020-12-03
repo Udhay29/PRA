@@ -1,0 +1,112 @@
+<form [formGroup]="createRatesModel?.setUpForm" autocomplete="off">
+  <div class="ui-g">
+    <div class="ui-g-3 ui-float-label mar-top16 pad-left0 date-field-float-eff ratesCalendar pad-bot0">
+      <p-calendar #cal [ngClass]="{'errorMsg':createRatesModel.isCorrectEffDateFormat || createRatesModel?.inValidEffDate || createRatesModel?.inValidDate ||(createRatesModel?.setUpForm.get('effectiveDate').touched && !createRatesModel?.setUpForm.get('effectiveDate').value)}"
+        formControlName="effectiveDate" [showIcon]="true" class="width_value width100" name="effectiveDate" appendTo="body"
+        yearRange="1900:2099" dateFormat="mm/dd/yy" (onSelect)="onDateSelected($event, 'effectiveDate')" (onBlur)="onDateSelected($event.srcElement.value, 'effectiveDate')" [showOnFocus]="true"
+        (onInput)="typedDateValidate($event,'effectiveDate')" yearRange="1900:2099"
+        [minDate]="createRatesModel?.effectiveMinDate" [maxDate]="createRatesModel?.effectiveMaxDate"></p-calendar>
+      <label class="label-style" for="effectiveDate" [ngClass]="{'labelAligns': (!createRatesModel?.setUpForm.get('effectiveDate').value || createRatesModel?.setUpForm.get('effectiveDate')['errors']?.invalid)}">Effective
+        Date</label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Provide a valid date" *ngIf="createRatesModel.isCorrectEffDateFormat">
+        </p-message>
+        <p-message severity="error" text="Provide Effective Date" *ngIf="!createRatesModel.isCorrectEffDateFormat && createRatesModel?.setUpForm.get('effectiveDate').touched && !createRatesModel?.setUpForm.get('effectiveDate').value">
+        </p-message>
+        <p-message severity="error" text="Provide a valid date" *ngIf="((createRatesModel?.setUpForm.get('effectiveDate').touched && createRatesModel?.setUpForm.get('effectiveDate')['errors']?.invalid) && !(createRatesModel?.setUpForm.get('effectiveDate').touched && !createRatesModel?.setUpForm.get('effectiveDate').value) && !createRatesModel.isCorrectEffDateFormat)">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-float-label mar-top16 date-field-float-exp ratesCalendar pad-bot0">
+      <p-calendar [ngClass]="{'errorMsg':createRatesModel.isCorrectExpDateFormat || createRatesModel?.inValidExpDate || createRatesModel?.inValidDate ||(createRatesModel?.setUpForm.get('expirationDate').touched && !createRatesModel?.setUpForm.get('expirationDate').value)}"
+        formControlName="expirationDate" [showIcon]="true" class="width_value width100" name="expirationDate" appendTo="body"
+        yearRange="1900:2099" (onSelect)="onDateSelected($event, 'expirationDate')" [showOnFocus]="true" (onInput)="typedDateValidate($event,'expirationDate')" (onBlur)="onDateSelected($event.srcElement.value, 'expirationDate')"
+        yearRange="1900:2099" [minDate]="createRatesModel?.expirationMinDate" [maxDate]="createRatesModel?.expirationMaxDate"></p-calendar>
+      <label class="label-style" for="expirationDate" [ngClass]="{'labelAligns': (!createRatesModel?.setUpForm.get('expirationDate').value || createRatesModel?.setUpForm.get('expirationDate')['errors']?.invalid)}">Expiration
+        Date</label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Provide a valid date" *ngIf="createRatesModel.isCorrectExpDateFormat">
+        </p-message>
+        <p-message severity="error" text="Provide Expiration Date" *ngIf="!createRatesModel.isCorrectExpDateFormat && createRatesModel?.setUpForm.get('expirationDate').touched && !createRatesModel?.setUpForm.get('expirationDate').value">
+        </p-message>
+        <p-message severity="error" text="Provide a valid date" *ngIf="(((createRatesModel?.setUpForm.get('expirationDate').touched && createRatesModel?.setUpForm.get('expirationDate')['errors']?.invalid) || (createRatesModel?.inValidExpDate || createRatesModel?.inValidDate)) && !(createRatesModel?.setUpForm.get('expirationDate').touched && !createRatesModel?.setUpForm.get('expirationDate').value) && !createRatesModel.isCorrectExpDateFormat)">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-lg-3 ui-md-3 mar-top16 pad-bot0">
+      <span class="ui-float-label groupNameWidth">
+          <p-autoComplete [suggestions]="createRatesModel.groupNameSuggestions" formControlName="groupName"
+          [dropdown]="true" (completeMethod)="onTypeGroupName($event)" name="groupName"
+          field="label" [inputStyle]="{'width':'100%'}" (onBlur)="onautoCompleteBlur($event, 'groupName')"
+          [forceSelection]="true" emptyMessage="No records found"></p-autoComplete>
+          <label for="groupName" [ngClass]="{'groupNameError': (createRatesModel.setUpForm.get('groupName').touched && createRatesModel.setUpForm.get('groupName')['errors']?.required)}">
+          <span>Group Name</span>
+          </label>
+          <span class="errorHeight">
+              <p-message severity="error" text="Select Group Name"
+                  *ngIf="createRatesModel.setUpForm.get('groupName').touched && createRatesModel.setUpForm.get('groupName')['errors']?.required">
+              </p-message>
+          </span>
+          <div class="clearfix"></div>
+      </span>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth  mar-top16 pad-bot0">
+      <p-autoComplete [suggestions]="createRatesModel.chargeTypeFiltered" formControlName="chargeType" [dropdown]="true"
+        (completeMethod)="onTypeChargeCode($event)" (onSelect)="onSelectChargeCode($event)" [style]="{'width':'100%'}"
+        field="label" [inputStyle]="{'width':'100%'}" name="chargeType" [ngClass]="{'errorMsg':createRatesModel.setUpForm.get('chargeType').touched && createRatesModel.setUpForm.get('chargeType')['errors']?.required}"
+        (onBlur)="onautoCompleteBlur($event, 'chargeType')" emptyMessage="No records found" [forceSelection]="true" (input)="onInputChargeType($event)"></p-autoComplete>
+      <label class="label-style chargeAlign" for="chargeType" [ngClass]="{'labelAligns': (createRatesModel?.setUpForm.get('chargeType')['errors']?.required || createRatesModel?.setUpForm.get('chargeType')['errors']?.touched)}">
+        <span>Charge Type</span>
+      </label>
+      <span class="errorHeight">
+        <p-message severity="error" text="Provide a Charge Type" *ngIf="createRatesModel.setUpForm.get('chargeType').touched && createRatesModel.setUpForm.get('chargeType')['errors']?.required">
+        </p-message>
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="ui-g mar-top8">
+    <div class="ui-g-3 ui-float-label fieldWidth pad-bot0 pad-left0">
+        <input type="text" pInputText formControlName="customerName" name="originDescription" maxlength="80" class="width_value width100">
+        <label class="label-style customerNameAlign ui-g-12 pad0">
+          <span>Customer’s Charge Name</span>
+          <span class="optional-text pad-right26 pull-right">optional</span>
+        </label>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth currency pad-bot0">
+      <p-autoComplete [suggestions]="createRatesModel.currencyCodeFiltered" field="label" name="currency"
+        formControlName="currency" (completeMethod)="onTypeCurrencyType($event)" [style]="{'width':'100%'}" field="label"
+        [forceSelection]="true" [dropdown]="true" [inputStyle]="{'width':'100%'}" emptyMessage="No records found"
+        [ngClass]="{'errorMsg':createRatesModel.setUpForm.get('currency').touched && createRatesModel.setUpForm.get('currency')['errors']?.required}"
+        (onBlur)="onCurrencyTypeBlur($event)"></p-autoComplete>
+      <label class="label-style ui-g-12 chargeAlign pad0 left15">
+        <span>Currency</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Currency Type" *ngIf="createRatesModel.setUpForm.get('currency').touched && createRatesModel.setUpForm.get('currency')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+  </div>
+  <div class ="ui-g">
+      <div class="ui-g-9 mar-bot15 pad-left0 pad-top10">
+          <span>
+              <p-checkbox name="groupname" value="Waived" label="Waived" formControlName="waived"
+                  (onChange)="onWaivedCheckboxSelect($event)"
+                  binary="true"></p-checkbox>
+          </span>
+          <span *ngIf="createRatesModel.waivedFlag">
+              <p-checkbox name="groupname" value="Calculate Rate Manually"
+                  label="Calculate Rate Manually" formControlName="calculateRate"
+                  (onChange)="onCalulateRateManuallyChecked($event)"
+                  binary="true"></p-checkbox>
+              <p-checkbox name="groupname" value="Pass-Through" label="Pass-Through"
+                  formControlName="passThrough" (onChange)="onPassThroughChecked($event)" binary="true">
+              </p-checkbox>
+              <p-checkbox name="groupname" value="Roll-Up" label="Roll-Up"
+                  formControlName="rollUp" (onChange)="onRollUpChecked($event)"
+                  binary="true"></p-checkbox>
+          </span>
+      </div>
+  </div>
+</form>

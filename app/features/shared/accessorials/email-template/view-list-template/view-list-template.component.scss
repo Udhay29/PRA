@@ -1,0 +1,71 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+
+.headingAlign {
+    margin-top: 0 !important;
+}
+
+.breadcrumb {
+  /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+      vertical-align: bottom !important;
+  }
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.icon-button {
+  background: 0 0;
+  border: none;
+}
+.padf {
+  display: block;
+}
+
+.font-decor {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.accordionHeight {
+  /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+      margin-bottom: 15px;
+      padding-top: 20px;
+  }
+}
+
+.overflow-menu {
+  color: rgba(0, 0, 0, 40);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  &:hover {
+      color: #00aafc;
+  }
+  &:active {
+      color: #00557e;
+  }
+}
+
+.content-text {
+    display: inline;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: .75rem; 
+    line-height: 1rem; 
+    letter-spacing: .01rem; 
+    text-transform: none;
+    color: $grey-dark66;
+}
+
+.heading-text {
+    color: $grey-dark27;
+    padding-right: 10px;
+}
+
+.line-style {
+  opacity: 0.8;
+  margin-right: 0.8em;
+}

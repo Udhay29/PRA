@@ -1,0 +1,10 @@
+.settingsWrapper {
+    /deep/ p-tabview .ui-tabview.ui-tabview-top > .ui-tabview-nav {
+        border: none !important;
+    }
+}
+.settingsWrapper .setting-breadcrumb {
+  /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+      vertical-align: bottom !important;
+  }
+}

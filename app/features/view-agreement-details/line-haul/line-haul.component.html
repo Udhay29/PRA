@@ -1,0 +1,171 @@
+<div [ngClass]="{'loader': lineHaulModel.loading || lineHaulModel.isTableDataLoading}" [appJbhLoader]="lineHaulModel.loading || lineHaulModel.isTableDataLoading"></div>
+
+<div class="ui-g ui-fluid contract-custom-cls" [ngClass]="lineHaulModel.isReview ? 'review-scrollabe-body' : 'linehaul-scrollabe-body'">
+    <div class="ui-md-12">
+        <p-table #lineHaulTable [rows]=lineHaulModel?.tableSize [rowsPerPageOptions]="[25,50,75,100]" [first]="lineHaulModel?.pageStart" [totalRecords]="lineHaulModel?.gridDataLength" [lazy]="true" [pageLinks]="5" [scrollable]="true" selectionMode="multiple"
+            datakey="contractName" sortMode="single" [resizableColumns]="true" columnResizeMode="expand" [columns]="lineHaulModel.tableColumns" [value]="lineHaulModel?.lineHaulList" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" (onRowSelect)="onRowSelect($event)"
+            (onRowUnselect)="onRowUnselect($event)" [customSort]="true" (onLazyLoad)="loadGridData($event)" [(selection)]="lineHaulModel.selectedLineHaulData" [ngClass]="{'emptyTable': !lineHaulModel?.lineHaulList.length && lineHaulModel.isLineHaulSearch, 'tableWrapper': lineHaulModel?.lineHaulList.length, 'emptyTableWrapper': !lineHaulModel.isLineHaulSearch && !lineHaulModel?.lineHaulList.length && !lineHaulModel.isReview, 'emptyReviewWrapper': lineHaulModel.isReview && !lineHaulModel.isLineHaulSearch && !lineHaulModel?.lineHaulList.length,'empty-caption': !lineHaulModel?.lineHaulList?.length && !lineHaulModel?.isLineHaulSearch}"
+            [paginator]="lineHaulModel?.isPaginatorFlag">
+            <ng-template pTemplate="caption">
+                <div class="ui-md-12 ui-g-12 table-caption pad0" *ngIf="lineHaulModel?.lineHaulList?.length || (!lineHaulModel?.lineHaulList?.length && lineHaulModel?.isLineHaulSearch)">
+                    <div class="ui-g-6 pad0 mar-top5">
+                        <span class="tableName alignHeading">Line Haul</span>
+                    </div>
+                    <div class="ui-g-6 pad0 pad-top5">
+                        <div class="grid-icons pull-right">
+                            <div appShortcut>
+                                <span class="filter-menu-icon mar-top5"><button data-attr="viewagreement-linehaul-filter-button"
+                    class="icon-Filter_Solid icon-button iconColorChange pad0"></button></span>
+                                <span *ngIf="lineHaulModel?.lineHaulList?.length > 0" class="filter-menu-icon mar-top5 mar-right5"> <button data-attr="viewagreement-linehaul-menuOverflow-button"
+                    class="icon-Menu_Overflow icon-button iconColorChange pad0 overflow-menu"
+                    (click)='menu.toggle($event)'></button></span>
+                            </div>
+                            <p-menu data-attr="viewagreement-linehaul-popup-mrnu" #menuOverlay #menu popup="popup" [model]="lineHaulModel?.menuItemList" styleClass="menu-overlay arrowtopbox font12" appendTo="body">
+                                <a #downloadExcel></a>
+                            </p-menu>
+                        </div>
+                        <div class="ui-inputgroup mar-right10 pull-right search-field">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+                            <input data-attr="viewagreement-linehaul-search-input" class="searchbox" type="text" pInputText placeholder="Search" (keyup)="searchGridRecords($event)">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="lineHaulModel?.tableColumns.length > 0">
+                    <col *ngFor="let thisCol of lineHaulModel?.tableColumns">
+                    <col>
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+
+                <tr class="pad0 mar0 table-header" *ngIf="lineHaulModel?.lineHaulList?.length">
+                    <th class="table-header-checkbox">
+                        <p-tableHeaderCheckbox data-attr="viewagreement-linehaul-header-checkbox" [ngClass]="checkBoxAlign"></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="min-col-width font-bold whitespace-style" [ngClass]="{'subcolumnBorder' : thisCol.isNotFirst === true}" *ngFor="let thisCol of columns" [pSortableColumn]="thisCol.field" pResizableColumn>
+                        <div *ngIf="thisCol.label==='Type'" pTooltip="Rate" tooltipPosition="top" class="mar0">Rate</div>
+                        <span [ngClass]="{'subcolumnsColor': thisCol.isSubcolumn === true, 'subcolAlignment': thisCol.isNotFirst === true}" pTooltip="{{thisCol.label}}" tooltipPosition="top">{{thisCol.label}}</span>
+                        <p-sortIcon [ngClass]="{'subColumnAlign': thisCol.isSubcolumn === true}" class="sortIcon" [field]="thisCol.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="!lineHaulModel?.lineHaulList?.length  && lineHaulModel?.isLineHaulSearch">
+                    <td class="noInfoMessage noRecBorderTop">
+                        <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+                            <span class="display-middle display-3">No records found</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="!lineHaulModel?.lineHaulList?.length && !lineHaulModel?.isLineHaulSearch &&  !lineHaulModel?.isTableDataLoading">
+                    <td class="noInfoMessage bgNone">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                            <button data-attr="viewagreement-linehaul-noInfoAddLinehaul-button" type="text" pButton label="Add Line Haul" class="ui-button-primary mar-top5 mar-left5" (click)="onAddLineHaul(true)"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns" class="tableHeight">
+                <tr [pSelectableRow]="rowData" [style]="{width: '50px'}" [attr.data-attr]="'viewagreement-linehaul-row-tr-' +  rowIndex">
+                    <td class="width20 ui-resizable-column">
+                        <p-tableCheckbox [attr.data-attr]="'viewagreement-linehaul-row-checkbox-' +  rowIndex" [ngClass]="checkBoxAlign" [value]="rowData" name="checkBox" (click)="$event.stopPropagation()" (onChange)="onchang($event)"></p-tableCheckbox>
+                    </td>
+                    <td class="mincolwidth ui-resizable-column" *ngFor="let thisCol of columns" colspan="thisCol.colspan" [ngClass]="{'subcolumnBorder' : thisCol.isNotFirst === true}">
+                        <div *ngIf="thisCol.isArray && thisCol.isSubcolumn===false">
+                            <div *ngIf="data[thisCol.field].length">
+                                <div *ngFor="let col of data[thisCol.field]; let k=index" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+                                    <span *ngIf="k<2">{{col}}</span>
+                            </div>
+    </div>
+    <div *ngIf="data[thisCol.field].length === 0">--</div>
+    <div *ngIf="data[thisCol.field].length > 2" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">{{data[thisCol.field]?.length - 2}} More</div>
+</div>
+<div *ngIf="!thisCol.isArray" class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">{{data[thisCol.field]}}</div>
+<div *ngIf="thisCol.isArray && thisCol.field === 'type' || thisCol.field === 'amount' || thisCol.field === 'minimum' || thisCol.field === 'maximum'" class="capitalize-first-word">
+    <tr class="subColumnsBackground">
+        <div *ngFor=" let col of data[thisCol.field]; let k=index" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+            <span *ngIf="k<2">{{col}}</span></div>
+<div *ngIf="data[thisCol.field]?.length > 2" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">{{data[thisCol.field]?.length - 2}} More</div>
+</tr>
+</div>
+</td>
+</tr>
+</ng-template>
+<ng-template pTemplate="paginatorright" class="tableFooter">
+    <tr>
+        <td colspan="2" *ngIf="lineHaulModel?.lineHaulList?.length">
+            <span class="pull-right pad-right10 pad4">
+          <button data-attr="viewagreement-linehaul-addLinehaul-button" type="text" pButton label="Add Line Haul" class="ui-button-primary mar-top5 mar-left5"
+            (click)="onAddLineHaul(false)" *ngIf="!lineHaulModel?.isDelete && !lineHaulModel.hasChecked"></button>
+          <button data-attr="viewagreement-linehaul-inactivate-button" type="text" pButton label="Inactivate" class="ui-button-primary mar-top5 mar-left5"
+            (click)="showInactivatePopup()" *ngIf="lineHaulModel.hasChecked"></button>
+          <button data-attr="viewagreement-linehaul-delete-button" type="text" pButton label="Delete" class="ui-button-primary mar-top5 mar-left5"
+            (click)="onLineHaulDeleteSelected()" *ngIf="lineHaulModel?.isDelete"></button>
+        </span>
+        </td>
+    </tr>
+    <tr *ngIf="!lineHaulModel?.lineHaulList?.length">
+        <td colspan="2">
+            <span class="pull-right pad-right10 pad4">
+          <button data-attr="viewagreement-linehaul-emptyListAddLinehaul-button" type="text" pButton label="Add Line Haul" class="ui-button-primary mar-top5 mar-left5"
+          (click)="onAddLineHaul(true)"></button>
+        </span>
+        </td>
+    </tr>
+</ng-template>
+</p-table>
+</div>
+</div>
+<p-dialog data-attr="viewagreement-linehaul-delete-dialog" header="Delete Line Haul" [(visible)]="lineHaulModel.isLineHaulDelete" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>Do you want to delete the selected Line Haul?</div>
+    <p-footer>
+        <button data-attr="viewagreement-linehaul-linehaulCancel-button" type="button" pButton (click)="onLineHaulDeleteCancel()" class="ui-button-secondary" label="Cancel"></button>
+        <button data-attr="viewagreement-linehaul-linehaulDelete-button" type="button" pButton (click)="onLineHaulDelete()" label="Delete" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<section class="lineHaulWrapper">
+    <p-dialog data-attr="viewagreement-linehaul-inactivate-dialog" header="Inactivate Selected Line Haul Rates" [(visible)]="lineHaulModel.inactivatePopup" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <form [formGroup]="lineHaulModel?.lineHaulInactivateForm" autocomplete="off">
+            <div>Do you want to proceed? If Yes, please select a date to inactivate the</div>
+            <div>selected Line Hauls Rates.</div>
+            <div class="ui-g-12 ui-md-7 ui-lg-7 pad-left0 pad-right0">
+                <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top30 pad-left0 lineHaulCalendar">
+                    <p-calendar data-attr="viewagreement-linehaul-expirationDate-calendar" #cal formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo="body" (onBlur)="onBlurDateValidate($event)" [maxDate]="lineHaulModel.maxDate" (onInput)="onTypeDate($event);cal.currentMonth=lineHaulModel.expDate?.getMonth();cal.currentYear=lineHaulModel.expDate?.getFullYear()"
+                        panelStyleClass="linehaul-expire-date" yearRange="1900:2099"></p-calendar>
+                    <label [ngClass]="{'label-align' : lineHaulModel?.lineHaulInactivateForm.get('expirationDate').pristine}" for="expirationDate">Expiration
+            Date</label>
+                </div>
+                <p-message severity="error" text="Provide Expiration Date" *ngIf="lineHaulModel?.lineHaulInactivateForm.get('expirationDate').touched && lineHaulModel?.lineHaulInactivateForm.get('expirationDate')['errors']?.required">
+                </p-message>
+                <p-message severity="error" text="Provide a  valid date" *ngIf="lineHaulModel?.lineHaulInactivateForm.get('expirationDate').touched && lineHaulModel?.lineHaulInactivateForm.get('expirationDate')['errors']?.invalid">
+                </p-message>
+            </div>
+        </form>
+        <p-footer>
+            <button data-attr="viewagreement-linehaul-clickCancel-button" type="button" pButton (click)="onClickCancel()" class="ui-button-secondary addnew_btn" label="Cancel"></button>
+            <button data-attr="viewagreement-linehaul-clickInactivate-button" type="button" pButton (click)="onClickInactivate()" label="Inactivate" class="ui-button-primary addnew_btn"></button>
+        </p-footer>
+    </p-dialog>
+</section>
+<p-dialog data-attr="viewagreement-linehaul-proceed-dialog" header="Proceed?" [(visible)]="lineHaulModel.showconformationPopup" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span *ngIf="lineHaulModel.priorEffDateFlag && lineHaulModel.selectedLineHaulData?.length > 1">Inactivation date
+    prior to effective date for {{lineHaulModel.preceedingEffDate}} Line Haul Rate(s) which cannot be
+    inactivated.<br>
+  </span>
+    <span *ngIf="lineHaulModel.canDeleteFlag && lineHaulModel.selectedLineHaulData?.length > 1">Inactivation date
+    prior to effective date for {{lineHaulModel.canDeleteCount}} Line Haul Rate(s) which are currently active will be
+    deleted.<br>
+  </span>
+    <span *ngIf="lineHaulModel.priorExpDateFlag">Expiration date prior to inactivation date for
+    {{lineHaulModel.exceedingExpDate}} Line Haul Rate(s) which cannot be inactivated.<br> </span>
+    <span *ngIf="lineHaulModel.selectedLineHaulData?.length > 1 && (lineHaulModel.priorExpDateFlag || lineHaulModel.priorEffDateFlag)">
+    Would you like to proceed?</span>
+    <span *ngIf="lineHaulModel.canDeleteFlag && lineHaulModel.selectedLineHaulData?.length <= 1">Inactivation date
+    prior to effective date. Would you like to delete? </span>
+    <p-footer>
+        <button data-attr="viewagreement-linehaul-cancelInactivation-button" type="button" pButton (click)="onClickCancel('Cancel Inactivation')" class="ui-button-secondary" label="Cancel"></button>
+        <button data-attr="viewagreement-linehaul-proceed-button" type="button" pButton (click)="onClickProceed()" label="Proceed" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

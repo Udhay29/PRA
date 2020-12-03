@@ -1,0 +1,604 @@
+<div [ngClass]="{'loader': fuelCalculationModel?.isPageLoading || fuelCalculationModel?.chargeTypeLoading}"
+  [appJbhLoader]="fuelCalculationModel?.isPageLoading || fuelCalculationModel?.chargeTypeLoading">
+</div>
+<div class="screen-height ui-md-12 ui-lg-12 ">
+<section class="ui-g">
+  <h2 class="pad-left20 mar-top0">Fuel Calculation Detail</h2>
+  <div class="ui-md-12 ui-lg-12 fieldSpacing">
+    <form class="filter-form" [formGroup]="fuelCalculationModel.FuelCalculationForm">
+      <div class="ui-g mar-bottom10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-fuelcalculationdatetype-dropdown" [options]="fuelCalculationModel.fuelCalculationList" name="fuelcalculationdatetype"
+              formControlName="fuelcalculationdatetype" [autoWidth]="false" filterPlaceholder="Fuel Calculation Date Type"
+              [autoDisplayFirst]="false" (onChange)="onChangeFuelCalculationDateType()"></p-dropdown>
+            <label class="top-5 pad-left5" for="fuelcalculationdatetype">Fuel Calculation Date Type</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Fuel Calculation Date Type" *ngIf="fuelCalculationModel.FuelCalculationForm.get('fuelcalculationdatetype').touched && fuelCalculationModel.FuelCalculationForm.get('fuelcalculationdatetype')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete  data-attr="viewagreement-fuelcalculation-chargetype-autocomplete" class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
+              [suggestions]="fuelCalculationModel.chargeTypeList" formControlName="chargetype" (completeMethod)="populateChargeType($event)"
+              field="label" [dropdown]="true" [forceSelection]="true" (onSelect)="onSelectChargeType($event)" (onClear)="onClearDropDown()"
+              emptyMessage="No records found"></p-autoComplete>
+            <label for="chargetype" class="pad-left5">Charge Type</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Select Charge Type" *ngIf="fuelCalculationModel.FuelCalculationForm.get('chargetype').touched && fuelCalculationModel.FuelCalculationForm.get('chargetype')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-roundingdigit-dropdown" [options]="fuelCalculationModel.roundingdigitList" name="roundingdigit" formControlName="roundingdigit"
+              [autoWidth]="false" filterPlaceholder="Rounding Digit" [autoDisplayFirst]="false" (onChange)="onChangeRoundingDigit()"></p-dropdown>
+            <label class="top-5 pad-left5" for="roundingdigit">Rounding Digit</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Rounding Digit" *ngIf="fuelCalculationModel.FuelCalculationForm.get('roundingdigit').touched && fuelCalculationModel.FuelCalculationForm.get('roundingdigit')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-bottom10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-calculationtype-dropdown" [options]="fuelCalculationModel.calculatetypeList" name="calculationtype" formControlName="calculationtype"
+              [autoWidth]="false" filterPlaceholder="Calculation Type" [autoDisplayFirst]="false" (onChange)="onChangeCalculationType()"></p-dropdown>
+            <label class="top-5 pad-left5" for="calculationtype">Calculation Type</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Calculation Type" *ngIf="fuelCalculationModel.FuelCalculationForm.get('calculationtype').touched && fuelCalculationModel.FuelCalculationForm.get('calculationtype')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-ratetype-dropdown" [options]="fuelCalculationModel.ratetypeList" name="ratetype" formControlName="ratetype"
+              [autoWidth]="false" filterPlaceholder="Rate Type" [autoDisplayFirst]="false" (onChange)="onChangeRateType()"></p-dropdown>
+            <label class="top-5 pad-left5" for="ratetype">Rate Type</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Rate Type" *ngIf="fuelCalculationModel.FuelCalculationForm.get('ratetype').touched && fuelCalculationModel.FuelCalculationForm.get('ratetype')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-fueltype-dropdown" [options]="fuelCalculationModel.fueltypeList" name="fueltype" formControlName="fueltype"
+              [autoWidth]="false" filterPlaceholder="Fuel Type" [autoDisplayFirst]="false" (onChange)="onChangeFuelType()"></p-dropdown>
+            <label class="pad-left5" for="fueltype">Fuel Type</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Fuel Type" *ngIf="fuelCalculationModel.FuelCalculationForm.get('fueltype').touched && fuelCalculationModel.FuelCalculationForm.get('fueltype')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-bottom10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-currency-dropdown" name="currency" formControlName="currency" [autoWidth]="false" [options]="fuelCalculationModel.currencyCodeList"
+              filterPlaceholder="Currency" [autoDisplayFirst]="false" [disabled]="fuelCalculationModel.sectionValidFlag"
+              (onChange)="onChangeCurrencyType()"></p-dropdown>
+            <label class="top-5 pad-left5" for="currency">Currency</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Currency" *ngIf="fuelCalculationModel.FuelCalculationForm.get('currency').touched && fuelCalculationModel.FuelCalculationForm.get('currency')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12 drop-down-float">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-draydiscount-dropdown" [options]="fuelCalculationModel.draydiscountList" name="draydiscount" formControlName="draydiscount"
+              [autoWidth]="false" filterPlaceholder="Dray Discount" [autoDisplayFirst]="false" (onChange)="onChangeDrayDiscount($event)"></p-dropdown>
+            <label class="ui-md-12 ui-lg-12 ui-g-12 pad-left5" for="draydiscount">Dray Discount
+              <span class="pull-right mar-right40">optional</span>
+            </label>
+          </span>
+
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0" *ngIf="fuelCalculationModel.isShowRollUp">
+          <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4">
+            <p-checkbox data-attr="viewagreement-fuelcalculation-rollup-checkbox" label="Roll-Up" value="Y" formControlName='rollup' (onChange)="onChangeRollUp($event)">
+            </p-checkbox>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-md-12 ui-lg-12 ui-g-12" [ngClass]="fuelCalculationModel.selectedFormName ==='Reefer' ? 'lineStyle' : ''">
+          <div>
+            <label class="labelText pad-left20">Calculation Method</label>
+          </div>
+          <p-selectButton data-attr="viewagreement-fuelcalculation-fuelmethod-selectButton" class="pad-left5" [options]="fuelCalculationModel.fuelmethodSelectButton" formControlName="fuelmethod"
+            (onChange)="onButtonSelected($event.value)"></p-selectButton>
+        </div>
+      </div>
+      <h2 class="pad-left10">{{fuelCalculationModel.selectedFuelCalculationType}} Detail</h2>
+    </form>
+  </div>
+</section>
+<div>
+<form class="filter-form" [formGroup]="fuelCalculationModel.FlatDetailsForm" *ngIf="fuelCalculationModel.selectedFormName == 'Flat'">
+  <div class="ui-md-12 ui-lg-12 fieldSpacing" *ngIf="fuelCalculationModel.selectedFuelCalculationType == 'Flat'">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-4 ui-lg-4">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount').touched && fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount')['errors']?.required ) || (fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount').touched && fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-fuelsurchargeamount-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FlatDetailsForm,'fuelsurchargeamount')" pInputText formControlName="fuelsurchargeamount"
+              (focus)="onFocus($event.target.value,fuelCalculationModel.FlatDetailsForm,'fuelsurchargeamount')" (blur)="validateCurrency($event.target.value,fuelCalculationModel.FlatDetailsForm,'fuelsurchargeamount')"
+              autocomplete="off">
+            <label for="fuelsurchargeamount" class="float-text">Fuel Surcharge Amount</label>
+          </span>
+        </span>
+        <div class="currency-error_Msg">
+          <p-message severity="error" text="Provide Fuel Surcharge Amount" *ngIf="fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount').touched && fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide Valid Fuel Surcharge Amount" *ngIf="fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount').touched && fuelCalculationModel.FlatDetailsForm.get('fuelsurchargeamount')['errors']?.invalid">
+          </p-message>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div>
+<form class="filter-form" [formGroup]="fuelCalculationModel.FormulaDetailsForm" *ngIf="fuelCalculationModel.selectedFormName == 'Formula'">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <div class="mar-bot15" *ngIf="fuelCalculationModel.capValidationFlag && !fuelCalculationModel.errFlag">
+        <p-messages [(value)]="fuelCalculationModel.inlineErrormessage" class="errorMsgAlign duplicate-err-msg">
+        </p-messages>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge')['errors']?.required ) || (fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-fuelsurcharge-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="fuelsurcharge"
+              formControlName="fuelsurcharge" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FormulaDetailsForm,'fuelsurcharge')"(focus)="onFocus($event.target.value,fuelCalculationModel.FormulaDetailsForm,'fuelsurcharge')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.FormulaDetailsForm,'fuelsurcharge')"
+              autocomplete="off">
+            <label for="fuelsurcharge" class="float-text">Fuel Surcharge Factor</label>
+          </span>
+
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Fuel Surcharge Factor" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Fuel Surcharge Factor" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('fuelsurcharge')['errors']?.invalid">
+            </p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge')['errors']?.required ) || (fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-incrementalcharge-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="incrementalcharge"
+              formControlName="incrementalcharge" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalcharge')" (focus)="onFocus($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalcharge')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalcharge')"
+              autocomplete="off">
+            <label for="incrementalcharge" class="float-text">Incremental Charge</label>
+          </span>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Incremental Charge" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Incremental Charge" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalcharge')['errors']?.invalid">
+            </p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FormulaDetailsForm.get('implementationprice').touched && fuelCalculationModel.FormulaDetailsForm.get('implementationprice')['errors']?.required ) || (fuelCalculationModel.FormulaDetailsForm.get('implementationprice').touched && fuelCalculationModel.FormulaDetailsForm.get('implementationprice')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-implementationprice-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="implementationprice"
+              formControlName="implementationprice" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FormulaDetailsForm,'implementationprice')" (focus)="onFocus($event.target.value,fuelCalculationModel.FormulaDetailsForm,'implementationprice')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.FormulaDetailsForm,'implementationprice')"
+              autocomplete="off">
+            <label for="implementationprice" class="float-text">Implementation Price</label>
+          </span>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Implementation Price" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('implementationprice').touched && fuelCalculationModel.FormulaDetailsForm.get('implementationprice')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Implementation Price" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('implementationprice').touched && fuelCalculationModel.FormulaDetailsForm.get('implementationprice')['errors']?.invalid">
+            </p-message>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval')['errors']?.required ) || (fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-incrementalinterval-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="incrementalinterval"
+              formControlName="incrementalinterval" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalinterval')" (focus)="onFocus($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalinterval')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.FormulaDetailsForm,'incrementalinterval')"
+              autocomplete="off">
+            <label for="incrementalinterval" class="float-text">Increment Interval</label>
+          </span>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Increment Interval" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Increment Interval" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval').touched && fuelCalculationModel.FormulaDetailsForm.get('incrementalinterval')['errors']?.invalid">
+            </p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0 pad-left0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.FormulaDetailsForm.get('cap').touched && fuelCalculationModel.FormulaDetailsForm.get('cap')['errors']?.required ) || (fuelCalculationModel.FormulaDetailsForm.get('cap').touched && fuelCalculationModel.FormulaDetailsForm.get('cap')['errors']?.invalid) || (fuelCalculationModel.capValidationFlag)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-cap-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="cap" formControlName="cap"
+              (focus)="onFocus($event.target.value,fuelCalculationModel.FormulaDetailsForm,'cap')" (input)="onFormKeypress($event.target.value,fuelCalculationModel.FormulaDetailsForm,'cap')" (blur)="validateCurrency($event.target.value,fuelCalculationModel.FormulaDetailsForm,'cap')"
+              autocomplete="off" [ngClass]="{'ui-inputwrapper-filled': fuelCalculationModel.capvalueFlag}">
+            <label for="cap" class="float-text">Cap</label>
+          </span>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Cap" *ngIf="fuelCalculationModel.FormulaDetailsForm.get('cap').touched && fuelCalculationModel.FormulaDetailsForm.get('cap')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Cap" *ngIf="(fuelCalculationModel.FormulaDetailsForm.get('cap').touched && fuelCalculationModel.FormulaDetailsForm.get('cap')['errors']?.invalid)">
+            </p-message>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div>
+<form class="filter-form" [formGroup]="fuelCalculationModel.ReferDetailsForm" *ngIf="fuelCalculationModel.selectedFormName == 'Refrigerated'">
+  <div class="ui-g fieldSpacing">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 lineStyle">
+      <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-distanceunit-dropdown" [options]="fuelCalculationModel.referDistanceList" name="distanceunit" formControlName="distanceunit"
+              (onChange)="onChangeReferDistanceUnit($event)" [autoWidth]="false" filterPlaceholder="Distance Unit"
+              [autoDisplayFirst]="false"></p-dropdown>
+            <label class="top-5" for="distanceunit">Distance Unit</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Distance Unit" *ngIf="fuelCalculationModel.ReferDetailsForm.get('distanceunit').touched && fuelCalculationModel.ReferDetailsForm.get('distanceunit')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0 pad-left0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-dropdown data-attr="viewagreement-fuelcalculation-fuelqtyunit-dropdown" [options]="fuelCalculationModel.referFuelUnitList" name="fuelqtyunit" formControlName="fuelqtyunit"
+              (onChange)="onChangeReferFuelUnit($event)" [autoWidth]="false" filterPlaceholder="Fuel Quantity Unit"
+              [autoDisplayFirst]="false"></p-dropdown>
+            <label class="top-5" for="fuelqtyunit">Fuel Quantity Unit</label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Please select Fuel Quantity Unit" *ngIf="fuelCalculationModel.ReferDetailsForm.get('fuelqtyunit').touched && fuelCalculationModel.ReferDetailsForm.get('fuelqtyunit')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+          <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+            <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.ReferDetailsForm.get('implementprice').touched && fuelCalculationModel.ReferDetailsForm.get('implementprice')['errors']?.required ) || (fuelCalculationModel.ReferDetailsForm.get('implementprice').touched && fuelCalculationModel.ReferDetailsForm.get('implementprice')['errors']?.invalid)}">
+              <span class="ui-inputgroup-addon">$</span>
+              <input data-attr="viewagreement-fuelcalculation-implementprice-input" id="float-input" class="ui-md-12 ui-lg-12" type="text" pInputText name="implementprice" (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'implementprice')"
+                formControlName="implementprice" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'implementprice')"
+                (blur)="validateCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'implementprice')"
+                autocomplete="off">
+              <label for="implementprice" class="float-text">Implementation Price</label>
+            </span>
+          </span>
+          <div class="currency-error_Msg">
+            <p-message severity="error" text="Provide Implementation Price" *ngIf="fuelCalculationModel.ReferDetailsForm.get('implementprice').touched && fuelCalculationModel.ReferDetailsForm.get('implementprice')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide Valid Implementation Price" *ngIf="fuelCalculationModel.ReferDetailsForm.get('implementprice').touched && fuelCalculationModel.ReferDetailsForm.get('implementprice')['errors']?.invalid">
+            </p-message>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-3 pad-right0 pad-left0">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <input data-attr="viewagreement-fuelcalculation-burnrate-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="burnrate"
+              formControlName="burnrate" (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'burnrate')" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'burnrate')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'burnrate')"
+              autocomplete="off">
+            <label for="burnrate" class="label-width">Burn Rate Per Hour
+            </label>
+          </span>
+          <p-message class="error_Msg" severity="error" text="Provide Burn Rate Per Hour" *ngIf="fuelCalculationModel.ReferDetailsForm.get('burnrate').touched && fuelCalculationModel.ReferDetailsForm.get('burnrate')['errors']?.required">
+          </p-message>
+          <p-message class="error_Msg" severity="error" text="Provide Valid Burn Rate Per Hour" *ngIf="fuelCalculationModel.ReferDetailsForm.get('burnrate')['errors']?.invalid"></p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-1">
+          <span class="gallon-left">{{fuelCalculationModel.referFuelOptionalText}}</span>
+        </div>
+
+      </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 mar-top20">
+      <div class="ui-g-12 ui-md-4 ui-lg-3">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-distancehour-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="distancehour"
+            formControlName="distancehour" (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'distancehour')" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'distancehour')"
+            (blur)="validateCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'distancehour')"
+            autocomplete="off">
+          <label for="distancehour" class="label-width float-text">Distance Per Hour
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Distance Per Hour" *ngIf="fuelCalculationModel.ReferDetailsForm.get('distancehour').touched && fuelCalculationModel.ReferDetailsForm.get('distancehour')['errors']?.required">
+        </p-message>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Distance Per Hour" *ngIf="fuelCalculationModel.ReferDetailsForm.get('distancehour')['errors']?.invalid"></p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-1">
+        <span class="gallon-left">{{fuelCalculationModel.referDistanceOptionalText}}</span>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <p-dropdown data-attr="viewagreement-fuelcalculation-distancerounding-dropdown" [options]="fuelCalculationModel.referDistanceRoundingList" name="distancerounding"
+            formControlName="distancerounding" [autoWidth]="false" filterPlaceholder="Distance Rounding"
+            [autoDisplayFirst]="false" (onChange)="onChangeDistRounding($event,'distancerounding')"></p-dropdown>
+          <label class="top-5 float-text" for="distancerounding">Distance Rounding</label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Please select Distance Rounding" *ngIf="fuelCalculationModel.ReferDetailsForm.get('distancerounding').touched && fuelCalculationModel.ReferDetailsForm.get('distancerounding')['errors']?.required">
+        </p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-loadinghours-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="loadinghours"
+            formControlName="loadinghours"  (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'loadinghours','posInteger')" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'loadinghours')"
+            (blur)="validateReeferCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'loadinghours')"
+            autocomplete="off">
+          <label for="loadinghours" class="label-width">Loading/Unloading Hours
+            <span class="pull-right">optional</span>
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Loading/Unloading Hours" *ngIf="fuelCalculationModel.ReferDetailsForm.get('loadinghours')['errors']?.invalid"></p-message>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <div class="ui-g-12 ui-md-4 ui-lg-3">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-servicehour-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="servicehour"
+            formControlName="servicehour"  (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'servicehour','posInteger')" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'servicehour')"
+            (blur)="validateReeferCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'servicehour')"
+            autocomplete="off">
+          <label for="servicehour" class="label-width">Service Hours Addon
+            <span class="pull-right">optional</span>
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Service Hours Addon" *ngIf="fuelCalculationModel.ReferDetailsForm.get('servicehour')['errors']?.invalid"></p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-1">
+        <span class="gallon-left">Hour</span>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-3 pad-right0 pad-left0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-addhours-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="addhours"
+            formControlName="addhours"  (input)="onFormKeypress($event.target.value,fuelCalculationModel.ReferDetailsForm,'addhours','posInteger')" (focus)="onFocus($event.target.value,fuelCalculationModel.ReferDetailsForm,'addhours')"
+            (blur)="validateReeferCurrency($event.target.value,fuelCalculationModel.ReferDetailsForm,'addhours')"
+            autocomplete="off">
+          <label for="addhours" class="label-width">Add Hours After Distance
+            <span class="pull-right">optional</span>
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Add Hours After Distance" *ngIf="fuelCalculationModel.ReferDetailsForm.get('addhours')['errors']?.invalid"></p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-1">
+        <span class="gallon-left">{{fuelCalculationModel.referDistanceOptionalText}}</span>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+        <span class="ui-float-label ui-md-12 ui-lg-12 drop-down-float">
+          <p-dropdown data-attr="viewagreement-fuelcalculation-servicehourrounding-dropdown" [options]="fuelCalculationModel.referServiceHourRoundingList" name="servicehourrounding"
+            formControlName="servicehourrounding" [autoWidth]="false" filterPlaceholder="Service Hour Rounding"
+            [autoDisplayFirst]="false" (onChange)="onChangeDistRounding($event,'servicehourrounding')"></p-dropdown>
+          <label class="ui-md-12 ui-lg-12 ui-g-12" for="servicehourrounding">Service Hours Rounding
+            <span class="pull-right mar-right40">optional</span>
+          </label>
+        </span>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div>
+<form class="filter-form" [formGroup]="fuelCalculationModel.DistanceDetailsForm" *ngIf="fuelCalculationModel.selectedFormName == 'Distance Per Fuel Quantity'">
+  <div class="ui-g fieldSpacing">
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <p-dropdown data-attr="viewagreement-fuelcalculation-distance-dropdown" name="distance" formControlName="distance" [options]="fuelCalculationModel.referDistanceList"
+            (onChange)="onChangeMpgDistanceUnit($event)" [autoWidth]="false" filterPlaceholder="Distance Unit"
+            [autoDisplayFirst]="false"></p-dropdown>
+          <label class="top-5" for="distance">Distance Unit</label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Distance Unit" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('distance').touched && fuelCalculationModel.DistanceDetailsForm.get('distance')['errors']?.required">
+        </p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-right0 pad-left0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <p-dropdown data-attr="viewagreement-fuelcalculation-fuelqty-dropdown" name="fuelqty" formControlName="fuelqty" [options]="fuelCalculationModel.referFuelUnitList"
+            [autoWidth]="false" filterPlaceholder="Fuel Quantity Unit" [autoDisplayFirst]="false"></p-dropdown>
+          <label class="top-5" for="fuelqty">Fuel Quantity Unit</label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Fuel Quantity Unit" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('fuelqty').touched && fuelCalculationModel.DistanceDetailsForm.get('fuelqty')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <div class="ui-g-12 ui-md-4 ui-lg-3">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-distanceper-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" name="distanceper" pInputText
+            formControlName="distanceper" (input)="onFormKeypress($event.target.value,fuelCalculationModel.DistanceDetailsForm,'distanceper')"  (focus)="onFocus($event.target.value,fuelCalculationModel.DistanceDetailsForm,'distanceper')"
+            (blur)="validateCurrency($event.target.value,fuelCalculationModel.DistanceDetailsForm,'distanceper')"
+            autocomplete="off">
+          <label for="distanceper" class="label-width">Distance Per Fuel Quantity
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Distance Per Fuel Quantity" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('distanceper').touched && fuelCalculationModel.DistanceDetailsForm.get('distanceper')['errors']?.required">
+        </p-message>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Distance Per Fuel Quantity" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('distanceper')['errors']?.invalid"></p-message>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-1">
+        <span class="gallon-left">{{fuelCalculationModel.mpgDistanceOptionalText}}</span>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0 pad-right0">
+        <span class="ui-md-12 ui-g-12 ui-lg-12 group-style currency-field-float">
+          <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error':(fuelCalculationModel.DistanceDetailsForm.get('incrementalprice').touched && fuelCalculationModel.DistanceDetailsForm.get('incrementalprice')['errors']?.required ) || (fuelCalculationModel.DistanceDetailsForm.get('incrementalprice').touched && fuelCalculationModel.DistanceDetailsForm.get('incrementalprice')['errors']?.invalid)}">
+            <span class="ui-inputgroup-addon">$</span>
+            <input data-attr="viewagreement-fuelcalculation-incrementalprice-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="incrementalprice"
+              formControlName="incrementalprice" (input)="onFormKeypress($event.target.value,fuelCalculationModel.DistanceDetailsForm,'incrementalprice')"  (focus)="onFocus($event.target.value,fuelCalculationModel.DistanceDetailsForm,'incrementalprice')"
+              (blur)="validateCurrency($event.target.value,fuelCalculationModel.DistanceDetailsForm,'incrementalprice')"
+              autocomplete="off">
+            <label for="incrementalprice" class="pad-left10">Implementation Price</label>
+          </span>
+        </span>
+        <div class="currency-error_Msg">
+          <p-message severity="error" text="Provide Implementation Price" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('incrementalprice').touched && fuelCalculationModel.DistanceDetailsForm.get('incrementalprice')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide Valid Implementation Price" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('incrementalprice').touched && fuelCalculationModel.DistanceDetailsForm.get('incrementalprice')['errors']?.invalid">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-4 pad-left0">
+        <span class="ui-float-label ui-md-12 ui-lg-12">
+          <input data-attr="viewagreement-fuelcalculation-addonamount-input" id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText name="addonamount"
+            formControlName="addonamount" (input)="onFormKeypress($event.target.value,fuelCalculationModel.DistanceDetailsForm,'addonamount')" (focus)="onFocus($event.target.value,fuelCalculationModel.DistanceDetailsForm,'addonamount')"
+            (blur)="validateCurrency($event.target.value,fuelCalculationModel.DistanceDetailsForm,'addonamount')"
+            autocomplete="off">
+          <label for="addonamount" class="label-width">Addon Amount
+            <span class="pull-right">optional</span>
+          </label>
+        </span>
+        <p-message class="error_Msg" severity="error" text="Provide Valid Addon Amount" *ngIf="fuelCalculationModel.DistanceDetailsForm.get('addonamount')['errors']?.invalid"></p-message>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div class="increment" *ngIf="fuelCalculationModel.selectedFormName == 'Increment'">
+  <div class="file-upload" *ngIf="fuelCalculationModel.uploadFlag">
+    <p>Upload Incremental Program Spreadsheet</p>
+    <p-fileUpload data-attr="viewagreement-fuelcalculation-uploadfile-fileUpload" [showCancelButton]="false" [showUploadButton]="false" name="demo[]" (onSelect)="onFilesUpload($event)"
+      chooseLabel="Choose File">
+      <ng-template class="pad0" pTemplate="content">
+        <div class="dropArea">
+          <div class="dragDropText">
+            <p>Drag & Drop File</p>
+          </div>
+        </div>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+  <div class="upload-loader" *ngIf="fuelCalculationModel.loaderFlag">
+    <p>Uploading {{fuelCalculationModel.fileName}}</p>
+    <p-progressBar mode="indeterminate"></p-progressBar>
+  </div>
+  <p-messages [(value)]="fuelCalculationModel.incrementalErrorMsg" *ngIf="fuelCalculationModel.inlineError && fuelCalculationModel.uploadTablearray.length">
+  </p-messages>
+  <div class="uploadDatatable" *ngIf="fuelCalculationModel.tableFlag">
+    <p-table #uploadtable [value]="fuelCalculationModel.uploadTablearray" (onRowSelect)="selectedListRow($event)"
+      (onRowUnselect)="selectedListRow($event)" (onHeaderCheckboxToggle)="onClickHeaderCheckbox($event);selectedListRow($event)"
+       [(selection)]="fuelCalculationModel.selectedItemList" [rows]="25"
+       (onSort)="clearErrors()" [rowsPerPageOptions]="[25,75,200]" [pageLinks]="5" [scrollable]="true" scrollHeight="calc(100vh - 450px)"
+      class="uploadTable" (sortFunction)="customSort($event)" [customSort]="true" [ngClass]="{ 'heightExceed' : fuelCalculationModel.heightCheckFlag}"
+      selectionMode="multiple" datakey="fuelIncrementCalculationMethodConfigurationID">
+      <ng-template pTemplate="caption">
+        <div class="ui-g table-caption">
+          <div class="ui-md-6 ui-lg-6">
+            <span class="tableName">Incremental Program</span>
+          </div>
+          <div class="ui-md-6 ui-lg-6">
+            <div class="ui-g">
+              <div class=" ui-md-11 ui-lg-11 ui-inputgroup" *ngIf="fuelCalculationModel.selectedItemList.length > 0">
+                <span  data-attr="viewagreement-fuelcalculation-deselect-span" (click)="onClickDeselect()">Deselect</span>
+                <span data-attr="viewagreement-fuelcalculation-removechrg-span" (click)="removeCharge(fuelCalculationModel.selectedItemList)">Remove Charge</span>
+                <span data-attr="viewagreement-fuelcalculation-newcharge-span" class="new_charge" (click)="addNewRow()"><em data-attr="viewagreement-fuelcalculation-add-em" class="icon-Circle_Add_Solid"></em><span>New Charge</span></span>
+              </div>
+              <div class=" ui-md-11 ui-lg-11 ui-inputgroup" *ngIf="fuelCalculationModel.selectedItemList.length === 0">
+                <span *ngIf="!fuelCalculationModel.overlaps.length && !fuelCalculationModel.duplicateCharges.length && !fuelCalculationModel.gaps.length && !fuelCalculationModel.invalidCharges.length && !fuelCalculationModel.invalidRanges.length && !fuelCalculationModel.emptyBeginAmount.length && !fuelCalculationModel.emptyEndAmount.length && !fuelCalculationModel.emptyChargeAmount.length">
+                  Export to Excel</span>
+                <span data-attr="viewagreement-fuelcalculation-uploadPopup-span" (click)="uploadPopup()">Upload Incremental Program</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="fuelCalculationModel?.uploadTablearray.length > 0">
+          <col>
+          <col *ngFor="let thisCol of fuelCalculationModel.editTableColumns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr *ngIf="fuelCalculationModel?.uploadTablearray.length === 0" class="bottom-line">
+          <td colspan="2">
+            <div class="displaymiddle mar-bot20">
+              <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="fuelCalculationModel.uploadTablearray.length > 0">
+          <th class="table-header-checkbox">
+            <p-tableHeaderCheckbox  data-attr="viewagreement-fuelcalculation-checkall-checkbox" [ngClass]="checkBoxAlign"></p-tableHeaderCheckbox>
+          </th>
+          <th *ngFor="let thisCol of fuelCalculationModel.editTableColumns" class="header-column-width tooltip"
+            [pSortableColumn]="thisCol.key" pTooltip={{thisCol.label}} tooltipPosition="top">
+            <span class="label">{{thisCol.label}}</span>
+            <span>
+              <p-sortIcon [field]="thisCol.key" aria-label="Activate to sort" aria-labelDesc="Activate to sort in descending order"
+                aria-labelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" class="tableHeight" [pSelectableRow]="rowData">
+        <tr>
+          <td class="width20 ui-resizable-column">
+            <p-tableCheckbox [attr.data-attr]="'viewagreement-fuelcalculation-row-checkbox-' +  rowIndex" [ngClass]="checkBoxAlign" [value]="rowData" name="checkBox"></p-tableCheckbox>
+          </td>
+          <td class="row-column-width tooltip ui-resizable-column editable-cell" *ngFor="let thisCol of fuelCalculationModel.editTableColumns"
+            pTooltip={{data[thisCol.key]}} tooltipPosition="top" pEditableColumn [ngSwitch]="thisCol.key">
+            <p-cellEditor *ngSwitchDefault [ngClass]="{'error-cell-editor': fuelCalculationModel.overlaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.gaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidRanges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyBeginAmount.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyEndAmount.indexOf(rowIndex) >= 0} ">
+              <ng-template pTemplate="input">
+                <input data-attr="viewagreement-fuelcalculation-fuelRange-input" type="text" #editField [(ngModel)]="data[thisCol.key]" (input)="onEditTable($event, data, thisCol.key )" (focus)="onfocusAmount(editField)" [ngClass]="{'error-cell': fuelCalculationModel.overlaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.gaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidRanges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyBeginAmount.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyEndAmount.indexOf(rowIndex) >= 0} ">
+                <p-message severity="error" text="Provide valid fuel range"
+                  *ngIf="fuelCalculationModel.overlaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.gaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidRanges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyBeginAmount.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyEndAmount.indexOf(rowIndex) >= 0"></p-message>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <div class="error-cell-output" [ngClass]="{'error-cell': fuelCalculationModel.overlaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.gaps.indexOf(rowIndex) >= 0
+                    || fuelCalculationModel.invalidRanges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyEndAmount.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyBeginAmount.indexOf(rowIndex) >= 0}">{{data[thisCol.key]}}
+                </div>
+                <p-message severity="error" text="Provide valid fuel range" *ngIf="fuelCalculationModel.overlaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.gaps.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidRanges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyEndAmount.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyBeginAmount.indexOf(rowIndex) >= 0"></p-message>
+              </ng-template>
+            </p-cellEditor>
+            <p-cellEditor *ngSwitchCase="'fuelSurchargeAmount'" [ngClass]="{'error-cell-editor': fuelCalculationModel.duplicateCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyChargeAmount.indexOf(rowIndex) >= 0}  ">
+              <ng-template pTemplate="input">
+                <input data-attr="viewagreement-fuelcalculation-charge-input" type="text" #editFieldCurrency [(ngModel)]="data[thisCol.key]" (input)="onEditTable($event, data, thisCol.key)" (focus)="onfocusAmount(editFieldCurrency)"
+                  [ngClass]="{'error-cell': fuelCalculationModel.duplicateCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyChargeAmount.indexOf(rowIndex) >= 0}" (focus) = "fuelCalculationModel.borderFlag === false" (keypress)="omitSpecialChar($event)">
+                <p-message severity="error" text="Provide valid Charge"
+                  *ngIf="fuelCalculationModel.duplicateCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyChargeAmount.indexOf(rowIndex) >= 0"></p-message>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <div class="error-cell-output" [ngClass]="{'error-cell': fuelCalculationModel.duplicateCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyChargeAmount.indexOf(rowIndex) >= 0}">
+                  {{data[thisCol.key]}}</div>
+                <p-message severity="error" text="Provide valid Charge" *ngIf="fuelCalculationModel.duplicateCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.invalidCharges.indexOf(rowIndex) >= 0 || fuelCalculationModel.emptyChargeAmount.indexOf(rowIndex) >= 0"></p-message>
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+</div>
+<p-footer class="pull-right mar-top20 mar-bot20 footer">
+    <button data-attr="viewagreement-fuelcalculation-fuelCancel-button" type="text" pButton label="Cancel" (click)="onClickCancel()" class="ui-button-secondary borderNone cancelBtn"></button>
+    <button data-attr="viewagreement-fuelcalculation-fuelPrev-button" type="text" pButton label="Previous" disabled class="ui-button-secondary backBtn"></button>
+    <button data-attr="viewagreement-fuelcalculation-fuelNext-button" type="text" pButton label="Next" (click)="onClickNext()" class="ui-button-primary mar-left15 nextBtn"></button>
+</p-footer>
+<p-dialog data-attr="viewagreement-fuelcalculation-calcmethodinfo-dialog" class="textalign" header="Confirmation" [(visible)]="fuelCalculationModel.showConfirmationPopup" (onHide)="onClickNo()"
+  [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You will lose the present calculation method information.Do you
+    <pre class="textmargin">want to change the calculation method?</pre></span>
+  <p-footer>
+    <button data-attr="viewagreement-fuelcalculation-fuelConfirmNo-button" type="button" pButton (click)="onClickNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="viewagreement-fuelcalculation-fuelConfirmYes-button" type="button" pButton (click)="onClickYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>
+<p-dialog data-attr="viewagreement-fuelcalculation-incrementalProgram-dialog" class="textalign" header="Confirmation" [(visible)]="fuelCalculationModel.uploadPopup" (onHide)="clickNo()"
+  [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You will lose the present Incremental Program information as you upload a new one. Do you want to proceed?
+  </span>
+  <p-footer>
+    <button data-attr="viewagreement-fuelcalculation-fuelProceedNo-button" type="button" pButton (click)="clickNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="viewagreement-fuelcalculation-fuelProceedYes-button" type="button" pButton (click)="clickYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

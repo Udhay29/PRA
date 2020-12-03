@@ -1,0 +1,149 @@
+<div [ngClass]="{'loader': drayGroupModel.isPageLoading}" [appJbhLoader]="drayGroupModel?.isPageLoading"></div>
+<div class="mar-left5 breadcrumb pad-bot0">
+    <p-breadcrumb styleClass="pad-left10" [model]="drayGroupModel.breadCrumbList"></p-breadcrumb>
+</div>
+
+<div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 capacity-heading mar-left10 pad0">
+        <h1 class="styling">DRAY GROUP</h1>
+    </div>
+</div>
+
+<div class="ui-g">
+    <div [ngClass]="{'ui-md-12': !this.drayGroupModel.isShowDrayGroupCreation, 'ui-g-12': !this.drayGroupModel.isShowDrayGroupCreation, 'ui-md-6': this.drayGroupModel.isShowDrayGroupCreation }"
+        class="padding-left">
+        <p-table class="main-content" [pageLinks]='5' [rows]='25' [resizableColumns]="true"
+            [paginator]='!drayGroupModel?.isRuleRecordEmpty' [rowsPerPageOptions]='[25,50,75,100]'
+            columnResizeMode='fit' [scrollable]="true" (onPage)="onPage($event)" scrollHeight="calc(100vh - 305px)"
+            [columns]="drayGroupModel.tableColumns" [value]="drayGroupModel.drayGroupArray" [lazy]="true"
+            (onLazyLoad)="loadConfigValuesLazy($event)" [totalRecords]="drayGroupModel.totalRuleRecords">
+
+
+            <ng-template pTemplate="caption">
+                <div class='ui-md-12 ui-g-12 pad0'>
+                    <div class="pad0"
+                        [ngClass]="{'ui-g-5' : this.drayGroupModel.isShowDrayGroupCreation,'ui-g-6': !this.drayGroupModel.isShowDrayGroupCreation}">
+                        Dray Groups
+                    </div>
+                     <div class='pad0 pad-top5' *ngIf='!drayGroupModel?.isRuleRecordEmpty || (drayGroupModel.isRuleRecordEmpty && drayGroupModel.searchFlag)'
+                        [ngClass]="{'ui-g-7' : this.drayGroupModel.isShowDrayGroupCreation,'ui-g-6': !this.drayGroupModel.isShowDrayGroupCreation}">
+                        <div class="grid-icons pull-right">
+                            <span class='filter-menu-icon'>
+                                <button class="icon-Filter_Solid icon-button buttonStyle pad0"></button>
+                            </span>
+                            <span class='filter-menu-icon mar-right5'>
+                                <button class="icon-Menu_Overflow icon-button buttonStyle pad0"></button>
+                            </span>
+                        </div>
+                        <div class="ui-inputgroup mar-right10 pull-right"
+                            [ngClass]="{'search-box-split' : this.drayGroupModel.isShowDrayGroupCreation,'search-box' : !this.drayGroupModel.isShowDrayGroupCreation}">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input type="text" pInputText placeholder="Search" appShortcut="alt+s"
+                                (keyup)="searchDrayGroup($event)" (keypress)="onDrayGroupKeyPress()" (focus)="checkIfDrayGroupFormIsTouched()">
+                        </div>
+                    </div> 
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" style='width:150px' [ngStyle]="col.width">
+                </colgroup>
+            </ng-template>
+
+
+
+            <ng-template pTemplate="header" let-columns>
+
+                <tr *ngIf='drayGroupModel?.isRuleRecordEmpty && !drayGroupModel.searchFlag'>
+                    <div class='center-container'>
+                        <div
+                            [ngClass]="{'display-middle-split': this.drayGroupModel.isShowDrayGroupCreation,'display-middle-dray': !this.drayGroupModel.isShowDrayGroupCreation}">
+                            <h4 class="emptyMsgText mar0 mar-bot5">No information</h4>
+                            <h4 class="emptyMsgText mar0 mar-bot5">was found to display</h4>
+                            <button appShortcut="ctrl+alt+1" type="button" pButton label="Create Dray Group"
+                                (click)="onCreateDrayGroup()" class="ui-button-primary"
+                                *ngIf="!this.drayGroupModel.isShowDrayGroupCreation"></button>
+                        </div>
+                    </div>
+
+                </tr>
+
+                <tr *ngIf='drayGroupModel.isRuleRecordEmpty && drayGroupModel.searchFlag'>
+                    <div class='center-container'>
+                        <div class="display-middle">No Records Found</div>
+                    </div>
+                </tr>
+
+                <tr *ngIf="!drayGroupModel?.isRuleRecordEmpty">
+                    <th (click)="onSortSelect(col.field)" *ngFor="let col of drayGroupModel.tableColumns"
+                        [ngClass]="{'subcolumnBorder' : col.isNotFirst === true}" [pSortableColumn]="col.field"
+                        pResizableColumn>
+
+                        <div *ngIf='col.headerName' pTooltip="{{col.headerName}}" tooltipPosition="top"
+                            class='header-title'>{{col.headerName}}</div>
+                        <p-sortIcon class="sort-icon-alignment" [field]="col.field" ariaLabel="Activate to sort"
+                            ariaLabelDesc="Activate to sort in descending order"
+                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of drayGroupModel.tableColumns" class="ui-resizable-column"
+                        [ngClass]="{'subcolumnBorder' : col.isNotFirst === true}">
+                        <span *ngIf="!col.isArray">
+                            <span *ngIf='rowData[col.field]' tooltipDisabled='{{col.isToolTipDisabled}}'
+                                pTooltip='{{rowData[col.field]}}' tooltipPosition="top">{{rowData[col.field]}}</span>
+                            <span *ngIf='!rowData[col.field]' tooltipDisabled='{{col.isToolTipDisabled}}'
+                                tooltipPosition="top" pTooltip='--'>--</span>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+
+
+
+
+            <ng-template pTemplate="paginatorright" class="tableFooter" *ngIf='!drayGroupModel?.isRuleRecordEmpty'>
+                <tr>
+                    <td colspan="2">
+                        <span class="pull-right pad-right10" *ngIf="!this.drayGroupModel.isShowDrayGroupCreation">
+                            <button type="text" appShortcut="ctrl+alt+1" pButton label="Create Dray Group"
+                                class="ui-button-primary" (click)="onCreateDrayGroup()">
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="ui-g-6 ui-md-6" *ngIf="this.drayGroupModel.isShowDrayGroupCreation">
+        <app-create-dray-group #createDrayGroupForm (closeClickEvent)="closeClick()" (CreateCloseClickEvent)="onCreateClose()"
+            (EnablePopup)="showPopupEvent($event)">
+        </app-create-dray-group>
+    </div>
+</div>
+
+<p-dialog header="Save Changes?" [(visible)]="drayGroupModel.showPopup" [modal]="true" [responsive]="true" [width]="425"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onClickPopupNo()" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onClickPopupYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+
+<p-dialog header="Save Changes?" [(visible)]="drayGroupModel.showSearchPopup" [modal]="true" [responsive]="true" [width]="425"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onClickSearchPopupNo()" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onClickSearchFocusPopupYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

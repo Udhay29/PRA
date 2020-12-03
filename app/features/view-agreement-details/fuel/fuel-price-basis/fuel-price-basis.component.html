@@ -1,0 +1,348 @@
+<div [ngClass]="{'loader': fuelPriceModel.isPageLoading}" [appJbhLoader]="fuelPriceModel?.isPageLoading"></div>
+<section class="ui-g">
+  <h2 class="pad-left16 mar-top0">Fuel Price Basis</h2>
+  <form [formGroup]="fuelPriceModel?.fuelPriceForm" class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+    <div class="ui-md-12 ui-lg-12 pad-left16">
+      <span class="ui-float-label pad0">
+        <p-selectButton data-attr="viewagreement-fuelpricebasis-fuelPriceType-selectbutton" [options]="fuelPriceModel.fuelPriceType" formControlName="fuelPriceType" name="fuelPriceType">
+        </p-selectButton>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide FuelPriceType" *ngIf="fuelPriceModel?.fuelPriceForm
+        .get('fuelPriceType').touched && fuelPriceModel?.fuelPriceForm.get('fuelPriceType')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+    </div>
+        <div class="ui-md-12 ui-g-12 ui-lg-12 mar-left10">
+      <span class="ui-md-4 ui-lg-4 ui-g-4">
+          <p-radioButton  data-attr="viewagreement-fuelpricebasis-fuelPriceBasisTypes-radioButton " class="radio-pad" *ngFor="let item of fuelPriceModel.fuelPriceBasisTypes , let i = index"
+          name="fuelPriceBasisTypes" value={{item.value}} label={{item.label}} formControlName="fuelPriceBasisTypes"
+          [(ngModel)]="fuelPriceModel.selectedValue" (click)="onclickFuelRadio(item, i)"></p-radioButton>
+      </span>
+    </div>
+    <!-- Week Starts Here -->
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left11" *ngIf="fuelPriceModel.isSelectedWeekly">
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-weekToApply-dropdown" [options]="fuelPriceModel.weekToApplyList" name="weekToApply" formControlName="weekToApply"
+          [autoWidth]="false" filterPlaceholder="Week to Apply" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="weekToApply">Week to Apply</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('weekToApply').touched && fuelPriceModel.fuelPriceForm.get('weekToApply')['errors']?.required}">
+          <p-message severity="error" text="Provide Week to Apply"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('weekToApply').touched && fuelPriceModel.fuelPriceForm.get('weekToApply')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-dayOfWeek-dropdown" [options]="fuelPriceModel.dayOfWeekList" name="dayOfWeek" formControlName="dayOfWeek"
+          [autoWidth]="false" filterPlaceholder="Day of week" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="dayOfWeek">Day of week</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('dayOfWeek').touched && fuelPriceModel.fuelPriceForm.get('dayOfWeek')['errors']?.required}">
+          <p-message severity="error" text="Provide Day of Week"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('dayOfWeek').touched && fuelPriceModel.fuelPriceForm.get('dayOfWeek')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-useFuelPriceAsOf-dropdown" [options]="fuelPriceModel.priceFactorTypes" name="useFuelPriceAsOf"
+          formControlName="useFuelPriceAsOf" [autoWidth]="false" filterPlaceholder="Use Fuel Price as of"
+          [autoDisplayFirst]="false" (onChange)="onChangePriceFactor($event)"></p-dropdown>
+        <label class="top-5" for="useFuelPriceAsOf">Use Fuel Price as of</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required}">
+          <p-message severity="error" text="Provide Fuel Price"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+    </div>
+    <!-- Rolling Week -->
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left11"
+      *ngIf="fuelPriceModel.isShowWeekAverage && fuelPriceModel.isSelectedWeekly">
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-weeksInAverage-dropdown" [options]="fuelPriceModel.weeksInAverage" name="weeksInAverage" formControlName="weeksInAverage"
+          [autoWidth]="false" filterPlaceholder="Weeks in Average" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="weeksInAverage">Weeks in Average</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('weeksInAverage').touched && fuelPriceModel.fuelPriceForm.get('weeksInAverage')['errors']?.required}">
+          <p-message severity="error" text="Provide Weeks in Average"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('weeksInAverage').touched && fuelPriceModel.fuelPriceForm.get('weeksInAverage')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12" *ngIf="fuelPriceModel.isSelectedWeekly">
+      <span class="bottom-line ui-md-12 ui-g-12 ui-lg-12 pad0"></span>
+    </div>
+    <!-- Week Ends Here -->
+    <!-- Month starts Here-->
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left11" *ngIf="fuelPriceModel.isSelectedMonthly">
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-dayOfMonth-dropdown" [options]="fuelPriceModel.dayOfMonthList" name="dayOfMonth" formControlName="dayOfMonth"
+          [autoWidth]="false" filterPlaceholder="Price Change Day of Month" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="dayOfMonth">Price Change Day of Month</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('dayOfMonth').touched && fuelPriceModel.fuelPriceForm.get('dayOfMonth')['errors']?.required}">
+          <p-message severity="error" text="Provide Price Change Day of Month"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('dayOfMonth').touched && fuelPriceModel.fuelPriceForm.get('dayOfMonth')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-useFuelPriceAsOf-dropdown" [options]="fuelPriceModel.priceFactorTypes" name="useFuelPriceAsOf"
+          formControlName="useFuelPriceAsOf" [autoWidth]="false" filterPlaceholder="Use Fuel Price as of"
+          [autoDisplayFirst]="false" (onChange)="onChangePriceFactor($event)"></p-dropdown>
+        <label class="top-5" for="useFuelPriceAsOf">Use Fuel Price as of</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required}">
+          <p-message severity="error" text="Provide Fuel Price"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float" *ngIf="fuelPriceModel.isshowMonthAverage">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-monthsInAverage-dropdown" [options]="fuelPriceModel.monthsInAverageList" name="monthsInAverage"
+          formControlName="monthsInAverage" [autoWidth]="false" filterPlaceholder="Months in Average"
+          [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="monthsInAverage">Months in Average</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('monthsInAverage').touched && fuelPriceModel.fuelPriceForm.get('monthsInAverage')['errors']?.required}">
+          <p-message severity="error" text="Provide Months in Average"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('monthsInAverage').touched && fuelPriceModel.fuelPriceForm.get('monthsInAverage')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12" *ngIf="fuelPriceModel.isSelectedMonthly">
+      <span class="bottom-line ui-md-12 ui-g-12 ui-lg-12 pad0"></span>
+    </div>
+    <!-- Month Ends Here -->
+    <!-- Last day of Month starts Here -->
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left11" *ngIf="fuelPriceModel.isSelectedLastDay">
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-useFuelPriceAsOf-dropdown" [options]="fuelPriceModel.priceFactorTypes" name="useFuelPriceAsOf"
+          formControlName="useFuelPriceAsOf" [autoWidth]="false" filterPlaceholder="Use Fuel Price as of"
+          [autoDisplayFirst]="false" (onChange)="onChangePriceFactor($event)"></p-dropdown>
+        <label class="top-5" for="useFuelPriceAsOf">Use Fuel Price as of</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required}">
+          <p-message severity="error" text="Provide Fuel Price"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf').touched && fuelPriceModel.fuelPriceForm.get('useFuelPriceAsOf')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float" *ngIf="fuelPriceModel.isshowMonthAverage">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-monthsInAverage-dropdown" [options]="fuelPriceModel.monthsInAverageList" name="monthsInAverage"
+          formControlName="monthsInAverage" [autoWidth]="false" filterPlaceholder="Months in Average"
+          [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="monthsInAverage">Months in Average</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('monthsInAverage').touched && fuelPriceModel.fuelPriceForm.get('monthsInAverage')['errors']?.required}">
+          <p-message severity="error" text="Provide Months in Average"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('monthsInAverage').touched && fuelPriceModel.fuelPriceForm.get('monthsInAverage')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12" *ngIf="fuelPriceModel.isSelectedLastDay">
+      <span class="bottom-line ui-md-12 ui-g-12 ui-lg-12 pad0"></span>
+    </div>
+    <!-- Last day of month Ends Here -->
+    <!-- second row -->
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left11">
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-priceSource-dropdown" [options]="fuelPriceModel.priceSource" name="priceSource" formControlName="priceSource"
+          [autoWidth]="false" filterPlaceholder="Price Source" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="priceSource">Price Source</label>
+        <div
+          [ngClass]="{'error-class-height': fuelPriceModel.fuelPriceForm.get('priceSource').touched && fuelPriceModel.fuelPriceForm.get('priceSource')['errors']?.required}">
+          <p-message severity="error" text="Provide Price Source"
+            *ngIf="fuelPriceModel.fuelPriceForm.get('priceSource').touched && fuelPriceModel.fuelPriceForm.get('priceSource')['errors']?.required">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 drop-down-float">
+        <p-dropdown data-attr="viewagreement-fuelpricebasis-delayForHoliday-dropdown" [options]="fuelPriceModel.delayForHoliday" name="delayForHoliday" formControlName="delayForHoliday"
+          [autoWidth]="false" filterPlaceholder="Delay for Holiday" [autoDisplayFirst]="false"></p-dropdown>
+        <label class="top-5" for="delayForHoliday">Delay for Holiday</label>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <span class="bottom-line ui-md-12 ui-g-12 ui-lg-12 pad0"></span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left16">
+      <h2>Fuel Price Basis - Region</h2>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left16">
+      <span class="ui-float-label pad0">
+        <p-selectButton data-attr="viewagreement-fuelpricebasis-regionType-selectbutton" [options]="fuelPriceModel.regionType" formControlName="regionType" name="regionType"
+          (onChange)="regionTypeChanged($event)"></p-selectButton>
+        <div [ngClass]="{'error-class-height': fuelPriceModel?.fuelPriceForm
+      .get('regionType').touched && fuelPriceModel?.fuelPriceForm.get('regionType')['errors']?.required}">
+          <p-message severity="error" text="Provide Region Type" *ngIf="fuelPriceModel?.fuelPriceForm
+        .get('regionType').touched && fuelPriceModel?.fuelPriceForm.get('regionType')['errors']?.required"></p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 mar-top20 pad-left16" *ngIf="fuelPriceModel?.isShowRegion">
+      <p-table [value]="fuelPriceModel?.regionTableList">
+        <ng-template pTemplate="header">
+          <tr class="table-header">
+            <th class="header-column-width">Region</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td class="padd20"><span>{{rowData}}</span></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left16 mar-top5" *ngIf="!fuelPriceModel?.isShowRegion">
+      <div class="ui-md-12 ui-g-12 ui-lg-12 mar-bot8 pad-left0 checkbox-align">
+        <p-checkbox  data-attr="viewagreement-fuelpricebasis-averaging-checkbox" [formControl]="fuelPriceModel?.fuelPriceForm.controls['averaging']" value="Averaging"
+          label="Averaging" inputId="averaging" (onChange)="onAveragingChange($event)" [binary]="true"
+          data-attr="viewagreement-fuelprice-averaging-checkbox"></p-checkbox>
+      </div>
+      <div class="ui-md-12 ui-g-12 ui-lg-12 mar-top10 pad-left0" *ngIf="!fuelPriceModel?.isShowRegion && !fuelPriceModel.isAveraging">
+        <p-table [value]="fuelPriceModel?.fuelPriceForm.controls['customRegion'].controls">
+          <ng-template pTemplate="header">
+            <tr class="table-header">
+              <th *ngFor="let thisCol of fuelPriceModel?.regionTableColumnList" class="header-column-width">
+                <span class="label">{{thisCol.label}}</span>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <tr formArrayName="customRegion">
+              <td class="pad-top20">
+                <span [formGroupName]="rowIndex">
+                  <p-dropdown data-attr="viewagreement-fuelpricebasis-customRegion-dropdown" [options]="fuelPriceModel.regionalDistrictList" name="region"
+                    [formControl]="rowData.controls['region']" [autoWidth]="false" placeholder="Region"
+                    [autoDisplayFirst]="false" appendTo="body" (onChange)="checkRegion(rowIndex)"></p-dropdown>
+                  <div class="error-class-height">
+                    <p-message severity="error" text="Provide Region"
+                      *ngIf="(rowData.get('region').touched && rowData.get('region')['errors']?.required)"></p-message>
+                  </div>
+                </span>
+                <span class="ui-md-1 ui-g-1 ui-lg-1 pull-right remove-icon" data-attr="viewagreement-fuelpricebasis-addicon-icon"
+                  *ngIf="fuelPriceModel?.fuelPriceForm.controls['customRegion'].controls.length > 1 && fuelPriceModel.isAveraging"
+                  (click)="removeRow(rowIndex)">
+                  <em data-attr="viewagreement-fuelpricebasis-removeCustomRegion-icon" class="icon-Circle_Remove_Solid pull-right font16"></em>
+                </span>
+                <div class="clearfix"></div>
+              </td>
+              <td class="pad-top20">
+                <span [formGroupName]="rowIndex">
+                  <p-dropdown data-attr="viewagreement-fuelpricebasis-regionStateOption-dropdown" [options]="fuelPriceModel.regionalStateList" name="regionStateOption"
+                    [formControl]="rowData.controls['regionStateOption']" [autoWidth]="false"
+                    placeholder="Region State Option" [autoDisplayFirst]="false" appendTo="body"
+                    (onChange)="checkRegion(rowIndex)"></p-dropdown>
+                  <div class="error-class-height">
+                    <p-message severity="error" text="Provide Region State Option"
+                      *ngIf="(rowData.get('regionStateOption').touched && rowData.get('regionStateOption')['errors']?.required)">
+                    </p-message>
+                  </div>
+                </span>
+              </td>
+              <td>
+                <span *ngIf="rowData.get('regionStateOption').value === 'Defined Region States'"> --
+                </span>
+              </td>
+              <td class="tooltip" pTooltip={{rowData.controls.states.value}}
+                tooltipPosition="top">
+                <span class="ui-md-11 ui-g-11 ui-lg-11 wrap-class">
+                  {{rowData.get('states').value === '' ? '--' : rowData.get('states').value}}
+                </span>
+                <span class="ui-md-1 ui-g-1 ui-lg-1 remove-icon"
+                  *ngIf="fuelPriceModel?.fuelPriceForm.controls['customRegion'].controls.length > 1"
+                  (click)="removeRow(rowIndex)" data-attr="viewagreement-fuelpricebasis-removeicon-span">
+                  <em data-attr="viewagreement-fuelpricebasis-removeState-icon" class="icon-Circle_Remove_Solid font16"></em>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <div class="padd20">
+              <a data-attr="viewagreement-fuelpricebasis-addicon-anchor" href="javascript:void(0)" (click)="addNewRegion()" class="add-link">
+                <span class="icon-Circle_Add_Solid font16 middle-align"></span>
+                <span class="text-space">Add New Region</span>
+              </a>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-md-12 ui-g-12 ui-lg-12 mar-top10 pad-left0" *ngIf="!fuelPriceModel?.isShowRegion && fuelPriceModel.isAveraging">
+        <p-table [value]="fuelPriceModel?.fuelPriceForm.controls['customRegion'].controls" class="regionAveragingTable">
+          <ng-template pTemplate="header">
+            <tr class="table-header">
+              <th *ngFor="let thisCol of fuelPriceModel?.regionTableColumnList" class="header-column-width">
+                <span class="label">{{thisCol.label}}</span>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <tr formArrayName="customRegion">
+              <td class="pad-top20">
+                <span [formGroupName]="rowIndex">
+                  <p-dropdown data-attr="viewagreement-fuelpricebasis-region-dropdown" [options]="fuelPriceModel.regionalDistrictList" name="region"
+                    [formControl]="rowData.controls['region']" [autoWidth]="false" placeholder="Region"
+                    [autoDisplayFirst]="false" appendTo="body" (onChange)="checkRegion(rowIndex)"></p-dropdown>
+                  <div class="error-class-height">
+                    <p-message severity="error" text="Provide Region"
+                      *ngIf="(rowData.get('region').touched && rowData.get('region')['errors']?.required)"></p-message>
+                  </div>
+                </span>
+                <div class="clearfix"></div>
+              </td>
+              <td>
+                <span data-attr="viewagreement-fuelpricebasis-removeicon-span" class="ui-md-1 ui-g-1 ui-lg-1 pull-left remove-icon pad-top10"
+                  *ngIf="fuelPriceModel?.fuelPriceForm.controls['customRegion'].controls.length > 1 && fuelPriceModel.isAveraging"
+                  (click)="removeRow(rowIndex)">
+                  <em data-attr="viewagreement-fuelpricebasis-remove-icon" class="icon-Circle_Remove_Solid pull-right font16"></em>
+                </span>
+              </td><td></td><td></td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <div class="padd20">
+              <a data-attr="viewagreement-fuelpricebasis-addicon-anchor" href="javascript:void(0)" (click)="addNewRegion()" class="add-link">
+                <span class="icon-Circle_Add_Solid font16 middle-align"></span>
+                <span class="text-space">Add New Region</span>
+              </a>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+  <div class="ui-g-12 footer">
+    <span class="pull-right button-align">
+      <button data-attr="viewagreement-fuelpricebasis-cancelBtn-button" type="text" pButton label="Cancel" (click)="onClickCancel()"
+        class="ui-button-secondary borderNone cancelBtn"></button>
+      <button data-attr="viewagreement-fuelpricebasis-backBtn-button" type="text" pButton label="Previous" disabled class="ui-button-secondary backBtn"></button>
+      <button data-attr="viewagreement-fuelpricebasis-nextBtn-button" type="text" pButton label="Next" (click)="onClickNext()" class="ui-button-primary mar-left15"></button>
+    </span>
+  </div>
+</section>
+<p-dialog data-attr="viewagreement-fuelpricebasis-confirmation-dialog" [(visible)]="fuelPriceModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+  [minY]="70" [baseZIndex]="10005" [closable]="false">
+  <p-header>
+    <span class="capitalizeTitle">Confirmation</span>
+    <a data-attr="viewagreement-fuelpricebasis-onpopup-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)"
+      role="button" (click)="(fuelPriceModel.selectedRegionType !== fuelPriceModel.fuelPriceForm
+      .get('regionType').value) ? regionChangeNo() : onClickNo()">
+      <span class="pi pi-times"></span>
+    </a>
+  </p-header>
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="(fuelPriceModel.selectedRegionType !== fuelPriceModel.fuelPriceForm
+    .get('regionType').value) ? regionChangeNo() : onClickNo()" class="ui-button-secondary" label="No"
+      data-attr="viewagreement-fuelpricebasis-popupno-button"></button>
+    <button type="button" pButton (click)="(fuelPriceModel.selectedRegionType !== fuelPriceModel.fuelPriceForm
+      .get('regionType').value) ? regionChangeYes() : onClickYes()" label="Yes" class="ui-button-primary"
+      data-attr="viewagreement-fuelpricebasis-popupyes-button"></button>
+  </p-footer>
+</p-dialog>

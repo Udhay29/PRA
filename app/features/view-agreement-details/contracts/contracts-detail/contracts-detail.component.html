@@ -1,0 +1,104 @@
+<div class="split-wrapper">
+    <div class="ui-g-12 pad0 dropshadow split-container view-form-content">
+        <div class="split-header">
+            <span class="title">{{ contractsDetailModel.splitViewTitle }}</span>
+            <button data-attr="viewagreement-contractFilter-menuclose-button" class="icon-button icon-Menu_Close close-position iconColorChange" (click)="onClose()"></button>
+        </div>
+        <div class="split-body">
+            <div *ngIf="contractsDetailModel.splitViewAction === 'View'">
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Contract Type</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.customerAgreementContractTypeName }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6 wordBreak">
+            <label class="heading-text content-text ">Contract Identifier</label>
+            <label class="content-text">{{ (contractsDetailModel.contractViewDetails?.customerContractNumber === null) ? '--' : contractsDetailModel.contractViewDetails?.customerContractNumber }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6 wordBreak">
+            <label class="heading-text content-text ">Description</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.customerContractName }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Status</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.status }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Effective Date</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayEffectiveDate | date:'MM/dd/yyyy' }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Expiration Date</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayExpirationDate | date:'MM/dd/yyyy' }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-12 ui-lg-12 ui-g-12">
+            <label class="heading-text content-text">Notes</label>
+            <label class="content-text text-wrap" *ngIf = "(contractsDetailModel.contractViewDetails?.customerContractComment === '' || contractsDetailModel.contractViewDetails?.customerContractComment === null)"> --</label>
+            <label class="content-text text-wrap" *ngIf = "(contractsDetailModel.contractViewDetails?.customerContractComment !== '' || contractsDetailModel.contractViewDetails?.customerContractComment !== null)">{{contractsDetailModel.contractViewDetails?.customerContractComment}}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Original Effective Date</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayOriginalEffectiveDate | date:'MM/dd/yyyy' }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Original Expiration Date</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayOriginalExpirationDate | date:'MM/dd/yyyy' }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Created By</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.createUserId }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Created On</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayCreatedOn }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 border-line">
+                    <span class="ui-md-12 ui-lg-12 ui-g-12  mar-bot10">
+            <label class="heading-text content-text">Created Program</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.createProgramName }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="sub-title ui-md-12 ui-g-12 ui-lg-12">Last Version</span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Updated By</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.lastUpdateUserID }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label class="heading-text content-text">Updated On</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.displayUpdatedOn }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-12 ui-lg-12 ui-g-12">
+            <label class="heading-text content-text">Last Updated Program</label>
+            <label class="content-text">{{ contractsDetailModel.contractViewDetails?.lastUpdateProgramName }}</label>
+          </span>
+                </div>
+            </div>
+        </div>
+        <div class="split-footer">
+            <span class="pull-right mar-top12" *ngIf="!hasAccess('/editcontracts')">
+        <a data-attr="viewagreement-contractFilter-contractId-anchor" href="javascript:void(0)" class="inactivate-link mar-right20 text-size">History</a>
+        <p-splitButton data-attr="viewagreement-contractFilter-inactivate-splitButton" label="Inactivate" styleClass="ui-button-secondary" class="mar-right15 split-size" [model]="contractsDetailModel.splitButtonMenu"></p-splitButton>
+        <button data-attr="viewagreement-contractFilter-edit-button" type="text" pButton label="Edit" class="ui-button-primary mar-right15"></button>
+      </span>
+            <span class="pull-right mar-top12" *ngIf="hasAccess('/editcontracts')">
+        <button data-attr="viewagreement-contractFilter-history-button" type="text" class="text-size" pButton label="History" class="ui-button-primary mar-right15"></button>
+      </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<p-steps class="linehaul-steps" [model]="additionalInformationModel.stepsList" [readonly]="false" [activeIndex]="additionalInformationModel.activeIndex" (activeIndexChange)="onIndexChange($event)">
+</p-steps>
+<h1 class="pad-left25">{{additionalInformationModel?.nameConfigurationDetails?.customerAgreementName}} - ADD LINE HAUL
+</h1>
+<div class="ui-g ui-md-12">
+    <div class="ui-g-3 filter-wrapper pad-left10">
+        <app-line-haul-overview [afterBroadcast]="additionalInformationModel.isBroadcastCallFlag"></app-line-haul-overview>
+    </div>
+    <div class="ui-g-9 setWidth padTop0">
+        <app-additional-info #addtionalInfoComponent></app-additional-info>
+    </div>
+</div>

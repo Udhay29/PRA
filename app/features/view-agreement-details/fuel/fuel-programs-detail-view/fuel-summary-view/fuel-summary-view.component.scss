@@ -1,0 +1,74 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.borderValue {
+    border-radius: 6px;
+}
+.overview-wrapper {
+    background: $white;
+}
+.fuel-haul-heading {
+    @include getTypographyStyles('h2');
+    border-bottom: 1px solid $grey;
+}
+.fuel-haul-heading-pad{
+    padding: 15px 0px 20px 14px;
+}
+.fuel-values {
+    display: inline;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: .75rem; 
+    line-height: 1rem; 
+    letter-spacing: .01rem; 
+    text-transform: none;
+    color: $grey-dark66;
+}
+.text-align {
+    display: block;
+}
+.overlayAlign{
+    top: auto;
+    left: auto;
+}
+.businessOverlay /deep/ .ui-overlaypanel {
+    left: auto !important;
+    top: auto !important;
+}
+.borderAlign {
+    border-top: 1px solid $grey-lite70;
+}
+.historyAlign {
+    background-color: $grey-lite70;
+    @include getTypographyStyles('caption1');
+    font-weight: bold;
+    font-size: 13px !important;
+    border-top: 1px solid $grey;
+}
+.arrowAlign {
+    float: right;
+    padding-right: 10px;
+    font-size: 14px;
+}
+.user-image-style {
+    background: $blue;
+    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    padding: 5px;
+    line-height: 0;
+    display: table-cell;
+    text-align: center;
+    float: left;
+  }
+.fsize {
+    @include getTypographyStyles('body1');
+    font-size: 0.7rem !important;
+    line-height: 0.800rem !important;
+}
+.historyAlign:hover {
+   cursor: pointer;
+}
+.notesAlign {
+    display: block;
+}

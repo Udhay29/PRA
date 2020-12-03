@@ -1,0 +1,11 @@
+<div class="ui-g ui-fluid feature-container wrapper pad-left10">
+  <p-breadcrumb data-attr="searchagreement-breadcrumblist-breadcrumb" class="ui-g-12" [model]="agreementSearchModel.breadcrumbSearchOwo"></p-breadcrumb>
+  <h1 class="nopadding pad-left10">SEARCH AGREEMENTS</h1>
+  <div class="ui-md-12 pad0 content-wrapper">
+    <app-advance-search [ngClass]="{'filter-component hideFilter':(!asideFlag),'filter-component ui-g-4 showFilter':(asideFlag)}"
+      (searchCall)="searchCall($event)" (resetCall)="resetCall($event)" (resetTable)="resetTable($event)">
+    </app-advance-search>
+    <app-search-grid [ngClass]="{'filter-component ui-g-12':(!asideFlag),'filter-component ui-g-8':(asideFlag)}"
+      [dataList]="agreementSearchModel.gridData" [isResetGrid]="agreementSearchModel.isResetGrid" [loader]="agreementSearchModel.isShowLoader" (asideToggle)="asideToggle($event)" (pageLoad)="onPageLoad($event)"></app-search-grid>
+  </div>
+</div>

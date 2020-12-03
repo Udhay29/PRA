@@ -1,0 +1,123 @@
+
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.buttonStyle {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    color: $grey;
+    padding-left: 12px;
+}
+.tableHeading{
+    padding-left: 2px;
+    top:10px;
+    position: relative;
+}
+.tableFooter {
+    max-height: 60px !important;
+}
+.min-col-width{
+    /deep/ .ui-table table thead > td,th{
+        padding-left: 10px !important;
+    }
+    min-width: 347px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ui-inputgroup.getGridValuesInput > span.ui-inputgroup-addon{
+    position:absolute;
+    left:6px;
+    top:3px;
+    border:none;
+    height:30px;
+}
+.ui-inputgroup.getGridValuesInput > input.ui-inputtext{
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background:transparent;
+}
+.ui-inputgroup.getGridValuesInput > input.ui-inputtext:focus{
+    border-left:1px solid #007dba;
+}
+.ui-inputgroup.getGridValuesInput > input.ui-inputtext:not([disabled]):hover{
+    border:1px solid #00aafc;
+  }
+.viewPriorityGrid{
+    /deep/.tableWrapper .ui-table-scrollable-body {
+      border-bottom: 1px solid #efefef;
+      overflow-x: hidden !important;
+    }
+    /deep/ .ui-table .ui-table-thead .ui-sortable-column {
+        padding-right: 10px !important;
+        .sortIcon {
+            padding-left: 5px;
+            right: auto !important;
+        }
+    }
+    /deep/.emptyTableWrapper .ui-table-scrollable-body  {
+        min-height: calc(100vh - 365px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/ .ui-table-caption.ui-widget-header.ng-star-inserted{
+        border-bottom: 1px solid #efefef;
+    }
+    .noHoverColor  {
+        background: none !important;
+    }
+}
+.tableRow{
+    line-height: 30px;
+}
+.displaymiddle {
+    height: 43vh;
+    padding-top: calc(50vh - 210px);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.priorityTable /deep/.ui-table-scrollable-wrapper /deep/.ui-table-scrollable-view {
+    /deep/.ui-table-scrollable-body-table,
+    /deep/.ui-table-scrollable-header-table {
+        min-width: 800px !important;
+        width: 100% !important;
+    }
+    /deep/.ui-table-scrollable-header /deep/.ui-table-scrollable-header-table /deep/.ui-sortable-column,
+    /deep/.ui-table-scrollable-body /deep/.ui-table-scrollable-body-table td {
+        width: 100% !important;
+    }
+    /deep/.ui-table-scrollable-header /deep/.ui-table-scrollable-header-table /deep/.ui-sortable-column,
+    /deep/.ui-table-scrollable-body {
+        min-height:calc(100vh - 400px) ;        
+    }
+  
+}
+
+/deep/.page-scroll.ui-g-12 .priorityTable /deep/.ui-table-scrollable-wrapper /deep/.ui-table-scrollable-view {
+    /deep/.ui-table-scrollable-body-table,
+    /deep/.ui-table-scrollable-header-table {
+        width: 100% !important;
+    }
+}
+.priorityTable /deep/ .ui-table-scrollable-header-box,
+    /deep/ .ui-table-scrollable-body-table{
+    margin-right: 7px !important
+}

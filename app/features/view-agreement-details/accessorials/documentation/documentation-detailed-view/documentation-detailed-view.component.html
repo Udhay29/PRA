@@ -1,0 +1,228 @@
+<div [ngClass]="{'loader': documentationDetailedViewModel?.isLoading}"
+    [appJbhLoader]="documentationDetailedViewModel?.isLoading"></div>
+<div class="ui-g documentationDetailedViewWrapper pad10">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0"
+        [model]="documentationDetailedViewModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-top0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 class="text-uppercase headingAlign mar0">
+                {{documentationDetailedViewModel?.agreementDetails?.customerAgreementName}} -
+                VIEW DOCUMENTATION
+                <button appShortcut="ctrl+alt+o" class="overFlowIcon icon-Menu_Overflow icon-button pad10 overflow-menu"
+                    (click)="onClickOverflowIcon(onMenu, $event)" data-attr="empty-plan-overflow-menu"></button>
+            </h1>
+            <p-menu #onMenu popup="popup" styleClass="documentationDetailsMenu menu-overlay arrowtopbox font12"
+                [model]="documentationDetailedViewModel?.overflowMenuList" appendTo="body"></p-menu>
+        </div>
+</div>
+    <div class="ui-g-12 pad-top0 documentDetailedViewscroll">
+        <div class="accordionHeight">
+            <p-accordion [multiple]="true">
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Setup" selected="true">
+                    <div class="ui-g"
+                        [ngClass]="{'mar-bot15' : (documentationDetailedViewModel?.documentationDetailedViewResponse?.level==='contract' || documentationDetailedViewModel?.documentationDetailedViewResponse?.level==='section')}">
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Documentation Type</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.documentationType">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.documentationType}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.documentationType">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Level</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.level">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.level}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.level">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Status</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.status">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.status}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.status">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Dates</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Effective Date</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.effectiveDate">{{documentationDetailedViewModel?.effectiveDate}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.effectiveDate">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Expiration Date</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.expirationDate">{{documentationDetailedViewModel?.expirationDate}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.expirationDate">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g mar-top16 contractTable">
+                        <app-contract-list #contract
+                            *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.contracts && !documentationDetailedViewModel?.documentationDetailedViewResponse?.sections"
+                            [detailedViewFlag]="documentationDetailedViewModel?.documentationDetailedViewFlag"
+                            [contractDetail]="documentationDetailedViewModel['documentationDetailedViewResponse']?.contracts">
+                        </app-contract-list>
+                    </div>
+                    <div class="ui-g mar-top16 sectionTable documentationBillTo"
+                        *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.sections">
+                        <app-sections #section
+                            [detailedViewFlag]="documentationDetailedViewModel?.documentationDetailedViewFlag"
+                            [sectionDetail]="documentationDetailedViewModel['documentationDetailedViewResponse']?.sections">
+                        </app-sections>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Additional Setup" selected="true">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Additional Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Charge Type</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.chargeTypes">{{documentationDetailedViewModel?.chargeTypes}}
+                                </span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!documentationDetailedViewModel?.chargeTypes">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Business Unit and Service Offering</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.businessUnitServiceOffering!==''">{{documentationDetailedViewModel?.businessUnitServiceOffering}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.businessUnitServiceOffering===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Carrier (Code)</label>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.carriers!==''">{{documentationDetailedViewModel?.carriers}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="documentationDetailedViewModel?.carriers===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0"
+                                *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.billToAccounts">
+                                <label class="label-style">Bill to Accounts</label>
+                                <span class="mar-left10 textColor">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0 pad-left0">
+                                <h4 class="mar0">Service</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Service Level</label>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.serviceLevelList!==''">{{documentationDetailedViewModel?.serviceLevelList}}</span>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.serviceLevelList===''">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Requested Service</label>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.requestServices">{{documentationDetailedViewModel?.reqService}}</span>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.requestServices">--</span>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0">
+                                <h4 class="mar0">Equipment</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Category</label>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentCategoryCode">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentCategoryCode}}</span>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentCategoryCode">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Type</label>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentType">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentType}}</span>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentType">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Length</label>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentLength">{{documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentLength}}
+                                        {{documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentLengthDescription}}
+                                        in Length</span>
+                                    <span class="mar-left10 textColor"
+                                        *ngIf="!documentationDetailedViewModel?.documentationDetailedViewResponse?.equipmentLength">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g mar-top16 documentationBillTo"
+                            *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.billToAccounts">
+                            <app-billto-list #billTo
+                                [detailedViewFlag]="documentationDetailedViewModel?.documentationDetailedViewFlag"
+                                [billToDetailsFromView]="documentationDetailedViewModel?.documentationDetailedViewResponse?.billToAccounts">
+                            </app-billto-list>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color mar-bot10" header="Documentation" selected="true">
+                    <div class="ui-g">
+                        <div class="ui-g-12 pad0">
+                            <div class="docTextDiv pad-right11 pad-left0"
+                                [ngClass]="{'ui-g-6': 'documentationDetailedViewModel?.instructionalText', 'ui-g-12': 'documentationDetailedViewModel?.instructionalText'}"
+                                [hidden]="!(documentationDetailedViewModel?.documentationDetailedViewResponse?.documentationType === 'Legal') || !(documentationDetailedViewModel?.legalText)">
+                                <h4 class="mar0">Legal</h4>
+                                <div class="textAreaWrapper">
+                                    <textarea #textAreaLegal class="textArea" [ngModelOptions]="{standalone: true}"
+                                        disabled="true" cols="100"
+                                        pInputTextarea>{{documentationDetailedViewModel?.legalText}}</textarea>
+                                </div>
+                            </div>
+                            <div class="docTextDiv pad-left11 pad-left0"
+                                [ngClass]="{'ui-g-6': 'documentationDetailedViewModel?.legalText', 'ui-g-12': 'documentationDetailedViewModel?.legalText'}"
+                                [hidden]="!(documentationDetailedViewModel?.documentationDetailedViewResponse?.documentationType === 'Instructional') || !(documentationDetailedViewModel?.instructionalText)">
+                                <h4 class="mar0">Instructional</h4>
+                                <div class="textAreaWrapper">
+                                    <textarea #textAreaInstructional class="textArea"
+                                        [ngModelOptions]="{standalone: true}" disabled="true" cols="100"
+                                        pInputTextarea>{{documentationDetailedViewModel?.instructionalText}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-md-12 ui-lg-12 attachbor pad-left0"
+                            *ngIf="documentationDetailedViewModel?.documentationDetailedViewResponse?.attachments">
+                            <h4 class="mar0">Attachments</h4>
+                            <div class="ui-g">
+                                <a #fileAttachment></a>
+                                <div class="mar-top16 ui-md-12 ui-lg-12 pad-left0 mar-bot5"
+                                    *ngFor="let data of documentationDetailedViewModel?.documentationDetailedViewResponse?.attachments;let i = index">
+                                    <div class="textColor ui-md-2 ui-lg-2 pad0 pull-left">
+                                        {{data.documentName}}
+                                    </div>
+                                    <div class="label-style ui-md-2 ui-lg-2 pad0 pull-left txtleft pad-left60">
+                                        {{data.accessorialAttachmentTypeDTO.accessorialAttachmentTypeName}}
+                                    </div>
+                                    <div class="label-style ui-md-3 ui-lg-3 pad0 pull-left txtleft padDate">
+                                        Added on
+                                        {{documentationDetailedViewModel?.attachmentAddedOnDate[i]}}
+                                    </div>
+                                    <div class="label-style ui-md-3 ui-lg-3 pad0 pull-left txtleft padAddedBy">
+                                        Added by
+                                        {{data.addedBy}}
+                                    </div>
+                                    <div class="ui-md-2 ui-lg-2 pad0 pull-right txt nodecor"
+                                        (click)="viewAttachment(data)"><a class="cursor-pointer">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        <p-footer class="pull-right footer clearfix">
+            <button appShortcut="ctrl+alt+1" type="text" pButton label="Close" class="ui-button-primary mar-left15"
+                (click)="onClickClose()"></button>
+        </p-footer>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="settingsWrapper">
+  <div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 pad-bot0 setting-breadcrumb">
+      <p-breadcrumb [model]="settingsModel.breadCrumbList"></p-breadcrumb>
+    </div>
+    <div class="ui-md-12 ui-lg-12 ui-g-12 capacity-heading mar-left10 pad0">
+      <h1 class="nopadding">SETTINGS</h1>
+    </div>
+  </div>
+  <p-tabView #tabPanelView styleClass="mar-left10" (onChange)="handleChange($event.index, tabPanelView)" [activeIndex]="settingsModel.selectedIndex">
+    <p-tabPanel header="BUSINESS">
+      <app-business [settingsModel]="settingsModel" #tabOneRef *ngIf="settingsModel.selectedIndex === 0 || settingsModel.lastEditedFormFlag"></app-business>
+    </p-tabPanel>
+    <p-tabPanel header="SYSTEM">
+      <app-admin [settingsModel]="settingsModel" #tabTwoRef *ngIf="settingsModel.selectedIndex === 1 || settingsModel.lastEditedFormFlag"></app-admin>
+    </p-tabPanel>
+  </p-tabView>
+  <p-confirmDialog #cd header="Confirmation" width="425">
+    <p-footer>
+      <button type="button" class="ui-button-secondary" pButton label="Yes" (click)="cd.accept()"></button>
+      <button type="button" #primaryButton class="ui-button-primary" pButton label="No" (click)="cd.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
+
+  <p-dialog header="Save Changes?" [(visible)]="settingsModel.isPopupVisible" [modal]="true" [responsive]="true" [width]="425"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>{{settingsModel.popupMessage}}</span>
+    <p-footer>
+      <button type="button" pButton (click)="onDontSave()" class="ui-button-secondary" label=" Don't Save"></button>
+      <button type="button" pButton (click)="onSave()" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+  </p-dialog>
+</div>

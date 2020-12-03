@@ -1,0 +1,48 @@
+<div align="center" class="sampleClass">
+  <div>
+    <h4> Error Code - {{status}}</h4>
+  </div>
+  <div *ngIf="status==401" class="row mar20">
+    <section class="col-md-12 content">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 martop50">
+        <div class="row pad20">
+          <span class="not_aut_message">NOT AUTHORIZED</span><span>
+					Error 401</span>
+        </div>
+        <p class="error_message">You do not have access to this application. Please contact your supervisor to enter a security request
+        </p>
+      </div>
+      <div class="col-md-4">
+        <img src="assets/images/error401.png" alt="401 Error Message">
+      </div>
+      <div class="col-md-2"></div>
+    </section>
+  </div>
+
+  <div *ngIf="status>=404" class="row mar20">
+    <section class="content">
+      <img src="assets/images/error404.png" alt="JB Hunt Logo">
+      <div class="error_title mar-top20">PAGE NOT FOUND</div>
+      <div class="error_message mar-top20">It appears that page you were trying to access does not exist or can no longer be found</div>
+    </section>
+  </div>
+
+  <div *ngIf="status>=500" class="row mar20">
+    <section class="col-md-12 content">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 martop50">
+        <div class="row pad20">
+          <span class="not_aut_message">Internal Server Error</span>
+        </div>
+        <p class="error_message">It appears that page you were trying to access encountered an internal error. Please contact your network administrator
+          if this error continues to persist.</p>
+        <p>Contact : 479-820-8464</p>
+      </div>
+      <div class="col-md-4">
+        <img src="assets/images/error401.png" alt="401 Error Message">
+      </div>
+      <div class="col-md-2"></div>
+    </section>
+  </div>
+</div>

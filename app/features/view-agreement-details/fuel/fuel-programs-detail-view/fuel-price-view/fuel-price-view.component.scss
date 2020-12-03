@@ -1,0 +1,71 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_dropshadow.scss';
+
+.pad-bot {
+padding-top: 2px !important;
+padding-bottom: 12px;
+}
+
+.border-bottom {
+    border-bottom: 1px solid $grey-lite70;
+    margin-bottom: 10px;
+    margin-top:5px;
+    width: 99%;
+}
+.content-text {
+    display: inline;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: .75rem; 
+    line-height: 1rem; 
+    letter-spacing: .01rem; 
+    text-transform: none;
+    color: $grey-dark66;
+}
+.heading-text {
+    color: $grey-dark27;
+    padding-right: 10px;
+}
+.pad-style{
+  padding-right: 5px;
+}
+.pad-top-style {
+    padding-top: 0px !important;
+}
+.pad-align{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+/deep/ .tableBorder .ui-table-wrapper {
+    border-top: 1px solid $grey-lite70;
+}
+.headingAlign {
+    border-bottom: 1px solid $grey;
+}
+.rateTable {
+/deep/ .ui-table .ui-table-caption.ui-widget-header {
+        padding-bottom: 0px !important;
+ }
+}
+/deep/ .stopCard .ui-table-caption.ui-widget-header.ng-star-inserted {
+    padding: 0px 0px 0px 0px;
+}
+.mar-bot {
+    display: block;
+    margin: 5px 0;
+    }
+    /deep/ .ui-table {
+      box-shadow : none !important; 
+}
+
+.borderValue {
+     border-radius: 6px; 
+ }
+       
+.overview-wrapper {
+     background: $white;
+}
+
+.fuel-haul-heading {
+    padding: 15px 0px 20px 14px;
+}

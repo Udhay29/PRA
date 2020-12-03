@@ -1,0 +1,74 @@
+<div [formGroup]="addRatesModel.addRateForm" class="ui-g">
+    <div class=" ui-g-12 pad0">
+        <div formArrayName="rates" class='rate-table-container'>
+            <p-table [value]="addRatesModel.addRateForm['controls'].rates['controls']">
+                <ng-template pTemplate="caption">
+                    <div class="ui-g">
+                        <div class="ui-g-12 table-heading pad-left0 pad-bot10">Rates</div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="line-details thHeaderRow pad-left15">Rate Type</th>
+                        <th class="line-details thHeaderRow">Rate Amount</th>
+                        <th class='line-details thHeaderRow'>Rounding</th>
+                        <th class="line-details thHeaderRow">Minimum Amount</th>
+                        <th class="line-details thHeaderRow">Maximum Amount</th>
+                        <th class="line-details thHeaderRow"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rate let-rowIndex="rowIndex">
+                    <tr [formGroupName]="rowIndex">
+                        <td class='rate-type-dropdown thBodyData pad-left15'>
+                            <p-autoComplete placeholder="Rate Type" name="rateType" [dropdown]="true" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label" formControlName="rateType" [suggestions]="addRatesModel.rateTypeSuggestion" (completeMethod)="onTypeRateType($event)"
+                                (onBlur)="onautoCompleteBlur($event, 'rateType', rowIndex)" [forceSelection]="true">
+                            </p-autoComplete>
+                        </td>
+                        <td>
+                            <span class="ui-inputgroup" [ngClass]="{'addon-error': rate.get('rateAmount').touched && rate.get('rateAmount').invalid}">
+                <span class="ui-inputgroup-addon mar-right8" *ngIf="rate.get('rateAmount').value">$</span>
+                            <input type="text" pInputText placeholder="Rate Amount" class="amountInput" formControlName="rateAmount" (blur)="validateRateAmount($event.target?.value, rowIndex, 'rateAmount')">
+                            </span>
+                        </td>
+                        <td class='rate-type-dropdown thBodyData'>
+                            <p-autoComplete placeholder="Rounding" name="rounding" [dropdown]="true" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label" [forceSelection]="true" formControlName="rounding" [suggestions]="addRatesModel.roundingTypeSuggestion" (completeMethod)="onTypeRoundingType($event)">
+                            </p-autoComplete>
+                        </td>
+                        <td class='rate-type-dropdown'>
+                            <span class="ui-inputgroup" [ngClass]="{'addon-error': rate.get('minAmount').touched &&
+                             rate.get('minAmount').invalid}">
+                <span class="ui-inputgroup-addon mar-right8" *ngIf="rate.get('minAmount').value">$</span>
+                            <input type="text" formControlName='minAmount' class="amountInput" pInputText placeholder="Minimum Amount" (blur)="validateMinMaxAmount($event.target?.value, rowIndex, 'minAmount')">
+                            </span>
+                        </td>
+                        <td class='rate-type-dropdown'>
+                            <span class="ui-inputgroup" [ngClass]="{'addon-error': rate.get('maxAmount').touched &&
+                            rate.get('maxAmount').invalid}">
+                <span class="ui-inputgroup-addon mar-right8" *ngIf="rate.get('maxAmount').value">$</span>
+                            <input type="text" formControlName='maxAmount' class="amountInput" pInputText placeholder="Maximum Amount" (blur)="validateMinMaxAmount($event.target?.value, rowIndex, 'maxAmount')">
+                            </span>
+                        </td>
+                        <td class='thBodyData'>
+                            <em class="icon-Circle_Add_Solid addrow pad-right15 top0" (click)='addRate(rowIndex)'></em>
+                            <em class="icon-Circle_Remove_Solid removerow" *ngIf="addRatesModel.addRateForm['controls'].rates['controls'].length > 1" (click)='removeRate(rowIndex)'></em>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-12 pad-left0 pad-top30" *ngIf='addRatesModel.isMoreThanOneRate'>
+            <div class="ui-g-3 ui-lg-3 ui-md-3 ui-float-label pad-left0">
+                <p-autoComplete name="groupRateType" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" formControlName='groupRateType' [forceSelection]="true" [dropdown]="true" field="label" [suggestions]="addRatesModel.groupRateTypeSuggestion" (completeMethod)="onTypeGroupRateType($event)"
+                    (onClear)="onRateOperatorClear($event)" (onSelect)="onGroupTypeChange()">
+                </p-autoComplete>
+                <label class="label-style ui-md-12 ui-lg-12 errorLabelAlign ui-g-12 pad0 left13">
+          <span>Rate Operator</span>
+        </label>
+            </div>
+            <div class="ui-g-3 pad-top10 pad-left20" *ngIf="addRatesModel.addRateForm.get('groupRateType').value?.value === 1">
+                <p-checkbox binary="true" label="Itemize Rates" formControlName='isGroupRateItemize'>
+                </p-checkbox>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.textColor {
+    color: $grey-dark66;
+}
+
+.wordBreak {
+    word-break: break-all;
+}

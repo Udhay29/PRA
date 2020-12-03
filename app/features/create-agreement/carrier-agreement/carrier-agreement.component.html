@@ -1,0 +1,105 @@
+<div class="mar-top15" [ngClass]="{'mar-top30': !agreementDetailsModel.duplicateErrorFlag}" [formGroup]="agreementDetailsModel?.carrierDetailsForm">
+  <div class="ui-g-12 pull-left duplicate-message pad0 pad-bot15" *ngIf="agreementDetailsModel.duplicateErrorFlag">
+    <p-messages closable="true" [(value)]="agreementDetailsModel.inlineErrormessage"></p-messages>
+  </div>
+  <p-table #carrierRef [value]="agreementDetailsModel?.carrierDetailsForm.controls['carrierAgreement']['controls']"
+  [(selection)]="agreementDetailsModel.selectedItemList" class="pull-left carrier-table"
+  [scrollable]="true" scrollHeight="calc(100vh - 450px)" [customSort]="true" (sortFunction)="customSort($event)" [ngClass]="{ 'heightExceed' : agreementDetailsModel.heightCheckFlag}"
+  selectionMode="mulitple" datakey="carrier">
+    <ng-template pTemplate="caption">
+      <div class="ui-g table-caption">
+        <div class="ui-md-10 ui-lg-10">
+          <span class="tableName">Carriers</span>
+        </div>
+        <div class="ui-md-2 ui-lg-2">
+          <a data-attr="createagreement-carrieragreement-addNewRow-anchor" class="inactivate-link pull-right" href="javascript:void(0)" (click)="addNewRow(carrierRef)" *ngIf="agreementDetailsModel.selectedItemList.length===0">Add Row</a>
+          <a data-attr="createagreement-carrieragreement-removerow-anchor" class="inactivate-link pull-right" href="javascript:void(0)" *ngIf="agreementDetailsModel.selectedItemList.length>0"
+          (click)="removeRow(carrierRef)">Remove Row</a>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr class="table-header">
+        <th class="checkbox-column table-header-checkbox">
+          <p-tableHeaderCheckbox data-attr="createagreement-carrieragreement-tableheader-headercheckbox" appShortcut focusKey="alt+1"></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let thisCol of agreementDetailsModel?.carriersColumnList" class={{thisCol.styleClass}}
+        [pSortableColumn]="thisCol.value" pTooltip={{thisCol.label}} tooltipPosition="top">
+          <span class="label">{{thisCol.label}}</span>
+          <span>
+            <p-sortIcon data-attr="createagreement-carrieragreement-tableheadersort-sortIcon-{{thisCol.label}}" [field]="thisCol.value" aria-label="Activate to sort" aria-labelDesc="Activate to sort in descending order"
+              aria-labelAsc="Activate to sort in ascending order"></p-sortIcon>
+          </span>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+      <tr [attr.data-attr]="'createagreement-carrieragreement-row-tr-' +  rowIndex" formArrayName="carrierAgreement">
+        <td class="checkbox-column width10">
+          <p-tableCheckbox [attr.data-attr]="'createagreement-carrieragreement-row-tablecheckbox-' +  rowIndex" [value]="rowData"></p-tableCheckbox>
+        </td>
+        <td class="first-column column-field-align">
+          <span [formGroupName]="rowIndex">
+            <p-autoComplete [attr.data-attr]="'createagreement-carrieragreement-row-autoComplete-' +  rowIndex" [formControl]="rowData.controls['carrier']" name="carrier" (completeMethod)="onCarrierSearch($event.query)"
+            [suggestions]="agreementDetailsModel.carrierList" size="70" [forceSelection]="true" spellcheck="false" dropdownMode="current"
+            placeholder="Carrier Name (Code)" appendTo="body" dropdown="true" field="carrierDisplayName" (onSelect)="onCarrierSelect($event, rowIndex)"
+            (onClear)="onClearCarrier($event.target['value'], rowIndex)" emptyMessage="No results found"></p-autoComplete>
+            <div class="error-class-height ">
+              <p-message severity="error" text="Provide Carrier Name (Code)"
+                *ngIf="(rowData.get('carrier').touched && rowData.get('carrier')['errors']?.required)">
+              </p-message>
+            </div>
+          </span>
+        </td>
+        <td>
+          <span [formGroupName]="rowIndex">
+            <p-calendar [attr.data-attr]="'createagreement-carrieragreement-effDaterow-calendar-' +  rowIndex" [formControl]="rowData.controls['effectiveDate']" [showIcon]="true" name="effectiveDate" dateFormat="mm/dd/yy" appendTo="body"
+            [showOnFocus]="true" placeholder="Effective Date" [minDate]="agreementDetailsModel.effectiveMinDate"
+            [maxDate]="agreementDetailsModel.effectiveMaxDate[rowIndex]" (onSelect)="onDateSelected($event, 0, rowIndex)"
+            (onInput)="onTypeDate($event.srcElement['value'], 'effective', rowIndex)"></p-calendar>
+            <div class="error-class-height ">
+              <p-message severity="error" text="Provide Effective Date" *ngIf="rowData.get('effectiveDate').touched && rowData.get('effectiveDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide valid date" *ngIf="rowData.get('effectiveDate').touched && rowData.get('effectiveDate')['errors']?.invalid"></p-message>
+            </div>
+          </span>
+        </td>
+        <td>
+          <span [formGroupName]="rowIndex">
+            <p-calendar [attr.data-attr]="'createagreement-carrieragreement-expDaterow-calendar-' +  rowIndex" [formControl]="rowData.controls['expirationDate']" [showIcon]="true" name="expirationDate" dateFormat="mm/dd/yy" appendTo="body"
+            [showOnFocus]="true" placeholder="Expiration Date" [minDate]="agreementDetailsModel.expirationMinDate[rowIndex]"
+            [maxDate]="agreementDetailsModel.expirationMaxDate" (onSelect)="onDateSelected($event, 1, rowIndex)"
+            (onInput)="onTypeDate($event.srcElement['value'], 'expiration', rowIndex)"></p-calendar>
+            <div class="error-class-height ">
+              <p-message severity="error" text="Provide Expiration Date" *ngIf="rowData.get('expirationDate').touched && rowData.get('expirationDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide valid date" *ngIf="rowData.get('expirationDate').touched && rowData.get('expirationDate')['errors']?.invalid"></p-message>
+            </div>
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div class="clearfix"></div>
+  <div class="pad-top8">
+    <span class="ui-float-label text-field-float pad-left0 ui-g-6 ui-lg-6 ui-md-6">
+      <input data-attr="createagreement-carrieragreement-carrierAgreementName-input" type="text" pInputText formControlName="carrierAgreementName" name="carrierAgreementName" maxlength="40" spellcheck="false"
+      class="width-100" autocomplete="off"/>
+      <label class="top-5" for="carrierAgreementName">Agreement Name</label>
+      <div class="error-class-height ">
+        <p-message severity="error" text="Provide Agreement Name" *ngIf="agreementDetailsModel?.carrierDetailsForm.get('carrierAgreementName')
+        .touched && agreementDetailsModel?.carrierDetailsForm.get('carrierAgreementName')['errors']?.required"></p-message>
+      </div>
+    </span>
+  </div>
+  <div class="footer-part wrapper" *ngIf="agreementDetailsModel.isCarrierAgreement">
+    <button data-attr="createagreement-carrieragreement-cancel-button" type="text" pButton label="Cancel" class="ui-button-secondary mar-right15" (click)="onCancel()" appShortcut="ctrl+alt+2"></button>
+    <button data-attr="createagreement-carrieragreement-createcarrier-button" type="text" pButton label="Create Agreement" (click)="onCreateCarrier()" class="ui-button-primary" appShortcut="ctrl+alt+1"></button>
+  </div>
+</div>
+<p-dialog  data-attr="createagreement-carrieragreement-popup-dialog" header="Confirmation" [(visible)]="agreementDetailsModel.isSaveChanges" [modal]="true"
+[responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button data-attr="createagreement-carrieragreement-popupno-button" type="button" pButton (click)="onClickNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="createagreement-carrieragreement-popupyes-button" type="button" pButton (click)="onClickYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,159 @@
+<div [formGroup]="stairStepModel.addStairStepForm" class="ui-g-12 pad0">
+  <div class='stair-table-container'>
+    <p-table [value]="[{}]">
+      <ng-template pTemplate="caption">
+        <div class="ui-g-12 table-heading pad-left0 pad-bot10">Stair-Step Rate</div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="stair-details thHeaderRow pad-left15">Rate Type</th>
+          <th class='stair-details thHeaderRow pad-left15'>Rounding</th>
+          <th class="stair-details thHeaderRow pad-left15">Minimum Amount</th>
+          <th class="stair-details thHeaderRow pad-left15">Maximum Amount</th>
+          <th class="stair-details thHeaderRow pad-left15">Maximum Applied When</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-stepArrray let-rowIndex="rowIndex">
+        <tr>
+          <td class='stair-type-dropdown thBodyData pad-left12'>
+            <p-autoComplete placeholder="Rate Type" name="rateType" [dropdown]="true" [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}" field="label" formControlName="rateType" [forceSelection]="true"
+              [suggestions]="stairStepModel.suggestionResult" (completeMethod)="onStairSearch($event,'rateTypes')"
+              (onBlur)="onAutoCompleteBlur($event, 'rateType', -1)" emptyMessage="No records found"
+              [ngClass]="{'error-cell-auto': stairStepModel.addStairStepForm.controls.rateType.touched && !stairStepModel.addStairStepForm.controls.rateType.valid}">
+            </p-autoComplete>
+          </td>
+          <td class='stair-type-dropdown thBodyData pad-left12'>
+            <p-autoComplete placeholder="Rounding" name="rounding" [dropdown]="true" [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}" field="label" [forceSelection]="true" formControlName="rounding"
+              [suggestions]="stairStepModel.suggestionResult" (completeMethod)="onStairSearch($event,'roundingTypes')"
+              (onBlur)="onAutoCompleteBlur($event, 'rounding', -1)" emptyMessage="No records found">
+            </p-autoComplete>
+          </td>
+          <td class='stair-type-dropdown thBodyData pad-left12'>
+            <span class="ui-inputgroup"
+              [ngClass]="{'addon-error': stairStepModel.addStairStepForm.get('minAmount').touched && stairStepModel.addStairStepForm.get('minAmount').invalid}">
+              <span class="ui-inputgroup-addon mar-right8"
+                *ngIf="stairStepModel.addStairStepForm.get('minAmount').value">$</span>
+              <input type="text" formControlName='minAmount' class="amountInput" pInputText placeholder="Minimum Amount"
+                (blur)="validateMinMaxAmount('minAmount')" (input)="onFormKeypress($event,'minAmount')"
+                (focus)="onfocusAmount('minAmount')">
+            </span>
+          </td>
+          <td class='stair-type-dropdown thBodyData pad-left12'>
+            <span class="ui-inputgroup"
+              [ngClass]="{'addon-error': stairStepModel.addStairStepForm.get('maxAmount').touched && stairStepModel.addStairStepForm.get('maxAmount').invalid}">
+              <span class="ui-inputgroup-addon mar-right8"
+                *ngIf="stairStepModel.addStairStepForm.get('maxAmount').value">$</span>
+              <input type="text" formControlName='maxAmount' class="amountInput" pInputText placeholder="Maximum Amount"
+                (blur)="validateMinMaxAmount('maxAmount')" (input)="onFormKeypress($event,'maxAmount')"
+                (focus)="onfocusAmount('maxAmount')">
+            </span>
+          </td>
+          <td class='stair-type-dropdown thBodyData pad-left12'>
+            <p-autoComplete placeholder="Maximum Applied When" name="maxApplidedWhen" [dropdown]="true"
+              [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label" formControlName="maxApplidedWhen"
+              [forceSelection]="true" [suggestions]="stairStepModel.suggestionResult"
+              (completeMethod)="onStairSearch($event,'maxApplidedWhen')"
+              (onBlur)="onAutoCompleteBlur($event, 'maxApplidedWhen', -1)" emptyMessage="No records found"
+              [ngClass]="{'error-cell-auto': stairStepModel.addStairStepForm.controls.maxApplidedWhen.touched && !stairStepModel.addStairStepForm.controls.maxApplidedWhen.valid}">
+            </p-autoComplete>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div formArrayName="stepsArray" class='stair-table-container mar-top20'>
+    <p-table [value]="stairStepModel.addStairStepForm['controls'].stepsArray['controls']">
+      <ng-template pTemplate="caption">
+        <div class="ui-g">
+          <div class="ui-g-12 table-heading pad-left0 pad-bot10">Steps</div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="line-details thHeaderRow pad-left8">Step</th>
+          <th class="line-details thHeaderRow">From Quantity</th>
+          <th class='line-details thHeaderRow'>To Quantity</th>
+          <th class="line-details thHeaderRow">Rate Amount</th>
+          <th class="line-details thHeaderRow width40"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-stepArrray let-rowIndex="rowIndex">
+        <tr [formGroupName]="rowIndex">
+          <td class='stair-type-dropdown thBodyData pad-left15 tdvertical-align'>
+            <span *ngIf='rowIndex===0' [ngClass]="{'error-cell-auto': stepArrray.controls.step.touched && !stepArrray.controls.step.valid}">
+              <p-autoComplete placeholder="Step" name="steps" [dropdown]="true" [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" field="label" formControlName="step" [forceSelection]="true"
+                [suggestions]="stairStepModel.suggestionResult" (completeMethod)="onStairSearch($event,'stepValue')"
+                (onBlur)="onAutoCompleteBlur($event, 'step', rowIndex)" (onSelect)="onSelectionOfstep($event.label)" emptyMessage="No records found">
+              </p-autoComplete>
+            </span>
+            <span *ngIf='rowIndex!==0'>
+              {{stepArrray.controls.step.value}}
+            </span>
+          </td>
+          <td class = "tdvertical-align">
+
+            <input type="text" formControlName='fromQuantity' pInputText placeholder="From Quantity"
+              (blur)="checkOverlap(rowIndex, 'fromQuantity')"
+              (input)="onFormKeypressRateAmount($event,'fromQuantity',rowIndex)"
+              [ngClass]="{'error-cell': stairStepModel.gaps.indexOf(rowIndex) >= 0 || stairStepModel.gapOverlap.indexOf(rowIndex) >= 0 || stairStepModel.invalidRanges.indexOf(rowIndex) >= 0 || stairStepModel.invalidPrecisionfrom.indexOf(rowIndex) >= 0 || stepArrray.controls.fromQuantity.touched && !stepArrray.controls.fromQuantity.value}"
+              (focus)="onfocusRateAmount(rowIndex,'fromQuantity')">
+            <p-message severity="error" text="Gap exists in steps; please correct"
+              *ngIf="stairStepModel.gaps.indexOf(rowIndex) >= 0 || stairStepModel.invalidRanges.indexOf(rowIndex) >= 0">
+            </p-message>
+            <p-message severity="error" text="Specify a consistent decimal precision"
+              *ngIf="stairStepModel.invalidPrecisionfrom.indexOf(rowIndex) >= 0 && !( stairStepModel.invalidRanges.indexOf(rowIndex) >= 0)">
+            </p-message>
+            <p-message severity="error" text="Overlapping steps exist; please correct"
+              *ngIf="(stairStepModel.gapOverlap.indexOf(rowIndex) >= 0 || stairStepModel.invalidRanges.indexOf(rowIndex) >= 0)">
+            </p-message>
+          </td>
+          <td class = "tdvertical-align">
+            <input type="text" formControlName='toQuantity' pInputText placeholder="To Quantity"
+              (blur)="checkOverlap(rowIndex, 'toQuantity')"
+              (input)="onFormKeypressRateAmount($event,'toQuantity',rowIndex)"
+              [ngClass]="{'error-cell': (stairStepModel.overlaps.indexOf(rowIndex) >= 0 || stairStepModel.invalidRanges.indexOf(rowIndex) >= 0 || stairStepModel.invalidPrecisionto.indexOf(rowIndex) >= 0)&& stepArrray.controls.toQuantity.touched || stepArrray.controls.toQuantity.touched && !stepArrray.controls.toQuantity.valid}"
+              (focus)="onfocusRateAmount(rowIndex,'toQuantity')">
+            <p-message severity="error" text="To quantity should be greater than from quantity"
+              *ngIf="(stairStepModel.overlaps.indexOf(rowIndex) >= 0 || stairStepModel.invalidRanges.indexOf(rowIndex) >= 0)&& stepArrray.controls.toQuantity.touched">
+            </p-message>
+            <p-message severity="error" text="Specify a consistent decimal precision"
+              *ngIf="stairStepModel.invalidPrecisionto.indexOf(rowIndex) >= 0">
+            </p-message>
+          </td>
+          <td class="tdvertical-align">
+            <div class="ui-inputgroup" [ngClass]="{'error-cell': (stairStepModel.rateAmountExceed.indexOf(rowIndex) >= 0 && stepArrray.controls.rateAmount.value) || (rowIndex === 0 && stairStepModel.invalidFreeAmount)
+              || stairStepModel.rateAmountValid.indexOf(rowIndex) >= 0 || stepArrray.controls.rateAmount.touched && !stepArrray.controls.rateAmount.valid}">
+              <span class="ui-inputgroup-addon mar-right8">$</span>
+              <input type="text" formControlName='rateAmount' class="amountInput" pInputText placeholder="Rate Amount"
+                (blur)="validateRateAmount(rowIndex)" (input)="onFormKeypressRateAmount($event,'rateAmount',rowIndex)"
+                (focus)="onfocusRateAmount(rowIndex,'rateAmount')">
+            </div>
+            <p-message severity="error" text="Rate should be less than maximum amount"
+              *ngIf="stairStepModel.rateAmountExceed.indexOf(rowIndex) >= 0 && stepArrray.controls.rateAmount.value"></p-message>
+            <p-message severity="error" text="Free amount should be 0"
+              *ngIf="rowIndex === 0 && stairStepModel.invalidFreeAmount"></p-message>
+            <p-message severity="error" text="Provide a valid Rate amount"
+              *ngIf="stairStepModel.rateAmountValid.indexOf(rowIndex) >= 0"></p-message>
+          </td>
+          <td class='thBodyData width40 pad0'>
+            <em class="icon-Circle_Add_Solid addrow pad-right15 top0" (click)='addStair(rowIndex)'></em>
+            <em class="icon-Circle_Remove_Solid removerow" (click)='removeStair(rowIndex)'
+              *ngIf="stairStepModel.addStairStepForm['controls'].stepsArray['controls'].length > 1"></em>
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g" style="width:250px" class="mar-top10 mar-bot8">
+    <div class="ui-g-12">
+      <p-checkbox binary="true" label="Itemize Rates" formControlName="itemizeRates">
+      </p-checkbox>
+    </div>
+
+  </div>
+</div>

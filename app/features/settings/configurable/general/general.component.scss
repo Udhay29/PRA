@@ -1,0 +1,41 @@
+.text-field-float {
+    .ui-float-label {
+        margin-top: 17px;
+        label {
+            margin-top: 0px !important;
+            top: 30%;
+            left: 17px;
+        }
+        input.ui-state-filled~label, input:focus~label {
+            top: calc(-.75em - 3px);
+            left: 15px;
+            font-size: 12px;
+        }
+    }
+}
+
+.currency-field-float {
+    .ui-float-label {
+        margin-top: 17px;
+        label {
+            top: 50%;
+        }
+        input.ui-state-filled~label, input:focus~label {
+            top: calc(-.75em - 3px);
+            left: 10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.addon-error {
+    span {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9 !important;
+    }
+    input {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9 !important;
+        border-right: 1px solid red !important;
+    }
+}

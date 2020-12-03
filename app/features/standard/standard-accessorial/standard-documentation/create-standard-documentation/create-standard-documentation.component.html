@@ -1,0 +1,125 @@
+<div #top></div>
+<div [ngClass]="{'loader': createDocumentationModel.loading}" [appJbhLoader]="createDocumentationModel.loading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="createDocumentationModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 class="text-uppercase mar-top0">CREATE STANDARD DOCUMENTATION
+            </h1>
+        </div>
+    </div>
+    <p-messages *ngIf='this.createDocumentationModel.msgs.length'  class="duplicate-err-msg width100"  [(value)]="createDocumentationModel.msgs"></p-messages>
+    <div class="ui-g-12 pad-top0">
+        <div class="accordionHeight">
+            <form [formGroup]="createDocumentationModel?.documentationForm" autocomplete="off">
+                <p-accordion [multiple]="true" class='accordian-container'>
+                    <p-accordionTab class="accord-color doc-type-accordian" header="Setup" [selected]="true">
+                        <div class="ui-g">
+                            <div class="ui-g-3 documentationType pad-left0">
+                                <div>
+                                    <label class="label-style pad-left10">Documentation Type</label>
+                                </div>
+                                <p-dropdown [options]="createDocumentationModel.documentationType" (onChange)="onChangeDocumentType($event)" optionLabel="label" formControlName="documentationType"></p-dropdown>
+                            </div>
+                            <div class="ui-g-3 ui-lg-3 ui-md-3 mar-top16">
+                                <span class="ui-float-label fieldWidth">
+                                    <p-autoComplete [suggestions]="createDocumentationModel.groupNameSuggestions" formControlName="groupName"
+                                    [dropdown]="true" (completeMethod)="onTypeGroupName($event)" 
+                                    field="label" [inputStyle]="{'width':'100%'}" (onBlur)="onautoCompleteBlur($event, 'groupName')"
+                                    [forceSelection]="true" emptyMessage="No records found"></p-autoComplete>
+                                    <label class="label-style" [ngClass]="{'groupNameError': (createDocumentationModel.documentationForm.get('groupName').touched && createDocumentationModel.documentationForm.get('groupName')['errors']?.required)}">
+                                    <span>Group Name</span>
+                                    </label>
+                                    <span class="errorHeight18">
+                                        <p-message severity="error" text="Select Group Name"
+                                            *ngIf="createDocumentationModel.documentationForm.get('groupName').touched && createDocumentationModel.documentationForm.get('groupName')['errors']?.required">
+                                        </p-message>
+                                    </span>
+                                    <div class="clearfix"></div>
+                                </span>
+                            </div>
+                            <div class="ui-g-3 ui-float-label date-field-float documentationCalendar">
+                                <p-calendar [ngClass]="{'errorMsg':createDocumentationModel.isCorrectEffDateFormat ||createDocumentationModel?.inValidEffDate || createDocumentationModel?.inValidDate || (createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value)}"
+                                    formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy" (onSelect)="onDateSelected($event, 'effectiveDate')" [showOnFocus]="true" (onInput)="typedDateValidate($event,'effectiveDate')" (onBlur)="onDateSelected($event.srcElement.value, 'effectiveDate')"
+                                    [minDate]="createDocumentationModel?.effectiveMinDate" [maxDate]="createDocumentationModel?.effectiveMaxDate"></p-calendar>
+                                <label class="label-style date-field-label" for="effectiveDate">Effective Date</label>
+                                <div class="errorHeight18 ">
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="createDocumentationModel.isCorrectEffDateFormat"></p-message>
+                                    <p-message severity="error" text="Provide Effective Date" *ngIf="(!createDocumentationModel.isCorrectEffDateFormat && createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value)">
+                                    </p-message>
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="((createDocumentationModel?.documentationForm.get('effectiveDate').touched && createDocumentationModel?.documentationForm.get('effectiveDate')['errors']?.invalid) && !(createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value) && !createDocumentationModel.isCorrectEffDateFormat)">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 ui-float-label date-field-float documentationCalendar">
+                                <p-calendar [ngClass]="{'errorMsg':createDocumentationModel.isCorrectExpDateFormat || createDocumentationModel?.inValidExpDate || createDocumentationModel?.inValidDate ||(createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value)}"
+                                    formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo="body" yearRange="1900:2099" (onSelect)="onDateSelected($event, 'expirationDate')" [showOnFocus]="true" (onInput)="typedDateValidate($event,'expirationDate')" (onBlur)="onDateSelected($event.srcElement.value, 'expirationDate')"
+                                    [minDate]="createDocumentationModel?.expirationMinDate" [maxDate]="createDocumentationModel?.expirationMaxDate"></p-calendar>
+                                <label class="label-style date-field-label" for="expirationDate">Expiration Date</label>
+                                <div class="errorHeight18 ">
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="createDocumentationModel.isCorrectExpDateFormat"></p-message>
+                                    <p-message severity="error" text="Provide Expiration Date" *ngIf="(!createDocumentationModel.isCorrectExpDateFormat && createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value)">
+                                    </p-message>
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="(((createDocumentationModel?.documentationForm.get('expirationDate').touched && createDocumentationModel?.documentationForm.get('expirationDate')['errors']?.invalid )||(createDocumentationModel?.inValidExpDate || createDocumentationModel?.inValidDate)) && !(createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value) && !createDocumentationModel.isCorrectExpDateFormat)">
+                                    </p-message>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="accord-color optional-accordian" header="Additional Options" [selected]="true">
+                        <div class="ui-g pad-bot15">
+                            <app-standard-optional-attributes #optionalFields class="optionalFields">
+                            </app-standard-optional-attributes>
+
+                        </div>
+
+                    </p-accordionTab>
+                    <p-accordionTab class="accord-color fileupload-accordian" header="Documentation" [selected]="true">
+
+                        <div class="ui-g">
+                            <app-documentation-category #documentationCategory class="optionalFields" [selectedDocumentType]="createDocumentationModel.selectedDocumentType" [documentCategory]="createDocumentationModel?.documentationForm"
+                            [optionalForm]="optionalFields.standardOptionalAttributesModel.optionalForm">
+                            </app-documentation-category>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </form>
+        </div>
+        <div class="pull-right footer">
+            <button type="text" appShortcut="ctrl+alt+2" pButton label="Cancel" (click)="onDocumentationCancel()" class="ui-button-secondary"></button>
+            <button type="text" appShortcut="ctrl+alt+1" pButton label="Save" (click)="onSaveDocumentation()" class="ui-button-primary mar-left15"></button>
+        </div>
+    </div>
+</div>
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.documentationCancel" [modal]="true" [responsive]="true" [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to cancel without saving your work?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onHideCancelPop('documentationCancel')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDontSave()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+
+<p-dialog header="Save Options" [(visible)]="createDocumentationModel.isShowSavePopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="470"  [minY]="70"  [baseZIndex]="10000">
+    <span class="saveHeaderPopup">Save & Close</span><span> Save current documentation and return to Standards
+        Documentation.</span>
+    <p-footer>
+        <button type="button" pButton (click)="savePopupNo()" label="Cancel" class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="savePopupYes()" label="Save & Close" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.documentationNavigateCancel" [modal]="true" [responsive]="true" [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onHideCancelPop('documentationNavigateCancel')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDontSaveNavigate()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.isShowDocumentTypePopup" [modal]="true" [responsive]="true" (onHide)="documentTypePopupNo()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="documentTypePopupNo()" label="No" class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="documentTypePopupYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

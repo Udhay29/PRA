@@ -1,0 +1,28 @@
+.loader-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width:100%; 
+    height: 100%; 
+    opacity: 0.1; 
+    z-index: 1;
+    background-color: black;
+}
+.prime-loader {
+    position: absolute;
+    top: 48%;
+    left: 49%;
+    z-index: 2;
+}
+
+.loading-text {
+  top: 52%;
+  z-index: 3;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;  
+  position: absolute;
+  text-align: center;
+  letter-spacing: 1.2px;
+  font-family: Proxima Nova;
+}

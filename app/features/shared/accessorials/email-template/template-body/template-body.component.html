@@ -1,0 +1,95 @@
+<div class="ui-g" [formGroup]="bodyForm">
+  <span class="heading">Introduction</span>
+  <div class="ui-g-12 pad0" *ngIf="masterData">
+    <ng-container *ngIf="masterData['introParagraph']">
+      <div *ngFor="let introPara of masterData['introParagraph']" class="mar-top30 heading6">
+        {{introPara['name']}}
+      </div>
+    </ng-container>
+  </div>
+  <ng-container formArrayName="introParagraph" *ngFor="let paragraph of bodyForm.controls.introParagraph['controls']; let i=index;">
+    <ng-container [formGroupName]="i">
+      <div class="ui-g-12 pad0 ui-float-label textAreaWrapper width100 text-area-div mar-top30">
+        <textarea class="textArea" [ngClass]="{'width100': bodyForm.controls.introParagraph['length'] === 1, 'width95': bodyForm.controls.introParagraph['length'] > 1}"
+          rows="5" cols="150" pInputTextarea id="textareavalue" formControlName="text"></textarea>
+        <label class="textAreaLabel textAreaValue ui-md-12 ui-lg-12 ui-g-12 errorAlign label-style">
+          <span>Paragraph {{i+1}}</span>
+          <span class="optional-text pull-right pad-right22" *ngIf="checkRequiredStatus('introParagraph', i)">optional</span>
+        </label>
+        <em class="icon-Circle_Remove_Solid remove-icon" *ngIf="bodyForm.controls.introParagraph['length'] > 1" (click)="removeControl(i, 'introParagraph', 'introSave')"></em>
+      </div>
+      <div class="ui-g-12 pad0" [ngClass]="{'height25': i === bodyForm.controls.introParagraph['controls']['length'] - 1}">
+      <p-message severity="error" [text]="getIntroError('introParagraph', 'introSave')" *ngIf="bodyForm.controls.introParagraph['controls'][i]['controls']['text'].touched &&
+      bodyForm.controls.introParagraph['controls'][i]['controls']['text'].invalid">
+      </p-message>
+    </div>
+    </ng-container>
+  </ng-container>
+  <div class="ui-g-12 pad0" *ngIf="bodyForm.controls.introParagraph['length'] < 6">
+    <button pButton type="button" label="Add Paragraph ({{bodyForm.controls.introParagraph.length}}/6)" class="ui-button-tertiary pad0"
+      icon="jbh-icon icon-Circle_Add_Solid" (click)="addControl('introParagraph', 'introSave')"></button>
+  </div>
+  <span class="heading mar-top20">Data</span>
+  <div class="ui-g-12 pad0" *ngIf="masterData">
+    <ng-container *ngIf="masterData['bodyDataElements']['length']">
+      <div *ngFor="let bodytDataElement of masterData['bodyDataElements']" class="mar-top30 heading6">
+        {{bodytDataElement['name']}}
+      </div>
+    </ng-container>
+    <div *ngIf="!masterData['bodyDataElements']['length']" class="mar-top30 heaading6">
+      No data elements were found in Master template.
+    </div>
+  </div>
+  <div class="ui-g-12 pad0 mar-top30 ui-float-label width100">
+    <p-autoComplete [suggestions]="emailTemplateModel.bodyElements" field="name" [forceSelection]="true" emptyMessage="No records found"
+      (completeMethod)="filterSubjectData($event)" [dropdown]="true" [multiple]="true" formControlName="bodyDataElements">
+    </p-autoComplete>
+    <label class="label-style ui-g-12 pad0 errorAlign">
+      <span>Data Elements</span>
+      <span class="optional-text pull-right pad-right40" *ngIf="checkElementRequiredStatus('bodyDataElements')">optional</span>
+    </label>
+  </div>
+  <div class="ui-g-12 pad0 height25">
+    <p-message severity="error" text="Provide data elements" *ngIf="bodyForm.controls['bodyDataElements'].touched &&
+  bodyForm.controls['bodyDataElements'].invalid"></p-message>
+  </div>
+  <span class="heading">Conclusion</span>
+  <div class="ui-g-12 pad0" *ngIf="masterData">
+    <ng-container *ngIf="masterData['conclusionParagraph']">
+      <div *ngFor="let conclusionPara of masterData['conclusionParagraph']" class="mar-top30 heading6">
+        {{conclusionPara['name']}}
+      </div>
+    </ng-container>
+  </div>
+  <ng-container formArrayName="conclusionParagraph" *ngFor="let conclusionParagraph of bodyForm.controls.conclusionParagraph['controls']; let i=index;">
+    <ng-container [formGroupName]="i">
+      <div class="ui-g-12 pad0 ui-float-label textAreaWrapper width100 text-area-div mar-top30">
+        <textarea class="textArea" [ngClass]="{'width100': bodyForm.controls.conclusionParagraph['length'] === 1, 'width95': bodyForm.controls.conclusionParagraph['length'] > 1}"
+          rows="5" cols="150" pInputTextarea id="textareavalue" formControlName="text"></textarea>
+        <label class="textAreaLabel textAreaValue ui-md-12 ui-lg-12 ui-g-12 errorAlign label-style">
+          <span>Paragraph {{i+1}}</span>
+          <span class="optional-text pull-right pad-right22" *ngIf="checkRequiredStatus('conclusionParagraph', i)">optional</span>
+        </label>
+        <em class="icon-Circle_Remove_Solid remove-icon" *ngIf="bodyForm.controls.conclusionParagraph['length'] > 1"
+          (click)="removeControl(i, 'conclusionParagraph', 'conclusionSave')"></em>
+      </div>
+      <div class="ui-g-12 pad0" [ngClass]="{'height25': i === bodyForm.controls.conclusionParagraph['controls']['length'] - 1}">
+      <p-message severity="error" [text]="getIntroError('conclusionParagraph', 'conclusionSave')" *ngIf="bodyForm.controls.conclusionParagraph['controls'][i]['controls']['text'].touched &&
+    bodyForm.controls.conclusionParagraph['controls'][i]['controls']['text'].invalid">
+      </p-message>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="ui-g-12 pad0" *ngIf="bodyForm.controls.conclusionParagraph['length'] < 6">
+    <button pButton type="button" label="Add Paragraph ({{bodyForm.controls.conclusionParagraph.length}}/6)" class="ui-button-tertiary pad0"
+      icon="jbh-icon icon-Circle_Add_Solid" (click)="addControl('conclusionParagraph', 'conclusionSave')"></button>
+  </div>
+</div>
+<p-dialog [header]="emailTemplateModel.popUpHeader" [(visible)]="emailTemplateModel.isShowPopUp" [modal]="true"
+  [responsive]="true" (onHide)="onCancel()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+  <span>{{emailTemplateModel.popUpText}}</span>
+  <p-footer>
+    <button type="button" pButton (click)="onCancel()" label="No" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="onProceed()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

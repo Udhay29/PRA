@@ -1,0 +1,152 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.wrapper {
+    height: 100%;
+    padding: 0 30px 0 24px;
+}
+
+.stops-container {
+    height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+    background-color: $white;
+    /deep/.ui-table.ui-widget {
+        border: 1px solid $grey;
+    }
+    .stops-header {
+        padding: 15px 20px 20px 20px;
+        height: 60px;
+        border-bottom: solid 1px $grey;
+        .title {
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+    }
+}
+
+/deep/ .table-shadow {
+    .ui-table {
+        box-shadow: none !important;
+    }
+}
+
+.divider {
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.add-stop {
+    color: $blue;
+    padding: 30px 0 30px 20px;
+}
+
+.add-stop span {
+    cursor: pointer;
+}
+
+.add-stop-label {
+    margin-left: 8px;
+    top: -2px;
+}
+
+.icon-Circle_Add_Solid {
+    position: relative;
+    top: 1px;
+}
+
+.origin {
+    border: none !important;
+}
+
+.addrow,
+.removerow {
+    color: $blue;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.removerow {
+    color: $red;
+    margin-right: 5px;
+}
+
+.addrow {
+    top: 0px;
+}
+
+.stop-charge {
+    margin: 20px;
+}
+
+.table-container {
+    margin: 20px 20px 20px 16px;
+}
+
+/deep/ td.cell-pad {
+    padding-left: 17px;
+    padding-right: 0px !important;
+}
+
+/deep/.stopsDropdown p-autocomplete .ui-autocomplete .ui-inputtext {
+    border: none;
+    border-radius: 0px;
+}
+
+/deep/.table-container .ui-table-wrapper table {
+    overflow: visible !important;
+}
+
+/deep/.dropdown button.ui-autocomplete-dropdown.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.ng-star-inserted {
+    margin-right: 10px;
+}
+
+/deep/td.stopsDropdown {
+    position: relative;
+    overflow: visible !important;
+    padding-right: 0px !important;
+    padding-left: 16px !important;
+    .ui-autocomplete-panel  {
+        left: -8px !important;
+    }
+}
+
+/deep/.points-autocomplete .ui-autocomplete,
+/deep/.points-autocomplete .ui-inputtext {
+    width: 100%;
+    border: none !important;
+}
+
+form /deep/.table-container {
+    thead tr th:nth-of-type(1) {
+        width: 10%;
+    }
+    thead tr th:nth-of-type(2),
+    thead tr th:nth-of-type(3), thead tr th:nth-of-type(6) {
+        width: 15%;
+    }
+    thead tr th:nth-of-type(4) {
+        width: 20%;
+    }
+    thead tr th:nth-of-type(5) {
+        width: 40%;
+    }
+    thead tr th span{
+        color: rgba(0, 0, 0, 0.3);
+        margin-left: 30px;
+    }
+}
+.text-center{
+    text-align: center;
+}
+.messageClass /deep/ .ui-message.ui-messages-error {
+    padding-left: 0px;
+}
+.stops-table /deep/ .ui-table-wrapper table tr td{
+    vertical-align: top;
+}
+.stops-table /deep/ .ui-table-wrapper table tr > td{
+    vertical-align: top;
+    &:first-child, &:last-child {
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,60 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.errorMsg /deep/ .ui-inputtext {
+    border-color: $red !important;
+    background-color: $red-lite90;
+}
+
+.labelAligns {
+    position: absolute;
+    top: 23px;
+}
+
+.labelAdjust {
+    top: 45%;
+    margin-left: 5px
+}
+
+.marTop10 {
+    margin-top: 10px;
+}
+
+.marTop30 {
+    margin-top: 30px;
+}
+
+.marLeft10 {
+    margin-left: 10px;
+}
+
+.course-details-icon {
+    font-size: medium;
+    color: $primary-blue;
+    cursor: pointer;
+  }
+
+  .add-ques-btn {
+    background: none;
+    border: 0;
+    color: $primary-blue;
+    margin-top: 25px;
+}
+.add-ques-btn:hover, .add-ques-btn:focus {
+    background: none;
+    border: 0;
+    color: $primary-blue;
+}
+
+.error-cell{
+    border: 1px solid $red !important;
+    background-color: $red-lite90 !important;
+    border-left: 1px solid $red !important;
+}
+.errorHeight{
+    height: 10px;
+}
+.errorAlign {
+    position: absolute;
+    top: 18px;
+}

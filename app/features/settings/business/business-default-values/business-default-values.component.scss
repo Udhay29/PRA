@@ -1,0 +1,38 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.clearfix {
+  clear: both;
+}
+.info-icon {
+  color: $black-opacity40;
+  text-decoration: none;
+  margin-top: 2px;
+}
+.default-page-footer {
+  position: fixed;
+  bottom: 3%;
+  right: 2%;
+}
+
+.wrapper {
+  left: 10px !important;
+}
+
+.ui-float-label input:focus ~ label, .ui-float-label input.ui-state-filled ~ label {
+  top: calc(-.75em - 3px);
+  left: 15px;                                                                                 
+  font-size: 12px;
+}

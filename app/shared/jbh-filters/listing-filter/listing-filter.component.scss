@@ -1,0 +1,119 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+
+.header-style {
+  width: calc(100% - 30px);
+  display: inline-block;
+  @include getTypographyStyles("body2");
+  color: $grey-dark66;
+   .filter-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: calc(100% - 20px);
+    float: left;
+  }
+}
+.error-message {
+  color: $grey-dark27;
+}
+.check-list {
+  padding: 5px 0;
+  .checkbox-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: calc(100% - 40px);
+    float: left;
+    padding-bottom: 10px;
+    }
+    /deep/ label.ui-chkbox-label {
+      vertical-align: baseline !important;
+    }
+    /deep/ .ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default{
+      margin-bottom: 10px;
+    }
+   }
+.reset-color {
+  color: #007dba !important;
+}
+.reset-color:hover {
+  color: $blue !important;
+  cursor: pointer;
+}
+.visible {
+  visibility: hidden;
+}
+
+.list-filter-style {
+  /deep/ .ui-scrollpanel-content {
+    padding: 0px;
+    max-height: 160px;
+  }
+  /deep/ .ui-panel-titlebar-icon:hover {
+    text-decoration: none;
+  }
+  /deep/ .ui-scrollpanel {
+    max-height: 160px;
+  }
+}
+
+.accordionHeight {
+  min-height: calc(100vh - 279px);
+  /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+      margin-bottom: none;
+  }
+}
+
+:host .list-filter-style {
+  /deep/ .ui-scrollpanel-content {
+    padding: 0px;
+    max-height: 160px;
+  /deep/ .ui-scrollpanel {
+    max-height: 160px;
+  }
+}
+}
+
+.no-border {
+  /deep/ .ui-accordion-header{
+    border-bottom: none !important;
+  }
+}
+
+.dateFilter {
+  ::ng-deep .ui-accordion-content.ui-widget-content  {
+    padding: 0px 15px 20px;
+ }
+}
+
+
+:host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header:hover {
+  background-color: $white;
+}
+
+:host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header {
+  background-color: $white;
+  border-bottom: solid 1px $grey-lite70;
+  padding: 0px;
+}
+
+:host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header a {
+  padding-left:15px;
+  .ui-accordion-toggle-icon {
+    position: absolute;
+    right: 5px;
+    color: $primary-blue;
+    top: -2px;
+  }
+}
+
+
+.pointer-events-none {
+  /deep/ .ui-accordion-header {
+      pointer-events: none;
+  }
+  /deep/ .ui-accordion-toggle-icon {
+    display: none;
+  }
+}

@@ -1,0 +1,132 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+
+html,
+body {
+  height: 100% !important;
+}
+
+.filter-wrapper {
+  border-radius: 6px;
+  background: $white;
+  height: 100%;
+
+  .filter-form {
+    height: 100%;
+  }
+
+  .filter-title {
+    @include getTypographyStyles("h2");
+    display: inline-block;
+  }
+
+  .clearSearch {
+    @include getTypographyStyles("body1");
+    cursor: pointer;
+    text-decoration: none;
+    background: transparent;
+    border: 0px;
+    color: $primary-blue;
+  }
+
+  .fav-back-color {
+    background-color: $blue-lite90;
+  }
+
+  .filter-footer {
+    padding: 8px;
+    float: right;
+    border-top: 1px solid #cccccc;
+  }
+
+  .text-gray {
+    color: #939393;
+  }
+}
+
+.favIcon {
+  position: absolute;
+  top: 21px;
+  left: 20px;
+}
+.error-box /deep/ .ui-autocomplete .ui-autocomplete-input {
+  border-color: #cc2d24 !important;
+  background-color: #faeae9;
+}
+
+.favSearch /deep/ .ui-dropdown .ui-dropdown-label  {
+  padding-left: 30px !important;
+  padding-top: 10px !important;
+}
+
+.filter-wrapper /deep/ .ui-scrollpanel-wrapper {
+  padding-bottom: 15px;
+  .ui-scrollpanel-content {
+    padding-top: 0 !important;
+    .drop-bottom{
+      .ui-autocomplete-panel{
+        top:auto !important;
+        bottom: 36px;
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+.favoritesFooter {
+  text-align: right;
+  margin-left: 0;
+  width: 100%;
+}
+
+.addon-error /deep/ .ui-autocomplete .ui-autocomplete-input  {
+      border-color: #cc2d24 !important;
+      background-color: #faeae9 !important;
+      border-right: 1px solid red !important;
+}
+.error-height {
+  height: 5px;
+}
+.typeahead-float-label {
+  .ui-float-label {
+  .ui-inputwrapper-focus~label,
+  .ui-inputwrapper-filled~label {
+      top: calc(-.75em - -10px);
+      font-size: 12px;
+  }
+}
+}
+.autoComplete-bottom-margin {
+  /deep/ .ui-autocomplete-panel.ui-widget-content {
+    margin-bottom: 20px !important;
+  }
+}
+.errormsg {
+  height: 5px;
+  color: $red;
+  font-size: 0.625rem !important;
+  letter-spacing: 0.0rem !important;
+  line-height: 0.875rem !important;
+}
+.clearFix {
+  clear: both;
+}
+.err-message {
+  color: $red;
+  @include getTypographyStyles("caption1");
+}
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+.searchScrollPanel /deep/ .ui-scrollpanel-bar-x{
+  display: none !important;
+}
+

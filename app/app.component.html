@@ -1,0 +1,18 @@
+<div class="main-container" *ngIf="isAcccessApplication">
+
+  <!-- This is the defalut app header that is loaded
+    as a backup for the platfrom header. Do not write
+    dependencies to this header. It will get over writen. -->
+  <app-header></app-header>
+  <p-growl [(value)]="msgs" [life]="3000" [baseZIndex]="99999"></p-growl>
+  <navigation-menu menu-title="Pricing" [pinnedOpen]="navMenuLocked" [menu-items]="navMenuItems" (menuSelect)="onMenuSelect($event)"
+    (errorHandler)="onMenuError($event)" (pin-handler)="onMenuPin($event)" [ngClass]="{'un-pinned': !navMenuLocked }">
+  </navigation-menu>
+
+  <div class="main ui-fluid router-container" [ngClass]="{'sidebar-left-unlocked': !navMenuLocked }">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div *ngIf="!isAcccessApplication">
+  <router-outlet></router-outlet>
+</div>

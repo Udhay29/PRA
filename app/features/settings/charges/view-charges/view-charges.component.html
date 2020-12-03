@@ -1,0 +1,118 @@
+<div class="ui-g ui-fluid filterClass">
+    <div class="ui-g-3 ui-md-3 filter-label-column pad0" [ngClass]="{'hideFilter':(!viewChargesModel.isFilterEnabled)}">
+        <app-charges-filter (loadData)="filterGridData($event)"></app-charges-filter>
+    </div>
+    <div class="pad-top0 tableStyle" [ngClass]="{'ui-g-9': viewChargesModel.isFilterEnabled, 'ui-g-6': viewChargesModel.isSplitView, 'ui-g-12': !viewChargesModel.isSplitView
+    && !viewChargesModel.isFilterEnabled }">
+        <p-table #chargeList [paginator]="true" selectionMode="multiple" [value]="viewChargesModel.tableContent" [rows]="viewChargesModel.pageSize" [totalRecords]="viewChargesModel.totalRecords" [rowsPerPageOptions]="[25,50,75,100]" [lazy]="true" [pageLinks]="5"
+            (onLazyLoad)="loadGridData($event)" [scrollable]="viewChargesModel.noResultFoundFlag ? false : true" [columns]="viewChargesModel.noResultFoundFlag?'':viewChargesModel.tableColumns" [frozenColumns]="viewChargesModel.frozenCols" [resizableColumns]="true"
+            columnResizeMode="expand" [scrollHeight]="screenHeight" [loading]="viewChargesModel.isLoader" [(selection)]="viewChargesModel.selectedChargeData" frozenWidth="250px" [sortField]="'Charge Type'" [sortOrder]="1">
+            <ng-template pTemplate="caption">
+                <div class="ui-g">
+                    <div [ngClass]="{'ui-md-4 ui-lg-4': viewChargesModel.isSplitView, 'ui-md-8 ui-lg-8': !viewChargesModel.isSplitView}" class="tableHeading">Charges</div>
+                    <div [ngClass]="{'ui-md-8 ui-lg-8': viewChargesModel.isSplitView, 'ui-md-4 ui-lg-4': !viewChargesModel.isSplitView}" class="iconsHolder">
+                        <div class="ui-g">
+                            <div class=" ui-md-8 ui-lg-8 ui-inputgroup">
+                                <span class="ui-inputgroup-addon">
+                  <em class="fa fa-search"></em>
+                </span>
+                                <input type="text" pInputText placeholder="Search" (keyup)="onSearch($event, 'searchBox')">
+                            </div>
+                            <div appShortcut class="ui-md-4 ui-lg-4 grid-icons pull-right caption-right">
+                                <button appShortcut="ctrl+alt+f" class="ui-md-5 icon-Filter_Solid icon-button buttonStyle" [ngClass]="{'filterColor': viewChargesModel.filterFlag}" (click)="onFilterClick()"></button>
+                                <button appShortcut="ctrl+alt+o" class="ui-md-7 icon-Menu_Overflow icon-button buttonStyle"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" style="width:250px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header"  let-columns>
+                <tr *ngIf="!viewChargesModel.noResultFoundFlag">
+                    <th *ngFor="let col of columns" pResizableColumn pReorderableColumn class="textwrap ui-resizable-column displaybold">
+                        <span><p-tableHeaderCheckbox class="mar-right10" *ngIf="col.property=='chargeIdentifier'"></p-tableHeaderCheckbox></span>
+                        <span class="pad-right0" [pSortableColumn]="col.name"><span>{{col.name}}</span>
+                        <p-sortIcon class="sortIcon" [field]="col.name"></p-sortIcon>
+                        </span>
+                    </th>
+                </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr *ngIf="viewChargesModel.noResultFoundFlag">
+                        <td colspan="5">
+                            <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+                                <span class="display-middle display-3">No results found</span>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr *ngIf="!viewChargesModel.noResultFoundFlag " [pSelectableRow]="rowData" (mouseenter)="onMouseEnter(rowData)" (mouseleave)="onMouseLeave(rowData)" [class.row-hover]="rowData.hover">
+                        <td *ngFor="let col of columns" [ngClass]="{'newLine': (col.property=='chargeTypeBusinessUnitServiceOfferingAssociations') ||  (col.property=='rateTypes') || (col.property == 'chargeUsageType')}" class="row-column-width ui-resizable-column textWrap tooltip"
+                            pTooltip={{rowData[col.property]}} tooltipPosition="top" [tooltipDisabled]="col.property=='chargeTypeBusinessUnitServiceOfferingAssociations' || col.property=='rateTypes' ||  col.property==='chargeUsageType'">
+                            <p-tableCheckbox class="mar-right10" *ngIf="col.property=='chargeIdentifier'" [value]="rowData" (click)="$event.stopPropagation()"></p-tableCheckbox>
+                            <span *ngIf="col.property=='chargeIdentifier' || col.property=='chargeTypeDescription' || col.property=='quantityRequiredIndicator'
+                || col.property=='autoInvoiceIndicator' || col.property=='chargeApplicationLevelTypes' || col.property=='effectiveDate'
+                || col.property=='expirationDate' ">{{rowData[col.property]}}</span>
+                            <span *ngIf="col.property=='rateTypes'" pTooltip="{{rowData['rateTypeToolTip']}}">{{rowData[col.property]}}</span>
+                            <span *ngIf="col.property=='chargeUsageType'" pTooltip="{{rowData['chargeUsageTypeToolTip']}}">{{rowData[col.property]}}</span>
+                            <span *ngIf="col.property=='chargeTypeBusinessUnitServiceOfferingAssociations'" pTooltip="{{rowData['tableToolTip']}}">{{rowData[col.property]}}</span>
+                            <span *ngIf="!rowData[col.property]">--</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorright">
+                    <tr *ngIf="viewChargesModel.showCreateButton">
+                        <td colspan="3">
+                            <span class="pull-right">
+              <button type="text" pButton label="Create Charge" class="ui-button-primary btnMargin mar-left5 button-width"
+                (click)="onClickCreateCharge()"></button>
+            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+        </p-table>
+    </div>
+    <div *ngIf="!viewChargesModel.isTableShow" class="pad-top0 tableStyle" [ngClass]="{'ui-g-9': viewChargesModel.isFilterEnabled, 'ui-g-6': viewChargesModel.isSplitView, 'ui-g-12': !viewChargesModel.isSplitView
+    && !viewChargesModel.isFilterEnabled }">
+        <p-table scrollHeight="calc(100vh - 768px)" [paginator]="false" [customSort]="true" [value]="viewChargesModel.tableContent" [rows]="25" [rowsPerPageOptions]="[5,10,25]" [lazy]="true" [pageLinks]="5" [scrollable]="true" [columns]="viewChargesModel.tableColumns"
+            [resizableColumns]="true" columnResizeMode="expand">
+            <ng-template pTemplate="caption">
+                <div class="ui-g">
+                    <div [ngClass]="{'ui-md-4 ui-lg-4': viewChargesModel.isSplitView, 'ui-md-8 ui-lg-8': !viewChargesModel.isSplitView}" class="tableHeading">Charges</div>
+                    <div [ngClass]="{'ui-md-8 ui-lg-8': viewChargesModel.isSplitView, 'ui-md-4 ui-lg-4': !viewChargesModel.isSplitView}" class="iconsHolder">
+                        <div class="ui-g">
+                            <div class=" ui-md-8 ui-lg-8 ui-inputgroup">
+                                <span class="ui-inputgroup-addon">
+                  <em class="fa fa-search"></em>
+                </span>
+                                <input id="text" appShortcut="" autocomplete="off" type="text" pInputText placeholder="Search" (input)="onSearch($event)" data-attr="empty-plan-search-bar">
+                            </div>
+                            <div appShortcut class="ui-md-4 ui-lg-4 grid-icons pull-right caption-right">
+                                <button appShortcut="ctrl+alt+f" class="ui-md-5 icon-Filter_Solid icon-button buttonStyle" [ngClass]="{'filterColor': viewChargesModel.filterFlag}" (click)="onFilterClick()"></button>
+                                <button appShortcut="ctrl+alt+o" class="ui-md-7 icon-Menu_Overflow icon-button buttonStyle"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr class="table-header">
+                    <td colspan="2">
+                        <div class="displaymiddle displaymidheight mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                            <button type="text" pButton label="Create Charge" class="ui-button-primary mar-top5 mar-left5" (click)="onClickCreateCharge()"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="ui-g-6 pad-top0 split-wrapper" [hidden]="!viewChargesModel.isSplitView">
+        <app-create-charges #createCharges [chargesComponentModel]="chargesModel" (closeCreateCharge)="closeSplitView($event)"></app-create-charges>
+    </div>
+</div>

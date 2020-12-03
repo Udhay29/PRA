@@ -1,0 +1,95 @@
+<div [ngClass]="{'loader': optionalAttributesModel.loading}" [appJbhLoader]="optionalAttributesModel.loading"></div>
+<div class='optional-attributes-container'>
+  <form [formGroup]="optionalAttributesModel.optionalForm" autocomplete="off">
+      <div class='optional-fields'>
+          <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-left0 pad-right0">
+              <div class="ui-g-9 ui-lg-9 ui-md-9 pad-left0">
+                  <div class='ui-float-label'>
+                      <p-multiSelect [options]="optionalAttributesModel.businessUnitData" [style]="{'width':'100%'}" field="label" maxSelectedLabels="1" defaultLabel="" [inputStyle]="{'width':'100%'}" formControlName="businessUnit" (onChange)="onBusinessUnitSelected($event)"
+                          (onPanelHide)="onBusinessUnitBlur()" (onPanelShow)="onBusinessUnitShow()"  [ngClass]="{'ui-inputwrapper-filled': optionalAttributesModel.businessUnitAdded}" resetFilterOnHide="true">
+                      </p-multiSelect>
+                      <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign" [ngClass]="{'labelAlign': !optionalAttributesModel.businessUnitAdded}">
+            <span>Business Unit and Service Offering</span>
+            <span class="optional-text pull-right pad-right40">optional</span>
+          </label>
+                  </div>
+              </div>
+              <div class="ui-g-3 ui-lg-3 ui-md-3 height10px pad-right0"  [ngClass]="{'posRelative': optionalAttributesModel.serviceLevelAdded}">
+                <div class="ui-md-12 ui-lg-12 pad-left0 pad-right0"  [ngClass]="{'service-level-field': optionalAttributesModel.serviceLevelAdded , 'ui-float-label top4': !optionalAttributesModel.serviceLevelAdded}">
+                    <span *ngIf="optionalAttributesModel.serviceLevelAdded" class="service-level-field-color" >Service Level</span>
+                      <p-multiSelect [options]="optionalAttributesModel.serviceLevel" filter="false" maxSelectedLabels="1" [style]="{'width':'100%'}" defaultLabel="" resetFilterOnHide="true" formControlName="serviceLevel" resetFilterOnHide="true" (onChange)="onServiceLevelSelected($event)"
+                          [ngClass]="{'ui-inputwrapper-filled': optionalAttributesModel.serviceLevelAdded}" optionLabel="label" [inputStyle]="{'width':'100%'}">
+                      </p-multiSelect>
+                      <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign" [ngClass]="{'labelAlign': !optionalAttributesModel.serviceLevelAdded}">
+                            <span  *ngIf="!optionalAttributesModel.serviceLevelAdded" >Service Level</span>
+                            <span  *ngIf="!optionalAttributesModel.serviceLevelAdded"  class="optional-text pull-right pad-right40">optional</span>
+                   </label>
+                  </div>
+              </div>
+          </div>
+          <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-left0 pad-right0">
+              <div class="ui-g-3 ui-lg-3 ui-md-3 pad-left0">
+                  <div class='ui-float-label'>
+                      <p-multiSelect [options]="optionalAttributesModel.operationalService" filter="false" maxSelectedLabels="1" [style]="{'width':'100%'}" defaultLabel="" resetFilterOnHide="true" formControlName="requestedService" (onChange)="onOperationalServiceSelected($event)"
+                          [ngClass]="{'ui-inputwrapper-filled': optionalAttributesModel.operationalServiceAdded}" resetFilterOnHide="true">
+                      </p-multiSelect>
+                      <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign" [ngClass]="{'labelAlign': !optionalAttributesModel.operationalServiceAdded}">
+            <span>Requested Service</span>
+            <span class="optional-text pull-right pad-right40">optional</span>
+          </label>
+                  </div>
+              </div>
+
+
+              <div class="ui-g-3 ui-lg-3 ui-md-3">
+                  <span class="ui-float-label">
+          <p-autoComplete [suggestions]="optionalAttributesModel.equipmentCategoryFiltered" formControlName="equipmentCategory"
+            [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" [dropdown]="true" emptyMessage="No records found"
+            (completeMethod)="onTypeEquipmentCategory($event)" (onSelect)="onSelectEquipmentCategory($event)"
+            emptyMessage="No records found" [forceSelection]="true" (onClear)="onEquipmentClear($event, 'equipmentCategory')" (onBlur)="onEquipmentBlur($event, 'equipmentCategory')"></p-autoComplete>
+          <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+            <span>Equipment Category</span>
+                  <span class="optional-text pad-right40 pull-right">optional</span>
+                  </label>
+                  </span>
+              </div>
+              <div class="ui-g-3 ui-lg-3 ui-md-3">
+                  <span class="ui-float-label">
+          <p-autoComplete [suggestions]="optionalAttributesModel.equipmentTypeFiltered" [autoDisplayFirst]="false"
+            [style]="{'width':'100%'}" field="value" [inputStyle]="{'width':'100%'}" [dropdown]="true" emptyMessage="No records found"
+            (completeMethod)="onTypeEquipmentType($event)" (onSelect)="onSelectEquipmentType($event)" formControlName="equipmentType"
+            [forceSelection]="true" (onBlur)="onEquipmentBlur($event, 'equipmentType')" (onClear)="onEquipmentClear($event, 'equipmentType')" emptyMessage="No records found"></p-autoComplete>
+          <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+            <span>Equipment Type</span>
+                  <span class="optional-text pad-right40 pull-right">optional</span>
+                  </label>
+                  </span>
+              </div>
+              <div class="ui-g-3 ui-lg-3 ui-md-3 pad-right0">
+                  <span class="ui-float-label">
+          <p-autoComplete [suggestions]="optionalAttributesModel.equipmentLengthFiltered" [autoDisplayFirst]="false"
+            formControlName="equipmentLength" [style]="{'width':'100%'}" field="value" [inputStyle]="{'width':'100%'}"
+            [dropdown]="true" (completeMethod)="onTypeEquipmentLength($event)" (onClear)="onEquipmentClear($event, 'equipmentLength')" emptyMessage="No records found"></p-autoComplete>
+          <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+            <span>Equipment Length</span>
+                  <span class="optional-text pad-right40 pull-right">optional</span>
+                  </label>
+                  </span>
+              </div>
+          </div>
+
+          <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-left0 pad-right0">
+              <div class="ui-g-12 ui-lg-12 ui-md-12 pad-left0 pad-right0">
+                  <div class='ui-float-label'>
+                      <p-autoComplete [suggestions]="optionalAttributesModel.carrierSuggestions" [multiple]="true" field="label" (completeMethod)="onCarrierCompleteMethod($event)" [forceSelection]="true" emptyMessage="No carrier is found" formControlName="carriers">
+                      </p-autoComplete>
+                      <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign">
+            <span>Carrier (Code)</span>
+            <span class="optional-text pull-right pad-right22">optional</span>
+          </label>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>

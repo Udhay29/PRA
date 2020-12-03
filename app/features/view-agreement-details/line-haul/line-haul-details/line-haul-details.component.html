@@ -1,0 +1,250 @@
+<div class="ui-g-12 pad-top0 laneCard" *ngIf="detailsModel?.originDestinationDetails?.length>0">
+    <p-table [columns]="detailsModel.tableColumnHeaders" [value]="detailsModel?.originDestinationDetails">
+        <ng-template pTemplate="caption">
+            <div class="ui-g">
+                <div class="ui-g-9 table-heading pad-left0">Lane</div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="line-details" *ngFor="let col of columns" pTooltip="{{col.name}}" tooltipPosition="top">
+                    {{col.name}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns" pTooltip="{{data[col.queryKey] ? data[col.queryKey] : rowData.pointToolTip}}" tooltipPosition="top">
+                    <span>
+            {{data[col.queryKey]}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.type === 'City State'">
+            {{rowData?.city}}, {{rowData?.state}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.type === 'State'">
+            {{rowData?.state}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.type === 'Address'">
+            <span>{{rowData?.addressLine1}},</span><br>
+                    <span>{{rowData?.city}},{{rowData?.state}},{{rowData?.postalCode}},{{rowData?.countryName}}</span>
+                    </span>
+                    <span *ngIf="col.queryKey === 'point' && (rowData?.type === '2-Zip' || rowData?.type === '3-Zip'
+          || rowData?.type === '5-Zip' || rowData?.type === '6-Zip' || rowData?.type === '9-Zip')">
+            {{rowData?.postalCode}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && (rowData?.type === 'Location' || rowData?.type === 'Ramp'
+          || rowData?.type === 'Yard')">
+            <span>{{rowData?.locationName}}({{rowData?.locationCode}}),</span><br>
+                    <span>{{rowData?.addressLine1}},</span><br>
+                    <span>{{rowData?.city}},{{rowData?.state}},{{rowData?.postalCode}},{{rowData?.countryName}}</span>
+                    </span>
+                    <span *ngIf="col.queryKey === 'point' && (rowData?.type === '3-Zip Range' || rowData?.type === '5-Zip Range'
+          || rowData?.type === '6-Zip Range' || rowData?.type === '9-Zip Range')">
+            {{rowData?.postalCode}}
+          </span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="ui-g-12 stopCard tableBorder" *ngIf="detailsModel?.stopList?.length>0">
+    <p-table [columns]="detailsModel.stopTableColumnHeaders" [value]="detailsModel.stopList">
+        <ng-template pTemplate="caption">
+            <div class="ui-g">
+                <div class="ui-g-12 table-heading pad-left20">Stops</div>
+                <div class=" ui-g-12 pad-left0 pad-right0 pad-top10 headingAlign"></div>
+                <div class="ui-g-12 pad-left0 pad-top5">
+                    <div class="ui-g-8 pad-left0 pad-bot0 pad-top0">
+                        <div class="ui-g-6 pad-left0 pad-top0">
+                            <label class="label-style pad-left20">Stop Charge Included</label>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.stopChargeIndicator">Yes</span>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.stopChargeIndicator === false">No</span>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.stopChargeIndicator === null">- -</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="line-details" *ngFor="let col of columns" pTooltip="{{col.name}}" tooltipPosition="top">
+                    {{col.name}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns">
+            <tr *ngIf="detailsModel.stopList.length > 0">
+                <td *ngFor="let col of columns" pTooltip="{{rowData[col.queryKey] ? rowData[col.queryKey] : rowData?.pointToolTip}}" tooltipPosition="top">
+                    <span>
+            {{rowData[col.queryKey]}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.stopType === 'City State'">
+            {{rowData?.city}}, {{rowData?.state}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.stopType === 'State'">
+            {{rowData?.state}}</span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.stopType === 'Address'">
+            <span>{{rowData?.addressLine1}},</span><br>
+                    <span>{{rowData?.city}},{{rowData?.state}},{{rowData?.postalCode}},{{rowData?.countryName}}</span>
+                    </span>
+                    <span *ngIf="col.queryKey === 'point' && (rowData?.stopType === '2-Zip' || rowData?.stopType === '3-Zip'
+          || rowData?.stopType === '5-Zip' || rowData?.stopType === '6-Zip' || rowData?.stopType === '9-Zip')">
+            {{rowData?.postalCode}}
+          </span>
+                    <span *ngIf="col.queryKey === 'point' && (rowData?.stopType === 'Location' || rowData?.stopType === 'Ramp'
+          || rowData?.stopType === 'Yard')">
+            <span>{{rowData?.locationName}}({{rowData?.locationCode}}),</span><br>
+                    <span>{{rowData?.addressLine1}},</span><br>
+                    <span>{{rowData?.city}},{{rowData?.state}},{{rowData?.postalCode}},{{rowData?.countryName}}</span>
+                    </span>
+                    <span *ngIf="col.queryKey === 'point' && rowData?.stopType === 'Country'">
+            {{rowData?.country}}
+          </span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="ui-g-12 rateTable stopCard tableBorder" *ngIf="detailsModel?.rateValues?.length > 0">
+    <p-table [columns]="detailsModel.rateTableColumnHeaders" [value]="detailsModel.rateValues">
+        <ng-template pTemplate="caption">
+            <div class="ui-g">
+                <div class="ui-g-9 table-heading pad-left20">Rate</div>
+                <div class=" ui-g-12 pad-left0 pad-right0 pad-top10 headingAlign"></div>
+                <div class="ui-g-12 pad-left0 pad-top10 line-height0">
+                    <div class="ui-g-8 pad-left20 pad-top0 pad-bot0">
+                        <div class="ui-g-6 pad-left0 pad-top0">
+                            <label class="label-style">Source Type</label>
+                            <span class="rate-values pad-left10">{{detailsModel?.lineHaulValues?.lineHaulSourceTypeName}}</span>
+                        </div>
+                        <div class="ui-g-6 pad-left0 pad-top0">
+                            <label class="label-style">Source Identifier</label>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.sourceID">{{detailsModel?.lineHaulValues?.sourceID}}</span>
+                            <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.sourceID">- -</span>
+                        </div>
+                        <div class="ui-g-6 pad-left0 pad-top0 " *ngIf="detailsModel.rateValues.length >= 2">
+                            <label class="label-style">Group Rate Type</label>
+                            <span class="rate-values pad-left10">{{detailsModel?.lineHaulValues?.groupRateType}}</span>
+                        </div>
+                        <div class="ui-g-6 pad-left0 pad-top0" *ngIf="detailsModel.rateValues.length >= 2 && detailsModel?.lineHaulValues?.groupRateType === 'Sum'">
+                            <label class="label-style">Group Rate Itemize</label>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.groupRateItemizeIndicator">Yes</span>
+                            <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.groupRateItemizeIndicator ===false">No</span>
+                        </div>
+                    </div>
+                    <div class="ui-g-4 pad-top0">
+                        <label class="label-style">Source Line Haul Identifier</label>
+                        <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.sourceLineHaulID">{{detailsModel?.lineHaulValues?.sourceLineHaulID}}</span>
+                        <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.sourceLineHaulID">- -</span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="line-details" *ngFor="let col of columns" pTooltip="{{col.name}}" tooltipPosition="top">
+                    {{col.name}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns">
+            <tr>
+                <ng-container *ngFor="let col of columns">
+                    <td *ngIf="!rowData[col.queryKey]  else currencyField" pTooltip="- -" tooltipPosition="top">
+                        <span>
+              - -
+            </span>
+                    </td>
+                    <ng-template #currencyField>
+                        <td *ngIf="(col.queryKey === 'chargeUnitTypeName' || col.queryKey === 'currencyCode') else normalField" pTooltip="{{data[col.queryKey]}}" tooltipPosition="top">
+                            <span>
+                {{data[col.queryKey]}}
+              </span>
+                        </td>
+                    </ng-template>
+                </ng-container>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="ui-g-12 pad-top0">
+    <div class=" ui-g-12 line-haul-heading pad-left0 stopCard pad-right0">
+        <p-table [columns]="detailsModel.rateTableColumnHeaders" [value]="detailsModel.rateValues">
+            <ng-template pTemplate="caption">
+                <div class="ui-g">
+                    <div class="ui-g-9 table-heading pad-left20">Additional Information</div>
+                    <div class="ui-g-12 pad-top10 headingAlign"></div>
+                    <div class="ui-g-12 addition-info-values pad-left0">
+                        <div class="ui-g-12 pad0 pad-left20">
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style">Bill To Code</label>
+                                <span *ngIf="detailsModel?.lineHaulValues?.billTos?.length">
+                  <span class="rate-values">
+                    <span class="overview-values pad-left10"
+                      *ngFor="let billtos of detailsModel?.lineHaulValues?.billTos; index as i">{{billtos?.billToName}}({{billtos.billToCode}})
+                      <span *ngIf="i !== detailsModel?.lineHaulValues?.billTos?.length - 1">,</span>
+                                </span>
+                                </span>
+                                </span>
+                                <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.billTos?.length">- -</span>
+                            </div>
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style">Hazmat Included</label>
+                                <span class="rate-values pad-left10">{{detailsModel?.lineHaulValues?.hazmatIncludedIndicator}}</span>
+                            </div>
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style pad-left1">Weight Range</label>
+                                <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.unitOfMeasurement?.lineHaulWeightRangeMinQuantity">{{detailsModel?.lineHaulValues?.unitOfMeasurement?.lineHaulWeightRangeMinQuantity}}
+                  - {{detailsModel?.lineHaulValues?.unitOfMeasurement?.lineHaulWeightRangeMaxQuantity}}
+                </span>
+                                <span class="rate-values" *ngIf="detailsModel?.lineHaulValues?.unitOfMeasurement?.lineHaulWeightRangeMinQuantity">
+                  {{detailsModel?.lineHaulValues?.unitOfMeasurement?.code}}
+                </span>
+                                <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.unitOfMeasurement?.lineHaulWeightRangeMinQuantity">-
+                  -</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 pad0 pad-left20 align-margin">
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style">Carrier Code</label>
+                                <span *ngIf="detailsModel?.carriersData?.length">
+                  <span class="rate-values">
+                    <span class="overview-values  pad-left10"
+                      *ngFor="let carrier of detailsModel?.carriersData; index as i">{{carrier?.LegalName}}({{carrier?.CarrierCode}})
+                      <span *ngIf="i !== detailsModel?.lineHaulValues?.carriers?.length - 1">,</span>
+                                </span>
+                                </span>
+                                </span>
+                                <span *ngIf="!detailsModel?.carriersData?.length" class="rate-values pad-left10">- -</span>
+                            </div>
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style">Fuel Included</label>
+                                <span class="rate-values pad-left10">{{detailsModel?.lineHaulValues?.fuelIncludedIndicator}}</span>
+                            </div>
+                            <div class="ui-g-4 pad0">
+                                <label class="label-style pad-left1">Mileage Range</label>
+                                <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.mileagePreference?.lineHaulMileageRangeMinQuantity">{{detailsModel?.lineHaulValues?.mileagePreference?.lineHaulMileageRangeMinQuantity}}
+                  - {{detailsModel?.lineHaulValues?.mileagePreference?.lineHaulMileageRangeMaxQuantity}}
+                  Miles</span>
+                                <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.mileagePreference?.lineHaulMileageRangeMinQuantity">-
+                  -</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-8 pad0 align-margin pull-right">
+                            <div class="ui-g-6 pad0 pad-bot5">
+                                <label class="label-style pad-left14">Auto Invoice</label>
+                                <span class="rate-values pad-left10">{{detailsModel?.lineHaulValues?.autoInvoiceIndicator}}</span>
+                            </div>
+                            <div class="ui-g-6 pad0 pad-left7">
+                                <label class="label-style">Mileage Preference</label>
+                                <span class="rate-values pad-left10" *ngIf="detailsModel?.lineHaulValues?.mileagePreference?.mileagePreferenceName">{{detailsModel?.lineHaulValues?.mileagePreference?.mileagePreferenceName}}</span>
+                                <span class="rate-values pad-left10" *ngIf="!detailsModel?.lineHaulValues?.mileagePreference?.mileagePreferenceName">-
+                  -</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.remove-icon {
+    color: $red;
+    cursor: pointer;
+    margin-left: 3em;
+}
+
+.text-line-div {
+    align-items: center;
+    display: flex;
+}
+
+
+.custom-float-label-multiple {
+    padding-right: 6em;
+}
+
+.remove-icon-pad {
+    padding-right: 0.3em;
+}
+
+.heading {
+    @include getTypographyStyles("h5");    
+}
+
+.heading6 {
+    @include getTypographyStyles("h6");    
+}
+
+.line-style {
+    opacity: 0.8;
+    margin-right: 0.8em;
+}
+

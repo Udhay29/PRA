@@ -1,0 +1,244 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.split-container {
+    height: 100%;
+    border-radius: 6px;
+    background-color: $white;
+    .split-header {
+        .header {
+            height: 61px;
+            border-bottom: solid 1px $grey-lite70;
+        }
+        .title {
+            top: 15px;
+            padding: 15px;
+            position: relative;
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+        .close-position {
+            float: right;
+            margin-right: 15px;
+            margin-top: 6px;
+            width: 44px;
+            height: 44px;
+            outline: none;
+            cursor: pointer;
+        }
+        .secondHeader {
+            height: 35px;
+            border-bottom: solid 1px $grey-lite70;
+        }
+        .secondTitle {
+            color: #939393;
+            font-weight: normal;
+            font-size: 12px;
+            position: relative;
+            top: 4px;
+            padding: 0px 17px;
+        }
+    }
+    .split-body {
+        width: 100%;
+        padding: 10px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .default-height {
+        height: calc(100vh - 337px);
+    }
+    .split-height {
+        height: calc(100vh - 337px);
+    }
+    .split-footer {
+        height: 60px;
+        position: relative;
+        border-top: solid 1px $grey-lite70;
+    }
+}
+
+.labelText {
+    font-size: 12px;
+    color: #939393;
+}
+
+.timeLabel {
+    color: #444444;
+    font-size: 13px;
+    padding-left: 5px;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+}
+
+.button-align {
+    margin-top: 13px;
+    margin-right: 15px;
+}
+
+.ui-inputgroup>.ui-inputtext:not(:last-child) {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-right: 1px solid #c9c9c9;
+}
+
+.cargoReleaseBu /deep/.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
+    width: 100% !important;
+}
+
+.cargoRelease /deep/ .ui-selectbutton .ui-button.ui-state-default {
+    min-width: 155px !important;
+}
+
+.displayIcon {
+    display: block;
+    color: $grey-dark66;
+}
+
+.width10 {
+    width: 10px;
+    border-right: 1px solid transparent;
+}
+
+.codesdisplaymiddle {
+    height: 30vh;
+    padding-top: 20vh;
+}
+
+.minimum-column-width {
+    width: 190px;
+    white-space: initial;
+    word-break: break-word;
+    border-right: 1px solid transparent;
+}
+.hidelabel {
+    display: none;
+}
+.optional {
+    position: absolute;
+    right: 20px;
+    color: $black-opacity30;    
+}
+.businessAlign {
+    margin-top: -4px;
+}
+.header-bold {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+}
+
+.section-header {
+    @include getTypographyStyles("h3");
+}
+
+.text-field-float {
+    .ui-float-label {
+        margin-top: 17px;
+        label {
+            margin-top: 0px !important;
+            top: 30%;
+            left: 17px;
+        }
+        input.ui-state-filled~label,
+        input:focus~label {
+            top: calc(-.75em - 3px);
+            left: 15px;
+            font-size: 12px;
+        }
+    }
+}
+
+.currency-field-float {
+    .ui-float-label {
+        margin-top: 17px;
+        label {
+            top: 50%;
+        }
+        input.ui-state-filled~label,
+        input:focus~label {
+            top: calc(-.75em - 3px);
+            left: 10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.addon-error {
+    span {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9 !important;
+    }
+    input {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9 !important;
+        border-right: 1px solid red !important;
+    }
+    /deep/ .ui-inputtext.ui-state-default{
+        border-color: #cc2d24 !important;
+        background-color: #faeae9 !important;
+        border-right: 1px solid red !important;
+    }
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.buErrorAlign {
+    position: relative;
+    top: 0px;
+}
+
+.buErrorAlign {
+    /deep/.ui-message.ui-messages-error {
+        max-height: 20px;
+    }
+}
+.buMessageAlign{
+    position: relative;
+    bottom: 7px;
+    float:left;
+}
+.displaycheck{
+    padding-bottom: 5px;
+}
+
+.message-height {
+    height: 5px;
+}
+.div-height {
+    max-height: 20px;
+}
+.leftPlace {
+    left: 32px;
+}
+.ui-float-label .ui-inputwrapper-focus ~ label.leftPlace,
+.ui-float-label .ui-inputwrapper-filled ~ label.leftPlace {
+    left: 0.5em;
+}  
+.date-field-float {
+    label {
+      margin-top: 3px !important;
+      top: 28%;
+      left: 34px;
+    }
+    .ui-inputwrapper-focus ~ label {
+      top: calc(-0.75em - 3px);
+      left: 15px !important;
+      font-size: 12px;
+    }
+    .ui-inputwrapper-filled ~ label {
+      top: calc(-0.75em - 3px);
+      left: 15px !important;
+      font-size: 12px;
+    }
+    /deep/.ui-datepicker {
+      z-index: 9999 !important;
+    }
+}

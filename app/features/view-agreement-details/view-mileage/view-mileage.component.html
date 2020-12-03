@@ -1,0 +1,136 @@
+<div [ngClass]="{'loader': viewMileageModel.pageLoading }" [appJbhLoader]="viewMileageModel.pageLoading"></div>
+<div class="ui-g ui-fluid viewMileageGrid">
+    <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!viewMileageModel.isFilterEnabled)}">
+        <app-mileage-filter (loadDataGrid)="filterGridData($event)" [agreementID]="agreementID"> </app-mileage-filter>
+    </div>
+    <div class="ui-g-9" [ngClass]="{'ui-g-9': viewMileageModel.isFilterEnabled, 'ui-g-6': viewMileageModel.isSplitView, 'ui-g-12': !viewMileageModel.isSplitView  && !viewMileageModel.isFilterEnabled, 'noresultHeight': viewMileageModel.noResultFoundFlag}">
+        <div class="noInfoMessage" *ngIf="viewMileageModel?.gridRows.length === 0 && viewMileageModel.noResultFoundFlag && !viewMileageModel.isEmptySearch">
+            <div class="displaymiddle mar-bot20">
+                <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                <button data-attr="viewagreement-viewMileage-noInfoCreateProgram-button" type="text" appShortcut="ctrl+alt+1" pButton label="Create Program" class="ui-button-primary mar-top5 mar-left5" (click)="onClickCreateMileage()"></button>
+            </div>
+        </div>
+        <p-table #viewMilageTable appTableKeynav [tableRef]="viewMilageTable" [ngClass]="{ 'no-table':
+      (!viewMileageModel.gridDataLength && !viewMileageModel.isEmptySearch),'tableWrapper': (!viewMileageModel.isSplitView && viewMileageModel.gridRows.length > 0), 'tableSplitWrapper': (viewMileageModel.gridRows.length > 0 && viewMileageModel.isSplitView)}"
+            [value]="viewMileageModel.gridRows" [rows]=viewMileageModel?.gridSize [lazy]="true" [paginator]="setPaginator()" [scrollable]="true" scrollHeight="calc(100vh - 305px)" [resizableColumns]="true" columnResizeMode="expand" [first]="viewMileageModel.pageStart"
+            [rowsPerPageOptions]="[25,50,75,100]" [pageLinks]="5" (onLazyLoad)="loadGridData($event)" (onRowSelect)="onRowSelect($event)" [totalRecords]="viewMileageModel?.gridDataLength" selectionMode="single">
+            <ng-template pTemplate="caption">
+                <div class="ui-g table-caption pad-bot0">
+                    <div class="tableHeading" [ngClass]="{'ui-md-6': !viewMileageModel.isSplitView, 'ui-md-3': viewMileageModel.isSplitView}">
+                        <span class="tableName alignHeading">Program</span>
+                    </div>
+                    <div class="mar-top9 pad0" [ngClass]="{'ui-md-6': !viewMileageModel.isSplitView, 'ui-md-9': viewMileageModel.isSplitView}">
+                        <div class="grid-icons iconsHolder pull-right">
+                            <div class="mar-top5">
+                                <span class="filter-menu-icon mar-top5">
+                    <button data-attr="viewagreement-viewMileage-filter-button"  [ngClass]="{'filterColor': viewMileageModel.filterFlag}" class="icon-Filter_Solid icon-button iconColorChange pad0"
+                    (click)="onFilterClick()" ></button>
+                  </span>
+                                <span class="filter-menu-icon mar-top5">
+                      <button data-attr="viewagreement-viewMileage-menuOverflow-button"  [ngClass]="{'hidden': !viewMileageModel.gridRows.length}"  class="icon-Menu_Overflow icon-button iconColorChange pad0" (click)="onClickMileageOverflowIcon(menuOverlay, $event)"
+                      ></button>
+                  </span>
+                            </div>
+                            <p-menu data-attr="viewagreement-viewMileage-popup-menu" #menuOverlay #menu popup="popup" [model]="viewMileageModel?.menuItemList" styleClass="mileageMenuOverlay menu-overlay font12" appendTo="body">
+                                <a data-attr="viewagreement-viewMileage-excel-a" #downloadExcel></a>
+                            </p-menu>
+                        </div>
+                        <div class="ui-inputgroup getGridValuesInput searchHolder search-field mar-right10 pull-right">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input data-attr="viewagreement-viewMileage-search-input" type="text" pInputText placeholder="Search" (keyup)="getGridValues($event)">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="viewMileageModel?.gridRows.length > 0">
+                    <col *ngFor="let thisCol of viewMileageModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="pad0 mar0 table-header" *ngIf="viewMileageModel.gridRows.length > 0">
+                    <th class="header-column-width displaybold " pResizableColumn *ngFor="let col of viewMileageModel.tableColumns" [pSortableColumn]="col.label">
+                        {{col.label}}
+                        <span>
+                <p-sortIcon [field]="col.label"></p-sortIcon>
+              </span>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="viewMileageModel.noResultFoundFlag && viewMileageModel.isEmptySearch">
+                    <td colspan="8">
+                        <div class=" message-wrapper text-gray">
+                            <span class="display-middle display-3">No results found</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data class="tableHeight" let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="data" [attr.data-attr]="'viewagreement-mileage-row-tr-' +  rowIndex" *ngIf="viewMileageModel.gridRows.length > 0">
+                    <td class="mincolwidth  ui-resizable-column" *ngFor="let thisCol of viewMileageModel.tableColumns" tooltipPosition="top" pTooltip="{{data[thisCol.field]}}">
+                        <span *ngIf="data[thisCol.field] && !thisCol.isArray" class="capitalize-first-word">{{data[thisCol.field]}}</span>
+
+                        <div *ngIf="thisCol.field === 'contracts' && thisCol.isArray" class="capitalize-first-word">
+                            <div *ngFor="let col of data['contracts']; let k=index" class="showFilter mincolwidth width-inherit">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+                            <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+
+                        <div *ngIf="thisCol.field === 'sections' && thisCol.isArray" class="capitalize-first-word">
+                            <div *ngFor="let col of data['sections']; let k=index" class="showFilter mincolwidth width-inherit">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+                            <span *ngIf="!data['sections']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+                        </div>
+
+                        <div *ngIf="thisCol.field === 'businessUnits' && thisCol.isArray" class="capitalize-first-word">
+                            <div *ngFor="let col of data['businessUnits']; let k=index">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+                            <span *ngIf="!data['businessUnits']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+                        </div>
+
+                        <div *ngIf="thisCol.field === 'carriers' && thisCol.isArray" class="capitalize-first-word">
+                            <div class="mincolwidth  width-inherit" *ngFor="let col of data['carriers']; let k=index">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+                            <span *ngIf="!data['carriers']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+                        </div>
+
+                        <div *ngIf="thisCol.field === 'systemParameters' && thisCol.isArray" class="capitalize-first-word">
+                            <div *ngFor="let col of data['systemParameters']; let k=index">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+                            <span *ngIf="!data['systemParameters']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+                        </div>
+
+                        <div *ngIf="thisCol.field === 'mileageProgramNoteText' && thisCol.isArray" class="capitalize-first-word showFilter mincolwidth width-inherit">
+                            <span>{{data[thisCol.field]}}</span>
+                            <span *ngIf="!data['mileageProgramNoteText']" pTooltip="- -" tooltipPosition="top">--</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <tr *ngIf="(!viewMileageModel.isSplitView && viewMileageModel.gridRows.length > 0) || viewMileageModel.isEmptySearch">
+                    <td colspan="12">
+                        <span class="pull-right pad-right10 pad10 pad-top0">
+                <button data-attr="viewagreement-viewMileage-createProgram-button" *ngIf="!viewMileageModel.isSplitView" type="text" pButton label="Create Program" appShortcut="ctrl+alt+1" class="ui-button-primary mar-top0 mar-left5"
+                  (click)="onClickCreateMileage()"></button>
+              </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="viewMileageModel.isSplitView">
+        <app-mileage-details (closeClickEvent)="closeClick($event)" (closeClickEventOnInactivate)="closeOnInactivate($event)" [agreementId]="agreementID" [uniqueDocID]="viewMileageModel.UniqueDocID"></app-mileage-details>
+    </div>
+</div>

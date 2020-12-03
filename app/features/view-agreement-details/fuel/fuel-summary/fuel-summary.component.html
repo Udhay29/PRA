@@ -1,0 +1,254 @@
+<div class="ui-g mar-left10">
+  <div [ngClass]="{'loader': fuelSummaryModel?.isTableDataLoading}" [appJbhLoader]="fuelSummaryModel?.isTableDataLoading"></div>
+  <form [formGroup]="fuelSummaryModel?.fuelSummaryForm" class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <span class="ui-float-label pad0">
+        <p-selectButton data-attr="viewagreement-fuelsummary-programType-selectbutton" [options]="fuelSummaryModel.fuelProgramType" formControlName="programType" name="programType"></p-selectButton>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <h2 class="mar-bot0">Program Summary</h2>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 mar-bot15">
+      <span class="ui-float-label ui-md-4 ui-lg-4 pad-bot0 ui-g-4 text-field-float">
+        <input data-attr="viewagreement-fuelsummary-progname-input" type="text" class="ui-md-12 ui-g-12 ui-lg-12 pad-left10" pInputText autocomplete="off" formControlName="programName"
+          name="programName" spellcheck="false" maxlength="80" autocomplete="false" />
+        <label for="programName">Program Name</label>
+        <div class="clearFix" [ngClass]="{'error-height': fuelSummaryModel.fuelSummaryForm.get('programName').touched && fuelSummaryModel.fuelSummaryForm.get('programName')['errors']?.required}">
+          <p-message severity="error" text="Provide Program Name" *ngIf="fuelSummaryModel.fuelSummaryForm.get('programName').touched && fuelSummaryModel.fuelSummaryForm.get('programName')['errors']?.required"></p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 pad-bot0 date-field-float">
+        <p-calendar data-attr="viewagreement-fuelsummary-effDate-calendar" formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" id="fuelEffectiveDate"
+          dateFormat="mm/dd/yy" [showOnFocus]="false" [minDate]="fuelSummaryModel.effectiveMinDate" [maxDate]="fuelSummaryModel.effectiveMaxDate"
+          (onSelect)="onDateSelected($event, 0)" (onInput)="onTypeDate($event, 'effective')"></p-calendar>
+        <label for="effectiveDate" class="leftPlace">Effective Date</label>
+        <div class="clearFix" [ngClass]="{'error-height': (fuelSummaryModel.fuelSummaryForm.get('effectiveDate').touched && fuelSummaryModel.fuelSummaryForm.get('effectiveDate')['errors']?.required) || (fuelSummaryModel.fuelSummaryForm.get('effectiveDate').touched && fuelSummaryModel.fuelSummaryForm.get('effectiveDate')['errors']?.invalid)}">
+          <p-message severity="error" text="Provide valid date" *ngIf="fuelSummaryModel.fuelSummaryForm.get('effectiveDate').touched && fuelSummaryModel.fuelSummaryForm.get('effectiveDate')['errors']?.required"></p-message>
+          <p-message severity="error" text="Provide valid date" *ngIf="fuelSummaryModel.fuelSummaryForm.get('effectiveDate').touched && fuelSummaryModel.fuelSummaryForm.get('effectiveDate')['errors']?.invalid"></p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 pad-bot0 date-field-float">
+        <p-calendar data-attr="viewagreement-fuelsummary-expDate-calendar" id="fuelExpirationDate" formControlName="expirationDate" [showIcon]="true" name="expirationDate"
+          dateFormat="mm/dd/yy" [showOnFocus]="false" [minDate]="fuelSummaryModel.expirationMinDate"
+          (onSelect)="onDateSelected($event, 1)" [maxDate]="fuelSummaryModel.expirationMaxDate" (onInput)="onTypeDate($event, 'expiration')"></p-calendar>
+        <label for="expirationDate" class="leftPlace">Expiration Date</label>
+        <div class="clearFix" [ngClass]="{'error-height': (fuelSummaryModel.fuelSummaryForm.get('expirationDate').touched && fuelSummaryModel.fuelSummaryForm.get('expirationDate')['errors']?.required) || (fuelSummaryModel.fuelSummaryForm.get('expirationDate').touched && fuelSummaryModel.fuelSummaryForm.get('expirationDate')['errors']?.invalid)}">
+          <p-message severity="error" text="Provide valid date" *ngIf="fuelSummaryModel.fuelSummaryForm.get('expirationDate').touched && fuelSummaryModel.fuelSummaryForm.get('expirationDate')['errors']?.required"></p-message>
+          <p-message severity="error" text="Provide valid date" *ngIf="fuelSummaryModel.fuelSummaryForm.get('expirationDate').touched && fuelSummaryModel.fuelSummaryForm.get('expirationDate')['errors']?.invalid"></p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 multiselect-field mar-bot13">
+      <span class="ui-float-label ui-md-4 pad-bot0 ui-lg-4 ui-g-4">
+        <p-multiSelect data-attr="viewagreement-fuelsummary-businessUnit-multiSelect" formControlName="businessUnit" [resetFilterOnHide]="true" [style]="{'width': '100%'}"
+          [panelStyle]="{'width': '100%'}" name="businessUnit" defaultLabel="" [options]="fuelSummaryModel.businessUnitServiceOfferingList"
+          (onChange)="onBusinessUnitChange()" (onPanelHide)="onMultiSelectBlur()"></p-multiSelect>
+        <label for="businessUnit" class="business-label">Business Unit and Service Offerings</label>
+        <div [ngClass]="{'error-height': fuelSummaryModel?.fuelSummaryForm
+        .get('businessUnit').touched && fuelSummaryModel?.fuelSummaryForm.get('businessUnit')['errors']?.required}">
+          <p-message severity="error" text="Provide Business Unit and Service Offerings" *ngIf="fuelSummaryModel?.fuelSummaryForm
+        .get('businessUnit').touched && fuelSummaryModel?.fuelSummaryForm.get('businessUnit')['errors']?.required"></p-message>
+        </div>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-bot15">
+      <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 typeahead-float-nested-label mar-bot10 pad0">
+        <p-autoComplete data-attr="viewagreement-fuelsummary-carriers-autocomplete" formControlName="carriers" name="carriers" [multiple]="true" size="75" field="carrierDisplayName"
+          [forceSelection]="true" spellcheck="false" (completeMethod)="onSearchCarrier($event)" (onClear)="onClearValues('carriers')"
+          [suggestions]="fuelSummaryModel.carrierList" emptyMessage="No results found"></p-autoComplete>
+        <label class="ui-md-12 ui-lg-12 ui-g-12 pad0" for="carriers">
+          <span>Carriers</span>
+          <span class="pull-right mar-right20">optional</span>
+        </label>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <span class="bottom-line ui-md-12 ui-g-12 ui-lg-12 pad0"></span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 mar-bot10 pad-top3">
+      <span class="ui-float-label pad0 mar-top20">
+        <label class="top-10" for="affiliationLevel">Level</label>
+        <p-selectButton data-attr="viewagreement-fuelsummary-affiliationLevel-selectbutton" [options]="fuelSummaryModel.affiliationLevel" formControlName="affiliationLevel" name="affiliationLevel"
+          (onChange)="affiliationChanged($event)"></p-selectButton>
+        <div [ngClass]="{'error-height': fuelSummaryModel?.fuelSummaryForm
+        .get('affiliationLevel').touched && fuelSummaryModel?.fuelSummaryForm.get('affiliationLevel')['errors']?.required}">
+          <p-message severity="error" text="Provide Affiliation Level" *ngIf="fuelSummaryModel?.fuelSummaryForm
+        .get('affiliationLevel').touched && fuelSummaryModel?.fuelSummaryForm.get('affiliationLevel')['errors']?.required"></p-message>
+        </div>
+      </span>
+    </div>
+    <div *ngIf="fuelSummaryModel.isShowContract">
+      <div class="ui-g-12">
+        <p-table #fuelleveltable (onFilter)="isEmptyTable($event)" [value]="fuelSummaryModel.itemList" [(selection)]="fuelSummaryModel.selectedItemList"
+          (onRowSelect)="fuelSummaryModel.fuelSummaryForm.get('selectedListData').markAsDirty(); getContractBillToList(); sectionLevelValidation()"
+          [rows]="25" [rowsPerPageOptions]="[25,75,200]" [pageLinks]="5" [globalFilterFields]="fuelSummaryModel.searchColumns"
+          [filterDelay]="0" [scrollable]="true" scrollHeight="calc(100vh - 450px)" (onRowUnselect)="fuelSummaryModel.fuelSummaryForm.get('selectedListData').markAsDirty(); getContractBillToList()"
+          [resizableColumns]="true" columnResizeMode="expand" (onHeaderCheckboxToggle)="fuelSummaryModel.fuelSummaryForm.get('selectedListData').markAsDirty(); getContractBillToList(); sectionLevelValidation()"
+          class="itemListTable" selectionMode="multiple" datakey="customerAgreementContractID">
+          <ng-template pTemplate="caption">
+            <div class="ui-g table-caption">
+              <div class="ui-md-9 ui-lg-9 mar-top10">
+                <span class="tableName">{{fuelSummaryModel.tableLabel}}</span>
+              </div>
+              <div class="ui-md-3 ui-lg-3">
+                <div class="ui-g">
+                  <div class=" ui-md-11 ui-lg-11 ui-inputgroup">
+                    <span class="ui-inputgroup-addon">
+                      <em class="fa fa-search"></em>
+                    </span>
+                    <input data-attr="viewagreement-fuelsummary-search-input" #consecsearch class="search-table" id="text" appShortcut="" [ngModelOptions]="{standalone: true}"
+                      autocomplete="off" type="text" pInputText placeholder="Search" (input)="fuelleveltable.filterGlobal($event.target.value, 'contains')"
+                      [(ngModel)]="fuelSummaryModel.searchInputValue" >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup *ngIf="fuelSummaryModel?.itemList.length > 0 && !fuelSummaryModel.noRecordMsgFlag">
+              <col>
+              <col *ngFor="let thisCol of fuelSummaryModel.tableColumnsList">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr *ngIf="fuelSummaryModel?.itemList.length === 0 || fuelSummaryModel.noRecordMsgFlag">
+              <td colspan="2" style="width:100%;">
+                <div class="displaymiddle mar-bot20" *ngIf="!fuelSummaryModel.isTableDataLoading">
+                  <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                </div>
+              </td>
+            </tr>
+            <tr class="pad0 mar0 table-header" *ngIf="fuelSummaryModel?.itemList.length > 0 && !fuelSummaryModel.noRecordMsgFlag">
+              <th class="checkbox-column table-header-checkbox">
+                <p-tableHeaderCheckbox   data-attr="viewagreement-fuelsummary-row-checkbox" appShortcut focusKey="alt+1"></p-tableHeaderCheckbox>
+              </th>
+              <th *ngFor="let thisCol of fuelSummaryModel.tableColumnsList" pResizableColumn class="header-column-width tooltip"
+                [pSortableColumn]="thisCol.key" pTooltip={{thisCol.label}} tooltipPosition="top">
+                <span class="label">{{thisCol.label}}</span>
+                <span>
+                  <p-sortIcon [field]="thisCol.key" aria-label="Activate to sort" aria-labelDesc="Activate to sort in descending order"
+                    aria-labelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </span>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" class="tableHeight">
+            <tr [pSelectableRow]="rowData">
+              <td class="checkbox-column width10">
+                <p-tableCheckbox  [attr.data-attr]="'viewagreement-fuelsummary-row-checkbox-' +  rowIndex" [value]="rowData" (click)="focusOn($event)"></p-tableCheckbox>
+              </td>
+              <td class="row-column-width tooltip ui-resizable-column" *ngFor="let thisCol of fuelSummaryModel.tableColumnsList"
+                pTooltip={{data[thisCol.key]}} tooltipPosition="top">
+                <span class="capitalize-first-word">{{ data[thisCol.key] }}</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad-top15" *ngIf="fuelSummaryModel.isShowAgreementBillTO || fuelSummaryModel?.isShowEmptyBillTo">
+      <span class="label-style">optional</span>
+      <p-table #billtotable (onFilter)="isEmptyTableBillTo($event)" [resizableColumns]="true" columnResizeMode="expand"
+        [scrollable]="true" class="affiliation-table" [value]="fuelSummaryModel.billToList" [columns]="fuelSummaryModel.tableColumns"
+        [(selection)]="fuelSummaryModel.selectedList" [globalFilterFields]="['display', 'section', 'contract']"
+        [filterDelay]="0" (onHeaderCheckboxToggle)="fuelSummaryModel.fuelSummaryForm.get('selectedData').markAsDirty(); getAgreementBillTo()"
+        scrollHeight="25vh" (onRowSelect)="fuelSummaryModel.fuelSummaryForm.get('selectedData').markAsDirty(); getAgreementBillTo();"
+        (onRowUnselect)="fuelSummaryModel.fuelSummaryForm.get('selectedData').markAsDirty(); getAgreementBillTo();" datakey="display">
+        <ng-template pTemplate="caption">
+          <div class="ui-g table-caption">
+            <div class="ui-md-9 ui-lg-9">
+              <span class="tableName">Bill To Accounts <span *ngIf="fuelSummaryModel.billToList.length">({{fuelSummaryModel?.billToList.length}})</span></span>
+            </div>
+            <div class="ui-md-3 ui-lg-3" *ngIf="fuelSummaryModel.billToList.length">
+              <div class="searchHolder">
+                <div class="ui-inputgroup search-field">
+                  <span class="ui-inputgroup-addon">
+                    <em class="fa fa-search"></em>
+                  </span>
+                  <input id="codeSearchText" appShortcut="" autocomplete="off" type="text" pInputText placeholder="Search"
+                    [ngModelOptions]="{standalone: true}" (input)="billtotable.filterGlobal($event.target.value, 'contains')"
+                    data-attr="viewagreement-fuelsummary-search-input" [(ngModel)]="fuelSummaryModel.billToSearchInputValue">
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup *ngIf="fuelSummaryModel?.billToList.length > 0 && !fuelSummaryModel.noRecordMsgFlagBillTo">
+            <col>
+            <col *ngFor="let thisCol of fuelSummaryModel.tableColumns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr *ngIf="fuelSummaryModel?.billToList.length === 0 || fuelSummaryModel.noRecordMsgFlagBillTo">
+            <td colspan="2" style="width:100%;">
+              <div class="displaymiddle mar-bot20" *ngIf="!fuelSummaryModel.isTableDataLoading">
+                <h4 class="emptyMsgText mar0 mar-bot10" *ngIf="!fuelSummaryModel?.isShowEmptyBillTo">No information was
+                  found to display</h4>
+                <h4 class="emptyMsgText mar0 mar-bot10" *ngIf="fuelSummaryModel?.isShowEmptyBillTo">Please select
+                  {{fuelSummaryModel.fuelSummaryForm.get('affiliationLevel').value}} to view and select Bill to
+                  Accounts</h4>
+              </div>
+            </td>
+          </tr>
+          <tr class="pad0 mar0" *ngIf="fuelSummaryModel?.billToList.length > 0 && !fuelSummaryModel.noRecordMsgFlagBillTo">
+            <th class="checkbox-column table-header-checkbox">
+              <p-tableHeaderCheckbox  data-attr="viewagreement-fuelsummary-billtorow-checkbox" appShortcut focusKey="alt+1"></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let thisCol of fuelSummaryModel?.tableColumns" pResizableColumn class="tooltip"
+              [pSortableColumn]="thisCol.key" pTooltip={{thisCol.label}} tooltipPosition="top" class="table-header">
+              {{thisCol.label}}
+              <span>
+                <p-sortIcon [field]="thisCol.key" aria-label="Activate to sort" aria-labelDesc="Activate to sort in descending order"
+                  aria-labelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </span>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex">
+          <tr [pSelectableRow]="rowData">
+            <td class="checkbox-column width10">
+              <p-tableCheckbox [attr.data-attr]="'viewagreement-fuelsummary-billtorow-checkbox-' +  rowIndex" [value]="rowData"></p-tableCheckbox>
+            </td>
+            <td class="ui-resizable-column" *ngFor="let thisCol of fuelSummaryModel.tableColumns">
+              <span class="capitalize-first-word newLine" class="tooltip" pTooltip={{data[thisCol.value]}}
+                tooltipPosition="top">{{ data[thisCol.value] }}</span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 notes-position">
+      <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top20 textarea-float">
+        <textarea  data-attr="viewagreement-fuelsummary-notes-textarea" class="noresize" [rows]="4" pInputTextarea formControlName="notes" name="notes" spellcheck="false"
+          maxlength="6000"></textarea>
+        <label class="ui-md-12 ui-lg-12 ui-g-12 textAreaValue" for="notes">Notes
+          <span class="pull-right mar-right20">optional</span>
+        </label>
+      </div>
+    </div>
+    <div class="pull-right mar-top20 mar-bot20">
+      <button type="button" pButton label="Cancel" (click)="onCancel()" class="ui-button-secondary mar-right15"
+        data-attr="viewagreement-fuelsummary-cancel-button" appShortcut="ctrl+alt+2"></button>
+      <button type="button" pButton label="Next" (click)="onNext()" class="ui-button-primary mar-right15" data-attr="viewagreement-fuelsummary-save-button"
+        appShortcut="ctrl+alt+1"></button>
+    </div>
+  </form>
+  <p-dialog data-attr="viewagreement-fuelsummary-confirmation-dialog" [(visible)]="fuelSummaryModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+    [minY]="70" [baseZIndex]="10005" [closable]="false">
+    <p-header>
+      <span class="capitalizeTitle">Confirmation</span>
+      <a data-attr="viewagreement-fuelsummary-popupcancel-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)"
+        role="button" (click)="popupCancel()">
+        <span class="pi pi-times"></span>
+      </a>
+    </p-header>
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+      <button type="button" pButton (click)="popupCancel()" class="ui-button-secondary" label="No" data-attr="viewagreement-fuelsummary-popupno-button"></button>
+      <button type="button" pButton (click)="(fuelSummaryModel.selectedAffiliationValue !== fuelSummaryModel.fuelSummaryForm.get('affiliationLevel').value) ?
+      affiliationChangeYes() : removeDirty()" label="Yes" class="ui-button-primary" data-attr="viewagreement-fuelsummary-popupyes-button"></button>
+    </p-footer>
+  </p-dialog>
+</div>

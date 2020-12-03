@@ -1,0 +1,91 @@
+<div class="ui-g ui-fluid filterClass">
+    <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!contractsModel.isFilterEnabled)}">
+        <app-contracts-filter (loadData)="filterGridData()" [agreementID]="agreementID" [sourceData]="contractsModel.sourceData">
+        </app-contracts-filter>
+    </div>
+    <div [ngClass]="{'ui-g-9': contractsModel.isFilterEnabled, 'ui-g-6': contractsModel.isSplitView, 'ui-g-12': !contractsModel.isSplitView  && !contractsModel.isFilterEnabled }" class="page-scroll">
+        <p-table class="full-width tableWrapper contractListTable" [ngClass]="{'data':!contractsModel.noResultFoundFlag,'noData':contractsModel.noResultFoundFlag}" [value]="contractsModel.contractList" selectionMode="single" [paginator]="contractsModel.isPaginatorFlag"
+            (onLazyLoad)="loadGridData($event)" [rows]="contractsModel.tableSize" [lazy]="true" [loading]="contractsModel.isShowLoader" [customSort]="true" [rowsPerPageOptions]="[25,50,75,100]" [first]="contractsModel.pageStart" [totalRecords]="contractsModel.gridDataLength"
+            (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" scrollable="true" scrollHeight="calc(100vh - 427px)" [resizableColumns]="true" columnResizeMode="expand">
+            <ng-template pTemplate="caption">
+                <div class="ui-g table-caption pad-bot0 pad-top13">
+                    <div [ngClass]="{'ui-md-6': contractsModel.isSplitView && !contractsModel.filterFlag, 'ui-md-8': !contractsModel.isSplitView && !contractsModel.filterFlag,
+          'ui-md-7': contractsModel.filterFlag && !contractsModel.isSplitView}" class="mar-top10">
+                        <span class="tableName">Contracts</span>
+                    </div>
+                    <div class="pad-top0" [ngClass]="{'ui-md-6': contractsModel.isSplitView && !contractsModel.filterFlag, 'ui-md-4': !contractsModel.isSplitView && !contractsModel.filterFlag,
+          'ui-md-5': contractsModel.filterFlag && !contractsModel.isSplitView }" class="mar-top10">
+                        <div class="ui-inputgroup ui-md-8 ui-g-12 pad-top0 getGridValuesInput">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+                            <input data-attr="viewagreement-contract-searchbox-input" #contractSearchBox type="text" pInputText placeholder="Search" appShortcut="alt+s" (keydown)="preventSearch()" (keyup)="getGridValues($event)" (focus)="checkIfContractFormIsTouched(true)">
+                        </div>
+                        <div class="iconsHolder ui-md-4 ui-g-12 pad-top0">
+                            <div appShortcut class="grid-icons ui-md-12 pad-top0">
+                                <div class="ui-md-5 ui-g-5">
+                                    <button data-attr="viewagreement-contract-filter-button" (click)="onFilterClick()" appShortcut="ctrl+alt+f" [ngClass]="{'filterColor': contractsModel.isFilterEnabled}" class="icon-Filter_Solid icon-button iconColorChange" appShortcut="ctrl+alt+f"></button>
+                                </div>
+                                <div class="ui-md-7 ui-g-7">
+                                    <button data-attr="viewagreement-contract-menu-button" appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button iconColorChange" (click)="menu.toggle($event)" appShortcut="ctrl+alt+o"></button>
+                                </div>
+                            </div>
+                            <p-menu data-attr="viewagreement-contract-menu-menu" #menuOverlay #menu popup="popup" [model]="contractsModel.dropdownValue" styleClass="menu-overlay" appendTo="body">
+
+                            </p-menu>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="contractsModel?.tableColumns.length > 0">
+                    <col *ngFor="let thisCol of contractsModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr *ngIf="!contractsModel.noResultFoundFlag">
+                    <th *ngFor="let thisCol of contractsModel.tableColumns" pResizableColumn [pSortableColumn]="thisCol.name" pTooltip={{thisCol.name}} tooltipPosition="top">
+                        {{thisCol.name}}
+                        <p-sortIcon data-attr="viewagreement-contract-sortclick-sortIcon-{{thisCol.name}}" [field]="thisCol.name"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="contractsModel.noResultFoundFlag">
+                    <td colspan="8">
+                        <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+                            <span class="display-middle display-3">No results found</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr [attr.data-attr]="'viewagreement-contract-row-tr-' +  rowIndex" [pSelectableRow]="rowData" *ngIf="contractsModel.gridDataLength !== 0">
+                    <td *ngFor="let col of contractsModel.tableColumns" pTooltip={{rowData[col.property]}} tooltipPosition="top" class="textwrap ui-resizable-column">
+                        {{rowData[col.property]}}
+                    </td>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <tr>
+                    <td colspan="12">
+                        <span *ngIf="!contractsModel.isSplitView" class="pull-right pad-right10 pad4">
+            <button data-attr="viewagreement-contract-createcontract-button" type="text" pButton label="Create Contract" (click)="onClickCreateContract()" class="ui-button-primary marg-top5 mar-left5"></button>
+          </span>
+                    </td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="contractsModel.isSplitView && !contractsModel.showCreateContracts">
+        <app-contracts-detail [viewScreenData]="contractsModel.detailsValue" (closeClickEvent)="closeClick($event)" (loaderEvent)="loader($event)"></app-contracts-detail>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="contractsModel.isSplitView && contractsModel.showCreateContracts">
+        <app-contract-item #contractItemRef (closeClickEvent)="closeClick($event)" (closeClickOnCreate)="closeClickOnCreate($event)" [agreementID]="agreementID" [dataFlag]="contractsModel.noResultFoundFlag"></app-contract-item>
+    </div>
+</div>
+<p-dialog data-attr="viewagreement-contract-confirmation-dialog" header="Save Changes?" [(visible)]="contractsModel.popUpForFilterClick" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button data-attr="viewagreement-contract-popupno-button" type="button" pButton (click)="onClickPopupNo()" class="ui-button-secondary" label="No"></button>
+        <button data-attr="viewagreement-contract-popupyes-button" type="button" pButton (click)="onClickPopupYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

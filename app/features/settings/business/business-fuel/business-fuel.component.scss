@@ -1,0 +1,8 @@
+.settingsWrapper {
+    /deep/ p-tabview .ui-tabview.ui-tabview-top > .ui-tabview-nav {
+        border: none !important;
+    }
+}
+.settingsWrapper /deep/ p-breadcrumb .ui-breadcrumb ul .ui-breadcrumb-chevron {
+    margin-top: 5px !important;
+}

@@ -1,0 +1,238 @@
+<div [ngClass]="{'loader': rateModel.loading}" [appJbhLoader]="rateModel.loading"></div>
+<div class="ui-g ui-fluid contract-custom-cls rateAlign">
+  <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!rateModel.isFilterEnabled)}">
+    <app-rates-filter (filterSelected)="loadGridBasedOnFilter($event)">
+    </app-rates-filter>
+  </div>
+  <div [ngClass]="{'ui-g-9': rateModel.isFilterEnabled, 'ui-g-12': !rateModel.isFilterEnabled }">
+    <p-table #dt name="pTable" [rows]=rateModel?.tableSize [rowsPerPageOptions]="[25,50,75,100]" [scrollable]="true"
+      [columns]="rateModel.tableColumns" [value]="rateModel?.rateListValues" [resizableColumns]="true"
+      [totalRecords]="rateModel?.gridDataLength" [lazy]="true" [pageLinks]="5" (onLazyLoad)="loadGridData($event)"
+      (onRowSelect)="onRowSelect($event)" [paginator]="rateModel?.rateListValues.length > 0"
+      [ngClass]="{ 'tableWrapper': rateModel?.dataFlag}" columnResizeMode="expand" (onPage)="onPage()"
+      (onSort)="onSort($event)" [first]="rateModel.first" selectionMode="single" datakey="chargeType">
+      <ng-template pTemplate="caption">
+        <div class="ui-g table-caption pad-bot0" *ngIf="rateModel?.dataFlag || rateModel.filterNoresultFlag">
+          <div class="pad-left0" [ngClass]="{'ui-md-6': rateModel.isFilterEnabled , 'ui-md-8' :
+            !rateModel.isFilterEnabled}">
+            <span class="tableName alignHeading">Rates</span>
+          </div>
+          <div class="pad-bot0"
+            [ngClass]="{'ui-md-6': rateModel.isFilterEnabled, 'ui-md-4': !rateModel.isFilterEnabled }">
+            <div class="alignPos">
+              <div class="ui-inputgroup searchWidth">
+                <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                <input type="text" pInputText placeholder="Search" appShortcut="alt+s">
+              </div>
+            </div>
+            <div class="iconsHolder pull-right">
+              <button class="icon-Filter_Solid icon-button buttonStyle ui-md-5" (click)="onFilterClick()"
+                appShortcut="ctrl+alt+f" [ngClass]="{'filterColor': rateModel.isFilterEnabled}"></button>
+              <button class="icon-Menu_Overflow icon-button buttonStyle ui-md-7 pad-right0"></button>
+
+            </div>
+          </div>
+        </div>
+        <div class="ui-g table-caption pad-bot0" *ngIf="!rateModel?.dataFlag && !rateModel.filterNoresultFlag">
+          <div class="ui-g-8 pad-left0">
+            <span class="tableName alignHeadingWithoutData">Rates</span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="rateModel?.dataFlag">
+          <col>
+          <col *ngFor="let thisCol of rateModel?.tableColumns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr *ngIf="!rateModel?.dataFlag && !rateModel.filterNoresultFlag">
+          <td class="noInfoMessage">
+            <div class="displaymiddle mar-bot20">
+              <h4 class="emptyMsgText mar0 mar-bot10">No information</h4>
+              <h4 class="emptyMsgText mar0 mar-bot20">was found to display</h4>
+              <button type="text" pButton label="Create Rate Setup" class="ui-button-primary mar-top5 mar-left5"
+                (click)="onCreateRateSetup()"></button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="!rateModel?.dataFlag && rateModel.filterNoresultFlag">
+          <div class="ui-g-12 message-wrapper">
+            <span class="display-middle">No results found</span>
+          </div>
+        </tr>
+        <tr class="pad0 mar0 table-header" *ngIf="rateModel?.dataFlag">
+          <th class="table-header-checkbox">
+            <p-tableHeaderCheckbox [ngClass]="checkBoxAlign"></p-tableHeaderCheckbox>
+          </th>
+          <th class="min-col-width font-bold whitespace-style" *ngFor="let thisCol of columns"
+            [pSortableColumn]="thisCol.field" pResizableColumn
+            [ngClass]="{'subcolumnBorder' : thisCol.isNotFirst === true}">
+            <div *ngIf="thisCol.label==='Service Level'" class="mar0">Service</div>
+            <p *ngIf="thisCol.label==='Equipment Category'" class="mar0">Equipment</p>
+            <p *ngIf="thisCol.label==='Legal'" class="mar0">Documentation</p>
+            <p *ngIf="thisCol.field==='rateType'" class="mar0">Rates</p>
+            <p *ngIf="thisCol.field==='stepRateType'" class="mar0">Stair-Step Rates</p>
+            <p *ngIf="thisCol.field==='additionalCharge'" class="mar0">Additional Charges</p>
+            <p *ngIf="thisCol.label==='Quantity'" class="mar0">Alternate Charge</p>
+            <span
+              [ngClass]="{'subcolumnsColor': thisCol.isSubcolumn === true, 'subcolAlignment': thisCol.isNotFirst === true}">
+              {{thisCol.label}}
+            </span>
+
+            <p-sortIcon class="sortIcon sortVal" [ngClass]="{'subColumnAlign': thisCol.isSubcolumn === true}"
+              [field]="thisCol.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns">
+        <tr [pSelectableRow]="rowData" [style]="{width: '50px'}" *ngIf="rateModel?.dataFlag">
+          <td class="width20 ui-resizable-column">
+            <p-tableCheckbox [ngClass]="checkBoxAlign" [value]="rowData" name="checkBox"
+              (click)="$event.stopPropagation()" (onChange)="onchange($event)"></p-tableCheckbox>
+          </td>
+          <td class="mincolwidth ui-resizable-column" *ngFor="let thisCol of columns"
+            [ngClass]="{'subcolumnBorder' : thisCol.isNotFirst === true}" tooltipPosition="top"
+            [tooltipDisabled]="thisCol.field === 'customerAlternateChargeThresholdQuantity' ||thisCol.field === 'accessorialRateAlternateChargeQuantityTypeName' || thisCol.field === 'alternateChargeTypeName' || thisCol.field === 'additionalCharge' ||thisCol.field === 'additionalRateType' || thisCol.field === 'additionalRateAmount'">
+            <span *ngIf="!thisCol.isArray && data[thisCol.field]" class="capitalize-first-word" tooltipPosition="top"
+              pTooltip="{{data[thisCol.field]}}">{{data[thisCol.field]}}</span>
+            <span *ngIf="!thisCol.isArray && !data[thisCol.field]" pTooltip="- -" tooltipPosition="top"
+              pTooltip="- -">--</span>
+            <div *ngIf="thisCol.field === 'contract'" class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}"
+              tooltipPosition="top">
+        <tr class="subColumnsBackground">
+          <div *ngFor=" let col of data['contract']; let k=index">
+            <span *ngIf="k<2">{{col}}</span>
+          </div>
+          <span *ngIf="data['contract']?.length > 2" class="pad-left2">+{{(data['contract'].length - 2)}}</span>
+          <span *ngIf="!data['contract']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+        </tr>
+  </div>
+  <div *ngIf="thisCol.field === 'section'" class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}"
+    tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data['section']; let k=index">
+        <span *ngIf="k<2">{{col}}</span>
+      </div>
+      <span *ngIf="data['section']?.length > 2" class="pad-left2">+{{(data['section'].length - 2)}}</span>
+      <span *ngIf="!data['section']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+    </tr>
+  </div>
+  <div *ngIf="thisCol.field === 'billToAccounts'" class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}"
+    tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data['billToAccounts']; let k=index">
+        <span *ngIf="k<2">{{col}}</span>
+      </div>
+      <span *ngIf="!data['billToAccounts']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+      <span *ngIf="data['billToAccounts']?.length > 2" class="pad-left2">+{{(data['billToAccounts'].length - 2)}}</span>
+    </tr>
+  </div>
+  <div *ngIf="thisCol.label === 'Business Unit and Service Offering'" class=" capitalize-first-word"
+    pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+    <div *ngFor=" let col of data['businessService']; let k=index">
+      <span *ngIf="k<2">{{col}}</span>
+    </div>
+    <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+    <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+  </div>
+  <div *ngIf="thisCol.label === 'Carrier (Code)'" class=" capitalize-first-word" pTooltip="{{data[thisCol.field]}}"
+    tooltipPosition="top">
+    <div *ngFor=" let col of data['carrier']; let k=index">
+      <span *ngIf="k<2"> {{col}}
+      </span>
+      <span *ngIf="k==3" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+    </div>
+    <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">--</span>
+  </div>
+  <div *ngIf="thisCol.label === 'Service Level' || thisCol.label === 'Requested Service'" class="capitalize-first-word"
+    pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data[thisCol.field]; let k=index">
+        <span *ngIf="k<2">{{col}}</span>
+      </div>
+      <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+      <span *ngIf="!data[thisCol.field]?.length" tooltipPosition="top" pTooltip="- - ">--</span>
+    </tr>
+  </div>
+  <div
+    *ngIf="thisCol.isArray === true && thisCol.field === 'rateType' || thisCol.field === 'rateAmount' || thisCol.field === 'minimumAmount' || thisCol.field === 'maximumAmount' || thisCol.field === 'rounding' || thisCol.field === 'rateOperator' || thisCol.field === 'itemizedRates'"
+    class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data[thisCol.field]; let k=index">
+        <span *ngIf="k<2">{{col}} </span></div>
+      <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+      <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">--</span>
+    </tr>
+  </div>
+  <div
+    *ngIf="thisCol.isArray === true && thisCol.field === 'stepRateAmount' || thisCol.field === 'fromQuantity' || thisCol.field === 'toQuantity'"
+    class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data[thisCol.field]; let k=index">
+        <span *ngIf="k<2">{{col}} </span></div>
+      <span *ngIf="data[thisCol.field]?.length > 2" class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+      <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">--</span>
+    </tr>
+  </div>
+  <div
+    *ngIf="thisCol.field === 'additionalCharge' || thisCol.field === 'additionalRateType' || thisCol.field === 'additionalRateAmount'"
+    class="capitalize-first-word">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data['additionalCharge']; let k=index">
+        <span *ngIf="k<2 && data['additionalCharge']" pTooltip="{{col[thisCol.field]}}"
+          tooltipPosition="top">{{col[thisCol.field]}}</span>
+      </div>
+      <span *ngIf="data['additionalCharge']?.length > 2"
+        class="pad-left2">+{{(data['additionalCharge'].length - 2)}}</span>
+      <span *ngIf="!data['additionalCharge']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+    </tr>
+  </div>
+  <div
+    *ngIf="thisCol.field === 'customerAlternateChargeThresholdQuantity' ||thisCol.field === 'accessorialRateAlternateChargeQuantityTypeName' || thisCol.field === 'alternateChargeTypeName'"
+    class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}" tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <div *ngFor=" let col of data['alternateCharge']; let k=index">
+        <span *ngIf="k<2 && data['alternateCharge']" tooltipPosition="top" pTooltip="{{col[thisCol.field]}}"
+          tooltipPosition="top">{{col[thisCol.field]}}</span>
+      </div>
+    </tr>
+  </div>
+  <div *ngIf="thisCol.label === 'Attachments'" class="capitalize-first-word" pTooltip="{{data[thisCol.field]}}"
+    tooltipPosition="top">
+    <tr class="subColumnsBackground">
+      <span>
+        <div *ngFor=" let col of data?.attachments; let k=index">
+          <span *ngIf="k<2">{{col}}</span>
+        </div>
+        <span *ngIf="data.attachments?.length > 2" class="pad-left2">+{{(data.attachments.length - 2)}}</span>
+      </span>
+      <span *ngIf="!data.attachments?.length" pTooltip="- - " tooltipPosition="top">--</span>
+    </tr>
+  </div>
+  <div *ngIf="thisCol.label === 'Legal' || thisCol.label === 'Instructional'" class="mincolwidth capitalize-first-word">
+    <span
+      *ngIf="rowData[thisCol.field] !== null &&  rowData[thisCol.field] !== undefined && rowData[thisCol.field] !== 'null null'">
+      <span>
+        {{rowData[thisCol.field]}}</span>
+    </span>
+    <span
+      *ngIf="rowData[thisCol.field] === null || rowData[thisCol.field] === undefined || rowData[thisCol.field] === 'null null'">--</span>
+  </div>
+  </td>
+  </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorright" class="tableFooter">
+    <tr>
+      <td colspan="2" *ngIf="rateModel?.dataFlag">
+        <span class="pull-right pad-right10 pad4">
+          <button type="text" pButton label="Create Rate Setup" class="ui-button-primary mar-top5 mar-left5"
+            (click)="onCreateRateSetup()"></button>
+        </span>
+      </td>
+    </tr>
+
+  </ng-template>
+  </p-table>
+</div>
+</div>

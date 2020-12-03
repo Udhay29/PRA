@@ -1,0 +1,297 @@
+<div class="ui-g ui-fluid feature-container filter-common-style">
+  <div class="filter-wrapper">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 mar-top10 pad-left15 pad-bot15 filterHeader">
+        <div class="ui-g-6">
+          <strong class="filter-heading">Filter By</strong>
+        </div>
+        <div class="ui-g-6 textAlign">
+          <button data-attr="viewagreement-contractFilter-onclearall-button" pButton class="ui-button-secondary clearSearch pad0" (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+        </div>
+      </div>
+      <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel contractsFilterPanel">
+        <div class="accordionHeight custom-accordion-segment">
+        <p-accordion [multiple]="true" class='accordian-container'>
+        <app-listing-filter #filtercomp [config]="filterConfig.contractType"
+          (itemsSelected)="onListingItemsSelected($event, 'ContractTypeName', 1)"></app-listing-filter>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.contractIdentifier"
+          (itemsSelected)="onListingItemsSelected($event, 'ContractNumber', 2)"></app-autocomplete-filter>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.contractDescriptionData"
+          (itemsSelected)="onListingItemsSelected($event, 'ContractName', 3)"></app-autocomplete-filter>
+        <div class="datecss">
+            <p-accordionTab data-attr="viewagreement-contractFilter-effDate-accordionTab" class="nopadding dateFilter"  [(selected)]="isEffecAccordianOpened" [ngClass]="{'no-border': isEffecAccordianOpened}"
+            expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">Effective Date</span>
+            </p-header>
+            <div class="ui-g mar-bot30">
+              <p-radioButton data-attr="viewagreement-contractFilter-effDateOnly-radioButton" class="ui-md-5 ui-g-5 pad0" name="effDateRdio" value="Date" label="Date"
+                [(ngModel)]="effDateRdio"
+                (click)="dateRadioToggle(true, 'effDateOnlyFlag','startDate', 'endDate', 'effDateExactMatch' , 4)"
+                checked="checked"></p-radioButton>
+              <p-radioButton data-attr="viewagreement-contractFilter-effDateRange-radioButton" class="ui-md-7 ui-g-7 pad0" name="effDateRdio" value="Date Range" label="Date Range"
+                [(ngModel)]="effDateRdio"
+                (click)="dateRadioToggle(false, 'effDateOnlyFlag','startDate', 'endDate', 'effDateExactMatch' , 4)">
+              </p-radioButton>
+            </div>
+            <div *ngIf="filterModel.effDateOnlyFlag">
+              <p-calendar  data-attr="viewagreement-contractFilter-effDateonly-calendar" #cal class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onDateRangeBlur(filterModel.effectiveExactMatchParameter)"
+                (onInput)="cal.currentMonth=filterModel.effDateExactMatch?.getMonth();cal.currentYear=filterModel.effDateExactMatch?.getFullYear()"
+                (onSelect)="onDateRangeSelect(filterModel.effectiveExactMatchParameter)" placeholder="Pick a Date"
+                [(ngModel)]="filterModel.effDateExactMatch"></p-calendar>
+              <div class="mar-top15 mar-left-9">
+                <p-checkbox data-attr="viewagreement-contractFilter-effDateExactMatch-checkbox" name="effDate" value="Match Exact Date" label="Match Exact Date" [(ngModel)]="effDate"
+                  (onChange)="matchExactDate($event, filterModel.effectiveExactMatchParameter)"></p-checkbox>
+              </div>
+            </div>
+            <div class="ui-g" *ngIf="filterModel.effDateOnlyFlag === false">
+              <span class="ui-md-12 ui-g-12  pad-left0 label-style">Between</span>
+              <div class="ui-g-12 ui-float-label  mar-bot5">
+                <p-calendar  data-attr="viewagreement-contractFilter-effDateStart-calendar" #cal class="effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                  (onBlur)="onDateRangeBlur(filterModel.effectiveParameter)"
+                  (onInput)="cal.currentMonth=filterModel.startDate?.getMonth();cal.currentYear=filterModel.startDate?.getFullYear()"
+                  (onSelect)="onDateRangeSelect(filterModel.effectiveParameter)" placeholder="Pick a Date"
+                  [(ngModel)]="filterModel.startDate"></p-calendar>
+              </div>
+
+              <div class="ui-g-12 pad-left0 pad-right0">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">And</span>
+                <div class="ui-float-label ui-md-12 ui-g-12">
+                  <p-calendar  data-attr="viewagreement-contractFilter-effDateEnd-calendar" #cal class="effective-date" showIcon=" true" calendarIcon="icon-Chevron_Down"
+                    dateFormat="mm/dd/yy" (onBlur)="onDateRangeBlur(filterModel.effectiveAndParameter)"
+                    (onInput)="cal.currentMonth=filterModel.endDate?.getMonth();cal.currentYear=filterModel.endDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.effectiveAndParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.endDate"></p-calendar>
+                </div>
+              </div>
+            </div>
+            <button data-attr="viewagreement-contractFilter-reseteffdate-button" class="icon-text-button reset-color pad-top10 pad-left0 mar-left0"
+              (click)="clearDate('startDate', 'endDate', 4, 'effDateExactMatch');resetRadio('effDateRdio','effDateOnlyFlag','effDate','effDateExactMatchFlag')">Reset</button>
+          </p-accordionTab>
+          <p-accordionTab data-attr="viewagreement-contractFilter-expDate-accordionTab" class="nopadding dateFilter"  [(selected)]="isExpirAccordianOpened" [ngClass]="{'no-border': isExpirAccordianOpened}"
+            expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">Expiration Date</span>
+            </p-header>
+            <div class="ui-g mar-bot30">
+              <p-radioButton data-attr="viewagreement-contractFilter-expDateOnly-radioButton" class="ui-md-5 ui-g-5 pad0" name="expDateRdio" value="Date" label="Date"
+                [(ngModel)]="expDateRdio"
+                (click)="dateRadioToggle(true, 'expDateOnlyFlag', 'expStartDate', 'expEndDate', 'expDateExactMatch', 12)">
+              </p-radioButton>
+              <p-radioButton data-attr="viewagreement-contractFilter-expDateRange-radioButton" class="ui-md-7 ui-g-7 pad0" name="expDateRdio" value="Date Range" label="Date Range"
+                [(ngModel)]="expDateRdio"
+                (click)="dateRadioToggle(false, 'expDateOnlyFlag', 'expStartDate', 'expEndDate', 'expDateExactMatch', 12)">
+              </p-radioButton>
+            </div>
+            <div *ngIf="filterModel.expDateOnlyFlag">
+              <p-calendar  data-attr="viewagreement-contractFilter-expDateOnly-calendar" #cal class="effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onDateRangeBlur(filterModel.expirationExactMatchParameter)"
+                (onInput)="cal.currentMonth=filterModel.expDateExactMatch?.getMonth();cal.currentYear=filterModel.expDateExactMatch?.getFullYear()"
+                (onSelect)="onDateRangeSelect(filterModel.expirationExactMatchParameter)" placeholder="Pick a Date"
+                [(ngModel)]="filterModel.expDateExactMatch"></p-calendar>
+              <div class="mar-top15 mar-left-9">
+                <p-checkbox data-attr="viewagreement-contractFilter-expDateExactMatch-checkbox" name="expDate" value="Match Exact Date" label="Match Exact Date" [(ngModel)]="expDate"
+                  (onChange)="matchExactDate($event, filterModel.expirationExactMatchParameter)"></p-checkbox>
+              </div>
+            </div>
+            <div *ngIf="filterModel.expDateOnlyFlag  === false">
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">Between</span>
+                <div class="ui-g-12 ui-float-label  mar-bot5">
+                  <p-calendar  data-attr="viewagreement-contractFilter-expDateStart-calendar" #cal class="effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                    (onBlur)="onDateRangeBlur(filterModel.expirationParameter)"
+                    (onInput)="cal.currentMonth=filterModel.expStartDate?.getMonth();cal.currentYear=filterModel.expStartDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.expirationParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.expStartDate"></p-calendar>
+                </div>
+              </div>
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">And</span>
+                <div class="ui-float-label ui-md-12 ui-g-12">
+                  <p-calendar  data-attr="viewagreement-contractFilter-expDateEnd-calendar" #cal class="effective-date" showIcon=" true" calendarIcon="icon-Chevron_Down"
+                    dateFormat="mm/dd/yy" (onBlur)="onDateRangeBlur(filterModel.expirationAndParameter)"
+                    (onInput)="cal.currentMonth=filterModel.expEndDate?.getMonth();cal.currentYear=filterModel.expEndDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.expirationAndParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.expEndDate"></p-calendar>
+                </div>
+              </div>
+            </div>
+            <button data-attr="viewagreement-contractFilter-resetexpDate-button" class="icon-text-button reset-color pad-top10 pad-left0 mar-left0"
+              (click)="clearDate('expStartDate', 'expEndDate', 12, 'expDateExactMatch');resetRadio('expDateRdio','expDateOnlyFlag','expDate','expDateExactMatchFlag')">Reset</button>
+          </p-accordionTab>
+        </div>
+        <app-listing-filter *ngIf="statusFlag" #filtercomp [config]="filterConfig.statusData"
+          [selectedList]="filterModel.statusSelectedList" (itemsSelected)="onListingItemsSelected($event, 'status', 5)"
+          (isCollapsed)="isStatusCollapsed($event)" (resetCall)="resetEvent($event)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.updatedBy"
+          (itemsSelected)="onListingItemsSelected($event, 'LastUpdateUser', 6)"></app-listing-filter>
+          <p-accordionTab data-attr="viewagreement-contractFilter-updatedOn-accordionTab" class="nopadding dateFilter"  [(selected)]="isUpdatedOnAccordianOpened" [ngClass]="{'no-border': isUpdatedOnAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Updated On</span>
+          </p-header>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-float-label ">
+              <p-calendar  data-attr="viewagreement-contractFilter-updatedOn-calendar" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onLastUpdateDate(7)"
+                [(ngModel)]="filterModel.updatedOnDate" #udpateOnDate (onSelect)="onSelectDate('onLastUpdateDate', 7)">
+              </p-calendar>
+              <label class="mar-left20">Date</label>
+            </div>
+          </div>
+          <div class="ui-g">
+            <div class="ui-float-label ui-md-12 ui-g-12 date-field-float">
+              <p-calendar  data-attr="viewagreement-contractFilter-lastUpdateTime-calendar" showIcon="true" calendarIcon="jbh-Circle_Clock" icon="icon-Circle_Clock" [timeOnly]="true"
+                hourFormat="12" (onClose)="onLastUpdateTime(7)" (onBlur)="onLastUpdateTime(7)"
+                [(ngModel)]="filterModel.updatedOnTime"></p-calendar>
+              <label class="mar-left20">Time</label>
+            </div>
+            <button data-attr="viewagreement-contractFilter-resetlastupdatetime-button" class="icon-text-button reset-color pad-top10"
+              (click)="clearDate('updatedOnDate', 'updatedOnTime', 7)">Reset</button>
+          </div>
+        </p-accordionTab>
+        <app-listing-filter #filtercomp [config]="filterConfig.lastUpdateProgram"
+          (itemsSelected)="onListingItemsSelected($event, 'LastUpdateProgram', 8)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.createdBy"
+          (itemsSelected)="onListingItemsSelected($event, 'CreateUser', 9)"></app-listing-filter>
+          <p-accordionTab data-attr="viewagreement-contractFilter-createdOn-panel" class="nopadding dateFilter"  [(selected)]="isCreatedAccordianOpened" [ngClass]="{'no-border': isCreatedAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Created On</span>
+          </p-header>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-float-label ">
+              <p-calendar  data-attr="viewagreement-contractFilter-createdOnDate-calendar" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onCreateDate(10)"
+                [(ngModel)]="filterModel.createdOnDate" (onSelect)="onSelectDate('onCreateDate', 10)"></p-calendar>
+              <label class="mar-left20">Date</label>
+            </div>
+          </div>
+          <div class="ui-g">
+            <div class="ui-float-label ui-md-12 ui-g-12 date-field-float">
+              <p-calendar  data-attr="viewagreement-contractFilter-createdOnTime-calendar" showIcon="true" calendarIcon="jbh-Circle_Clock" icon="icon-Circle_Clock" [timeOnly]="true"
+                hourFormat="12" [(ngModel)]="filterModel.createdOnTime" (onClose)="onCreateTime(10)"
+                (onBlur)="onCreateTime(10)"></p-calendar>
+              <label class="mar-left20">Time</label>
+            </div>
+            <button data-attr="viewagreement-contractFilter-resetcreatetime-button" class="icon-text-button reset-color pad-top10"
+              (click)="clearDate('createdOnDate', 'createdOnTime', 10)">Reset</button>
+          </div>
+        </p-accordionTab>
+        <app-listing-filter #filtercomp [config]="filterConfig.updateProgram"
+          (itemsSelected)="onListingItemsSelected($event, 'CreateProgram', 11)"></app-listing-filter>
+        <div class="datecss">
+          <p-accordionTab data-attr="viewagreement-contractFilter-originEffDate-accordionTab" class="nopadding dateFilter"  [(selected)]="isOriginalEffAccordianOpened" [ngClass]="{'no-border': isOriginalEffAccordianOpened}"
+            expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">Original Effective Date</span>
+            </p-header>
+            <div class="ui-g mar-bot30">
+              <p-radioButton data-attr="viewagreement-contractFilter-originalEffDateOnly-radioButton" class="ui-md-5 ui-g-5 pad0" name="originEffDateRdio" value="Date" label="Date"
+                [(ngModel)]="originEffDateRdio"
+                (click)="dateRadioToggle(true, 'originalEffDateOnlyFlag','OriginEffectiveDate', 'OriginExpirationDate', 'originalEffDateExactMatch', 2)">
+              </p-radioButton>
+              <p-radioButton data-attr="viewagreement-contractFilter-originalEffDateRange-radioButton" class="ui-md-7 ui-g-7 pad0" name="originEffDateRdio" value="Date Range" label="Date Range"
+                [(ngModel)]="originEffDateRdio"
+                (click)="dateRadioToggle(false, 'originalEffDateOnlyFlag','OriginEffectiveDate', 'OriginExpirationDate', 'originalEffDateExactMatch', 2)">
+              </p-radioButton>
+            </div>
+            <div *ngIf="filterModel.originalEffDateOnlyFlag">
+              <p-calendar  data-attr="viewagreement-contractFilter-originalEffDateOnly-calendar" #cal class="original-effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onDateRangeBlur(filterModel.originalEffectiveExactMatchParameter)"
+                (onInput)="cal.currentMonth=filterModel.originalEffDateExactMatch?.getMonth();cal.currentYear=filterModel.originalEffDateExactMatch?.getFullYear()"
+                (onSelect)="onDateRangeSelect(filterModel.originalEffectiveExactMatchParameter)"
+                placeholder="Pick a Date" [(ngModel)]="filterModel.originalEffDateExactMatch"></p-calendar>
+              <div class="mar-top15 mar-left-9">
+                <p-checkbox data-attr="viewagreement-contractFilter-originalEffDateExactMatch-checkbox" name="originEffDate" value="Match Exact Date" label="Match Exact Date"
+                  [(ngModel)]="originEffDate"
+                  (onChange)="matchExactDate($event, filterModel.originalEffectiveExactMatchParameter)"></p-checkbox>
+              </div>
+            </div>
+            <div *ngIf="filterModel.originalEffDateOnlyFlag  === false">
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">Between</span>
+                <div class="ui-g-12 ui-float-label mar-bot5">
+                  <p-calendar  data-attr="viewagreement-contractFilter-originalEffDateStart-calendar" #cal class="original-effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                    (onBlur)="onDateRangeBlur(filterModel.originalEffectiveParameter)"
+                    (onInput)="cal.currentMonth=filterModel.OriginEffectiveDate?.getMonth();cal.currentYear=filterModel.OriginEffectiveDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.originalEffectiveParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.OriginEffectiveDate"></p-calendar>
+                </div>
+              </div>
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">And</span>
+                <div class="ui-float-label ui-md-12 ui-g-12 ">
+                  <p-calendar  data-attr="viewagreement-contractFilter-originalEffDateEnd-calendar" #cal class="original-effective-date" showIcon="true" calendarIcon="icon-Chevron_Down"
+                    dateFormat="mm/dd/yy" (onBlur)="onDateRangeBlur(filterModel.originalEffectiveAndParameter)"
+                    (onInput)="cal.currentMonth=filterModel.OriginExpirationDate?.getMonth();cal.currentYear=filterModel.OriginExpirationDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.originalEffectiveAndParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.OriginExpirationDate"></p-calendar>
+                </div>
+              </div>
+            </div>
+            <button data-attr="viewagreement-contractFilter-resetoriginaleffdate-button" class="icon-text-button reset-color pad-top10 pad-left0 mar-left0"
+              (click)="originDateClear('OriginEffectiveDate', 'OriginExpirationDate', 'originalEffDateExactMatch', 2);resetRadio('originEffDateRdio','originalEffDateOnlyFlag','originEffDate','originalEffDateExactMatchFlag')">Reset</button>
+          </p-accordionTab>
+          <p-accordionTab data-attr="viewagreement-contractFilter-originalExpDate-accordionTab" class="nopadding dateFilter"  [(selected)]="isOriginalExpAccordianOpened" [ngClass]="{'no-border': isOriginalExpAccordianOpened}"
+            expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up"
+            (onAfterToggle)="afterPanelToggle($event.collapsed, 'Effective')">
+            <p-header class="header-style">
+              <span class="filter-title">Original Expiration Date</span>
+            </p-header>
+            <div class="ui-g mar-bot30">
+              <p-radioButton data-attr="viewagreement-contractFilter-originalExpDateOnly-radioButton" class="ui-md-5 ui-g-5 pad0" name="originExpDateRdio" value="Date" label="Date"
+                [(ngModel)]="originExpDateRdio"
+                (click)="dateRadioToggle(true, 'originalExpDateOnlyFlag','OriginalEffectiveDate', 'OriginalExpirationDate', 'originalExpDateExactMatch', 3)">
+              </p-radioButton>
+              <p-radioButton data-attr="viewagreement-contractFilter-originalExpDateRange-radioButton" class="ui-md-7 ui-g-7 pad0" name="originExpDateRdio" value="Date Range" label="Date Range"
+                [(ngModel)]="originExpDateRdio"
+                (click)="dateRadioToggle(false, 'originalExpDateOnlyFlag','OriginalEffectiveDate', 'OriginalExpirationDate', 'originalExpDateExactMatch', 3)">
+              </p-radioButton>
+            </div>
+            <div *ngIf="filterModel.originalExpDateOnlyFlag">
+              <p-calendar  data-attr="viewagreement-contractFilter-originalExpDateOnly-calendar" #cal class="original-effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onDateRangeBlur(filterModel.originalExpirationExactMatchParameter)"
+                (onInput)="cal.currentMonth=filterModel.originalExpDateExactMatch?.getMonth();cal.currentYear=filterModel.originalExpDateExactMatch?.getFullYear()"
+                (onSelect)="onDateRangeSelect(filterModel.originalExpirationExactMatchParameter)"
+                placeholder="Pick a Date" [(ngModel)]="filterModel.originalExpDateExactMatch" class="mar-bot10">
+              </p-calendar>
+              <div class="mar-top15 mar-left-9">
+                <p-checkbox data-attr="viewagreement-contractFilter-originExpDateExactMatch-checkbox" name="originExpDate" value="Match Exact Date" label="Match Exact Date"
+                  [(ngModel)]="originExpDate"
+                  (onChange)="matchExactDate($event, filterModel.originalExpirationExactMatchParameter)"></p-checkbox>
+              </div>
+            </div>
+            <div *ngIf="filterModel.originalExpDateOnlyFlag  === false">
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">Between</span>
+                <div class="ui-g-12 ui-float-label  mar-bot5">
+                  <p-calendar  data-attr="viewagreement-contractFilter-originalExpDateStart-calendar" #cal class="original-effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                    (onBlur)="onDateRangeBlur(filterModel.originalExpirationParameter)"
+                    (onInput)="cal.currentMonth=filterModel.OriginalEffectiveDate?.getMonth();cal.currentYear=filterModel.OriginalEffectiveDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.originalExpirationParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.OriginalEffectiveDate"></p-calendar>
+                </div>
+              </div>
+              <div class="ui-g">
+                <span class="ui-md-12 ui-g-12  pad-left0 label-style">And</span>
+                <div class="ui-float-label ui-md-12 ui-g-12 ">
+                  <p-calendar  data-attr="viewagreement-contractFilter-originalExpDateEnd-calendar" #cal class="original-effective-date" showIcon="true" calendarIcon="icon-Chevron_Down"
+                    dateFormat="mm/dd/yy" (onBlur)="onDateRangeBlur(filterModel.originalExpirationAndParameter)"
+                    (onInput)="cal.currentMonth=filterModel.OriginalExpirationDate?.getMonth();cal.currentYear=filterModel.OriginalExpirationDate?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.originalExpirationAndParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel.OriginalExpirationDate"></p-calendar>
+                </div>
+              </div>
+            </div>
+            <button data-attr="viewagreement-contractFilter-resetoriginalexpdate-button" class="icon-text-button reset-color pad-top10 pad-left0 mar-left0"
+              (click)="originDateClear('OriginalEffectiveDate', 'OriginalExpirationDate', 'originalExpDateExactMatch', 3);resetRadio('originExpDateRdio','originalExpDateOnlyFlag','originExpDate','originalExpDateExactMatchFlag')">Reset</button>
+          </p-accordionTab>
+        </div>
+      </p-accordion>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="ui-g ui-fluid feature-container filter-common-style">
+  <div class="filter-wrapper mileageFilterPanel pad-bot5">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 mar-top10 pad-left15 pad-bot15 filterHeader">
+        <div class="ui-g-6 pad-left0">
+          <strong class="filter-heading">Filter By</strong>
+        </div>
+        <div class="ui-g-6 textAlign">
+          <button data-attr="viewagreement-viewMileage-mileageFilter-clearFilter-button" pButton class="ui-button-secondary clearSearch pad0" (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+        </div>
+      </div>
+      <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel ">
+        <app-listing-filter #filtercomp [config]="filterConfig.programName"
+            (itemsSelected)="onListingItemsSelected($event, 'programName', 4, false)"></app-listing-filter>
+
+        <app-listing-filter #filtercomp [config]="filterConfig.agreementDefault"
+            (itemsSelected)="onListingItemsSelected($event, 'agreementDefaultIndicator', 5, false)"></app-listing-filter>
+
+        <app-listing-filter #filtercomp [config]="filterConfig.contract"
+            (itemsSelected)="onListingItemsSelected($event, 'contract', 6, true)"></app-listing-filter>
+            
+        <app-listing-filter #filtercomp [config]="filterConfig.section"
+            (itemsSelected)="onListingItemsSelected($event, 'section', 7, true)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.businessUnit"
+            (itemsSelected)="onListingItemsSelected($event, 'businessUnit', 8, true)"></app-listing-filter>
+
+            <app-autocomplete-filter #filtercomp [config]="filterConfig.carrier"
+            (itemsSelected)="onListingItemsSelected($event, 'carrier', 9, true)"></app-autocomplete-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.system"
+            (itemsSelected)="onListingItemsSelected($event, 'mileageSystemName', 10, false)"></app-listing-filter>
+                     
+            <app-listing-filter #filtercomp [config]="filterConfig.systemVersion"
+            (itemsSelected)="onListingItemsSelected($event, 'systemVersion', 12, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.systemParameters"
+            (itemsSelected)="onListingItemsSelected($event, 'mileageSystemParameters', 11, true)"></app-listing-filter>
+            
+            <app-listing-filter #filtercomp [config]="filterConfig.borderMilesParameter"
+            (itemsSelected)="onListingItemsSelected($event, 'borderMilesParameter', 13, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.distanceUnit"
+            (itemsSelected)="onListingItemsSelected($event, 'distanceUnit', 14, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.geographyType"
+            (itemsSelected)="onListingItemsSelected($event, 'geographyType', 15, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.routeType"
+            (itemsSelected)="onListingItemsSelected($event, 'routeType', 16, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.calculationType"
+            (itemsSelected)="onListingItemsSelected($event, 'calculationType', 17, false)"></app-listing-filter>
+
+            <app-listing-filter #filtercomp [config]="filterConfig.decimalPrecision"
+            (itemsSelected)="onListingItemsSelected($event, 'decimalPrecision', 18, false)"></app-listing-filter>
+            <app-date-filter *ngIf="filterModel.isDateResetFlag" [dateFilterModel]="filterModel.effectiveDateModel"  (isCollapsed)="isStatusCollapsed($event)" (updatedQuery)="loadGrid($event)" [query]="currentQuery()"></app-date-filter>
+            <app-date-filter *ngIf="filterModel.isDateResetFlag"[dateFilterModel]="filterModel.expirationDateModel"  (isCollapsed)="isStatusCollapsed($event)" (updatedQuery)="loadGrid($event)" [query]="currentQuery()"></app-date-filter>
+
+             <app-date-filter *ngIf="false"[dateFilterModel]="filterModel.originalEffectiveDateModel" (updatedQuery)="loadGrid($event)" [query]="currentQuery()"></app-date-filter>
+            <app-date-filter *ngIf="false" [dateFilterModel]="filterModel.originalExpirationDateModel" (updatedQuery)="loadGrid($event)" [query]="currentQuery()"></app-date-filter>
+
+            <app-listing-filter #filtercomp *ngIf="statusFlag" 
+            [config]="filterConfig.status" 
+            [selectedList]="filterModel.statusSelectedList"
+            (isCollapsed)="isStatusCollapsed($event)"
+            (itemsSelected)="onListingItemsSelected($event, 'status', 3, false)"
+            (resetCall)="resetEvent($event)">
+          </app-listing-filter>
+
+            <app-listing-filter *ngIf="false" #filtercomp [config]="filterConfig.lastUpdatedBy"
+            (itemsSelected)="onListingItemsSelected($event, 'carrier', 7, true)"></app-listing-filter>
+            <app-listing-filter *ngIf="false"#filtercomp [config]="filterConfig.lastUpdatedProgram"
+            (itemsSelected)="onListingItemsSelected($event, 'carrier', 7, true)"></app-listing-filter>
+            <app-listing-filter *ngIf="false" #filtercomp [config]="filterConfig.createdBy"
+            (itemsSelected)="onListingItemsSelected($event, 'carrier', 7, true)"></app-listing-filter>
+            <app-listing-filter *ngIf="false" #filtercomp [config]="filterConfig.createdProgram"
+            (itemsSelected)="onListingItemsSelected($event, 'carrier', 7, true)"></app-listing-filter>
+      </div>
+    </div>
+  </div>
+</div>

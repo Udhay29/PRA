@@ -1,0 +1,196 @@
+<div #top></div>
+<div [ngClass]="{'loader': createDocumentationModel.loading}" [appJbhLoader]="createDocumentationModel.loading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12">
+    <p-breadcrumb class="pad-left10 breadcrumb" [model]="createDocumentationModel?.breadCrumbList"></p-breadcrumb>
+    <div class="ui-g-12 pad-bot0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 class="text-uppercase headingAlign">{{createDocumentationModel?.agreementDetails?.customerAgreementName}} - CREATE DOCUMENTATION
+            </h1>
+        </div>
+    </div>
+    <p-messages *ngIf='this.createDocumentationModel.msgs.length'  class="duplicate-err-msg width100"  [(value)]="createDocumentationModel.msgs"></p-messages>
+    <div class="ui-g-12 pad-top0">
+        <div class="accordionHeight">
+            <form [formGroup]="createDocumentationModel?.documentationForm" autocomplete="off">
+                <p-accordion [multiple]="true" class='accordian-container'>
+                    <p-accordionTab class="accord-color doc-type-accordian" header="Setup" [selected]="true">
+                        <div class="ui-g">
+                            <div class="ui-g-3 documentationType pad-left0">
+                                <div>
+                                    <label class="label-style pad-left10">Documentation Type</label>
+                                </div>
+                                <p-dropdown [options]="createDocumentationModel.documentationType" (onChange)="onChangeDocumentType($event)" optionLabel="label" formControlName="documentationType"></p-dropdown>
+                            </div>
+                            <div class="ui-g-2 ui-float-label date-field-float documentationCalendar">
+                                <p-calendar [ngClass]="{'errorMsg':createDocumentationModel.isCorrectEffDateFormat ||createDocumentationModel?.inValidEffDate || createDocumentationModel?.inValidDate || (createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value)}"
+                                    formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy" (onSelect)="onDateSelected($event, 'effectiveDate')" (onInput)="typedDateValidate($event,'effectiveDate')" (onBlur)="onDateSelected($event.srcElement.value, 'effectiveDate')"
+                                   [minDate]="createDocumentationModel?.effectiveMinDate" [maxDate]="createDocumentationModel?.effectiveMaxDate"></p-calendar>
+                                <label class="label-style date-field-label" for="effectiveDate">Effective Date</label>
+                                <div class="errorHeight">
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="createDocumentationModel.isCorrectEffDateFormat"></p-message>
+                                    <p-message severity="error" text="Provide Effective Date" *ngIf="(!createDocumentationModel.isCorrectEffDateFormat && createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value)"></p-message>
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="((createDocumentationModel?.documentationForm.get('effectiveDate').touched && createDocumentationModel?.documentationForm.get('effectiveDate')['errors']?.invalid || createDocumentationModel.inValidDate) && !(createDocumentationModel?.documentationForm.get('effectiveDate').touched && !createDocumentationModel?.documentationForm.get('effectiveDate').value) && !createDocumentationModel.isCorrectEffDateFormat)"></p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-2 ui-float-label date-field-float documentationCalendar">
+                                <p-calendar [ngClass]="{'errorMsg':createDocumentationModel.isCorrectExpDateFormat || createDocumentationModel?.inValidExpDate || createDocumentationModel?.inValidDate ||(createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value)}"
+                                    formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo="body" yearRange="1900:2099" (onSelect)="onDateSelected($event, 'expirationDate')" (onInput)="typedDateValidate($event,'expirationDate')" (onBlur)="onDateSelected($event.srcElement.value, 'expirationDate')"
+                                    [minDate]="createDocumentationModel?.expirationMinDate" [maxDate]="createDocumentationModel?.expirationMaxDate"></p-calendar>
+                                <label class="label-style date-field-label" for="expirationDate">Expiration Date</label>
+                                <div class="errorHeight">
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="createDocumentationModel.isCorrectExpDateFormat"></p-message>
+                                    <p-message severity="error" text="Provide Expiration Date" *ngIf="(!createDocumentationModel.isCorrectExpDateFormat && createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value)"></p-message>
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="(((createDocumentationModel?.documentationForm.get('expirationDate')['errors']?.invalid )||(createDocumentationModel?.inValidExpDate || createDocumentationModel?.inValidDate)) && !(createDocumentationModel?.documentationForm.get('expirationDate').touched && !createDocumentationModel?.documentationForm.get('expirationDate').value) && !createDocumentationModel.isCorrectExpDateFormat)"></p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-5 documentationLevel pad-right0">
+                                <div>
+                                    <label class="label-style pad-left10">Level</label>
+                                </div>
+                                <p-selectButton [options]="createDocumentationModel.documentationLevel" (onOptionClick)="onChangeDocumentLevel($event)" formControlName="documentationLevel"></p-selectButton>
+                            </div>
+                        </div>
+                        <div class="ui-g mar-bot10" *ngIf="createDocumentationModel.documentLevel==='contract'">
+                            <app-contract-list class='mar-bot20' #contractListModel (contractChecked)="selectedContrastList($event)" [effectiveDate]="createDocumentationModel.effectiveDate" [expirationDate]="createDocumentationModel.expirationDate" [agreementId]="createDocumentationModel.agreementDetails.customerAgreementID"
+                                (contractData)="getContractDetails($event)"></app-contract-list>
+                        </div>
+                        <div class="ui-g mar-bot10" *ngIf="createDocumentationModel.documentLevel==='section'">
+                            <app-sections class='mar-bot20' #sectionListModel [effectiveDate]="createDocumentationModel.effectiveDate" [expirationDate]="createDocumentationModel.expirationDate" [agreementId]="createDocumentationModel.agreementDetails.customerAgreementID" (sectionData)="getsectionDetails($event)"></app-sections>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="accord-color optional-accordian" header="Additional Options" [selected]="true">
+                        <div class="ui-g">
+                            <app-optional-attributes #optionalFields class="optionalFields"></app-optional-attributes>
+                        </div>
+                        <div class="ui-g">
+                            <app-billto-list #billTo [agreementId]="createDocumentationModel.agreementDetails?.customerAgreementID" [rateType]="createDocumentationModel.documentationChange" [contractValue]="createDocumentationModel.selectedContractValue" [sectionValue]="createDocumentationModel.selectedSectionValue"
+                                [effectiveDate]="createDocumentationModel.effectiveDate" [expirationDate]="createDocumentationModel.expirationDate"></app-billto-list>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="accord-color fileupload-accordian" header="Documentation" [selected]="true">
+
+                        <div class="ui-g">
+                            <div class="ui-g-12 pad0 loaderClass">
+                                <div class="ui-g-12 pad-left0 pad-top0 pad-bot0">
+                                    <p class="grey pad-left10 selectedTabLabel">Documentation Category</p>
+                                    <p-selectButton class="ui-g-5 pad-left0 pad-top0 documentCategory" [options]="createDocumentationModel?.documentCategorySelect" formControlName="documentCategorySelect" (onChange)="onChangedocumentCategory($event.value)"></p-selectButton>
+                                </div>
+                                <div class="textName ui-g-12 pad-right0" [ngClass]="{'pad-bot0': createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Both'}" *ngIf="(createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Text Only') ||
+                                (createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Both')">
+                                    <div class="ui-g-3 pad-left0 pad-bot0">
+                                        <div class="ui-float-label displayBlock pad0">
+                                            <input formControlName="textName" id="float-input" type="text" maxlength="80" size="30" pInputText [ngClass]="{'ui-inputwrapper-filled': createDocumentationModel.documentationForm.controls.textName.value}">
+                                            <label for="float-input">Text Name</label>
+                                        </div>
+
+                                        <div class="errorHeight displayBlock">
+                                            <p-message severity="error" text="Provide Text Name" *ngIf="(createDocumentationModel?.documentationForm.controls.textName.invalid && createDocumentationModel?.documentationForm.controls.textName.touched )"></p-message>
+                                        </div>
+                                    </div>
+                                    <div class=" ui-g-12 pad-left0 pad-right0" [ngClass]="{'pad-bot0': createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Both'}">
+                                        <div class="ui-float-label textAreaWrapper">
+                                            <textarea formControlName="textArea" class="textArea" maxlength="6000" rows="5" cols="150" pInputTextarea id="textareavalue"></textarea>
+                                            <label class="textAreaLabel textAreaValue" for="textareavalue">Text</label>
+                                        </div>
+
+                                        <div class="errorHeight displayBlock">
+                                            <p-message severity="error" text="Provide Text" *ngIf="(createDocumentationModel?.documentationForm.controls.textArea.invalid && createDocumentationModel?.documentationForm.controls.textArea.touched )"></p-message>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 pad-left0 pad-bot0" [ngClass]="{'pad-top0': createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Both'}" *ngIf=" (createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Document Only')||(createDocumentationModel?.documentationForm.controls.documentCategorySelect.value == 'Both')">
+                                    <p class="pad-left10 grey selectedTabLabel">Supported file formats: Doc, Excel, PDF, JPG, PNG, TXT, TIFF</p>
+                                    <div class="ui-g-12 dashedBorder pad0">
+                                        <div [ngClass]="{'loader1': createDocumentationModel.loadings}" [appJbhLoader]=createDocumentationModel.loadings></div>
+                                        <p-fileUpload [showCancelButton]="false" [showUploadButton]="false" name="demo[]" (onSelect)="onFilesUpload($event)" multiple="multiple" chooseLabel="Choose Files">
+                                            <ng-template class="pad0" pTemplate="content">
+                                                <div class="dropArea">
+                                                    <div class="dragDropText">
+                                                        <p>Drag & Drop Files</p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-fileUpload>
+                                    </div>
+
+                                    <div class="ui-g-12 pad-left0 pad-right0 pad-bot0 height100 position-rel" formArrayName="attachment">
+
+                                        <div class="nobullet pad0 attachment-list" *ngIf="createDocumentationModel.documentationForm.controls.attachment?.length">
+                                            <div [ngClass]="{'removeAttachLoader': createDocumentationModel.loaderOnRemove}" [appJbhLoader]=createDocumentationModel.loaderOnRemove></div>
+                                            <div *ngFor="let file of createDocumentationModel.documentationForm.controls.attachment.controls; let i=index">
+                                                <div class="ui-g-12 verticalAlignment pad-left0 pad-right0 pad-bot15 pad-top0" [formGroupName]="i">
+                                                    <div class=" pad-left0 ui-g-3 pad-right20 autuCompleteVetical">
+                                                        <div class="pad-left0 pad-right0 ui-float-label">
+                                                            <p-autoComplete [suggestions]="createDocumentationModel.attachmentTypeFiltered" [autoDisplayFirst]="false"
+                                                            formControlName="attachmentType" [style]="{'width':'100%'}" field="value" [inputStyle]="{'width':'100%'}"                                     [dropdown]="true" (completeMethod)="onTypeAttachmentType($event)" [forceSelection]="true" (onBlur)="onBlurAttachmentType($event, i)" emptyMessage="No records found"></p-autoComplete>
+
+                                                            <label class="label-style" [ngClass]="{'label-style-without-pmessage': !(file.get('attachmentType').touched && file.get('attachmentType').invalid),'label-style-with-pmessage':(file.get('attachmentType').touched && file.get('attachmentType').invalid)}"
+                                                                for="attachmentTypeDropDown">Attachment
+                                                                Type</label>
+                                                            <div class="errorHeight">
+                                                                <p-message severity="error" text="Select Attachment Type" *ngIf="file.get('attachmentType').touched && file.get('attachmentType').invalid"></p-message>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fileDisplay ui-g-9 pad-bot10">
+                                                        <div class='filename pad-left15 ui-g-11'>
+                                                            {{file.controls.filename.value}}
+                                                        </div>
+                                                        <div (click)='removeAttachment(i)' class="icon-Menu_Close pad-left25 pull-right delete ui-g-1"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </form>
+        </div>
+        <div class="pull-right footer">
+            <button type="text" appShortcut="ctrl+alt+2" pButton label="Cancel" (click)="onDocumentationCancel()" class="ui-button-secondary"></button>
+            <button type="text" appShortcut="ctrl+alt+1" pButton label="Save" (click)="onSaveDocumentation()" class="ui-button-primary mar-left15"></button>
+        </div>
+    </div>
+</div>
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.documentationCancel" [modal]="true" [responsive]="true" [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to Cancel without saving your work?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onHidePop('documentationCancel')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDontSave()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.documentationLevelChange" [modal]="true" [responsive]="true" [width]="450" (onHide)="onPopupClose()" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>You are about to lose all the changes. Do you want to proceed?</div>
+    <p-footer>
+        <button type="button" pButton (click)="onHidePop('documentationLevelChange')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDocumentationLevelChange()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.isShowDocumentTypePopup" [modal]="true" [responsive]="true" (onHide)="documentTypePopupNo()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="documentTypePopupNo()" label="No" class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="documentTypePopupYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Save Options" [(visible)]="createDocumentationModel.isShowSavePopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="470"  [minY]="70"  [baseZIndex]="10000">
+    <span class="saveHeaderPopup">Save & Close</span><span> Save current documentation and return to Agreement Details.</span>
+    <p-footer>
+        <button type="button" pButton (click)="savePopupNo()" label="Cancel" class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="savePopupYes()" label="Save & Close" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createDocumentationModel.documentationNavigateCancel" [modal]="true" [responsive]="true" [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onHideCancelPop('documentationNavigateCancel')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDontSaveNavigate()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

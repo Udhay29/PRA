@@ -1,0 +1,62 @@
+<div [formGroup]="addChargesModel.addChargesForm" class="ui-g">
+  <div class=" ui-g-12 pad0">
+    <div formArrayName="charges" class='addCharges-table-container'>
+      <p-table [value]="addChargesModel.addChargesForm['controls'].charges['controls']" [loading]="addChargesModel.rateTypeLoading">
+        <ng-template pTemplate="caption">
+          <div class="ui-g">
+            <div class="ui-g-12 table-heading pad-left0 pad-bot10">Additional Charges</div>
+            <div class="cursor-pointer remove-charge">
+              <span (click)='onRemoveAllChargesClick()'><span class="remove-charge-btn"><em class="icon-Circle_Remove_Solid"></em></span>
+                  <span>Remove All Charges</span></span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="line-details thHeaderRow pad-left15">Charge Type</th>
+            <th class="line-details thHeaderRow">Rate Type</th>
+            <th class="line-details thHeaderRow">Rate Amount</th>
+            <th class="line-details thHeaderRow"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-charge let-rowIndex="rowIndex">
+          <tr [formGroupName]="rowIndex">
+           <td class='chargeType-dropdown thBodyData pad-left15'>
+              <p-autoComplete placeholder="Charge Type" name="chargeType" [dropdown]="true" [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" field="label" formControlName="chargeType" [suggestions]="addChargesModel.chargeTypeSuggestions"
+                (completeMethod)="onTypeChargeType($event)" (onBlur)="onautoCompleteBlur($event, 'chargeType', rowIndex)" (onSelect)="onSelectChargeType($event,rowIndex)" 
+                (input) = "onInputChargeType($event,rowIndex)" [forceSelection]="true" emptyMessage="No Records Found">
+              </p-autoComplete>
+            </td>
+            <td class='chargeType-dropdown thBodyData pad-left15'>
+              <p-autoComplete placeholder="Rate Type" name="rateType" [dropdown]="true" [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" field="label" formControlName="rateType" [suggestions]="addChargesModel.rateTypeSuggestions[rowIndex]"
+                (completeMethod)="onTypeRateType($event,rowIndex)" (onBlur)="onautoCompleteBlur($event, 'rateType', rowIndex)"
+                [forceSelection]="true" emptyMessage="No Records Found">
+              </p-autoComplete>
+            </td>
+            <td>
+              <span class="ui-inputgroup" [ngClass]="{'addon-error': charge.get('rateAmount').touched && charge.get('rateAmount').invalid}">
+                <span class="ui-inputgroup-addon mar-right8" *ngIf="charge.get('rateAmount').value">$</span>
+                <input type="text" pInputText placeholder="Rate Amount" class="amountInput" formControlName="rateAmount"
+                  (blur)="validateRateAmount($event.target?.value, rowIndex)" (input)="onRateAmountFormKeypress($event,rowIndex)">
+              </span>
+            </td>
+            
+            <td class='thBodyData'>
+              <em class="icon-Circle_Add_Solid addrow pad-right5 top0" (click)='addAdditionalChargeRow(rowIndex)'></em>
+              <em *ngIf="addChargesModel.addChargesForm?.controls['charges']['controls'].length > 1" class="icon-Circle_Remove_Solid removerow" (click)='removeCharge(rowIndex)'></em>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<p-dialog header="Confirmation" [(visible)]="addChargesModel.showRemoveAllConfirmPop" [modal]="true" [responsive]="true" [width]="450" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>Are you sure you would like to remove the Additional Charges?</div>
+    <p-footer>
+        <button type="button" pButton (click)="onPopNo()" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="removeAllCharges()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

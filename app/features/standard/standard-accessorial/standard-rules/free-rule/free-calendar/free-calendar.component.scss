@@ -1,0 +1,28 @@
+
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.labelAligns {
+    position: absolute;
+    top: 23px;
+  }
+.pad-bot12 {
+    padding-bottom: 12px;
+}
+
+.freeTypeAlign {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+}
+.additionalOptions{
+    // margin-bottom: 2%;
+    margin-top: -1%;
+}
+input[type="text"]::placeholder {  
+    text-align: right; 
+} 
+.chosen-day{
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+}

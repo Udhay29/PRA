@@ -1,0 +1,63 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.header-style{
+    width: calc(100% - 30px);
+    display: inline-block;
+    @include getTypographyStyles("body2");   
+    color: $grey-dark66;
+    .filter-title {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: calc(100% - 40px);
+        float: left;
+    }
+}
+.label-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.visible{
+    visibility: hidden;
+}
+.reset-color {
+    color: $blue;
+}
+.value-container{
+    width:100%;
+    text-align: center;
+}
+
+.no-border {
+    /deep/ .ui-accordion-header{
+      border-bottom: none !important;
+    }
+  }
+  
+  .dateFilter {
+    ::ng-deep .ui-accordion-content.ui-widget-content  {
+      padding: 0px 15px 20px;
+   }
+  }
+  
+  :host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header:hover {
+    background-color: $white;
+  }
+  
+  :host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header {
+    background-color: $white;
+    border-bottom: solid 1px $grey-lite70;
+    padding: 0px;
+  }
+  
+  :host ::ng-deep .accordian-container .ui-accordion .ui-accordion-header a {
+    padding-left:15px;
+    .ui-accordion-toggle-icon {
+      position: absolute;
+      right: 5px;
+      color: $primary-blue;
+      top: -2px;
+    }
+  }
+  

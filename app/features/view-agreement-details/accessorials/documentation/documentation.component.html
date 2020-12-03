@@ -1,0 +1,227 @@
+<div [ngClass]="{'loader': documentationModel.isShowLoader}" [appJbhLoader]="documentationModel.isShowLoader"></div>
+<div class="ui-g ui-fluid documentTable contract-custom-cls">
+    <div class="ui-md-12">
+            <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!documentationModel.isFilterEnabled)}" >
+                    <app-documentation-filter [agreementID]="agreementID" (loadDataGrid)="onFilterGridData()"> </app-documentation-filter>
+                    </div>
+      <div [ngClass]="{'ui-g-9': documentationModel.isFilterEnabled, 'noresultHeight': documentationModel.noResultFoundFlag}">
+        <div class="noInfoMessage" *ngIf="documentationModel?.gridDataLength === 0 && documentationModel.noResultFoundFlag && !documentationModel.isEmptySearch">
+                <div class="mar-bot20 pad-top0">
+                    <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                    <button type="text" pButton label="Create Documentation" class="ui-button-primary mar-top5 mar-left5"
+                                (click)="onCreateDocumentation()" appShortcut="ctrl+alt+1"></button>
+                </div>
+            </div>
+        <p-table class="full-width tableWrapper documentListTable" [value]="documentationModel.documentList"
+        [ngClass]="{ 'no-table':
+      (!documentationModel.gridDataLength && !documentationModel.isEmptySearch)}"
+            [paginator]="setPaginator()" (onLazyLoad)="loadGridData($event)"
+            (onRowSelect)="onRowSelect($event)" [rows]="documentationModel.tableSize" [lazy]="true" [loading]="documentationModel.isShowLoader"
+            [customSort]="true" [rowsPerPageOptions]="[25,50,75,100]" [first]="documentationModel.pageStart"
+            [totalRecords]="documentationModel.gridDataLength" scrollable="true" [resizableColumns]="true"
+            columnResizeMode="expand" selectionMode="single" datakey="accessorialDocumentType">
+            <ng-template pTemplate="caption">
+                <div class="ui-g-12 table-caption pad0 header-height">
+                    <div class="ui-g-6 ui-md-6 mar-top12">
+                        <span class="tableName">Documentation</span>
+                    </div>
+                    <div class="ui-g-6 pad-top0 pad-bot0 pad-right0">
+                        <div class="alignPos">
+                            <div class="ui-inputgroup searchWidth">
+                                <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                                <input type="text" pInputText placeholder="Search" appShortcut="alt+s">
+                            </div>
+                        </div>
+                        <div class="iconsHolder pull-right">
+                            <button appShortcut="ctrl+alt+f" [ngClass]="{'filterColor': documentationModel.isFilterEnabled, 'mar-right30': !documentationModel.gridDataLength}"
+                                class="icon-Filter_Solid icon-button buttonStyle" appShortcut="ctrl+alt+f"
+                                (click)="onFilterClick()"></button>
+                            <button appShortcut="ctrl+alt+o" [ngClass]="{'hidden': !documentationModel.gridDataLength}"  class="icon-Menu_Overflow icon-button buttonStyle" (click)="menu.toggle($event)"
+                                appShortcut="ctrl+alt+o"></button>
+                            <p-menu #menuOverlay #menu popup="popup" [model]="documentationModel.dropdownValue"
+                                styleClass="menu-overlay" appendTo="body">
+
+                            </p-menu>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="documentationModel?.tableColumns.length > 0">
+                    <col *ngFor="let thisCol of documentationModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr *ngIf="!documentationModel.noResultFoundFlag" class = "table-header-documentation">
+                    <th class="table-header-checkbox">
+                        <p-tableHeaderCheckbox [ngClass]="checkBoxAlign"></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="min-col-width font-bold whitespace-style" *ngFor="let thisCol of documentationModel.tableColumns"
+                        pResizableColumn [pSortableColumn]="thisCol.name" [ngClass]="{'subcolumnBorder' : thisCol.isNotFirst === true}">
+                        <p *ngIf="thisCol.name==='Attachment Type'" class="mar0">Attachment</p>
+                        <span [ngClass]="{'subcolumnsColor': thisCol.isSubcolumn === true, 'subcolAlignment': thisCol.isNotFirst === true}">
+                            {{thisCol.name}}
+                        </span>
+                        <p-sortIcon  class="sortIcon sortVal"  [ngClass]="{'subColumnAlign': thisCol.isSubcolumn === true}" [field]="thisCol.name">
+                        </p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+ 
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                    <tr *ngIf="documentationModel.noResultFoundFlag && documentationModel.isEmptySearch">
+                      <td colspan="8" class="width100">
+                        <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+                          <span class="display-middle display-3">No results found</span>
+                        </div>
+                      </td>
+                  </tr>
+                </ng-template>
+
+
+            <ng-template pTemplate="body" let-rowData let-columns="documentationModel.tableColumns" let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="rowData" *ngIf="!documentationModel.noResultFoundFlag">
+                    <td class="width20 ui-resizable-column">
+                        <p-tableCheckbox [ngClass]="checkBoxAlign" [value]="rowData" name="checkBox" (click)="$event.stopPropagation()"
+                            (onChange)="onchange($event)"></p-tableCheckbox>
+                    </td>
+                    <td *ngFor="let col of documentationModel.tableColumns" class="mincolwidth textwrap ui-resizable-column">
+                        <div class="mincolwidth ellipsisWidth" pTooltip={{rowData[col.property]}} tooltipPosition="top" >
+                        <span *ngIf="!col.isArray && rowData[col.property] !== null &&  rowData[col.property] !== undefined && rowData[col.property] !== 'null null'">
+                            <span class="mincolwidth">
+                                {{rowData[col.property]}}</span>
+                        </span>
+                        <span class="displayBlock" pTooltip="- -" tooltipPosition="top" *ngIf="!col.isArray && (rowData[col.property] == null || rowData[col.property] == undefined || rowData[col.property] == 'null null')">--</span>
+                    </div>
+                        <div *ngIf="col.name === 'Charge Type'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['chargeTypeName']; let k=index"
+                                pTooltip="{{rowData['chargeTypeName']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['chargeTypeName']?.length > 2" class="pad-left2"
+                                pTooltip="{{rowData['chargeTypeName']}}" tooltipPosition="top">+{{(rowData['chargeTypeName'].length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['chargeTypeName']?.length" pTooltip="- -"
+                                tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Business Unit and Service Offering'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['businessUnitServiceOfferingDTOs']; let k=index"
+                                pTooltip="{{rowData['businessUnitServiceOfferingDTOs']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['businessUnitServiceOfferingDTOs']?.length > 2" class="pad-left2"
+                                pTooltip="{{rowData['businessUnitServiceOfferingDTOs']}}" tooltipPosition="top">+{{(rowData['businessUnitServiceOfferingDTOs'].length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['businessUnitServiceOfferingDTOs']?.length" pTooltip="- -"
+                                tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Contract'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['customerAgreementContractName']; let k=index"
+                                pTooltip="{{rowData['customerAgreementContractName']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['customerAgreementContractName']?.length > 2" class="pad-left2"
+                                pTooltip="{{rowData['customerAgreementContractName']}}" tooltipPosition="top">+{{(rowData['customerAgreementContractName']?.length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['customerAgreementContractName']?.length" pTooltip="- -"
+                                tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Section'" class="capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['customerAgreementContractSectionName']; let k=index"
+                                pTooltip="{{rowData['customerAgreementContractSectionName']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['customerAgreementContractSectionName']?.length > 2" class="pad-left2"
+                                pTooltip="{{rowData['customerAgreementContractSectionName']}}" tooltipPosition="top">+{{(rowData['customerAgreementContractSectionName']?.length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['customerAgreementContractSectionName']?.length" pTooltip="- -"
+                                tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Service Level'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['serviceLevel']; let k=index"
+                                pTooltip="{{rowData['serviceLevel']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['serviceLevel']?.length > 2" class="pad-left2" pTooltip="{{rowData['serviceLevel']}}"
+                                tooltipPosition="top">+{{(rowData['serviceLevel']?.length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['serviceLevel']?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Requested Service'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['requestedServices']; let k=index"
+                                pTooltip="{{rowData['requestedServices']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['requestedServices']?.length > 2" class="pad-left2" pTooltip="{{rowData['requestedServices']}}"
+                                tooltipPosition="top">+{{(rowData['requestedServices']?.length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['requestedServices']?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Bill to Account'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['customerAgreementContractSectionAccountName']; let k=index"
+                                pTooltip="{{rowData['customerAgreementContractSectionAccountName']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['customerAgreementContractSectionAccountName']?.length > 2" class="pad-left2"
+                                pTooltip="{{rowData['customerAgreementContractSectionAccountName']}}" tooltipPosition="top">+{{(rowData['customerAgreementContractSectionAccountName']?.length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['customerAgreementContractSectionAccountName']?.length" pTooltip="- -"
+                                tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Carrier (Code)'" class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let col of rowData['carrierName']; let k=index"
+                                pTooltip="{{rowData['carrierName']}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{col}}</span>
+                            </div>
+                            <span *ngIf="rowData['carrierName']?.length > 2" class="pad-left2" pTooltip="{{rowData['carrierName']}}"
+                                tooltipPosition="top">+{{(rowData['carrierName'].length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData['carrierName']?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Attachment Type' || col.name === 'File Type' || col.name === 'File Title'"
+                            class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let column of rowData[col.property]; let k=index"
+                                pTooltip="{{rowData[col.property]}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{column}}</span>
+                            </div>
+                            <span *ngIf="rowData[col.property]?.length > 2" class="pad-left2" pTooltip="{{rowData[col.property]}}"
+                                tooltipPosition="top">+{{(rowData[col.property].length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData[col.property]?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Added On' || col.name === 'Added By' || col.name === 'Document ID'"
+                            class=" capitalize-first-word">
+                            <div class="mincolwidth ellipsisWidth"  *ngFor=" let colm of rowData[col.property]; let k=index"
+                                pTooltip="{{rowData[col.property]}}" tooltipPosition="top">
+                                <span *ngIf="k<2">{{colm}}</span>
+                            </div>
+                            <span *ngIf="rowData[col.property]?.length > 2" class="pad-left2" pTooltip="{{rowData[col.property]}}"
+                                tooltipPosition="top">+{{(rowData[col.property].length
+                                - 2)}}</span>
+                            <span class="displayBlock" *ngIf="!rowData[col.property]?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+                        </div>
+                        <div *ngIf="col.name === 'Text Name' || col.name === 'Text'" class=" capitalize-first-word "
+                            tooltipPosition="top" pTooltip="{{rowData[col.property]}}" appTooltipClass>
+                            <div class="mincolwidth ellipsisWidth" *ngIf="rowData[col.property] !== null &&  rowData[col.property] !== undefined && rowData[col.property] !== 'null null'">
+                                <span>
+                                    {{rowData[col.property]}}</span>
+                            </div>
+                            <span class="displayBlock" pTooltip="- -" tooltipPosition="top" *ngIf="rowData[col.property] === null || rowData[col.property] === undefined || rowData[col.property] === 'null null'">--</span>
+                        </div>
+                    </td>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <tr *ngIf="documentationModel.gridDataLength > 0 || documentationModel.isEmptySearch">
+                    <td colspan="12">
+                        <span class="pull-right pad-right10">
+                            <button type="text" pButton label="Create Documentation" class="ui-button-primary mar-top5 mar-left5"
+                                (click)="onCreateDocumentation()" appShortcut="ctrl+alt+1"></button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+    </div>
+</div>

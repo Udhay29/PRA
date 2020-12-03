@@ -1,0 +1,114 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.user-image-style {
+  background: $primary-blue;
+  color: $white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  padding: 5px;
+  line-height: 2.2;
+  display: table-cell;
+  text-align: center;
+  float: left;
+}
+.fsize{
+@include getTypographyStyles('body1');
+}
+.billto-span {
+  padding-top: 7px;
+  width: 70%;
+  word-break: break-all;
+}
+
+.text-grey {
+  color: #939393;
+}
+.width33 {
+  width: 33.33%;
+}
+.dialog-style {
+  /deep/.ui-dialog.ui-widget {
+    top: 100px !important;
+  }
+  /deep/.ui-dialog .ui-dialog-titlebar {
+    border-bottom: 1px solid $grey-lite48;
+  }
+  /deep/.ui-dialog-footer {
+    border-top: 1px solid $grey-lite48;
+  }
+}
+.accord-color {
+  /deep/ .ui-accordion-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid $grey-lite48;
+    border-top: 1px solid $grey-lite48;
+    padding: 0 5px !important;
+  }
+  /deep/ .ui-accordion-header a .ui-accordion-toggle-icon {
+    color: $black-opacity40 !important;
+  }
+  /deep/ .ui-accordion-header-text {
+    color: $grey-dark66 !important;
+    @include getTypographyStyles('h3');
+  }
+  /deep/
+    .ui-accordion-content-wrapper:not(.ui-accordion-content-wrapper-overflown) {
+    box-shadow: none !important;
+  }
+  /deep/.ui-accordion-content-wrapper .ui-accordion-content {
+    padding: 15px !important;
+  }
+}
+.typeahead-float-nested-label {
+  margin-top: 17px;
+  label {
+    margin-top: 0px !important;
+    top: 23%;
+    left: 12px;
+  }
+  .ui-inputwrapper-focus~label {
+    top: calc(-.75em - 6px);
+    left: 10px;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled~label {
+    top: calc(-.75em - 6px);
+    left: 10px;
+    font-size: 12px;
+  }
+}
+.drop-down-float {
+  margin-top: 17px !important;
+  label {
+    margin-top: 0px !important;
+    top: 30%;
+    left: 17px;
+  }
+  .ui-inputwrapper-focus ~ label,
+  .ui-inputwrapper-filled ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px;
+    font-size: 12px;
+  }
+  .ng-valid ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px;
+    font-size: 12px;
+  }
+}
+/deep/.capitalizeTitle {
+  text-transform: capitalize !important;
+}
+
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}

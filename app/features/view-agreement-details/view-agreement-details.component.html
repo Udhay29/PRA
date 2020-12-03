@@ -1,0 +1,103 @@
+<div [ngClass]="{'loader': viewAgreementModel?.isPageLoaded || viewAgreementModel?.accessorialTabLoading}" [appJbhLoader]="viewAgreementModel?.isPageLoaded || viewAgreementModel?.accessorialTabLoading"></div>
+<div class="mar-left5 breadcrumb">
+    <p-breadcrumb data-attr="viewagreement-details-breadcrumb-navigate" styleClass="pad-left10" [model]="viewAgreementModel.breadCrumbList"></p-breadcrumb>
+    <div class="ui-g">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left10">
+            <h1 class="text-uppercase mar0 customerAgreementNameText">{{viewAgreementModel.agreementDetails?.customerAgreementName}}
+                <button  data-attr="viewagreement-details-menu-button" appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10 overflow-menu" (click)="onMenu.toggle($event)" data-attr="empty-plan-overflow-menu"></button>
+            </h1>
+            <p-menu  data-attr="viewagreement-details-menu-pmenu" #onMenu popup="popup" styleClass="menu-overlay arrowtopbox font12" [model]="viewAgreementModel.overflowMenuList" appendTo="body"></p-menu>
+        </div>
+    </div>
+    <p-panel class="ui-g-12 ui-lg-12 ui-md-12 panel pad-left10 view-panel pad-right10" [header]='false' [showHeader]='false'>
+        <div class="wrapper">
+            <span class="col-width">
+        <label data-attr="viewagreement-details-agreementTypelbl-label" class="heading-text">Agreement Type</label>
+        <label data-attr="viewagreement-details-agreementType-label">{{viewAgreementModel.agreementDetails?.agreementType}}</label>
+      </span>
+            <span class="col-width">
+        <label data-attr="viewagreement-details-agreementNamelbl-label" class="heading-text">Agreement</label>
+        <label data-attr="viewagreement-details-agreementName-label">{{viewAgreementModel.agreementDetails?.customerAgreementName}}</label>
+      </span>
+            <span class="col-width">
+        <label data-attr="viewagreement-details-agrrementStatuslbl-label" class="heading-text">Status</label>
+        <label data-attr="viewagreement-details-agrrementStatus-label">{{viewAgreementModel?.agreementStatus}}</label>
+      </span>
+            <span class="col-width">
+        <label  data-attr="viewagreement-details-businessUnitlbl-label" class="heading-text">Business Units</label>
+        <label data-attr="viewagreement-details-businessUnit-label">{{viewAgreementModel.agreementDetails?.businessUnits.join(', ')}}</label>
+      </span>
+            <span class="col-width">
+        <label  data-attr="viewagreement-details-cargoReleaseAmountlbl-label" class="heading-text">Cargo Release</label>
+        <label data-attr="viewagreement-details-cargoReleaseAmount-label">{{viewAgreementModel.agreementDetails?.cargoReleaseAmount}}</label>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+  </p-panel>
+  <div class="ui-g-12 ui-lg-12 ui-md-12 tableAlign">
+    <form [formGroup]="viewAgreementModel.dropdownForm">
+    <p-dropdown data-attr="viewagreement-details-detailList-dropdown" #dropdown class="ui-g-2 ui-lg-2 ui-md-2" formControlName="dropdown" [(ngModel)]="viewAgreementModel.detailType" [options]="viewAgreementModel.detailsList"
+        name="detailList" [autoWidth]="false" (onChange)="onChangeValue($event.value)"></p-dropdown>
+      </form>
+    <span class="programTab" *ngIf="viewAgreementModel.showViewMileageFlag">
+      <p-tabView class="ui-g-10">
+        <p-tabPanel class="pad-top0" header="Program">
+        </p-tabPanel>
+      </p-tabView>
+    </span>
+        <span class="ui-g-10 accessorialTab" *ngIf="viewAgreementModel.isShowAccessorialFlag">
+      <p-tabView data-attr="viewagreement-details-tabs-tabView" (onChange)="onTabChange($event)" [activeIndex]="viewAgreementModel.accessTabIndex">
+        <p-tabPanel data-attr="viewagreement-details-rateTab-tabPanel" *ngIf="viewAgreementModel.showAllTab" header="Rates">
+        </p-tabPanel>
+        <p-tabPanel data-attr="viewagreement-details-docTabs-tabPanel" *ngIf="viewAgreementModel.showDocumentationTab" header="Documentation">
+        </p-tabPanel>
+        <p-tabPanel data-attr="viewagreement-details-rulesTabs-tabPanel" *ngIf="viewAgreementModel.showAllTab" header="Rules">
+        </p-tabPanel>
+        <p-tabPanel data-attr="viewagreement-details-emailsTabs-tabPanel" *ngIf="viewAgreementModel.showAllTab" header="Emails">
+        </p-tabPanel>
+      </p-tabView>
+    </span>
+
+        <span *ngIf="viewAgreementModel.isShowFuel">
+      <app-fuel></app-fuel>
+    </span>
+    </div>
+    <div class="ui-g-12 ui-lg-12 ui-md-12 div-height">
+        <div *ngIf="viewAgreementModel.showViewMileageFlag">
+            <app-view-mileage [agreementID]="viewAgreementModel.agreementId"></app-view-mileage>
+        </div>
+        <div *ngIf="viewAgreementModel.showCargoFlag">
+            <app-cargo-release [agreementID]="viewAgreementModel.agreementId"></app-cargo-release>
+        </div>
+        <div *ngIf="viewAgreementModel.showLineHaul">
+            <app-line-haul [agreementId]="viewAgreementModel.agreementId"></app-line-haul>
+        </div>
+        <div *ngIf="viewAgreementModel.isShowAccessorialFlag">
+            <app-accessorials [accessorialType]="viewAgreementModel.accesorialType" [agreementId]="viewAgreementModel.agreementId"></app-accessorials>
+        </div>
+        <div>
+            <app-contracts *ngIf="viewAgreementModel.isShowContracts" [agreementID]="viewAgreementModel.agreementId" (loaderEvent)="loader($event)"></app-contracts>
+        </div>
+        <div *ngIf="viewAgreementModel.showSections">
+            <app-section-list [agreementID]="viewAgreementModel.agreementId" [agreementDetails]="viewAgreementModel.agreementDetails" (loaderEvent)="loader($event)"></app-section-list>
+        </div>
+        <app-rating-rule *ngIf="viewAgreementModel.isShowRatingRule"></app-rating-rule>
+    </div>
+    <app-manage-teams (closeTeams)="onTeamsClose($event)" *ngIf="viewAgreementModel.isManageTeams" (isTeamSaved)="successCall($event)" [ManageTeams]="viewAgreementModel.manageTeams"></app-manage-teams>
+
+<p-dialog data-attr="viewagreement-details-confirmation-dialog" [(visible)]="viewAgreementModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+  [minY]="70" [baseZIndex]="10005" [closable]="false">
+  <p-header>
+    <span class="capitalizeTitle">Confirmation</span>
+    <a data-attr="viewagreement-details-cancel-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)" role="button" (click)="popupCancel()">
+      <span class="pi pi-times"></span>
+    </a>
+  </p-header>
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button  data-attr="viewagreement-details-popupNo-button" type="button" pButton (click)="popupCancel()" class="ui-button-secondary"
+    label="No"></button>
+    <button  data-attr="viewagreement-details-popupYes-button" type="button" pButton (click)="popupYes()" label="Yes" class="ui-button-primary"
+    ></button>
+  </p-footer>
+</p-dialog>

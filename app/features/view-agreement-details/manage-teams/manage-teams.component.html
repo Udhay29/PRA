@@ -1,0 +1,111 @@
+<div [ngClass]="{'loader': manageTeamsModel.isPageLoading}" [appJbhLoader]="manageTeamsModel.isPageLoading"></div>
+<p-dialog data-attr="viewagreement-manageTeams-teams-dialog"  class="dialog-style" [closable]="false" [(visible)]="manageTeamsModel.isShowTeams" [modal]="true" [responsive]="true"
+  [width]="750" [minWidth]="200" [minY]="70" [baseZIndex]="10000" [contentStyle]="{'max-height':'50vh'}">
+  <p-header>
+    <span class="title capitalizeTitle">Teams</span>
+    <a data-attr="viewagreement-manageTeams-teams-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)" role="button" (click)="hideTeams()">
+      <span class="pi pi-times"></span>
+    </a>
+  </p-header>
+  <form [formGroup]="manageTeamsModel.teamsForm">
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 typeahead-float-nested-label">
+        <p-autoComplete data-attr="viewagreement-manageTeams-teams-autoComplete" formControlName="teams" name="teams" [suggestions]="manageTeamsModel.teamsList"
+          (completeMethod)="onSearchTeam($event)" (onSelect)="onSearchTeamSelect($event)"
+          (onUnselect)="onSearchTeamRemove($event)" [multiple]="true" size="75" field="teamName" [forceSelection]="true" spellcheck="false"></p-autoComplete>
+        <label class="ui-md-12 ui-lg-12 ui-g-12" for="teams">Teams</label>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <p-accordion [activeIndex]="0">
+        <p-accordionTab  [attr.data-attr]="'viewagreement-manageTeams-teamName-accordionTab-' +  index" class="accord-color" [header]="teamDetail?.teamName" *ngFor="let teamDetail of manageTeamsModel.teamSelectedDetailList;let index=index">
+          <div *ngFor="let teamNestedVal of teamDetail?.teamDatil">
+            <span>{{teamNestedVal.teamMemberName}} </span>
+            <span class="text-grey" *ngIf="teamNestedVal.roleTypeName || teamNestedVal.roleTypeCode">{{'{'}}</span>
+            <span class="text-grey" *ngIf="teamNestedVal.roleTypeName">{{teamNestedVal.roleTypeName}}</span>
+            <span class="text-grey" *ngIf="teamNestedVal.roleTypeCode"> / </span>
+            <span class="text-grey" *ngIf="teamNestedVal.roleTypeCode">{{teamNestedVal.roleTypeCode}}</span>
+            <span class="text-grey" *ngIf="teamNestedVal.roleTypeName || teamNestedVal.roleTypeCode">{{'}'}}</span>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12">
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 drop-down-float">
+        <p-dropdown data-attr="viewagreement-manageTeams-billTo-dropdown" [options]="manageTeamsModel.billToList" name="billTo" formControlName="billTo" [autoWidth]="false"
+          filterPlaceholder="Bill To" [autoDisplayFirst]="false" (onChange)="onBillToChange($event)"></p-dropdown>
+        <label class="top-5" for="billTo">Bill To</label>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12" *ngIf="manageTeamsModel.isViewOwnersDetail">
+      <span class="ui-md-3 ui-lg-3 ui-g-3 width33">
+        <p class="text-grey">Sales Representative</p>
+        <label class="user-image-style" *ngIf="manageTeamsModel.ownershipDetails?.salesPersonName">
+          <span class="fsize">{{manageTeamsModel.ownershipDetails?.salesPersonName | returnInitialsFromName}}
+          </span>
+        </label>
+        <span class="pull-left billto-span pad-left5" *ngIf="manageTeamsModel.ownershipDetails?.salesPersonName">{{manageTeamsModel.ownershipDetails?.salesPersonName}}
+          <span *ngIf="manageTeamsModel.ownershipDetails?.salesPersonUid">({{manageTeamsModel.ownershipDetails?.salesPersonUid}})</span>
+        </span>
+        <span *ngIf="!manageTeamsModel.ownershipDetails?.salesPersonName || !manageTeamsModel.ownershipDetails?.salesPersonUid">No Data Available</span>
+      </span>
+      <span class="ui-md-3 ui-lg-3 ui-g-3 width33">
+        <p class="text-grey">Pricing Analyst</p>
+        <label class="user-image-style" *ngIf="manageTeamsModel.ownershipDetails?.prePdaName">
+          <span class="fsize">{{manageTeamsModel.ownershipDetails?.prePdaName | returnInitialsFromName}}
+          </span>
+        </label>
+        <span class="pull-left billto-span pad-left5" *ngIf="manageTeamsModel.ownershipDetails?.prePdaName">{{manageTeamsModel.ownershipDetails?.prePdaName}}
+          <span *ngIf="manageTeamsModel.ownershipDetails?.prePdaUid">({{manageTeamsModel.ownershipDetails?.prePdaUid}})</span>
+        </span>
+        <span *ngIf="!manageTeamsModel.ownershipDetails?.prePdaName || !manageTeamsModel.ownershipDetails?.prePdaUid">No Data Available</span>
+      </span>
+      <span class="ui-md-3 ui-lg-3 ui-g-3 width33">
+        <p class="text-grey">Invoicing PDA</p>
+        <label class="user-image-style" *ngIf="manageTeamsModel.ownershipDetails?.invoicingPdaName">
+          <span class="fsize">{{manageTeamsModel.ownershipDetails?.invoicingPdaName | returnInitialsFromName}}
+          </span>
+        </label>
+        <span class="pull-left billto-span pad-left5" *ngIf="manageTeamsModel.ownershipDetails?.invoicingPdaName">{{manageTeamsModel.ownershipDetails?.invoicingPdaName}}
+          <span *ngIf="manageTeamsModel.ownershipDetails?.invoicingPdaUid">({{manageTeamsModel.ownershipDetails?.invoicingPdaUid}})</span>
+        </span>
+        <span *ngIf="!manageTeamsModel.ownershipDetails?.invoicingPdaName || !manageTeamsModel.ownershipDetails?.invoicingPdaUid">No Data Available</span>
+      </span>
+    </div>
+    <div class="ui-md-12 ui-g-12 ui-lg-12" *ngIf="manageTeamsModel.isViewOwnersDetail">
+      <span class="ui-md-3 ui-lg-3 ui-g-3 width33">
+        <p class="text-grey">Post PDA</p>
+        <label class="user-image-style" *ngIf="manageTeamsModel.ownershipDetails?.postPdaName">
+          <span class="fsize">{{manageTeamsModel.ownershipDetails?.postPdaName | returnInitialsFromName}}
+          </span>
+        </label>
+        <span class="pull-left billto-span pad-left5" *ngIf="manageTeamsModel.ownershipDetails?.postPdaName">{{manageTeamsModel.ownershipDetails?.postPdaName}}
+          <span *ngIf="manageTeamsModel.ownershipDetails?.postPdaUid">({{manageTeamsModel.ownershipDetails?.postPdaUid}})</span>
+        </span>
+        <span *ngIf="!manageTeamsModel.ownershipDetails?.postPdaName || !manageTeamsModel.ownershipDetails?.postPdaUid">No Data Available</span>
+      </span>
+      <span class="ui-md-3 ui-lg-3 ui-g-3 width33">
+        <p class="text-grey">PDM</p>
+        <label class="user-image-style" *ngIf="manageTeamsModel.ownershipDetails?.pdmName">
+          <span class="fsize">{{manageTeamsModel.ownershipDetails?.pdmName | returnInitialsFromName}}
+          </span>
+        </label>
+        <span class="pull-left billto-span pad-left5" *ngIf="manageTeamsModel.ownershipDetails?.pdmName">{{manageTeamsModel.ownershipDetails?.pdmName}}
+          <span *ngIf="manageTeamsModel.ownershipDetails?.pdmUid">({{manageTeamsModel.ownershipDetails?.pdmUid}})</span>
+        </span>
+        <span *ngIf="!manageTeamsModel.ownershipDetails?.pdmName || !manageTeamsModel.ownershipDetails?.pdmUid">No Data Available</span>
+      </span>
+    </div>
+  </form>
+  <p-footer>
+    <button data-attr="viewagreement-manageTeams-cancel-button" type="button" pButton class="ui-button-secondary" label="Cancel" (click)="hideTeams()"></button>
+    <button data-attr="viewagreement-manageTeams-save-button" type="button" pButton label="Save" class="ui-button-primary" (click)="onTeamsSave()"></button>
+  </p-footer>
+</p-dialog>
+<p-dialog data-attr="viewagreement-manageTeams-saveChanges-dialog" header="Save Changes?" [(visible)]="manageTeamsModel.isSaveChanges" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10005">
+  <span>You made changes to the teams that were not saved</span>
+  <p-footer>
+    <button data-attr="viewagreement-manageTeams-popupDontSave-button" type="button" pButton (click)="onDontSave()" class="ui-button-secondary" label="Don't Save"></button>
+    <button data-attr="viewagreement-manageTeams-popupSave-button" type="button" pButton (click)="onTeamsSave()" label="Save" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

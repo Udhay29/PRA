@@ -1,0 +1,17 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.feature-container {
+  .content-wrapper {
+    height: calc(100% - 75px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .filter-component {
+    height: 100%;
+  }
+}
+.wrapper /deep/ p-breadcrumb .ui-breadcrumb ul .ui-breadcrumb-chevron {
+  margin-top: 4px !important;
+}

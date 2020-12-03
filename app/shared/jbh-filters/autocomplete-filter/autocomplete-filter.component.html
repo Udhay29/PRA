@@ -1,0 +1,30 @@
+<p-accordion [multiple]="true" class='accordian-container'>
+<p-accordionTab [selected]="!isPanelClosed" [attr.data-attr]="'filterautocomplete-' +  filterConfig?.title + '-accordionTab'" 
+class="nopadding dateFilter autocomplete-filter-style" [(selected)]="isChildAccordianOpened" 
+[ngClass]="{'no-border': isChildAccordianOpened, 'pointer-events-none': !isPanelClosed}"
+  expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+  <p-header class="header-style">
+    <span class="filter-title"  pTooltip={{filterConfig?.title}} tooltipPosition="top">{{filterConfig?.title}}</span>
+    <span class="pull-right" *ngIf="selectedValues.length > 0">({{selectedValues.length}})</span>
+  </p-header>
+  <div class="ui-g" >
+    <div class="ui-g-12 ui-inputgroup ui-search-group">
+      <span class="ui-inputgroup-addon ">
+        <em class="icon-Search"></em>
+      </span>
+      <p-autoComplete [(ngModel)]="autocompleteModel" field="label" placeholder="Search" [style]="{width:'100%'}"
+        delay="400" [size]="100" [suggestions]="suggestionList" [forceSelection]="true" (completeMethod)="onSearch($event.query)"
+        (onSelect)="onSuggestionSelect($event)" (onClear)="onClearSuggestion()" [attr.data-attr]="'filterautocomplete-' +  filterConfig?.title + '-autoComplete'"></p-autoComplete>
+    </div>
+    <span class="ui-g-12 error-message">{{errorMessage}}</span>
+    <p-scrollPanel class="ui-g-12" [style]="{width: '100%', height: scrollHeight}">
+      <ul class="pad0 mar0 pad-bot10">
+        <li class="check-list" *ngFor="let item of selectedItemList;let index=index">
+          <p-checkbox name="groupname" [attr.data-attr]="'filterautocomplete-' +  filterConfig?.title + '-checkbox-' + index" [value]="item"  pTooltip={{item.label}} tooltipPosition="top" [label]="item.label" [(ngModel)]="selectedValues" (onChange)="onCheckBoxSelect()"></p-checkbox>
+        </li>
+      </ul>
+    </p-scrollPanel>
+    <button class="icon-text-button reset-color" (click)="onReset()">Reset</button>
+  </div>
+</p-accordionTab>
+</p-accordion>

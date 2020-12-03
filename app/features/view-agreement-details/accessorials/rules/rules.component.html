@@ -1,0 +1,104 @@
+<div class='ui-md-12 ui-g-12'>
+    <p-table class="main-content" #ruleTable [columns]="rulesModel.cols" [value]="rulesModel.rules" [paginator]='!rulesModel.isRuleRecordEmpty' appTableKeynav [tableRef]="ruleTable" [pageLinks]='5' [rowsPerPageOptions]='[25,50,75,100]' [rows]='25' [resizableColumns]="true"
+        columnResizeMode='fit' [scrollable]="true" [loading]="rulesModel.loading" scrollHeight="calc(100vh - 445px)" 
+        [sortField]="rulesModel.sortField" [sortOrder]="1" (onRowSelect)="onRowSelect($event)" 
+        [totalRecords]="rulesModel.totalRuleRecords" [lazy]="true"
+         (onLazyLoad)="loadConfigValuesLazy($event)"
+        selectionMode="single" datakey="contractsToShow">
+
+        <ng-template pTemplate="caption">
+            <div class='ui-md-12 ui-g-12 pad0'>
+                <div class="ui-g-6 pad0">
+                    Rules
+                </div>
+                <div *ngIf='!rulesModel.isRuleRecordEmpty || (rulesModel.isRuleRecordEmpty && rulesModel.firstCheck === 1)' class='ui-g-6 pad0 pad-top5'>
+                    <div class="grid-icons pull-right">
+                        <span class='filter-menu-icon'>
+                        <button class="icon-Filter_Solid icon-button buttonStyle pad0"></button>
+                    </span>
+                        <span class='filter-menu-icon mar-right5'>
+                        <button class="icon-Menu_Overflow icon-button buttonStyle pad0"></button>
+                    </span>
+                    </div>
+                    <div class="ui-inputgroup pull-right search-box mar-right10">
+                        <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                        <input type="text" pInputText placeholder="Search" appShortcut="alt+s" (keyup)="searchRule($event.target.value)">
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col style='width: 50px'>
+                <col *ngFor="let col of columns" style='width:150px' [ngStyle]="col.width">
+            </colgroup>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+            <tr *ngIf='!rulesModel.isRuleRecordEmpty'>
+                <th class="table-header-checkbox">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let col of columns" [ngClass]="{'subcolumnBorder' : col.isNotFirst === true}" [pSortableColumn]="col.field" pResizableColumn>
+
+                    <div *ngIf='col.title' pTooltip="{{col.title}}" tooltipPosition="top" class='header-title'>{{col.title}}</div>
+                    <span [ngClass]="{'subtitle': col.isSubtitle}">{{col.header}}</span>
+
+                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+            </tr>
+            <tr *ngIf='rulesModel.isRuleRecordEmpty && rulesModel.firstCheck === 0'>
+                <div class='center-container'>
+                    <div class="display-middle">
+                        <h4 class="emptyMsgText mar0 mar-bot10">No information</h4>
+                        <h4 class="emptyMsgText mar0 mar-bot20">was found to display</h4>
+                        <button appShortcut="ctrl+alt+1" type="button" pButton label="Create Rule" (click)="onCreateRule()" class="ui-button-primary"></button>
+                    </div>
+                </div>
+
+            </tr>
+            <tr *ngIf='rulesModel.isRuleRecordEmpty && rulesModel.firstCheck === 1'>
+                <div class='center-container'>
+                    <div class="display-middle">No Records Found</div>
+                </div>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td>
+                    <p-tableCheckbox></p-tableCheckbox>
+                </td>
+                <td *ngFor="let col of columns" class="ui-resizable-column" [ngClass]="{'subcolumnBorder' : col.isNotFirst === true}">
+                    <span *ngIf="!col.isArray">
+                        <span *ngIf='rowData[col.field]' tooltipDisabled='{{col.isToolTipDisabled}}' pTooltip='{{rowData[col.field]}}'
+                            tooltipPosition="top">{{rowData[col.field]}}</span>
+                    <span *ngIf='!rowData[col.field]' tooltipDisabled='{{col.isToolTipDisabled}}' tooltipPosition="top" pTooltip='--'>--</span>
+                    </span>
+
+                    <div *ngIf='col.isArray'>
+                        <div *ngFor='let listItem of rowData[col.field]; let i = index' pTooltip='{{rowData[col.field]}}' tooltipPosition="top">
+                            <div *ngIf='listItem && i < 2'>
+                                {{listItem}}
+                            </div>
+                        </div>
+                        <span *ngIf="rowData[col.field].length > 2" class="pad-left2">+{{(rowData[col.field].length - 2)}}</span>
+                        <div *ngIf='!rowData[col.field].length' tooltipPosition="top" pTooltip='--'>--</div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template *ngIf='!rulesModel.isRuleRecordEmpty || rulesModel.firstCheck === 1' pTemplate="paginatorright" class="tableFooter">
+            <tr>
+                <td colspan="2">
+                    <span class="pull-right pad-right10">
+                <button type="text" appShortcut="ctrl+alt+1" pButton label="Create Rule" class="ui-button-primary" (click)="onCreateRule()">
+                </button>
+            </span>
+                </td>
+            </tr>
+
+        </ng-template>
+    </p-table>
+</div>

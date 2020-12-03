@@ -1,0 +1,74 @@
+<div [ngClass]="{'loader': contractItemModel.pageLoading}" [appJbhLoader]="contractItemModel?.pageLoading"></div>
+<div>
+  <div class="ui-g-12 pad0 dropshadow split-container">
+    <div class="split-header">
+      <span class="title">
+        Create Contract
+      </span>
+      <button data-attr="viewagreement-contractItem-menuclose-button" class="icon-button icon-Menu_Close close-position" (click)="onClose();"></button>
+    </div>
+    <div [ngClass]="{'data':dataFlag == false, 'noData':dataFlag == true }">
+      <form [formGroup]="contractItemModel.contractForm">
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 space-around-fields drop-down-float">
+          <p-dropdown  data-attr="viewagreement-contractItem-contractType-dropdown"[options]="contractItemModel.contractTypeList" name="contractType" formControlName="contractType"
+            [autoWidth]="false" filterPlaceholder="Contract Type" [autoDisplayFirst]="false" (onChange)="onContractTypeSelected($event.value)"></p-dropdown>
+          <label class="top-5" for="contractType">Contract Type</label>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Contract Type" *ngIf="(contractItemModel.contractForm.get('contractType').touched && contractItemModel.contractForm.get('contractType')['errors']?.required)"></p-message>
+          </div>
+        </span>
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 space-around-fields text-field-float" *ngIf="!contractItemModel.isTransactional">
+          <input data-attr="viewagreement-contractItem-contractId-input" type="text" autocomplete="off" pInputText formControlName="contractId" name="contractId" *ngIf="!contractItemModel.isContractTypeDisabled" spellcheck="false" maxlength="80"/>
+          <span class="spanIdClass" *ngIf="contractItemModel.isContractTypeDisabled">{{contractItemModel.contractForm.get('contractId').value}}</span>
+          <label [ngClass]="{'labelPlacement': contractItemModel.isContractTypeDisabled}" for="contractId">Contract Identifier</label>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Contract Identifier" *ngIf="contractItemModel.contractForm.get('contractId').touched && contractItemModel.contractForm.get('contractId')['errors']?.required"></p-message>
+          </div>
+        </span>
+        <span class="ui-float-label space-around-fields text-field-float" [ngClass]="{'ui-md-6 ui-lg-6 ui-g-6': contractItemModel.isTransactional, 'ui-md-12 ui-lg-12 ui-g-12':!contractItemModel.isTransactional}">
+          <input data-attr="viewagreement-contractItem-description-input" type="text" autocomplete="off" pInputText formControlName="description" name="description" maxlength="80" spellcheck="false" />
+          <label class="top-5" for="description">Description</label>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Description" *ngIf="contractItemModel.contractForm.get('description').touched && contractItemModel.contractForm.get('description')['errors']?.required"></p-message>
+          </div>
+        </span>
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 space-around-fields date-field-float">
+            <p-calendar  data-attr="viewagreement-contractItem-effDate-calendar" #effectiveCal formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" appendTo=body dateFormat="mm/dd/yy" [minDate]="contractItemModel.effectiveMinDate" [maxDate]="contractItemModel.effectiveMaxDate" (onInput)="onTypeDate($event.srcElement['value'], 'effective');" (onSelect)="onDateSelected($event, 0)" [showOnFocus]="false" ></p-calendar>
+            <label for="effectiveDate" class="leftPlace">Effective Date</label>
+            <div class="error-class-height">
+              <p-message severity="error" text="Provide Effective Date" *ngIf="contractItemModel.contractForm.get('effectiveDate').touched && contractItemModel.contractForm.get('effectiveDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide a valid date" *ngIf="contractItemModel.contractForm.get('effectiveDate').touched && contractItemModel.contractForm.get('effectiveDate')['errors']?.invalid"></p-message>
+            </div>
+          </span>
+          <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 space-around-fields date-field-float">
+            <p-calendar data-attr="viewagreement-contractItem-expDate-calendar" #expirationCal formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo="body" dateFormat="mm/dd/yy" panelStyleClass="" [minDate]="contractItemModel.expirationMinDate" [maxDate]="contractItemModel.expirationMaxDate" (onSelect)="onDateSelected($event, 1)" (onInput)="onTypeDate($event.srcElement['value'], 'expiration')" [showOnFocus]="false" ></p-calendar>
+            <label for="expirationDate" class="leftPlace">Expiration Date</label>
+            <div class="error-class-height">
+              <p-message severity="error" text="Provide Expiration Date" *ngIf="contractItemModel.contractForm.get('expirationDate').touched && contractItemModel.contractForm.get('expirationDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide a valid date" *ngIf="contractItemModel.contractForm.get('expirationDate').touched && contractItemModel.contractForm.get('expirationDate')['errors']?.invalid"></p-message>
+            </div>
+          </span>
+        <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 space-around-fields textarea-float">
+          <textarea data-attr="viewagreement-contractItem-notes-textarea"  class="noresize" [rows]="4" [cols]="30" pInputTextarea formControlName="notes" name="notes" spellcheck="false" maxlength="500"></textarea>
+          <label class="ui-md-12 ui-lg-12 ui-g-12" for="notes">Notes
+            <span class="pull-right mar-right20">optional</span>
+          </label>
+        </span>
+      </form>
+    </div>
+    <div class="split-footer">
+      <span class="pull-right mar-right0 mar-top10">
+        <button data-attr="viewagreement-contractItem-cancel-button" type="text" pButton label="Cancel" (click)="onClose()" class="ui-button-secondary mar-right15"></button>
+        <button data-attr="viewagreement-contractItem-save-button" type="text" pButton label="Save" (click)="onSave()" class="ui-button-primary mar-right15"></button>
+      </span>
+    </div>
+  </div>
+</div>
+<p-dialog data-attr="viewagreement-contractItem-confirmation-dialog" header="Save Changes?" [(visible)]="contractItemModel.isShowPopup" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button data-attr="viewagreement-contractItem-onpopupno-button" type="button" pButton (click)="onClickPopupNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="viewagreement-contractItem-onpopupyes-button" type="button" pButton (click)="onClickPopupYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>
+

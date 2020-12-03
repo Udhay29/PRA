@@ -1,0 +1,201 @@
+<div class="ui-g ui-fluid feature-container filter-common-style">
+  <div class="filter-wrapper">
+    <div class="ui-g-12 ui-fluid pad-top0 pad-bot0 pad-left0">
+      <div class="ui-g-12 mar-top10 mar-bot10 borderAlign pad-left15">
+        <div class="ui-g-6 mar-top5">
+          <strong class="filter-heading">Filter By</strong>
+        </div>
+        <div class="ui-g-6 textAlign">
+          <button pButton class="ui-button-secondary clearSearch pad-left0 pad-right0"
+            (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+        </div>
+      </div>
+      <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel pad-bot10">
+        <div class="accordionHeight custom-accordion-segment">
+          <p-accordion [multiple]="true" class='accordian-container'>
+        <app-listing-filter #filtercomp *ngIf="resetSourceFlag" [config]="filterConfig.sourceData"
+          (itemsSelected)="onListingItemsSelected($event, 'fuelPriceSourceTypeName')"
+          [selectedList]="filterModel.sourceTypeList" (resetCall)="resetSource(true)"
+          (isCollapsed)="isSourceCollapsed($event)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.regionData" *ngIf="resetRegionFlag"
+          (itemsSelected)="onListingItemsSelected($event, 'fuelRegionName')" [selectedList]="filterModel.regionList"
+          (resetCall)="resetRegion(true)" (isCollapsed)="isRegionCollapsed($event)"></app-listing-filter>
+          <p-accordionTab class="nopadding dateFilter"  [(selected)]="isFuelAccordianOpened" [ngClass]="{'no-border': isFuelAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Fuel Price</span>
+          </p-header>
+          <div class="ui-g">
+            <div class="ui-float-label ui-g-12 group-style width_align">
+              <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error': filterModel.errorFlag
+              }">
+                <span class=" ui-inputgroup-addon displayIcon">$</span>
+                <input style="width:100%;" (keyup)="validateCurrency($event.target.value)"
+                  (blur)="formatAmount($event.target.value)" [(ngModel)]="filterModel.currencyValue" pInputText />
+                <label for="region">Fuel Price</label>
+              </span>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide Valid Fuel Price" *ngIf="filterModel.errorFlag"></p-message>
+              </div>
+            </div>
+            <button class="icon-text-button reset-color pad-top10" (click)="clearAmount()">Reset</button>
+          </div>
+        </p-accordionTab>
+        <app-listing-filter #filtercomp [config]="filterConfig.basisData"
+          (itemsSelected)="onListingItemsSelected($event, 'unitOfVolumeMeasurementCode')"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.currencyData"
+          (itemsSelected)="onListingItemsSelected($event, 'currencyCode')"></app-listing-filter>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.countryData"
+          (itemsSelected)="onListingItemsSelected($event, 'pricingCountryCode')"></app-autocomplete-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.fuelTypeData"
+          (itemsSelected)="onListingItemsSelected($event, 'fuelTypeName')"></app-listing-filter>
+        <p-accordionTab class="nopadding dateFilter"  [(selected)]="isEffcDateAccordianOpened" [ngClass]="{'no-border': isEffcDateAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Effective Date</span>
+          </p-header>
+          <div class="mar-bot15">
+            <p-radioButton name="effDateRdio" value="Date" label="Date" [(ngModel)]="filterModel.defaultSelect"
+              (click)="dateRadioToggle(true, 'effDateOnlyFlag','effectiveDateValue', 'effectiveStartDate', 'effectiveEndDate', 'effectiveDate', 'date')">
+            </p-radioButton>
+            <p-radioButton name="effDateRdio" value="Date Range" label="Date Range"
+              (click)="dateRadioToggle(false, 'effDateOnlyFlag','effectiveDateValue', 'effectiveEndDate', 'effectiveStartDate', 'effectiveDate', 'dateRange')"
+              [(ngModel)]="filterModel.defaultSelect">
+            </p-radioButton>
+          </div>
+          <div *ngIf="filterModel.effDateOnlyFlag">
+            <p-calendar class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy"
+              (onBlur)="onDateRangeSelect('effectiveDateValue')" (onSelect)="onDateRangeSelect('effectiveDateValue')"
+              placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveDateValue"></p-calendar>
+            <div class="mar-top10">
+              <p-checkbox name="groupname" value="Match Exact Date" [(ngModel)]="filterModel.effectiveCheck"
+                label="Match Exact Date" (onChange)="matchExactDate($event)"></p-checkbox>
+            </div>
+          </div>
+          <div class="ui-g" *ngIf="filterModel.effDateOnlyFlag === false">
+            <span class="ui-md-12 ui-g-12  pad-left15 label-style">Between</span>
+            <div class="ui-g-12 ui-float-label  mar-bot20">
+              <p-calendar class="effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onDateRangeSelect('effectiveStartDate')" (onSelect)="onDateRangeSelect('effectiveStartDate')"
+                placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveStartDate"></p-calendar>
+            </div>
+
+            <div class="ui-g">
+              <span class="ui-md-12 ui-g-12  pad-left15 label-style">And</span>
+              <div class="ui-float-label ui-md-12 ui-g-12 ">
+                <p-calendar showIcon="true" calendarIcon="icon-Chevron_Down" dateFormat="mm/dd/yy"
+                  (onBlur)="onDateRangeSelect('effectiveEndDate')" (onSelect)="onDateRangeSelect('effectiveEndDate')"
+                  placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveEndDate"></p-calendar>
+              </div>
+            </div>
+          </div>
+          <button class="icon-text-button reset-color pad-top10"
+            (click)="clearDate('effectiveEndDate', 'effectiveStartDate', 'effectiveDateValue', 'effectiveDate', 'defaultSelect', 'effDateOnlyFlag', 'effectiveCheck')">Reset</button>
+        </p-accordionTab>
+        <p-accordionTab class="nopadding dateFilter" [(selected)]="isExpDateAccordianOpened" [ngClass]="{'no-border': isExpDateAccordianOpened}" 
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Expiration Date</span>
+          </p-header>
+          <div class="mar-bot15">
+            <p-radioButton name="expDateRdio" value="Date" label="Date" [(ngModel)]="filterModel.expDefaultSelect"
+              (click)="expDateRadioToggle(true, 'expDateOnlyFlag','expirationDateValue', 'expirationStartDate', 'expirationEndDate', 'expirationDate', 'date')">
+            </p-radioButton>
+            <p-radioButton name="expDateRdio" value="Date Range" label="Date Range"
+              (click)="expDateRadioToggle(false, 'expDateOnlyFlag','expirationDateValue', 'expirationStartDate', 'expirationEndDate', 'expirationDate', 'dateRange')"
+              [(ngModel)]="filterModel.expDefaultSelect">
+            </p-radioButton>
+          </div>
+          <div *ngIf="filterModel.expDateOnlyFlag">
+            <p-calendar class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy"
+              (onBlur)="onExpirationRangeSelect('expirationDateValue')"
+              (onSelect)="onExpirationRangeSelect('expirationDateValue')" placeholder="Pick a Date"
+              [(ngModel)]="filterModel.expirationDateValue"></p-calendar>
+            <div class="mar-top10">
+              <p-checkbox name="groupname" value="Match Exact Date" label="Match Exact Date"
+                (onChange)="expirationMatchExactDate($event)" [(ngModel)]="filterModel.expirationCheck"></p-checkbox>
+            </div>
+          </div>
+          <div class="ui-g" *ngIf="filterModel.expDateOnlyFlag === false">
+            <span class="ui-md-12 ui-g-12  pad-left15 label-style">Between</span>
+            <div class="ui-g-12 ui-float-label  mar-bot20">
+              <p-calendar class="effective-date" showIcon="true" dateFormat="mm/dd/yy"
+                (onBlur)="onExpirationRangeSelect('expirationStartDate')"
+                (onSelect)="onExpirationRangeSelect('expirationStartDate')" placeholder="Pick a Date"
+                [(ngModel)]="filterModel.expirationStartDate"></p-calendar>
+            </div>
+
+            <div class="ui-g">
+              <span class="ui-md-12 ui-g-12  pad-left15 label-style">And</span>
+              <div class="ui-float-label ui-md-12 ui-g-12 ">
+                <p-calendar showIcon="true" calendarIcon="icon-Chevron_Down" dateFormat="mm/dd/yy"
+                  (onBlur)="onExpirationRangeSelect('expirationEndDate')"
+                  (onSelect)="onExpirationRangeSelect('expirationEndDate')" placeholder="Pick a Date"
+                  [(ngModel)]="filterModel.expirationEndDate"></p-calendar>
+              </div>
+            </div>
+          </div>
+          <button class="icon-text-button reset-color pad-top10"
+            (click)="clearDate('expirationStartDate', 'expirationEndDate', 'expirationDateValue', 'expirationDate', 'expDefaultSelect', 'expDateOnlyFlag', 'expirationCheck')">Reset</button>
+        </p-accordionTab>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.createdByData"
+          (itemsSelected)="onListingItemsSelected($event, 'createUserID')"></app-autocomplete-filter>
+        <p-accordionTab class="nopadding dateFilter" [(selected)]="isCreatedOnAccordianOpened" [ngClass]="{'no-border': isCreatedOnAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Created On</span>
+          </p-header>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-float-label date-field-float">
+              <p-calendar showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onCreateDate()"
+                [(ngModel)]="filterModel.createdOnDate" (onSelect)="onCreateDate()"></p-calendar>
+              <label class="mar-left20">Date</label>
+            </div>
+          </div>
+          <div class="ui-g">
+            <div class="ui-float-label ui-md-12 ui-g-12 date-field-float">
+              <p-calendar showIcon="true" calendarIcon="jbh-Circle_Clock" icon="icon-Circle_Clock" [timeOnly]="true"
+                hourFormat="12" (onClose)="onCreateTime()" [(ngModel)]="filterModel.createdOnTime"></p-calendar>
+              <label class="mar-left20">Time</label>
+            </div>
+            <button class="icon-text-button reset-color pad-top10"
+              (click)="clearDateValues('createdOnDate', 'createdOnTime', 'createTimestamp')">Reset</button>
+          </div>
+        </p-accordionTab>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.createdProgramData"
+          (itemsSelected)="onListingItemsSelected($event, 'createProgramName')"></app-autocomplete-filter>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.updatedByData"
+          (itemsSelected)="onListingItemsSelected($event, 'lastUpdateUserID')"></app-autocomplete-filter>
+        <p-accordionTab class="nopadding dateFilter"  [(selected)]="isUpdatedOnAccordianOpened" [ngClass]="{'no-border': isUpdatedOnAccordianOpened}"
+          expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Updated On</span>
+          </p-header>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-float-label date-field-float">
+              <p-calendar showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onUpdateDate()" #udpateOnDate
+                (onSelect)="onUpdateDate()" [(ngModel)]="filterModel.updatedOnDate">
+              </p-calendar>
+              <label class="mar-left20">Date</label>
+            </div>
+          </div>
+          <div class="ui-g">
+            <div class="ui-float-label ui-md-12 ui-g-12 date-field-float">
+              <p-calendar showIcon="true" calendarIcon="jbh-Circle_Clock" icon="icon-Circle_Clock" [timeOnly]="true"
+                hourFormat="12" (onClose)="onUpdateTime()" [(ngModel)]="filterModel.updatedOnTime"></p-calendar>
+              <label class="mar-left20">Time</label>
+            </div>
+            <button class="icon-text-button reset-color pad-top10"
+              (click)="clearDateValues('updatedOnDate', 'updatedOnTime', 'lastUpdateTimestamp')">Reset</button>
+          </div>
+        </p-accordionTab>
+        <app-autocomplete-filter #filtercomp [config]="filterConfig.updatedProgramData"
+          (itemsSelected)="onListingItemsSelected($event, 'lastUpdateProgramName')"></app-autocomplete-filter>
+        </p-accordion>
+      </div>   
+    </div>
+    </div>
+  </div>
+</div>

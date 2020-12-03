@@ -1,0 +1,135 @@
+<div [ngClass]="{'loader': drayGroupModel.isPageLoading}" [appJbhLoader]="drayGroupModel?.isPageLoading"></div>
+
+
+<div class="ui-g-12 pad0 dropshadow split-container">
+  <div class="split-header">
+    <span class="title">
+      Create Dray Group
+    </span>
+    <button class="icon-button icon-Menu_Close close-position" (click)="onClose();"></button>
+  </div>
+  <div class="split-body ">
+    <form [formGroup]="drayGroupModel.drayGroupForm">
+      <div class="ui-md-12 ui-lg-12 ui-g-12 displaycheck pad-left0">
+        <span class="ui-md-6 ui-lg-6 ui-g-6 pad-left0 placeholder-style group-style">
+          <span class="ui-inputgroup ui-float-label">
+            <input class="inputwidth" pInputText formControlName="drayGroupName" autocomplete="off" name="drayGroupName"
+              [maxlength]="drayGroupModel?.drayGroupValidation.groupNameMaxLength"
+              (blur)="onCheckEmptyData('drayGroupName')"
+              [ngClass]="{'addon-error':drayGroupModel.drayGroupForm.get('drayGroupName').touched && drayGroupModel.drayGroupForm.get('drayGroupName')['errors']?.required}" />
+            <label for="cargoValue">Name</label>
+
+          </span>
+          <div class="error-msg-height ui-messages-error">
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.drayGroupNameError"
+              *ngIf="(drayGroupModel.drayGroupForm.get('drayGroupName').touched && drayGroupModel.drayGroupForm.get('drayGroupName')['errors']?.required)">
+            </p-message>
+          </div>
+
+        </span>
+        <span class="ui-md-6 ui-lg-6 ui-g-6 pad-left10 placeholder-style group-style">
+          <span class="ui-inputgroup ui-float-label ">
+            <input class="inputwidth" pInputText autocomplete="off" formControlName="drayGroupCode" name="drayGroupCode"
+              [maxlength]="drayGroupModel?.drayGroupValidation.groupCodeMaxLength"
+              (blur)="onCheckEmptyData('drayGroupCode')"
+              [ngClass]="{'addon-error': drayGroupModel.drayGroupForm.get('drayGroupCode').touched && drayGroupModel.drayGroupForm.get('drayGroupCode')['errors']?.required}" />
+            <label for="cargoValue">Code</label>
+
+          </span>
+          <div class="error-msg-height ui-messages-error">
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.drayGroupCodeError"
+              *ngIf="(drayGroupModel.drayGroupForm.get('drayGroupCode').touched && drayGroupModel.drayGroupForm.get('drayGroupCode')['errors']?.required)">
+            </p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-md-12 ui-g-12 ui-lg-12 displaycheck  pad-left0">
+        <span class="ui-float-label pad-left0 ui-md-6 ui-lg-6 ui-g-6  date-field-float group-style">
+          <p-calendar [showIcon]="true" name="effectiveDate" appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy"
+            (onSelect)="onDateSelected($event, 'effectiveDate')" (onBlur)="typedDateValidate($event,'effectiveDate')"
+            [showOnFocus]="true" [minDate]="drayGroupModel?.drayGroupValidation.effectiveMinDate"
+            [maxDate]="drayGroupModel?.drayGroupValidation.effectiveMaxDate" class="inputwidth"
+            formControlName="effectiveDate" name="effectiveDate" [style]="{'width':'100%'}"
+            [inputStyle]="{'width':'100%'}">
+          </p-calendar>
+          <label for="effectiveDate" class="left32">Effective Date</label>
+          <div class="error-msg-height ui-messages-error">
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.draygroupEffDateError"
+              *ngIf="drayGroupModel.drayGroupForm.get('effectiveDate').touched && drayGroupModel.drayGroupForm.get('effectiveDate')['errors']?.required">
+            </p-message>
+
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.drayGroupDateValid"
+              *ngIf="(((drayGroupModel?.drayGroupForm.get('effectiveDate').touched && drayGroupModel?.drayGroupForm.get('effectiveDate')['errors']?.invalid )||(drayGroupModel?.drayGroupValidation.isInValidEffDate || drayGroupModel?.drayGroupValidation.isInValidDate)) && !(drayGroupModel?.drayGroupForm.get('effectiveDate').touched && drayGroupModel?.drayGroupForm.get('effectiveDate')['errors']?.required))">
+            </p-message>
+          </div>
+        </span>
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 pad-left10  date-field-float group-style">
+          <p-calendar [showIcon]="true" name="effectiveDate" appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy"
+            [showOnFocus]="true" (onSelect)="onDateSelected($event, 'expirationDate')"
+            (onBlur)="typedDateValidate($event,'expirationDate')"
+            [minDate]="drayGroupModel?.drayGroupValidation.expirationMinDate"
+            [maxDate]="drayGroupModel?.drayGroupValidation.expirationMaxDate" class="inputwidth"
+            formControlName="expirationDate" name="expirationDate" [style]="{'width':'100%'}"
+            [inputStyle]="{'width':'100%'}"></p-calendar>
+          <label for="expirationDate" class="expleftPlace">Expiration Date</label>
+          <div class="error-msg-height ui-messages-error">
+
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.draygroupExpDateError"
+              *ngIf="(drayGroupModel.drayGroupForm.get('expirationDate').touched && drayGroupModel.drayGroupForm.get('expirationDate')['errors']?.required)">
+            </p-message>
+            <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.drayGroupDateValid"
+              *ngIf="(((drayGroupModel?.drayGroupForm.get('expirationDate').touched && drayGroupModel?.drayGroupForm.get('expirationDate')['errors']?.invalid )||(drayGroupModel?.drayGroupValidation.isInValidExpDate || drayGroupModel?.drayGroupValidation.isInValidDate)) && !(drayGroupModel?.drayGroupForm.get('expirationDate').touched && drayGroupModel?.drayGroupForm.get('expirationDate')['errors']?.required))">
+            </p-message>
+          </div>
+
+        </span>
+      </div>
+      <div class="ui-md-12 ui-g-12 ui-lg-12 rateScopeMar pad-left0">
+        <div class="rateLabel">
+          <label class="" for="ratescope">Rate Scope</label>
+        </div>
+        <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 switchPadTop">
+
+          <p-inputSwitch onLabel="One-Way" offLabel="Two-Way" class="switchMarLeft" formControlName="rateScopeTypeName"
+            name="rateScopeTypeName" (onChange)="onrateScopeChange($event)"></p-inputSwitch>
+        </span>
+      </div>
+
+      <div class="ui-md-12 ui-lg-12 ui-g-12 displaycheck pad-left0">
+        <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 pad-left0 placeholder-style ">
+          <p-autoComplete field="drayGroupCountryName" [multiple]="true" formControlName="drayGroupCountries"
+            name="drayGroupCountries" [suggestions]="drayGroupModel.countryFiltered"
+            (completeMethod)="onTypeCountries($event)" emptyMessage="No countries found" [forceSelection]="true"
+            [dropdown]="true"></p-autoComplete>
+          <label for="country">Country</label>
+
+        </div>
+        <div class="error-msg-height ui-messages-error">
+          <p-message severity="error" [text]="drayGroupModel?.drayGroupValidation.drayGroupCountryError"
+            *ngIf="(drayGroupModel.drayGroupForm.get('drayGroupCountries').touched && drayGroupModel.drayGroupForm.get('drayGroupCountries')['errors']?.required)">
+          </p-message>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="split-footer">
+    <span class="pull-right mar-right10 mar-top10">
+      <button type="text" pButton label="Cancel" (click)="onClose()" appShortcut="ctrl+alt+2"
+        class="ui-button-secondary mar-right15"></button>
+      <button type="text" pButton label="Save" (click)="onSave()" appShortcut="ctrl+alt+1"
+        class="ui-button-primary mar-right15"></button>
+    </span>
+  </div>
+</div>
+
+
+<!-- cancel Modal Popup -->
+
+<p-dialog header="Save Changes?" [(visible)]="drayGroupModel.isShowPopup" [modal]="true" [responsive]="true"
+  [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="onClickPopupNo()" class="ui-button-secondary" label="No"></button>
+    <button type="button" pButton (click)="onClickPopupYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

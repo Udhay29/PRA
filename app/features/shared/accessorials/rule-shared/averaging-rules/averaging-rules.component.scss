@@ -1,0 +1,19 @@
+.radioBtns {
+    margin-top: 4px;
+    /deep/ .ui-radiobutton-label:not(.ui-label-disabled) {
+        margin-right: 10px;
+    }
+}
+
+.timeFrameAlign {
+    width: 100%;
+}
+
+.eachAlign /deep/ label.ui-radiobutton-label.ui-label {
+    margin-right: 18px !important;
+}
+
+.eachAlign /deep/ label.ng-star-inserted.ui-radiobutton-label {
+    padding-right: 6px !important;
+    padding-left: 5px;
+}

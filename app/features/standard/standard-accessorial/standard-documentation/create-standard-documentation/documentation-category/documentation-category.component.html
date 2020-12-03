@@ -1,0 +1,86 @@
+<form [formGroup]="documentCategory" autocomplete="off">
+
+    <div class="ui-g-12 pad0 loaderClass">
+        <div class="ui-g-12 pad-left0 pad-top0 pad-bot0">
+            <p class="grey pad-left10 selectedTabLabel">Documentation Category</p>
+            <p-selectButton class="ui-g-5 pad-left0 pad-top0 documentCategory" [options]="createDocumentationModel?.documentCategorySelect" formControlName="documentCategorySelect" (onChange)="onChangedocumentCategory($event.value)"></p-selectButton>
+        </div>
+        <div class="textName ui-g-12 pad-right0" [ngClass]="{'pad-bot0': documentCategory?.controls.documentCategorySelect.value == 'Both'}" *ngIf="(documentCategory?.controls.documentCategorySelect.value == 'Text Only') ||
+      (documentCategory?.controls.documentCategorySelect.value == 'Both')">
+            <div class="ui-g-3 pad-left0 pad-bot0">
+                <div class="ui-float-label displayBlock pad0">
+                    <input formControlName="textName" id="float-input" type="text" maxlength="80" size="30" pInputText [ngClass]="{'ui-inputwrapper-filled': documentCategory.controls.textName.value}">
+                    <label for="float-input">Text Name</label>
+                </div>
+
+                <div class="errorHeight18 displayBlock">
+                    <p-message severity="error" text="Provide Text Name" *ngIf="(documentCategory?.controls.textName.invalid && documentCategory?.controls.textName.touched )"></p-message>
+                </div>
+            </div>
+            <div class=" ui-g-12 pad-left0 pad-right0" [ngClass]="{'pad-bot0': documentCategory?.controls.documentCategorySelect.value == 'Both'}">
+                <div class="ui-float-label textAreaWrapper">
+                    <textarea formControlName="textArea" class="textArea" maxlength="6000" rows="5" cols="150" pInputTextarea  id="textareavalue"></textarea>
+                    <label class="textAreaLabel textAreaValue" for="textareavalue">Text</label>
+                </div>
+
+                <div class="errorHeight18 displayBlock">
+                    <p-message severity="error" text="Provide Text" *ngIf="(documentCategory?.controls.textArea.invalid && documentCategory?.controls.textArea.touched )"></p-message>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g-12 pad-left0 pad-bot0" [ngClass]="{'pad-top0': documentCategory?.controls.documentCategorySelect.value == 'Both'}" *ngIf=" (documentCategory?.controls.documentCategorySelect.value == 'Document Only')||(documentCategory?.controls.documentCategorySelect.value == 'Both')">
+            <p class="pad-left10 grey selectedTabLabel">Supported file formats: Doc, Excel, PDF, JPG, PNG, TXT, TIFF</p>
+            <div class="ui-g-12 dashedBorder pad0">
+                <div [ngClass]="{'loader1': createDocumentationModel.loadings}" [appJbhLoader]=createDocumentationModel.loadings></div>
+                <p-fileUpload [showCancelButton]="false" [showUploadButton]="false" name="demo[]" (onSelect)="onFilesUpload($event)" multiple="multiple" chooseLabel="Choose Files">
+                    <ng-template class="pad0" pTemplate="content">
+                        <div class="dropArea">
+                            <div class="dragDropText">
+                                <p>Drag & Drop Files</p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fileUpload>
+            </div>
+
+            <div class="ui-g-12 pad-left0 pad-right0 pad-bot0 height100 position-rel" formArrayName="attachment">
+
+                <div class="nobullet pad0 attachment-list" *ngIf="documentCategory.controls.attachment?.length">
+                    <div [ngClass]="{'removeAttachLoader': createDocumentationModel.loaderOnRemove}" [appJbhLoader]=createDocumentationModel.loaderOnRemove></div>
+                    <div *ngFor="let file of documentCategory.controls.attachment.controls; let i=index">
+                        <div class="ui-g-12 verticalAlignment pad-left0 pad-right0 pad-bot15 pad-top0" [formGroupName]="i">
+                            <div class=" pad-left0 ui-g-3 pad-right20 autuCompleteVetical">
+                                <div class="pad-left0 pad-right0 ui-float-label">
+                                    <p-autoComplete [suggestions]="createDocumentationModel.attachmentTypeFiltered" [autoDisplayFirst]="false"
+                                    formControlName="attachmentType" [style]="{'width':'100%'}" field="value" [inputStyle]="{'width':'100%'}"                                     [dropdown]="true" (completeMethod)="onTypeAttachmentType($event)" [forceSelection]="true"     emptyMessage="No records found" (onBlur)="onBlurAttachmentType($event, i)"></p-autoComplete>
+
+                                    <label class="label-style" [ngClass]="{'label-style-without-pmessage': !(file.get('attachmentType').touched && file.get('attachmentType').invalid),'label-style-with-pmessage':(file.get('attachmentType').touched && file.get('attachmentType').invalid)}"
+                                        for="attachmentTypeDropDown">Attachment
+                                      Type</label>
+                                    <div class="errorHeight">
+                                        <p-message severity="error" text="Select Attachment Type" *ngIf="file.get('attachmentType').touched && file.get('attachmentType').invalid"></p-message>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fileDisplay ui-g-9 pad-bot10">
+                                <div class='filename pad-left15 ui-g-11'>
+                                  {{file.controls.filename.value}}
+                              </div>
+                                <div (click)='removeAttachment(i)' class="icon-Menu_Close pad-left25 pull-right delete  ui-g-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p-dialog header="Confirmation" [(visible)]="createDocumentationModel.isShowDocumentTypePopup" [modal]="true" [responsive]="true" (onHide)="documentTypePopupNo()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+                    <span>You are about to lose all the changes. Do you want to proceed?</span>
+                    <p-footer>
+                        <button type="button" pButton (click)="documentTypePopupNo()" label="No" class="ui-button-secondary"></button>
+                        <button type="button" pButton (click)="documentTypePopupYes()" label="Yes" class="ui-button-primary"></button>
+                    </p-footer>
+                </p-dialog>
+            </div>
+        </div>
+    </div>
+</form>

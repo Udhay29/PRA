@@ -1,0 +1,95 @@
+<form [formGroup]="settingForm">
+  <h4 class="heading-style">System Default Values</h4>
+  <div class='ui-md-3 inlineBlock'>
+    <label for="country">Country</label>
+    <p-dropdown formControlName="country" placeholder="Country" [options]="dropDownTypes" [autoWidth]="false" name="country"
+      [autoDisplayFirst]="false"></p-dropdown>
+  </div>
+  <div class='ui-md-3 inlineBlock'>
+    <label for="country">Currency</label>
+    <p-dropdown formControlName="country" placeholder="Currency" [options]="dropDownTypes" [autoWidth]="false" name="country"
+      [autoDisplayFirst]="false"></p-dropdown>
+  </div>
+  <div class='ui-md-3 inlineBlock'>
+    <label for="country">Cubic Length</label>
+    <p-dropdown formControlName="country" placeholder="Cubic Length" [options]="dropDownTypes" [autoWidth]="false" name="country"
+      [autoDisplayFirst]="false"></p-dropdown>
+  </div>
+  <div class='ui-md-3 inlineBlock'>
+    <label for="country">Mileage</label>
+    <p-dropdown formControlName="country" placeholder="Mileage" [options]="dropDownTypes" [autoWidth]="false" name="country"
+      [autoDisplayFirst]="false"></p-dropdown>
+  </div>
+  <div class="ui-md-12 border-style nopadding">
+    <div class='ui-md-3 inlineBlock'>
+      <label for="country">Length</label>
+      <p-dropdown formControlName="country" placeholder="Length" [options]="dropDownTypes" [autoWidth]="false" name="country" [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+    <div class='ui-md-3 inlineBlock'>
+      <label for="country">Weight</label>
+      <p-dropdown formControlName="country" placeholder="Weight" [options]="dropDownTypes" [autoWidth]="false" name="country" [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+    <div class='ui-md-3 inlineBlock'>
+      <label for="country">Weight-band</label>
+      <p-dropdown formControlName="country" placeholder="Weight-band" [options]="dropDownTypes" [autoWidth]="false" name="country"
+        [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+    <div class='ui-md-3 inlineBlock'>
+      <label for="country">Volume</label>
+      <p-dropdown formControlName="country" placeholder="Volume" [options]="dropDownTypes" [autoWidth]="false" name="country" [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+  </div>
+  <h4 class="heading-style">Fuel Surcharge</h4>
+  <div class="ui-md-12 ui-float-label">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">Fuel Group Email Address</label>
+  </div>
+  <div class="ui-md-12 ui-float-label">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">External Fuel Weekly Update Emails for customers without individual fuel program setup</label>
+  </div>
+  <h4 class="heading-style">Rule</h4>
+  <div class="ui-md-12 ui-float-label">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">LTL Classes</label>
+  </div>
+  <div class="ui-md-12 ui-float-label nopadding">
+    <p-table #dt [columns]="gridHeadeList" [value]="gridDataList">
+      <ng-template pTemplate="caption">
+        <div class="ui-helper-clearfix">
+          <span class="heading-style" style="font-size:17px;">Dynamic Margin</span>
+          <span style="float:right; font-size:15px;">New Priority Default Group</span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td pEditableColumn *ngFor="let col of columns">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input type="text" [(ngModel)]="rowData[col.field]">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData[col.field]}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-md-12 ui-float-label border-style">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">Tax ID, which can be associated</label>
+  </div>
+</form>

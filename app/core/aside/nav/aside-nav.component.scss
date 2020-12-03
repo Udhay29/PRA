@@ -1,0 +1,73 @@
+@import "~ngx-prime-theme/theme/colors";
+@import "~ngx-prime-theme/theme/mixins";
+
+nav {
+  @include noselect();
+
+  margin: auto -20px 20px -20px;
+  font-size: 0.875em;
+
+  a {
+    cursor: pointer;
+    padding: 10px 20px 10px 15px;
+    color: $grey;
+    text-decoration:none;
+    display: block;
+    font-size: 0.875em;
+    @include transition(color 0.3s ease-out);
+    &:hover, &:focus { color: $blue; }
+  }
+
+  i {
+    line-height: 20px;
+    float: right;
+    position: relative;
+    right: -6px;
+    font-size: 1.5em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      @include transition(background-color 0.3s ease-out);
+      background-color: $blue-dark75;
+      &.active {
+        // commented lines for future reference
+        // @include transition(background-color 0.2s ease-in);
+        // background-color: $blue-dark50;
+        // > a { color: $white; }
+        > a { color: $blue; }
+      }
+
+      ul {
+        li {
+          padding: 0 0 0 10px;
+          max-height: 0;
+          background: none;
+
+          @include transition(max-height 0.3s ease-out, opacity 0.3s ease-out);
+          @include opacity(0);
+          overflow: hidden;
+
+          &.active a { color: $blue; }
+          a {
+            color: $grey-dark27;
+            padding: 5px 20px 10px 15px;
+            &:hover, &:focus { color: $blue; }
+          }
+        }
+
+        &.open {
+          li {
+            max-height: 35px;
+            @include transition(max-height 0.2s ease-in, opacity 0.2s ease-in);
+            @include opacity(1);
+          }
+        }
+      }
+    }
+  }
+}

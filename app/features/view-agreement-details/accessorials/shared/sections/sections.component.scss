@@ -1,0 +1,94 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.header-height {
+    height: 45px;
+    position: relative;
+}
+
+.main-content {
+    padding: 5px;
+    box-shadow: 0 0 10px darkgrey;
+    border-radius: 7px;
+    background: white;
+    padding: 0;
+    min-height: calc(100vh - 302px);
+    height: 250px;
+}
+
+.main-content /deep/.ui-table .ui-table-caption.ui-widget-header {
+    border-bottom: 1px solid darkgray;
+    padding: 11px 12px 3px 11px;
+}
+
+.main-content /deep/ .ui-table.ui-widget {
+    height: 250px;
+    box-shadow: none;
+    overflow: hidden;
+    border: 1px solid darkgray;
+}
+
+.thRow {
+    padding-top: 8px!important;
+    padding-bottom: 8px!important;
+}
+
+.thHeaderRow {
+    padding-top: 10px!important;
+    padding-bottom: 12px!important;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 8%;
+    padding: 10px;
+    line-height: 40px;
+}
+
+.message-wrapper {
+    @include getTypographyStyles("h2");
+    height: calc(100vh - 285px);
+    color: $grey-dark27;
+    font-size: 50px;
+}
+.checkbox-customise /deep/ .ui-chkbox .ui-chkbox-box {
+    width: 12px;
+    height: 12px;
+}
+.checkbox-customise /deep/ .ui-chkbox .ui-chkbox-icon {
+    font-size: 10px;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 80px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.ui-inputgroup.getGridValuesInput > span.ui-inputgroup-addon{
+    position:absolute;
+    left:6px;
+    top:3px;
+    border:none;
+    height:30px;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext{
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background:transparent;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext:focus{
+    border-left:1px solid #007dba;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext:not([disabled]):hover{
+    border:1px solid #00aafc;
+  }

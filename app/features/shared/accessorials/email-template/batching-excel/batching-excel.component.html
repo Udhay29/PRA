@@ -1,0 +1,35 @@
+<div class="ui-g">
+  <span class="heading5 width100">Column Headings</span>
+  <span class="heading6 mar-top20">Add column headings in the order they will appear, from left to right, in the first
+    worksheet of the Excel workbook. When batching occurs, this attachment will be sent instead of the Default
+    Excel Attachment and Data Elements in the Body.
+  </span>
+</div>
+<p-orderList class="custom-order-list" [value]="emailTemplateModel?.batchingExcelValues" dragdrop="true">
+  <ng-template let-batchExcelValue let-index='index' pTemplate="item">
+    <div class="mar-top0 mar-left5 mar-right3 ui-helper-clearfix">
+      <div class="ui-g-1 mar-top5 pad0 custom-order-list-index">
+        {{index+1}}
+      </div>
+      <div class="ui-g-4 pad0">
+        <div class="ui-float-label pad0 width100">
+          <p-autoComplete [suggestions]="emailTemplateModel.batchingExcelSuggestions" [dropdown]="true"
+            (completeMethod)="filterBatchExcelData($event)" (onSelect)="checkDuplicateBatch($event)" [style]="{'width':'100%'}"
+            field="name" [inputStyle]="{'width':'100%'}" emptyMessage="No records found" [forceSelection]="true" (onBlur)="onBatchValueChange($event, batchExcelValue)"
+            [(ngModel)]="batchExcelValue['name']" placeholder="Heading {{index+1}}"
+            [ngClass]="{'error-cell': ((batchExcelValue['name'] === '' || batchExcelValue['name'] === null) && (batchExcelValue['invalid'] || submitStatus['batchingExcel']))}"></p-autoComplete>
+          <label class="label-style ui-g-12 pad0 errorAlign">
+            <span></span>
+          </label>
+        </div>
+        <p-message severity="error" [text]="getErrorMessage(batchExcelValue)" *ngIf="((batchExcelValue['name'] === '' || batchExcelValue['name'] === null) && (batchExcelValue['invalid'] || submitStatus['batchingExcel']))"></p-message>
+      </div>
+      <a href="javascript:void(0)" (click)="removeBatchExcelElement(index)" class="pull-right remove-icon-color"
+        tabindex="3">
+        <em class="icon-Circle_Remove_Solid" *ngIf="emailTemplateModel.batchingExcelValues.length > 1"></em>
+      </a>
+    </div>
+  </ng-template>
+</p-orderList>
+<button pButton type="button" label="Add Column" class="ui-button-tertiary pad0" icon="jbh-icon icon-Circle_Add_Solid"
+  (click)="addBatchExcelElement()"></button>

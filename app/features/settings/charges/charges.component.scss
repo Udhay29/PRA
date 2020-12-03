@@ -1,0 +1,13 @@
+.mar-top0 {
+    margin-top: 0px;
+}
+.chargesWrapper {
+    /deep/ p-tabview .ui-tabview.ui-tabview-top > .ui-tabview-nav {
+        border: none !important;
+    }
+}
+.charges-breadcrumb {
+  /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+      vertical-align: bottom !important;
+  }
+}

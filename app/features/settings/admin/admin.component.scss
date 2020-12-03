@@ -1,0 +1,53 @@
+.button-border {
+    border: none !important;
+    font-weight: normal;
+}
+
+.label-alignment {
+    margin: 0 0 12px 10px;
+}
+
+.testing {
+    /deep/ .ui-chips {
+        .ui-inputtext li {
+            .ui-chips-token-icon {
+                display: none;
+            }
+            .ui-chips-token-label {
+                margin-right: 0;
+                padding-right: 0;
+            }
+        }
+    }
+}
+.wrapper {
+    padding: 0 0.5em;
+}
+
+.footer-part {
+    position: fixed;
+    bottom: 3%;
+    right: 2%;
+}
+.font18 {
+    font-size: 18px;
+}
+.text-gray {
+    color: #c9c9c9;
+}
+.container {
+    /deep/ .ui-table.ui-widget {
+        border: 1px solid #e3e3e3 !important;
+    }
+    /deep/ .ui-table-caption.ui-widget-header {
+        border: 1px solid #C9C9C9;
+        padding-left: 15px;
+        border-radius: 5px 5px 0 0;
+    }
+    .borderColor {
+        border: 1px solid #C9C9C9 !important;
+    }
+}
+.pad25 {
+    padding: 25px;
+}

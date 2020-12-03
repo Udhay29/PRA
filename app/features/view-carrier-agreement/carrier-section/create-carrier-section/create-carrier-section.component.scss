@@ -1,0 +1,141 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.split-container {
+  height: 100%;
+  border-radius: 6px;
+  background-color: $white;
+  .split-header {
+    padding-top:2px;
+    height: 60px;
+    border-bottom: solid 1px $grey-lite70;
+    .title {
+      top: 15px;
+      padding: 10px;
+      position: relative;
+      color: $grey-dark66;
+      @include getTypographyStyles("h2");
+    }
+    .close-position {
+      float: right;
+      margin-right: 15px;
+      margin-top: 6px;
+      width: 44px;
+      height: 44px;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  .split-body {
+    width: 100%;
+    padding: 20px 10px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 397px);
+  }
+  .split-footer {
+    height: 60px;
+    position: relative;
+    border-top: solid 1px $grey-lite70;
+  }
+}
+.field-space {
+  padding: 3px 0;
+}
+.typeahead-float {
+  label {
+    margin-top: 0 !important;
+    top: 35%;
+    left: 12px;
+  }
+  .ui-inputwrapper-focus~label {
+    top: calc(-.75em - 3px);
+    left: 10px;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled~label {
+    top: calc(-.75em - 3px);
+    left: 10px;
+    font-size: 12px;
+  }
+}
+.typeahead-float-nested-label {
+  label {
+    margin-top: 0 !important;
+    top: 35%;
+    left: 12px;
+  }
+  .ui-inputwrapper-focus~label {
+    top: calc(-.75em - 3px);
+    left: 10px;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled~label {
+    top: calc(-.75em - 3px);
+    left: 10px;
+    font-size: 12px;
+  }
+}
+.optional-label {
+  margin-right: 35px;
+}
+.text-field-float {
+  label {
+    margin-top: 0 !important;
+    top: 35%;
+    left: 12px;
+  }
+  input.ui-state-filled ~ label,
+  input:focus ~ label {
+    top: calc(-0.75em - 3px);
+    left: 10px;
+    font-size: 12px;
+  }
+}
+.message-height {
+  height: 5px;
+}
+.date-field-float {
+  label {
+    margin-top: 4px !important;
+    top: 28%;
+    left: 32px;
+  }
+  .ui-inputwrapper-focus ~ label {
+    top: calc(-0.75em - 8px);
+    left: 10px !important;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled ~ label {
+    top: calc(-0.75em - 8px);
+    left: 10px !important;
+    font-size: 12px;
+  }
+}
+/deep/.expire-date {
+  right: 0 !important;
+}
+.billto-emptyMsgText {
+  @include getTypographyStyles("display 3");
+  color: $grey-dark27;
+}
+.align-emptymessage {
+  text-align: center;
+}
+.codes-table-caption {
+  height: 20px;
+}
+.billto-table {
+  /deep/.ui-table .ui-table-caption.ui-widget-header {
+    border-bottom: none !important;
+  }
+  /deep/ .ui-table-scrollable-header-table, /deep/ .ui-table-scrollable-body-table{
+    min-width: 100% !important;
+  }
+  /deep/.ui-table-wrapper table {
+    min-width: 100%;
+  }
+}
+.width10 {
+  width: 10px;
+}

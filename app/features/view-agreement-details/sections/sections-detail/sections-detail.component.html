@@ -1,0 +1,144 @@
+<div class="split-wrapper">
+    <div class="ui-g-12 pad0 dropshadow split-container view-form-content">
+        <div class="split-header">
+            <span  data-attr="viewagreement-sectionDetail-splitViewTitle-span" class="title">{{ sectionsDetailModel.splitViewTitle }}</span>
+            <button data-attr="viewagreement-sectionDetail-close-button" class="icon-button icon-Menu_Close close-position iconColorChange" (click)="onClose()"></button>
+        </div>
+
+        <div class="split-body">
+            <div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-secNameHeader-label" class="heading-text content-text">Section Name</label>
+            <label data-attr="viewagreement-sectionDetail-secName-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.customerAgreementContractSectionName}}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-secTypeHeader-label" class="heading-text content-text">Section Type</label>
+            <label data-attr="viewagreement-sectionDetail-secType-label" class="content-text title-padding">{{
+              sectionsDetailModel.sectionViewDetails?.customerAgreementContractSectionTypeName }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-currencyHeader-label" class="heading-text content-text">Currency Type</label>
+            <label data-attr="viewagreement-sectionDetail-currencyCode-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.currencyCode }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-contractIdentifierHeader-label" class="heading-text content-text">Contract Identifier</label>
+            <label data-attr="viewagreement-sectionDetail-contractIdentifier-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.customerContractNumber }}</label>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad-b-10 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-EffDateHeader-label" class="heading-text content-text">Effective Date</label>
+            <label data-attr="viewagreement-sectionDetail-EffDate-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayEffectiveDate |
+              date:'MM/dd/yyyy'}}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-ExpDateHeader-label" class="heading-text content-text">Expiration Date</label>
+            <label data-attr="viewagreement-sectionDetail-expDate-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayExpirationDate |
+              date:'MM/dd/yyyy'}}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 mar-bot10 section-details-border">
+                    <p-table [value]="sectionsDetailModel.sectionViewDetails?.customerAgreementContractSectionAccountDTOs">
+                        <ng-template pTemplate="caption" class="section-codes">
+                            <div class="ui-g table-caption">
+                                <span data-attr="viewagreement-sectionDetail-sectionCode-span" class="tableName mar-top18">
+                  Associated Codes ({{sectionsDetailModel.sectionViewDetails?.associatedCodesLength}})
+                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr class="pad0 mar0 table-header">
+                                <th [attr.data-attr]="'viewagreement-sectionDetail-sectionCode-th-' +  thisCol.name" class="checkbox-column width10 text-bold" *ngFor="let thisCol of sectionsDetailModel.associatedCodeTableColumns">
+                                    {{thisCol.name}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                            <tr>
+                                <td [attr.data-attr]="'viewagreement-sectionDetail-sectionCode-td-' +  rowIndex" class="textwrap ui-resizable-column" colspan=1 *ngFor="let col of sectionsDetailModel.associatedCodeTableColumns">
+                                    {{ rowData[col.property] }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-12 ui-lg-12 ui-g-12">
+            <label data-attr="viewagreement-sectionDetail-statusHeader-label" class="heading-text content-text">Status</label>
+            <label data-attr="viewagreement-sectionDetail-status-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.status }}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-originalEffDateHeader-label" class="heading-text content-text">Original Effective Date</label>
+            <label data-attr="viewagreement-sectionDetail-originalEffDate-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayOriginalEffectiveDate |
+              date:'MM/dd/yyyy' }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-originalExpDateHeader-label" class="heading-text content-text">Original Expiration Date</label>
+            <label data-attr="viewagreement-sectionDetail-originalExpDate-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayOriginalExpirationDate |
+              date:'MM/dd/yyyy'}}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-createdByHeader-label" class="heading-text content-text">Created By</label>
+            <label data-attr="viewagreement-sectionDetail-createdBy-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.createUserID }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-createdOnHeader-label" class="heading-text content-text">Created On</label>
+            <label data-attr="viewagreement-sectionDetail-createdOn-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayCreatedOn }}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 border-line mar-bot10">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-createdProgHeader-label" class="heading-text content-text">Created Program</label>
+            <label data-attr="viewagreement-sectionDetail-createProg-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.createProgramName }}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="sub-title ui-md-12 ui-g-12 ui-lg-12">Last Version</span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-updatedByheader-label" class="heading-text content-text">Updated By</label>
+            <label data-attr="viewagreement-sectionDetail-updatedBY-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.lastUpdateUserID }}</label>
+          </span>
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-updatedOnHeader-label" class="heading-text content-text">Updated On</label>
+            <label data-attr="viewagreement-sectionDetail-updatedOn-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.displayUpdatedOn }}</label>
+          </span>
+                </div>
+
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="ui-md-6 ui-lg-6 ui-g-6">
+            <label data-attr="viewagreement-sectionDetail-LastUpdateProgHeader-label" class="heading-text content-text">Last Updated Program</label>
+            <label data-attr="viewagreement-sectionDetail-LastUpdateProg-label" class="content-text title-padding">{{ sectionsDetailModel.sectionViewDetails?.lastUpdateProgramName }}</label>
+          </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="split-footer">
+            <span class="pull-right mar-top12" *ngIf="!hasAccess('/editsections')">
+        <a data-attr="viewagreement-sectionDetail-history-anchor" href="javascript:void(0)" appShortcut="ctrl+alt+2" class="inactivate-link mar-right20 text-size">History</a>
+        <p-splitButton data-attr="viewagreement-sectionDetail-inactivate-splitButton" label="Inactivate" styleClass="ui-button-secondary" class="mar-right15 split-size" [model]="sectionsDetailModel.sectionViewDetails?.splitButtonMenu"></p-splitButton>
+         <button data-attr="viewagreement-sectionDetail-edit-button" type="text" appShortcut="ctrl+alt+1" pButton label="Edit" [disabled]= "sectionsDetailModel.editButtonDisable" (click)="onSectionEdit()" class="ui-button-primary mar-right15"></button>
+      </span>
+            <span class="pull-right mar-top12" *ngIf="hasAccess('/editsections')">
+         <button data-attr="viewagreement-sectionDetail-history-button" type="text" class="text-size" appShortcut="ctrl+alt+3" pButton label="History" class="ui-button-primary mar-right15"></button>
+      </span>
+        </div>
+    </div>
+</div>

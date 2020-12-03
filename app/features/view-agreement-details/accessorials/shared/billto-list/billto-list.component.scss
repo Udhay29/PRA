@@ -1,0 +1,145 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.table-caption {
+    min-height: 30px;
+}
+
+/deep/.tableWrapper .ui-table-caption {
+    border-bottom: 1px solid $grey-lite70 !important;
+}
+
+/deep/.empty-caption .ui-table-caption.ui-widget-header.ng-star-inserted {
+    border-bottom: none !important;
+}
+
+.main-content /deep/ .ui-table.ui-widget {
+    height: 253px;
+    box-shadow: none;
+    overflow: hidden;
+    border: 1px solid darkgray !important;
+}
+
+.main-content /deep/.ui-table .ui-table-caption.ui-widget-header {
+    border-bottom: 1px solid darkgray !important;
+    padding: 12px 12px 3px 11px;
+}
+
+.optional-text {
+    color: $black-opacity30;
+}
+
+.search-icon-holder {
+    float: right;
+    width: 90%;
+}
+
+.displaymiddle {
+    height: 57vh;
+    padding-top: 20vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.emptyMsgText {
+    @include getTypographyStyles("display3");
+    color: $grey-dark27;
+}
+
+.subTextColor {
+    color: $grey-dark27 !important;
+}
+
+.mincolwidth {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.alignHeading {
+    padding: 0px 8px;
+    text-align: center;
+}
+
+.subColumnsBackground {
+    background-color: inherit !important;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+.checkbox-column {
+    text-overflow: clip !important;
+    -ms-text-overflow: clip !important;
+}
+
+.thHeaderRow {
+    padding-top: 10px!important;
+    padding-bottom: 12px!important;
+}
+
+.thRow {
+    padding-top: 8px!important;
+    padding-bottom: 8px!important;
+}
+
+.full-width {
+    width: 93%;
+}
+
+.display-middle_rate {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 30%;
+    padding: 10px;
+    line-height: 5px;
+}
+
+.message-wrapper {
+    @include getTypographyStyles("h2");
+    height: calc(100vh - 427px);
+    color: $grey-dark27;
+    padding-top: 10px;
+    max-height: 200px;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 320px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-inputgroup.getGridValuesInput>span.ui-inputgroup-addon {
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    border: none;
+    height: 30px;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext {
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background: transparent;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:focus {
+    border-left: 1px solid #007dba;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:not([disabled]):hover {
+    border: 1px solid #00aafc;
+}

@@ -1,0 +1,210 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_dropshadow.scss';
+.split-wrapper {
+    height: 100%;
+    @include dropShadow("level2");
+}
+
+.split-container {
+    height: 100%;
+    border-radius: 6px;
+    background-color: $white;
+    .split-header {
+        height: 60px;
+        border-bottom: solid 1px $grey-lite70;
+        .title {
+            top: 15px;
+            padding: 10px;
+            position: relative;
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+        .close-position {
+            float: right;
+            margin: 15px;
+            margin-top: 20px !important;
+        }
+    }
+    .split-body {
+        width: 100%;
+        padding: 20px 10px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 427px);
+    }
+    .split-footer {
+        height: 60px;
+        position: relative;
+        border-top: solid 1px $grey-lite70;
+    }
+}
+
+.text-field-float {
+    label {
+        margin-top: 0px !important;
+        top: 30%;
+        left: 17px;
+    }
+    input.ui-state-filled~label,
+    input:focus~label {
+        top: calc(-0.75em - 3px);
+        left: 15px;
+        font-size: 12px;
+    }
+}
+
+.typeahead-float {
+    label {
+        margin-top: 0px !important;
+        top: 28%;
+        left: 17px;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-.75em - 3px);
+        left: 15px;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-.75em - 3px);
+        left: 15px;
+        font-size: 12px;
+    }
+    /deep/.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
+        width: 100% !important;
+    }
+}
+
+.date-field-float {
+    label {
+        margin-top: 0px !important;
+        top: 28%;
+        left: 34px;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.75em - 3px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.75em - 3px);
+        left: 10px !important;
+        font-size: 12px;
+    }
+}
+
+.ui-float-label .ui-inputwrapper-focus~label.leftPlace,
+.ui-float-label .ui-inputwrapper-filled~label.leftPlace {
+    left: 0.5em;
+}
+
+.leftPlace {
+    left: 32px;
+}
+
+/deep/.expire-date {
+    left: unset !important;
+    right: 0px !important;
+}
+
+.codes-table-caption {
+    min-height: 20px;
+}
+
+.codesdisplaymiddle {
+    height: 10vh;
+}
+
+.table-header {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+}
+
+.billto-table {
+    /deep/.ui-table-caption {
+        padding-top: 10px;
+    }
+}
+
+.ui-inputgroup.search-field>span.ui-inputgroup-addon {
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    border: none;
+    height: 30px;
+}
+
+.ui-inputgroup.search-field>input.ui-inputtext {
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background: transparent;
+}
+
+.ui-inputgroup.search-field>input.ui-inputtext:focus {
+    border-left: 1px solid #007dba;
+}
+
+.ui-inputgroup.search-field>input.ui-inputtext:not([disabled]):hover {
+    border: 1px solid #00aafc;
+}
+
+.footer-float {
+    /deep/.ui-dialog .ui-dialog-footer {
+        clear: both;
+    }
+    /deep/.ui-dialog-footer {
+        border-top: 1px solid $grey-lite48;
+    }
+}
+
+.error-class {
+    height: 20px;
+}
+
+.billToTable {
+    /deep/ .ui-table.ui-widget {
+        border: 1px solid $grey-lite48;
+        border-radius: 5px
+    }
+}
+
+.text-bold {
+    font-weight: bold;
+    color: #000000;
+    font-size: 14px;
+}
+
+.popup-wrapper {
+    /deep/ .ui-table .ui-table-caption.ui-widget-header {
+        min-height: 10px !important;
+    }
+    /deep/ .ui-table table tbody>tr>td:first-child {
+        padding-left: 15px !important;
+    }
+}
+
+.popup-error-msg {
+    p-messages {
+        display: block;
+        width: calc(100% + 30px);
+        margin-left: -15px;
+        /deep/ .ui-messages ul li {
+            /deep/ .ui-messages-summary {
+                padding: 0;
+            }
+            /deep/ .ui-messages-detail {
+                display: block;
+                padding-left: 15px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.pad-left50 {
+    padding-left: 50px;
+}

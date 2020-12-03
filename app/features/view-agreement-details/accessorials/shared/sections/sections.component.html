@@ -1,0 +1,56 @@
+<div [ngClass]="{'loader': sectionsModel.loading}" [appJbhLoader]="sectionsModel.loading"></div>
+<p-growl [(value)]="msgs"></p-growl>
+<p-table #dt name="ptable_section" class="main-content" [value]="sectionsModel.accessorialGridValue" [scrollable]="true" [resizableColumns]="true" scrollHeight="150px" [(selection)]="sectionsModel.selectedSection" [globalFilterFields]="['customerAgreementContractSectionName','customerContractName','effectiveDate','expirationDate']"
+    [filterDelay]="0" (onFilter)="onFilter($event.filteredValue.length)" selectionMode="multiple" datakey="customerAgreementContractID" (onRowSelect)="onRowSelect($event)" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle()" (onRowUnselect)="onRowUnselect($event)"
+    sortMode="multiple" [multiSortMeta]="multiSortMeta" (onSort)="onSort($event)">
+    <ng-template pTemplate="caption">
+        <div class="ui-g header-height table-caption">
+            <div class="ui-md-9 ui-lg-9 tableName">Sections</div>
+            <div class="iconsHolder ui-g-3 ui-md-3 pull-right pad0">
+                <div appShortcut class="pull-right pad0 width93">
+                    <div class="ui-inputgroup pad0 ui-g-12 getGridValuesInput">
+                        <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                        <input type="text" pInputText placeholder="Search" appShortcut="alt+s" (keyup)="dt.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let thisCol of sectionsModel.accessorialGridColumns">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr *ngIf="sectionsModel.filteredValuesLength !== 0">
+            <th class="checkbox-column table-header-checkbox thHeaderRow" *ngIf="!detailedViewFlag">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let thisCol of sectionsModel.accessorialGridColumns" pResizableColumn [pSortableColumn]="thisCol.property" class="thHeaderRow textDot">
+                <span>
+                    {{thisCol.name}}
+                    <p-sortIcon [field]="thisCol.property" class="pad-right10"></p-sortIcon>
+                </span>
+            </th>
+        </tr>
+        <tr *ngIf="sectionsModel.filteredValuesLength === 0">
+            <td colspan="4">
+                <div class="ui-g-12 message-wrapper">
+                    <span class="display-middle">No results found</span>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr>
+            <td class="checkbox-column width10 thRow" *ngIf="!detailedViewFlag">
+                <p-tableCheckbox [value]="rowData" name="checkBox" (click)="$event.stopPropagation()" (onChange)="onchang($event)"></p-tableCheckbox>
+            </td>
+            <td *ngFor="let thisCol of sectionsModel.accessorialGridColumns" class="thRow textDot">
+                <span class="capitalize-first-word">
+                    {{ rowData[thisCol.property] }}
+                </span>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

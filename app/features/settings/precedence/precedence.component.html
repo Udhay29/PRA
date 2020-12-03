@@ -1,0 +1,92 @@
+<div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper">
+  <p-panel>
+    <p-header>
+      <h3 class="heading-style">Precedence</h3>
+    </p-header>
+    <div class="ui-md-12 border-style pad-bot20">
+      <form [formGroup]="precedenceForm">
+        <!-- Origin Type -->
+        <div class='ui-md-3 ui-float-label'>
+          <p-dropdown [autoWidth]="false" class="display mar-top5" [options]="originDestTypeList" formControlName="originType"
+            [autoDisplayFirst]="false"></p-dropdown>
+          <label for="originType">Agreement Type</label>
+        </div>
+        <!-- Destination Type -->
+        <div class='ui-md-3 ui-float-label'>
+          <p-dropdown [autoWidth]="false" class="display mar-top5" [options]="originDestTypeList" formControlName="destinationType"
+            [autoDisplayFirst]="false"></p-dropdown>
+          <label for="destinationType">Destination Type</label>
+        </div>
+        <!-- Priority -->
+        <div class='ui-md-3 ui-float-label'>
+          <p-spinner size="30" [min]="1" class="display mar-top5" [max]="1000" formControlName="priority"></p-spinner>
+          <label for="priority">Priority</label>
+        </div>
+        <!-- Last updated info -->
+        <div class='ui-md-3 ui-float-label'>
+          <input #lastUpdatedUserName type="text" class="display mar-top5" formControlName='lastUpdatedUser' size="32"
+             pInputText />
+          <label for='lastUpdatedUser'>Last Update By</label>
+        </div>
+        <!-- <div class='ui-md-3 ui-float-label'>
+          <p-calendar class="calenderStyle" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" formControlName="invoiceDate"
+            [showIcon]="true" dateFormat="dd/mm/yy" [minDate]="minStartDate"></p-calendar>
+          <label class="pad-left30" for='invoiceDate'>Invoice Date</label>
+        </div> -->
+      </form>
+    </div>
+
+
+    <!-- Accessorials Default -->
+    <div class="ui-md-12 border-style pad-bot20">
+      <h3 class="nopadding heading-style">Accessorials Default</h3>
+      <form [formGroup]="accessorialsForm">
+        <div class="ui-md-12">
+          <!-- AccessorialsName -->
+          <div class='ui-md-3 ui-float-label'>
+            <input type="text" class="display mar-top5" formControlName='accessorialsName' size="32" pInputText />
+            <label for='accessorialsName'>Acccessorials Name</label>
+          </div>
+          <!-- Rate Type -->
+          <div class='ui-md-3 ui-float-label'>
+            <p-dropdown [autoWidth]="false" class="display mar-top5" [options]="originDestTypeList" formControlName="rateType"
+              [autoDisplayFirst]="false"></p-dropdown>
+            <label for="rateType">Rate Type</label>
+          </div>
+          <!-- IBU's -->
+          <div class='ui-md-3 ui-float-label'>
+            <p-multiSelect class="display mar-top5" [options]="IbuList" formControlName="ibu"></p-multiSelect>
+            <label for="ibu">IBU's</label>
+          </div>
+        </div>
+        <!-- Accessorial Description -->
+        <div class="ui-md-12">
+          <div class="ui-md-8 message-area mar-left10 ui-float-label">
+            <textarea pInputTextarea class="textarea-edit" placeholder="Type a Message" formControlName="accessorialDesc"
+              maxlength="2000" [rows]="5" [cols]="45"></textarea>
+            <!-- <label for='accessorialDesc'>Accessorial Description</label> -->
+          </div>
+          <div class="ui-md-2 ui-float-label">
+            <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="cubicCapacityWarningLevels"></p-inputSwitch>
+            <label for="cubicCapacityWarningLevels">Cubic Capacity Warning Levels</label>
+          </div>
+        </div>
+        <div class="ui-md-12">
+          <div class='ui-md-3 ui-float-label'>
+            <input type="text" class="display mar-top5" formControlName='acceslastUpdatedUser' size="32" disabled
+              pInputText />
+            <label for='acceslastUpdatedUser'>Last Update By</label>
+          </div>
+          <div class='ui-md-3 ui-float-label'>
+            <!-- <input type="text" class="display mar-top5" formControlName='invoiceDate' size="32" disabled
+                      pInputText /> -->
+            <p-calendar class="calenderStyle" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+              formControlName="accessinvoiceDate" [showIcon]="true" dateFormat="dd/mm/yy" [minDate]="minStartDate"></p-calendar>
+            <label class="pad-left30" for='accessinvoiceDate'>Invoice Date</label>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </p-panel>
+</div>

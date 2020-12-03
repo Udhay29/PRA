@@ -1,0 +1,21 @@
+<p-steps class="linehaul-steps" [model]="reviewModel?.stepsList" [readonly]="false" [activeIndex]="reviewModel?.activeIndex" (activeIndexChange)="onIndexChange($event)">
+</p-steps>
+<h1 class="pad-left25">{{reviewModel?.agreementDetails?.customerAgreementName}} - ADD LINE HAUL</h1>
+<div class="customLineHaul">
+    <app-line-haul #linehaul [isReview]="reviewModel?.isReview" (isChecked)="onSelectLineHaul($event)" [agreementId]="reviewModel?.agreementDetails.customerAgreementID" [status]="'pending'" [screen]="'review'"></app-line-haul>
+</div>
+<div>
+    <span class="pull-right linkAlign aremove">
+        <a data-attr="viewagreement-linehaul-review-cancel-a" class="inactivate-link mar-right30" (click)="onSelectLineHaulCancel()">Cancel</a>
+        <a data-attr="viewagreement-linehaul-review-back-a" class="inactivate-link mar-right30 mar-left20" (click)="onClickLineHaulBack()">Back</a>
+        <a data-attr="viewagreement-linehaul-review-publish-a" class="inactivate-link mar-left20" (click)="onLineHaulPublish()">Publish</a>
+    </span>
+</div>
+<p-dialog data-attr="viewagreement-linehaul-review-save-dialog" header="Save Changes?" [(visible)]="reviewModel.isCancel" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>You will lose the Line Haul information as you leave without saving.</div>
+    <div>Do you like to save the Line Haul as a draft before you leave?</div>
+    <p-footer>
+        <button data-attr="viewagreement-linehaul-review-dontSave-button" type="button" pButton (click)="onLineHaulDeleteData()" class="ui-button-secondary" label="Don't Save"></button>
+        <button data-attr="viewagreement-linehaul-review-save-button" type="button" pButton (click)="onLineHaulSaveData()" label="Save Draft" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,29 @@
+<div class="ui-md-12 ui-lg-12 ui-g-12">
+  <form [formGroup]="valuesModel.valuesForm">
+    <div class="ui-md-12">
+      <label class="label-text pad-left10" for="Usage">Usage</label>
+      <p-chips class="mar-top5" formControlName="usage" [addOnTab] = true [addOnBlur] = true
+      (onAdd)="onAdd($event,'usage')" (onRemove)="onRemoval($event,'usage')">
+      </p-chips>
+    </div>
+    <div class="ui-md-12 pad-top10">
+      <label class="label-text pad-left10" for="Application Level">Application Level</label>
+      <p-chips class="mar-top5" formControlName="applicationLevel" [addOnTab] = true [addOnBlur] = true
+      (onAdd)="onAdd($event,'applicationLevel')"
+        (onRemove)="onRemoval($event,'applicationLevel')">
+      </p-chips>
+    </div>
+    <div class="footer-part ui-md-12">
+      <button type="text" pButton label="Save" class="pull-right  ui-button-primary" (click)="saveChargeCodeConfigurables()"></button>
+      <button type="text" pButton label="Cancel" class="mar-right20 pull-right ui-button-secondary" (click)="onClickCancel()"></button>
+    </div>
+  </form>
+</div>
+<p-dialog header="Save Changes?" [(visible)]="valuesModel.isSaveChanges" [modal]="true" [responsive]="true" [width]="425"
+  [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>Do you want to save changes?</span>
+  <p-footer>
+    <button type="button" pButton (click)="onDontSave()" class="ui-button-secondary" label=" Don't Save"></button>
+    <button type="button" pButton (click)="onSave()" label="Save" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

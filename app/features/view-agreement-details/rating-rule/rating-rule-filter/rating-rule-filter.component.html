@@ -1,0 +1,93 @@
+<div class="ui-g ui-fluid feature-container filter-common-style">
+  <div class="filter-wrapper">
+    <div class="ui-g ui-fluid pad-bot5">
+      <div class="ui-g-12 mar-top10 pad-bot15 pad-left10 filterHeader">
+        <div class="ui-g-6">
+          <strong class="filter-heading">Filter By</strong>
+        </div>
+        <div class="ui-g-6 textAlign">
+          <button data-attr="viewagreement-ratingruleFilter-clrAllFilter-button" pButton class="ui-button-secondary clearSearch pad0"
+            (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+        </div>
+      </div>
+      <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel ratingRuleFilterPanel">
+      <div class="accordionHeight custom-accordion-segment">
+        <p-accordion [multiple]="true" class='accordian-container'>
+        <app-listing-filter #filtercomp [config]="filterConfig.agreementDefault" (itemsSelected)="onListingItemsSelected($event, 'agreementDefault', 2, false)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.contract" (itemsSelected)="onListingItemsSelected($event, 'contract', 10, true)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.section" (itemsSelected)="onListingItemsSelected($event, 'section', 11, true)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.businessUnit" (itemsSelected)="onListingItemsSelected($event, 'businessUnit', 12, true)"></app-listing-filter>
+        <app-listing-filter #filtercomp [config]="filterConfig.serviceOfferings" (itemsSelected)="onListingItemsSelected($event, 'serviceOfferings', 13, true)"></app-listing-filter>
+          <p-accordionTab data-attr="viewagreement-ratingruleFilter-citySubstitution-accordionTab" class="nopadding align-panel dateFilter"
+            [(selected)]="isCityAccordianOpened" [ngClass]="{'no-border': isCityAccordianOpened}" expandIcon="icon-Chevron_Down"
+            collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">City Substitution</span>
+            </p-header>
+            <div class="ui-g">
+              <p-radioButton class="ui-md-12 ui-g-12 ui-lg-12 radio-pad pad-left15" name="citySubstitution" [(ngModel)]="filterModel.selectedCitySubstitution"
+                (ngModelChange)="radiusToggle('Yes', 3)" value="Yes" label="Yes"></p-radioButton>
+
+              <p-radioButton class="ui-md-12 ui-g-12 ui-lg-12 radio-pad pad-left15" name="citySubstitution" [(ngModel)]="filterModel.selectedCitySubstitution"
+                (ngModelChange)="radiusToggle('No', 3)" value="No" label="No"></p-radioButton>
+            </div>
+            <div class="ui-md-12 ui-lg-12 ui-g-12 pad0 pad-top25" *ngIf="filterModel.showRadiusFlag">
+              <div class="ui-md-8 ui-lg-8 ui-g-8 ui-float-label text-field-float pad0 pad-left15">
+                <input data-attr="viewagreement-ratingruleFilter-radius-input" pInputText name="radius" spellcheck="false"
+                  maxlength="3" class="ui-md-12 ui-lg-12 ui-g-12" autocomplete="off" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  (input)="onListingItemsSelected($event, 'radius', 3, false)" [(ngModel)]="filterModel.radius" />
+                <label for="radius" class="pad-left15">Radius</label>
+              </div>
+              <label class="ui-md-4 ui-lg-4 ui-g-4 content-text heading-text">Miles</label>
+            </div>
+            <button class="icon-text-button reset-color pad-left16 mar-top15" (click)="resetRadius(3)">Reset</button>
+          </p-accordionTab>
+          <app-listing-filter #filtercomp [config]="filterConfig.hazmatChargeRule" (itemsSelected)="onListingItemsSelected($event, 'hazmatChargeRule', 4, false)"></app-listing-filter>
+          <app-listing-filter #filtercomp [config]="filterConfig.congestionCharge" (itemsSelected)="onListingItemsSelected($event, 'congestionCharge', 5, false)"></app-listing-filter>
+
+          <app-listing-filter #filtercomp [config]="filterConfig.flatRateWithStops" (itemsSelected)="onListingItemsSelected($event, 'flatRateWithStops', 6, false)"></app-listing-filter>
+
+          <app-listing-filter #filtercomp *ngIf="statusFlag" [config]="filterConfig.status" [selectedList]="filterModel.statusSelectedList"
+            (isCollapsed)="isStatusCollapsed($event)" (itemsSelected)="onListingItemsSelected($event, 'status', 9, false)"
+            (resetCall)="resetEvent($event)"></app-listing-filter>
+          <p-accordionTab data-attr="viewagreement-ratingruleFilter-effDate-accordionTab" class="nopadding align-panel dateFilter margin-bottom-shadow"
+            [(selected)]="isEffecRatingAccordianOpened" [ngClass]="{'no-border': isEffecRatingAccordianOpened}"
+            expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">Effective Date</span>
+            </p-header>
+            <div class="ui-g">
+              <div class="ui-g-12 ui-float-label date-field-float mar-top5">
+                <p-calendar showIcon="true" dateFormat="mm/dd/yy" (input)="onInputDate($event,'effectiveDate', 'effectiveDate', 7, 'gte')"
+                  (onSelect)="onDateRangeSelect('effectiveDate', 'effectiveDate', 7, 'gte')" [(ngModel)]="filterModel.effectiveDate"></p-calendar>
+                <label class="mar-left20">Effective Date</label>
+              </div>
+            </div>
+            <div class="ui-g">
+              <button class="icon-text-button reset-color mar-top15 pad-left16" (click)="originDateClear('effectiveDate', 'effectiveDate', 7)">Reset</button>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab data-attr="viewagreement-ratingruleFilter-expDate-accordionTab" class="nopadding align-panel dateFilter"
+            [(selected)]="isExpAccordianOpened" [ngClass]="{'no-border': isExpAccordianOpened}" expandIcon="icon-Chevron_Down"
+            collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title">Expiration Date</span>
+            </p-header>
+            <div class="ui-g">
+              <div class="ui-g-12 ui-float-label date-field-float mar-top5">
+                <p-calendar showIcon="true" dateFormat="mm/dd/yy" (input)="onInputDate($event,'expirationDate', 'expirationDate', 8, 'lte')"
+                  (onSelect)="onDateRangeSelect('expirationDate', 'expirationDate', 8, 'lte')" [(ngModel)]="filterModel.expirationDate"></p-calendar>
+                <label class="mar-left20">Expiration Date</label>
+              </div>
+            </div>
+            <div class="ui-g">
+              <button class="icon-text-button reset-color mar-top15 pad-left16" (click)="originDateClear('expirationDate', 'expirationDate', 8)">Reset</button>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,193 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.wrapper {
+  padding: 0 0.5em;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.heading-text {
+  color: $grey-dark27;
+}
+
+.expiration-text {
+  line-height: 1rem !important;
+}
+
+.content-text {
+  display: block;
+  font-family: "Helvetica Neue LT Pro 55 ROMAN",Helvetica,Arial,Sans-Serif;
+  font-size: .75rem;
+  line-height: 1.5rem;
+  letter-spacing: .01rem;
+  text-transform: capitalize;
+}
+
+.date-field-float {
+  margin-top: 17px;
+  label {
+    margin-top: 0px !important;
+    top: 28%;
+    left: 34px;
+  }
+  .ui-inputwrapper-focus ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px !important;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px !important;
+    font-size: 12px;
+  }
+  /deep/.ui-datepicker {
+    z-index: 9999 !important;
+  }
+  /deep/input.ui-inputtext {
+    width: 100%;
+  }
+}
+
+.noneditable-field {
+  margin-top: -6px;
+  margin-left: -4px;
+}
+
+.text-field-float {
+  label {
+    left: 17px;
+  }
+  input.ui-state-filled ~ label,
+  input:focus ~ label {
+    left: 15px;
+    font-size: 12px;
+  }
+}
+
+.checkbox-align {
+  line-height: 2.0em;
+}
+
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.footer-part {
+  position: fixed;
+  bottom: 20px;
+  right: 2%;
+}
+
+.top-10 {
+  top: -10px;
+}
+
+.table-header {
+  @include getTypographyStyles("h6");
+  color: $grey-dark66 !important;
+}
+
+.width10 {
+  width: 10px;
+}
+
+.checkbox-column {
+  text-overflow: clip !important;
+  -ms-text-overflow: clip !important;
+}
+
+.table-caption {
+  min-height: 30px;
+}
+
+.optional-class {
+  margin-right: 3.5em;
+}
+
+.multiselect-field {
+  .ui-float-label > label {
+    top: 2em !important;
+  }
+  .ui-inputwrapper-focus~label, .ui-inputwrapper-filled~label, .ng-dirty.ng-valid~label {
+    top: -.75em !important;
+  }
+  .ui-multiselect-items-wrapper{
+    background-color: #fff;
+  }
+}
+
+.codesdisplaymiddle {
+  padding-top: 9vh;
+  justify-content: center;
+  align-items: center;
+text-align: center;
+}
+
+/deep/.affiliation-table {
+  z-index: 10;
+  position: relative;
+  .ui-table-scrollable-body {
+    min-height: 25vh !important;
+  }
+}
+
+.mar-right5 {
+  margin-right: 5px;
+}
+
+/deep/.capitalizeTitle {
+  text-transform: capitalize !important;
+}
+
+.ui-inputgroup.search-field > span.ui-inputgroup-addon{
+  position:absolute;
+  left:6px;
+  top:3px;
+  border:none;
+  height:30px;
+}
+.ui-inputgroup.search-field > input.ui-inputtext{
+  border-left: 1px solid #c9c9c9;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding-left: 35px;
+  z-index: 9;
+  background:transparent;
+}
+.ui-inputgroup.search-field > input.ui-inputtext:focus{
+  border-left:1px solid #007dba;
+}
+.ui-inputgroup.search-field > input.ui-inputtext:not([disabled]):hover{
+  border:1px solid #00aafc;
+}
+
+.radio-pad {
+  /deep/ .ui-radiobutton-label {
+    padding-left: 8px;
+  }
+}
+.footerAlign{
+  position: relative;
+  top: 20vh;
+}
+.mar-top30 {
+  margin-top: 30px;
+}
+.mar-left-5 {
+  margin-left: -5px;
+}
+.pad-bot3 {
+  padding-bottom: 3px !important;
+}
+.pad-top7 {
+  padding-bottom: 7px !important;
+}

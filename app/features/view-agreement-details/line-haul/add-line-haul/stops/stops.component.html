@@ -1,0 +1,82 @@
+<div class="wrapper ui-g-12 ui-md-12">
+    <div class="ui-g-12 dropshadow stops-container pad-left0 pad-right0 pad-bot10">
+        <div class="stops-header">
+            <span class="title">
+        Stops
+      </span>
+        </div>
+
+        <div class='seperator'></div>
+
+        <div class='stops-body'>
+            <div class='add-stop' *ngIf='stopsModel.showAddStopBtn'>
+                <span (click)='actionAddStop()'><em  data-attr="viewagreement-linehaul-stops-addStops-em" class="icon-Circle_Add_Solid iconColorChange"></em> <span class='add-stop-label iconColorChange'>
+            Add Stop</span></span>
+            </div>
+
+            <div *ngIf='!stopsModel.showAddStopBtn'>
+                <form [formGroup]="stopsModel.stopsForm" autocomplete="off">
+                    <div class='table-container pad0' formArrayName="stops">
+                        <p-table [value]="stopsModel.stopsForm.controls.stops.controls" class="table-shadow stops-table">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Stop</th>
+                                    <th>Type</th>
+                                    <th>Country</th>
+                                    <th>Point</th>
+                                    <th>Vendor Identifier <span>optional</span></th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-stop let-rowIndex="rowIndex">
+                                <tr [formGroupName]="rowIndex">
+                                    <td>{{ rowIndex + 1 }}</td>
+                                    <td class='stopsDropdown'>
+                                        <p-autoComplete [attr.data-attr]="'viewagreement-linehaul-stops-originType-autocomplete-' +  rowIndex" formControlName='type' [suggestions]="stopsModel.geographyValuesTyped" name="originType" (completeMethod)="onTypeOriginType($event)" (onSelect)="onCountryGeoChange(rowIndex)"
+                                            [dropdown]="true" class="dropdown" [forceSelection]="true" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" (onBlur)="onautoCompleteBlur($event, 'type', rowIndex)" field="label">
+                                        </p-autoComplete>
+                                        <div class="messageClass">
+                                            <p-message severity="error" text="Provide a Type" *ngIf="stopsModel.stopsForm.controls.stops.at(rowIndex).get('type').touched && stopsModel.stopsForm.controls.stops.at(rowIndex).get('type')['errors']?.required">
+                                            </p-message>
+                                        </div>
+                                    </td>
+                                    <td class='stopsDropdown'>
+                                        <p-autoComplete [attr.data-attr]="'viewagreement-linehaul-stops-country-autocomplete-' +  rowIndex" formControlName='country' [suggestions]="stopsModel.countryFiltered" name="country" class="dropdown" (completeMethod)="onTypeCountries($event)" [style]="{'width':'100%'}"
+                                            [inputStyle]="{'width':'100%'}" [dropdown]="true" [forceSelection]="true" field="label" (onSelect)="onCountryGeoChange(rowIndex)" (onBlur)="onautoCompleteBlur($event, 'country', rowIndex)">
+                                        </p-autoComplete>
+                                        <div class="messageClass">
+                                            <p-message severity="error" text="Provide a Origin Country" *ngIf="stopsModel.stopsForm.controls.stops.at(rowIndex).get('country').touched && stopsModel.stopsForm.controls.stops.at(rowIndex).get('country')['errors']?.required">
+                                            </p-message>
+                                        </div>
+                                    </td>
+                                    <td class='points-autocomplete stopsDropdown'>
+                                        <p-autoComplete [attr.data-attr]="'viewagreement-linehaul-stops-point-autocomplete-' +  rowIndex" [suggestions]="stopsModel.pointSuggestions" field="label" formControlName='point' class="dropdown" [dropdown]="false" name='point' (completeMethod)="onStopPointChange($event.query, rowIndex)"
+                                            (onBlur)="onautoCompleteBlur($event, 'point', rowIndex)">
+                                        </p-autoComplete>
+                                        <div class="messageClass">
+                                            <p-message severity="error" text="Provide a Point" *ngIf="stopsModel.stopsForm.controls.stops.at(rowIndex).get('point').touched && stopsModel.stopsForm.controls.stops.at(rowIndex).get('point')['errors']?.required">
+                                            </p-message>
+                                            <p-message severity="error" text="Provide a Valid Point" *ngIf="stopsModel.stopsForm.controls.stops.at(rowIndex).get('point').touched && stopsModel.stopsForm.controls.stops.at(rowIndex).get('point')['errors']?.invalid">
+                                            </p-message>
+                                        </div>
+                                    </td>
+                                    <td class="cell-pad">
+                                        <input [attr.data-attr]="'viewagreement-linehaul-stops-vendorid-input' +  rowIndex" type="text" formControlName='vendorid' maxlength="30" pInputText placeholder="Vendor Identifier">
+                                    </td>
+                                    <td class="text-center">
+                                        <em [attr.data-attr]="'viewagreement-linehaul-stops-removeStop-em' +  rowIndex" class="icon-Circle_Remove_Solid removerow pad-right5" (click)='removeStop(rowIndex)'></em>
+                                        <em [attr.data-attr]="'viewagreement-linehaul-stops-addStop-em' +  rowIndex" class="icon-Circle_Add_Solid addrow " (click)='addStop(rowIndex)'></em>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class='stop-charge'>
+                        <p-checkbox data-attr="viewagreement-linehaul-stops-isStopChargeIncluded-checkbox" binary="true" label="Stop Charge Included" formControlName='isStopChargeIncluded'></p-checkbox>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

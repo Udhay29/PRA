@@ -1,0 +1,290 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+/deep/.tableWrapper .ui-table-caption {
+    border-bottom: 1px solid $grey-lite48 !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.tableWrapper /deep/ .ui-table.ui-widget{
+    border: 1px solid $grey-lite48;
+    border-radius: 5px;
+}
+.ui-inputgroup.getGridValuesInput > span.ui-inputgroup-addon{
+    position:absolute;
+    left:6px;
+    top:3px;
+    border:none;
+    height:30px;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext{
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background:transparent;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext:focus{
+    border-left:1px solid #007dba;
+  }
+  .ui-inputgroup.getGridValuesInput > input.ui-inputtext:not([disabled]):hover{
+    border:1px solid #00aafc;
+  }
+
+/deep/.empty-caption .ui-table-caption.ui-widget-header.ng-star-inserted {
+    border-bottom: none !important;
+}
+
+.displaymiddle {
+    height: 45vh;
+    padding-top: 10vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.emptyMsgText {
+    @include getTypographyStyles("display3");
+    color: $grey-dark27;
+}
+.title {
+    @include getTypographyStyles("h2");
+}
+
+.tableFooter {
+    max-height: 60px !important;
+}
+
+.buttonStyle {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    color: $grey;
+    padding-left: 12px;
+}
+
+.min-col-width {
+    width: 130px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include getTypographyStyles("h6");
+    padding-bottom: 0 !important;
+    padding-top: 0 !important
+}
+.rate-maximum-width {
+  width: 160px !important;
+}
+.stair-max-width {
+  width: 150px !important;
+}
+.min-columns-width {
+    width: 127px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: none !important;
+    padding: 0px !important;
+}
+.alterate-columns-width {
+  width: 102px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: none !important;
+  padding: 0px !important;
+}
+.width120 {
+  width: 120px !important;
+}
+.service-columns-width {
+  width: 254px !important;
+}
+.documentation-columns-width {
+  width: 127px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subTextColor {
+    color: $grey-dark27 !important;
+}
+
+.service-column-width {
+    width: 244px !important;
+}
+.equipment-column-width {
+  width: 419px !important;
+}
+.minimum-columns-width {
+    width: 580px !important;
+}
+.equipments-column-width {
+  width: 429px !important;
+}
+.doumentation-column-width {
+  width: 522px !important;
+  padding-right: 0 !important;
+}
+.doumentation-columns-width {
+  width: 512px !important;
+}
+.rate-column-width {
+  width: 910px !important;
+  padding-right: 0 !important;
+}
+.rate-columns-width {
+  width: 900px !important;
+}
+.stair-column-width {
+  width: 1185px !important;
+  padding-right: 0 !important;
+}
+.stair-columns-width {
+  width: 1175px !important;
+}
+.additional-column-width {
+  width: 392px !important;
+  padding-right: 0 !important;
+}
+.additional-columns-width {
+  width: 382px !important;
+}
+.alternate-column-width {
+  width: 392px !important;
+  padding-right: 0 !important;
+}
+.alternate-columns-width {
+  width: 382px !important;
+}
+.mincolwidth {
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.alignHeading {
+    padding: 0px 8px 0px 10px;
+    text-align: center;
+    position: relative;
+    top: 10px;
+}
+
+.checkBoxAlign {
+    position: relative;
+    right: 5px;
+}
+
+.contract-custom-cls {
+    /deep/.tableWrapper .ui-table .ui-table-scrollable-body {
+        height: calc(100vh - 427px) !important;
+    }
+    /deep/.tableWrapper .min-column-width {
+        width: 120px !important;
+    }
+    /deep/ .emptyTable .ui-table .ui-table-scrollable-body {
+        height: calc(100vh - 360px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/ .emptyTable .ui-table .ui-table-scrollable-body-table {
+        height: inherit;
+    }
+    /deep/.ui-table-tfoot {
+        border-top: 1px solid $grey-lite70 !important;
+    }
+    /deep/.ui-table-caption {
+        padding: 10px;
+    }
+    /deep/.ui-table-scrollable-footer-table {
+        width: 100% !important;
+    }
+    /deep/ .ui-table .ui-table-thead .ui-sortable-column {
+      p-sortIcon.sortVal{
+        position:absolute;
+        top:11px;
+      }
+    }
+    /deep/ .emptyTableWrapper .ui-table .ui-table-scrollable-wrapper {
+        height: calc(100vh - 360px) !important;
+    }
+    /deep/ .ui-table .ui-paginator-bottom.ui-paginator{
+        padding-bottom: 0px;
+    }
+    /deep/ .ui-table-scrollable-wrapper{
+        padding-bottom: 8px;
+    }
+    .ui-button-primary{
+        position: relative;
+        bottom: 8px;
+    }
+}
+.subColumnsBackground {
+    background-color: inherit !important;
+}
+.classAlign {
+ text-align: left;
+}
+
+.message-wrapper {
+    height: calc(100vh - 392px) !important;
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+/deep/td.noInfoMessage {
+    width: 100%;
+}
+
+.search-field {
+    top: -2px;
+    padding: 0px 8px 0px 30px;
+}
+.equipment-width {
+  width: 160px !important;
+}
+.rateAlign /deep/ .ui-paginator-bottom.ui-paginator.ui-widget.ui-widget-header.ui-unselectable-text.ui-helper-clearfix.ng-star-inserted {
+  border-top: 1px solid #efefef;
+    margin-top: 5px;
+}
+.subcolumnsColor {
+   color: #939393 !important
+}
+.subColumnAlign{
+  top: 20px !important;
+}
+.subcolAlignment {
+  margin-top: 18px;
+  display: block;
+}
+.subcolumnBorder {
+  border-left: none !important;
+}
+.descriptionAlign {
+  overflow: hidden;
+  display: block;
+}

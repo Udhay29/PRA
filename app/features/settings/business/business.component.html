@@ -1,0 +1,36 @@
+<div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper pad-left0 container" [appJbhLoader]="businessModel?.pageLoading">
+  <form [formGroup]="settingForm">
+    <p-table [value]="businessModel.systemTableValues" class="business-table">
+      <ng-template pTemplate="caption">
+        <div class="ui-g">
+          <div class="ui-md-9 ui-lg-9 tableHeading">Business</div>
+          <div class="ui-md-3 ui-lg-3">
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon">
+                <i class="fa fa-search"></i>
+              </span>
+              <input appShortcut="" type="text" pInputText disabled = true placeholder="Search">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <div>
+              <p class="pad-left15 font12" (click)="onClickRow(rowData)">
+                <span>{{rowData}}</span>
+                <i class="icon-Chevron_Next pull-right mar-right10 font18 text-gray" (click)="onClickRow(rowData)"></i>
+              </p>
+          </div>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr class="borderColor">
+          <td class="pad25"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </form>
+</div>
+

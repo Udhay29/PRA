@@ -1,0 +1,17 @@
+<div class="settingsWrapper">
+  <div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 breadcrumb-wrapper mar-left2 pad-bot0">
+      <p-breadcrumb [model]="businessFuelModel.breadCrumbList"></p-breadcrumb>
+    </div>
+    <div class="ui-md-12 ui-lg-12 ui-g-12 capacity-heading mar-left12 pad0">
+      <h1 class="nopadding">FUEL - BUSINESS</h1>
+    </div>
+  </div>
+  <p-tabView #tabPanelView styleClass="mar-left10 mar-right10" [activeIndex]="businessFuelModel.selectedIndex">
+    <p-tabPanel header="RULE">
+
+    </p-tabPanel>
+    <p-tabPanel header="FUEL PRICE">
+      <app-fuel-price *ngIf="businessFuelModel.selectedIndex === 1" [initGrid]="1"></app-fuel-price>
+    </p-tabPanel>
+  </p-tabView>

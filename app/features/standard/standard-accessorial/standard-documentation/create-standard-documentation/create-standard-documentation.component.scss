@@ -1,0 +1,181 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+
+.cargoRelease /deep/ .ui-selectbutton .ui-button.ui-state-default {
+    min-width: 204px !important;
+}
+
+.documentationType /deep/ {
+    .ui-dropdown,
+    .ui-float-label {
+        width: 100% !important;
+    }
+}
+.groupNameError {
+    top:39%;
+}
+.fieldWidth {
+    width: 100% !important;
+    /deep/ span.ui-autocomplete.ui-widget.ui-autocomplete-dd{
+        width: 100%;
+    }
+}
+
+.documentationLevel /deep/ .ui-selectbutton.ui-buttonset.ui-widget.ui-corner-all {
+    width: 100% !important;
+}
+
+.doc-type-accordian /deep/ .ui-accordion-content {
+    padding: 15px 20px 0px 20px !important;
+    margin-bottom: 10px;
+}
+
+.optional-accordian /deep/ .ui-accordion-content {
+    padding: 25px 20px !important;
+    margin-bottom: 10px;
+}
+
+.fileupload-accordian /deep/ .ui-accordion-content {
+    padding: 15px 20px !important;
+    margin-bottom: 10px;
+}
+
+.accordian-container /deep/ .ui-accordion {
+    padding-right: 10px !important;
+}
+
+.documentationLevel /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted {
+    width: 33.33% !important;
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    padding-bottom: 0px;
+}
+
+.date-field-float {
+    margin-top: 16px;
+    label {
+        margin-top: 0px !important;
+        top: 27%;
+        left: 37px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.65em - 2px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.65em - 2px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+}
+
+.optionalFields {
+    width: 100%;
+}
+
+.grey {
+    color: rgb(147, 147, 147);
+}
+
+.errorAlign {
+    position: absolute;
+    top: 18px !important;
+}
+
+
+.accordian-container /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+    padding-bottom: 0px !important;
+}
+
+.errorHeight18 /deep/ .ui-message.ui-messages-error {
+    padding-top: 0px;
+}
+
+.footer {
+    padding: 35px 20px 10px 20px;
+}
+
+.documentationCalendar {
+    .errorMsg /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9;
+    }
+}
+
+p-dialog {
+    .saveHeaderPopup {
+        color: $grey-dark27;
+        padding-right: 7px;
+    }
+}
+
+.accordionHeight {
+    min-height: calc(100vh - 279px);
+}
+
+.dashedBorder {
+    position: relative;
+    height: 110px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    background: #efefef;
+    margin-bottom: 20px;
+    .dropArea {
+        height: 100%;
+    }
+    /deep/ .ui-messages.ui-messages-error {
+        display: none;
+    }
+    /deep/ .ui-fileupload-buttonbar {
+        top: 28%;
+        right: 50%;
+        position: absolute;
+        z-index: 1;
+    }
+    /deep/ .ui-fileupload-files {
+        display: none;
+    }
+    /deep/ .ui-fileupload-content .ui-progressbar {
+        display: none;
+    }
+    /deep/ .ui-fileupload,
+    /deep/ .ui-fileupload-content {
+        height: 100%;
+    }
+    /deep/ .ui-button-icon-left.ui-clickable.pi.pi-plus {
+        display: none;
+    }
+    .dragDropText {
+        color: rgb(147, 147, 147);
+        font-size: 15px;
+        position: absolute;
+        top: 28%;
+        left: 51%;
+    }
+}
+.loader1 {
+    position: absolute !important;
+    z-index: 888888888;
+    width: 100%;
+    height: 100%;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 100px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+}

@@ -1,0 +1,22 @@
+<!-- <nav> -->
+<nav>
+  <ul *ngFor="let route of routes">
+    <li *ngIf="show(route)" routerLinkActive="active" [ngClass]="routeIsActive(route)?'active':''">
+      <a (click)="menuItemClick(route)"> {{ getDisplayText(route) }}
+        <i [class]="[getRouteIcon(route)]"></i>
+      </a>
+      <ul *ngIf="hasChildren(route)"
+        [ngClass]="{'open': route.data.openSidebarEntry}">
+        <ng-container *ngFor="let childRoute of route.children">
+          <li *ngIf="show(childRoute)" routerLinkActive="active">
+            <a [routerLink]="[getRouterLinkURL(route, childRoute)]"
+              (click)="menuItemClick(route, childRoute)">
+              {{ getDisplayText(childRoute) }}
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  

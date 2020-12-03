@@ -1,0 +1,101 @@
+<div class="ui-g ui-fluid feature-container filter-common-style height12">
+    <div class="filter-wrapper">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12 mar-top10 pad-left15 pad-bot15 filterHeader">
+                <div class="ui-g-6">
+                    <strong class="filter-heading">Filter By</strong>
+                </div>
+                <div class="ui-g-6 caption-right">
+                    <button pButton class="ui-button-secondary clearSearch pad0" (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+                </div>
+            </div>
+            <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel">
+              <div class="accordionHeight custom-accordion-segment">
+                <p-accordion [multiple]="true" class='accordian-container'>
+                <app-autocomplete-filter #filtercomp [config]="filterConfig.chargeType" (itemsSelected)="onChargeTypeSelected($event, 'ChargeType')"></app-autocomplete-filter>
+                <app-listing-filter #filtercomp [config]="filterConfig.businessUnit" (itemsSelected)="onBUItemsSelected($event, 'BusinessUnit')"></app-listing-filter>
+                <app-listing-filter #filtercomp [config]="filterConfig.serviceOfferings" (itemsSelected)="onServiceOfferingItemsSelected($event, 'BusinessUnitServiceOfferingName')"></app-listing-filter>
+                <app-listing-filter #filtercomp [config]="filterConfig.quantityRequired" (itemsSelected)="onListingItemsSelected($event, 'QuantityRequired')"></app-listing-filter>
+                <app-listing-filter #filtercomp [config]="filterConfig.applicationLevel" (itemsSelected)="onApplicationLevelSelected($event, 'ApplicationLevel')"></app-listing-filter>
+                <app-listing-filter #filtercomp [config]="filterConfig.usageType" (itemsSelected)="onUsageSelected($event, 'Usage')"></app-listing-filter>
+                <div class="datecss">
+                    <p-accordionTab class="nopadding dateFilter"  [(selected)]="ischargesFilterEffcDateAccordianOpened" [ngClass]="{'no-border': ischargesFilterEffcDateAccordianOpened}"
+                     expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Effective Date</span>
+                        </p-header>
+                        <div class="ui-g mar-bot30">
+                            <p-radioButton class="ui-md-5 ui-g-5 pad0" name="effDateRdio" value="Date" label="Date" [(ngModel)]="filterModel.effSelectedType" (click)="effDateRadioToggle(true, 'effDateOnlyFlag', 'date')">
+                            </p-radioButton>
+                            <p-radioButton class="ui-md-7 ui-g-7 pad0" name="effDateRdio" value="Date Range" label="Date Range" [(ngModel)]="filterModel.effSelectedType" (click)="effDateRadioToggle(false, 'effDateOnlyFlag', 'dateRange')">
+                            </p-radioButton>
+                        </div>
+                        <div *ngIf="filterModel.effDateOnlyFlag" class="pad-right20">
+                            <p-calendar #calEffDateVal class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onEffDateRangeSelect('effectiveDateValue')" (onSelect)="onEffDateRangeSelect()" (onInput)="calEffDateVal.currentMonth=filterModel.effectiveDateValue?.getMonth();
+                calEffDateVal.currentYear=filterModel.effectiveDateValue?.getFullYear()" placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveDateValue"></p-calendar>
+                            <div class="mar-top15">
+                                <p-checkbox name="effDate" value="Match Exact Date" label="Match Exact Date" [(ngModel)]="filterModel.effDateCheck" (onChange)="matchExactDate($event,'effDateExactMatch')"></p-checkbox>
+                            </div>
+                        </div>
+                        <div class="ui-g" *ngIf="!filterModel.effDateOnlyFlag">
+                            <span class="ui-md-12 ui-g-12  pad-left10 label-style">Between</span>
+                            <div class="ui-g-12 ui-float-label pad-left0 mar-bot20 pad-right20">
+                                <p-calendar #calEFfStartDate class="effective-date" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onEffDateRangeSelect()" (onSelect)="onEffDateRangeSelect()" (onInput)="calEFfStartDate.currentMonth=filterModel.effectiveStartDate?.getMonth();
+                  calEFfStartDate.currentYear=filterModel.effectiveStartDate?.getFullYear()" placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveStartDate"></p-calendar>
+                            </div>
+                            <div class="ui-g-12 pad-left0 pad-right0">
+                                <span class="ui-md-12 ui-g-12 pad-left10 label-style">And</span>
+                                <div class="ui-float-label ui-md-12 ui-g-12 pad-left0 pad-right20">
+                                    <p-calendar #calEffEndDate class="effective-date" showIcon=" true" calendarIcon="icon-Chevron_Down" dateFormat="mm/dd/yy" (onBlur)="onEffDateRangeSelect()" (onInput)="calEffEndDate.currentMonth=filterModel.effectiveEndDate?.getMonth();
+                    calEffEndDate.currentYear=filterModel.effectiveEndDate?.getFullYear()" (onSelect)="onEffDateRangeSelect()" placeholder="Pick a Date" [(ngModel)]="filterModel.effectiveEndDate"></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="icon-text-button reset-color pad-top20 pad-left0 mar-left0" (click)="resetEffectiveDate($event)">Reset</button>
+                    </p-accordionTab>
+                    <p-accordionTab class="nopadding" class="nopadding dateFilter"  [(selected)]="ischargesFilterExpDateAccordianOpened" [ngClass]="{'no-border': ischargesFilterExpDateAccordianOpened}" 
+                       expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Expiration Date</span>
+                        </p-header>
+                        <div class="ui-g mar-bot30">
+                            <p-radioButton class="ui-md-5 ui-g-5 pad0" name="expDateRdio" value="Date" label="Date" [(ngModel)]="filterModel.expSelectedType" (click)="expDateRadioToggle(true, 'expDateOnlyFlag','date')"></p-radioButton>
+                            <p-radioButton class="ui-md-7 ui-g-7 pad0" name="expDateRdio" value="Date Range" label="Date Range" [(ngModel)]="filterModel.expSelectedType" (click)="expDateRadioToggle(false, 'expDateOnlyFlag', 'dateRange')">
+                            </p-radioButton>
+                        </div>
+                        <div *ngIf="filterModel.expDateOnlyFlag" class="pad-right20">
+                            <p-calendar #calExpDateVal class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onExpDateRangeSelect('expirationDateValue')" (onSelect)="onExpDateRangeSelect()" (onInput)="calExpDateVal.currentMonth=filterModel.expirationDateValue?.getMonth();
+                calExpDateVal.currentYear=filterModel.expirationDateValue?.getFullYear()" placeholder="Pick a Date" [(ngModel)]="filterModel.expirationDateValue"></p-calendar>
+                            <div class="mar-top15">
+                                <p-checkbox name="effDate" value="Match Exact Date" label="Match Exact Date" [(ngModel)]="filterModel.expDateCheck" (onChange)="matchExactDate($event,'expDateExactMatch')"></p-checkbox>
+                            </div>
+                        </div>
+                        <div class="ui-g" *ngIf="!filterModel.expDateOnlyFlag">
+                            <span class="ui-md-12 ui-g-12  pad-left10 label-style">Between</span>
+                            <div class="ui-g-12 ui-float-label pad-left0 mar-bot20 pad-right20">
+                                <p-calendar #calExpStartDate class="effective-date" showIcon="true" dateFormat="mm/dd/yy" (onBlur)="onExpDateRangeSelect('expirationStartDate')" (onSelect)="onExpDateRangeSelect()" (onInput)="calExpStartDate.currentMonth=filterModel.expirationStartDate?.getMonth();
+                  calExpStartDate.currentYear=filterModel.expirationStartDate?.getFullYear()" placeholder="Pick a Date" [(ngModel)]="filterModel.expirationStartDate"></p-calendar>
+                            </div>
+                            <div class="ui-g-12 pad-left0 pad-right0">
+                                <span class="ui-md-12 ui-g-12  pad-left10 label-style">And</span>
+                                <div class="ui-float-label pad-left0 ui-md-12 ui-g-12 pad-right20">
+                                    <p-calendar #calExpEndDate class="effective-date" showIcon=" true" calendarIcon="icon-Chevron_Down" dateFormat="mm/dd/yy" (onBlur)="onExpDateRangeSelect()" (onInput)="calExpEndDate.currentMonth=filterModel.expirationEndDate?.getMonth();
+                    calExpEndDate.currentYear=filterModel.expirationEndDate?.getFullYear()" (onSelect)="onExpDateRangeSelect()" placeholder="Pick a Date" [(ngModel)]="filterModel.expirationEndDate">
+                                    </p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="icon-text-button reset-color pad-top20 pad-left0 mar-left0" (click)="resetExpiryDate($event)">Reset</button>
+                    </p-accordionTab>
+                </div>
+                <app-autocomplete-filter #filtercomp [config]="filterConfig.rateType" (itemsSelected)="onRateTypeSelected($event)"></app-autocomplete-filter>
+                <app-listing-filter #filtercomp *ngIf="statusFlag" [config]="filterConfig.status" [selectedList]="filterModel.statusSelectedList" (isCollapsed)="isStatusCollapsed($event)" (itemsSelected)="onStatusItemsSelected($event, 'status', 14, false)" (resetCall)="resetEvent($event)"></app-listing-filter>
+                </p-accordion>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+</div>

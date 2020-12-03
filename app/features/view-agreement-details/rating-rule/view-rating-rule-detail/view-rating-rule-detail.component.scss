@@ -1,0 +1,115 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_dropshadow.scss';
+.split-wrapper {
+    height: 100%;
+    @include dropShadow("level2");
+}
+
+.split-container {
+    height: 100%;
+    border-radius: 6px;
+    background-color: $white;
+    .split-header {
+        height: 60px;
+        border-bottom: solid 1px $grey-lite70;
+        .title {
+            top: 15px;
+            padding: 10px;
+            position: relative;
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+        .close-position {
+            float: right;
+            margin: 15px;
+            cursor: pointer;
+        }
+    }
+    .split-body {
+        width: 100%;
+        padding: 14px 10px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 394px);
+    }
+    .split-footer {
+        height: 60px;
+        position: relative;
+        border-top: solid 1px $grey-lite70;
+    }
+}
+
+.sub-title {
+    color: $grey-dark66;
+    @include getTypographyStyles("h3");
+}
+
+.border-line {
+    border-bottom: solid 1px $grey-lite70;
+}
+
+.heading-text {
+    color: $grey-dark27;
+}
+
+.text-wrap {
+    word-wrap: break-word;
+}
+
+.content-text {
+    display: inline;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: .75rem;
+    line-height: 1rem;
+    letter-spacing: .01rem;
+    text-transform: none;
+}
+
+.text-size {
+    font-size: 14px;
+}
+
+.split-size {
+    /deep/.ui-menu.ui-menu-dynamic {
+        width: 119px;
+    }
+    /deep/ span.ui-menuitem-text {
+        font-size: 14px;
+    }
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.date-field-float-eff {
+    margin-top: 17px;
+    label {
+        margin-top: 0px !important;
+        top: 37%;
+        left: 30px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.65em - 2px);
+        left: 10px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.75em - 3px);
+        left: 10px !important;
+        font-size: 12px;
+    }
+}
+
+/deep/.linehaul-expire-date.ui-datepicker {
+    z-index: 99999 !important;
+}

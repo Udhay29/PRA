@@ -1,0 +1,198 @@
+<ng-container
+  *ngIf="viewTemplateModel?.viewTemplateDetails?.emailTemplateType.emailTemplateTypeName === 'Master'; else defaultBreadCrumb">
+  <div class="ui-g ui-fluid mar-left10 ui-md-12 pad-bot0 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="viewTemplateModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-left0">
+      <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0 pad-bot0">
+        <h1 class="text-uppercase headingAlign">
+          {{viewTemplateModel?.header}}
+          <button appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10 overflow-menu"
+            (click)="onMenu.toggle($event)" data-attr="empty-plan-overflow-menu"></button>
+        </h1>
+        <p-menu #onMenu popup="popup" styleClass="menu-overlay arrowtopbox font12"
+          [model]="viewTemplateModel.overflowMenuList" appendTo="body"></p-menu>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #defaultBreadCrumb>
+  <div class="ui-g ui-fluid mar-left10 ui-md-12 pad-bot0 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="viewTemplateModel?.breadCrumbListDefault">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-left0">
+      <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0 pad-bot0">
+        <h1 class="text-uppercase headingAlign">
+          {{viewTemplateModel?.defaultHeader}}
+          <button appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10 overflow-menu"
+            (click)="onMenu.toggle($event)" data-attr="empty-plan-overflow-menu"></button>
+        </h1>
+        <p-menu #onMenu popup="popup" styleClass="menu-overlay arrowtopbox font12"
+          [model]="viewTemplateModel.overflowMenuList" appendTo="body"></p-menu>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<div class="ui-g">
+  <div class="ui-g-12 pad-left15 pad-top0 accordionHeight">
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="Overview" selected="true">
+        <div class="ui-g">
+          <span class="ui-g-4 pad0">
+            <label class="content-text heading-text">Template Number</label>
+            <ng-container *ngIf="viewTemplateModel?.viewTemplateDetails?.emailTemplateReferenceNumber;">
+              <label class="content-text">
+                {{viewTemplateModel?.viewTemplateDetails?.emailTemplateReferenceNumber}}</label>
+            </ng-container>
+          </span>
+          <span class="ui-g-4 pad0">
+            <label class="content-text heading-text">Modified By</label>
+            <ng-container *ngIf="viewTemplateModel?.viewTemplateDetails?.modifiedBy;">
+              <label class="content-text">
+                {{viewTemplateModel?.viewTemplateDetails?.modifiedBy}}</label>
+            </ng-container>
+          </span>
+          <span class="ui-g-4 pad0">
+            <label class="content-text heading-text">Date Modified</label>
+            <ng-container *ngIf="viewTemplateModel?.viewTemplateDetails?.lastUpdateTimestamp;">
+              <label class="content-text">
+                {{viewTemplateModel?.viewTemplateDetails?.lastUpdateTimestamp}}</label>
+            </ng-container>
+          </span>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Setup" selected="true"
+        *ngIf="viewTemplateModel?.viewTemplateDetails?.emailTemplateType.emailTemplateTypeName === 'Default'">
+        <div class="ui-g">
+          <span class="ui-g-4 pad0">
+            <label class="content-text heading-text">Charge Type</label>
+            <ng-container *ngIf="viewTemplateModel?.viewTemplateDetails?.chargeTypeDisplayName">
+              <label class="content-text">
+                {{viewTemplateModel?.viewTemplateDetails?.chargeTypeDisplayName}}</label>
+            </ng-container>
+          </span>
+          <span class="ui-g-4 pad0">
+            <label class="content-text heading-text">Notification Type</label>
+            <ng-container
+              *ngIf="viewTemplateModel?.viewTemplateDetails?.accessorialNotificationType?.accessorialNotificationTypeName">
+              <label class="content-text">
+                {{viewTemplateModel?.viewTemplateDetails?.accessorialNotificationType?.accessorialNotificationTypeName}}</label>
+            </ng-container>
+          </span>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Subject" selected="true">
+        <div class="ui-g">
+          <div class="ui-g-12 pad-top10 pad-bot0">
+            <ng-container *ngIf="viewTemplateModel?.subjectArray.length > 0">
+              <div class="mar-bot10" *ngFor="let arrSubject of viewTemplateModel.subjectArray">{{arrSubject}}</div>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="viewTemplateModel?.subjectValueArr.length > 0">
+            <div class="ui-g-12 pad-top20 pad-bot0">
+              <div class="mar-bot10" *ngFor="let arrSubjectVal of viewTemplateModel.subjectValueArr">{{arrSubjectVal}}
+              </div>
+            </div>
+          </ng-container>
+          <ng-container
+            *ngIf="viewTemplateModel?.subjectValueArr.length === 0 && viewTemplateModel?.subjectArray.length === 0">
+            <div class="ui-g-12 pad-top10">
+              <label>No subject provided.</label>
+            </div>
+          </ng-container>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Body" selected="true">
+        <div class="ui-g">
+          <span class="ui-g-12 pad-top10">
+            <label class="font-decor">Introduction</label>
+            <div class="pad-top20 pad-bot20">
+              <ng-container *ngIf="viewTemplateModel?.introArray.length > 0">
+                <div class="mar-bot10" *ngFor="let arrIntro of viewTemplateModel.introArray">{{arrIntro}}</div>
+              </ng-container>
+            </div>
+            <span class="pad-top10">
+              <label class="font-decor">Data</label>
+            </span>
+            <div class="pad-top20 pad-bot20">
+              <ng-container *ngIf="viewTemplateModel.emailBodyValueArr.length > 0; else notShowEmailBodyValue">
+                <div class="mar-bot10" *ngFor="let emailValue of viewTemplateModel.emailBodyValueArr">{{emailValue}}
+                </div>
+              </ng-container>
+              <ng-template #notShowEmailBodyValue>
+                <label>No data elements provided.</label>
+              </ng-template>
+            </div>
+            <span>
+              <label class="font-decor">Conclusion</label>
+            </span>
+            <div class="pad-top20">
+              <ng-container *ngIf="viewTemplateModel?.conclusionArray.length > 0">
+                <div class="mar-bot10" *ngFor="let arrConclusion of viewTemplateModel.conclusionArray">{{arrConclusion}}
+                </div>
+              </ng-container>
+            </div>
+          </span>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Signature" selected="true">
+        <div class="ui-g">
+          <div class="ui-g-12 pad-top10">
+            <ng-container *ngIf="viewTemplateModel?.masterSignatureArray.length > 0 && viewTemplateModel?.defaultSignatureArray.length > 0; else noSignatureArray">
+                <div class="ui-g-6">
+              <div class="mar-bot10" *ngFor="let arrSignature of viewTemplateModel.masterSignatureArray">{{arrSignature}}
+              </div>
+            </div>
+            <div class="ui-g-6">
+                <div class="mar-bot10" *ngFor="let defaultSignature of viewTemplateModel.defaultSignatureArray">{{defaultSignature}}
+                </div>
+                </div>
+            </ng-container>
+            <ng-template #noSignatureArray>
+              <label *ngIf="viewTemplateModel?.masterSignatureArray.length === 0 && viewTemplateModel?.defaultSignatureArray.length === 0;">No signature provided.</label>
+            </ng-template>
+                <div class="ui-g-12" *ngIf="viewTemplateModel?.masterSignatureArray.length === 0 && viewTemplateModel?.defaultSignatureArray.length > 0;">
+                <div class="mar-bot10" *ngFor="let defaultSignature of viewTemplateModel.defaultSignatureArray">{{defaultSignature}}
+                </div>
+              </div>
+              <div class="ui-g-12" *ngIf="viewTemplateModel?.masterSignatureArray.length > 0 && viewTemplateModel?.defaultSignatureArray.length === 0;">
+                  <div class="mar-bot10" *ngFor="let arrSignature of viewTemplateModel.masterSignatureArray">{{arrSignature}}
+                  </div>
+                </div>
+          </div>
+          </div>
+      </p-accordionTab>
+      <p-accordionTab header="Default Excel Attachment" selected="true"
+        *ngIf="viewTemplateModel?.viewTemplateDetails?.emailTemplateType.emailTemplateTypeName === 'Default' && viewTemplateModel?.defaultExcelArr.length > 0">
+        <div class="ui-g">
+          <div class="ui-g-12 pad-top10">
+            <label class="font-decor">Column Headings</label>
+            <div class="pad-top20">
+                <div class="mar-bot10" *ngFor="let arrDefault of viewTemplateModel.defaultExcelArr; let i=index"><span class="line-style">{{i+1}} </span> {{arrDefault}}
+                </div>
+                </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Batching Excel Attachment" selected="true"
+        *ngIf="viewTemplateModel?.viewTemplateDetails?.emailTemplateType.emailTemplateTypeName === 'Default'">
+        <div class="ui-g">
+          <div class="ui-g-12 pad-top10">
+            <label class="font-decor">Column Headings</label>
+            <div class="pad-top20">
+            <ng-container *ngIf="viewTemplateModel?.batchExcelArr.length > 0">
+            <div class="mar-bot10" *ngFor="let arrBatchExcel of viewTemplateModel.batchExcelArr;let i=index"><span class="line-style">{{i+1}} </span> {{arrBatchExcel}}
+              </div>
+            </ng-container>
+          </div>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+  <div class="ui-g-12 padd20">
+    <span class="pull-right">
+      <button appShortcut="ctrl+alt+1" type="text" pButton label="Close" (click)="onClickClose()" class="ui-button-primary"></button>
+    </span>
+  </div>
+</div>

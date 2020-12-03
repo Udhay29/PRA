@@ -1,0 +1,276 @@
+<div #top></div>
+<div [ngClass]="{'loader': createRuleModel.chargeTypeLoading}" [appJbhLoader]="createRuleModel.chargeTypeLoading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12 pad-bot0 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="createRuleModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-left0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0 pad-bot0">
+            <h1 class="text-uppercase headingAlign">
+                    CREATE STANDARD RULE
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="ui-g-12 align-error-panel pad-left15" *ngIf="createRuleModel?.errorMsg">
+    <p-messages closable="true" [value]="createRuleModel.inlineErrormessage" class="duplicate-err-msg"></p-messages>
+</div>
+<div class="ui-g-12 pad-left15 pad-top0">
+    <div class="accordionHeight">
+        <form [formGroup]="createRuleModel?.rulesForm" autocomplete="off">
+            <p-accordion [multiple]="true" class='accordian-container'>
+                <p-accordionTab class="accord-color doc-type-accordian" header="Setup" [selected]="true">
+                    <div class="ui-g">
+                        <div class="ui-g-12 pad0">
+                        <div class="ui-g-4 ui-float-label fieldWidth  mar-top15 pad-left0">
+                            <p-autoComplete formControlName="groupName" [dropdown]="true" [style]="{'width':'100%'}"
+                                field="label" [inputStyle]="{'width':'100%'}" name="groupName"
+                                [ngClass]="{'errorMsg':createRuleModel.rulesForm.get('groupName').touched && createRuleModel.rulesForm.get('groupName')['errors']?.required}"
+                                emptyMessage="No records found" [forceSelection]="true"
+                                [suggestions]="createRuleModel.groupNameSuggestions"
+                                (completeMethod)="onTypeGroupName($event)"
+                                (onBlur)="onautoCompleteBlur($event, 'groupName')"></p-autoComplete>
+                            <label class="label-style ruleAlign" for="groupName"
+                                [ngClass]="{'labelAligns': (createRuleModel?.rulesForm.get('groupName')['errors']?.required || createRuleModel?.rulesForm.get('groupName')['errors']?.touched)}">
+                                <span>Group Name</span>
+                            </label>
+                            <div class="errorHeight">
+                                <p-message severity="error" text="Provide a Group Name"
+                                    *ngIf="createRuleModel.rulesForm.get('groupName').touched && createRuleModel.rulesForm.get('groupName')['errors']?.required">
+                                </p-message>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth  mar-top15">
+                            <p-autoComplete formControlName="ruleType" [dropdown]="true" [style]="{'width':'100%'}"
+                                field="label" [inputStyle]="{'width':'100%'}" name="ruleType"
+                                [ngClass]="{'errorMsg':createRuleModel.rulesForm.get('ruleType').touched && createRuleModel.rulesForm.get('ruleType')['errors']?.required}"
+                                emptyMessage="No records found" [forceSelection]="true"
+                                [suggestions]="createRuleModel.ruleTypeFiltered"
+                                (completeMethod)="onTypeRuleType($event)" (onSelect)="onChangeRuleType($event)"
+                                (onBlur)="onBlurRuleType($event)"></p-autoComplete>
+                            <label class="label-style chargeAlign" for="ruleType"
+                                [ngClass]="{'labelAligns': (createRuleModel?.rulesForm.get('ruleType')['errors']?.required || createRuleModel?.rulesForm.get('ruleType')['errors']?.touched)}">
+                                <span>Rule Type</span>
+                            </label>
+                            <div class="errorHeight">
+                                <p-message severity="error" text="Provide a Rule Type"
+                                    *ngIf="createRuleModel.rulesForm.get('ruleType').touched && createRuleModel.rulesForm.get('ruleType')['errors']?.required">
+                                </p-message>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth  mar-top15 pad-bot0">
+                            <p-autoComplete formControlName="chargeType" [dropdown]="true"
+                                [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                                name="chargeType"
+                                [ngClass]="{'errorMsg':createRuleModel.rulesForm.get('chargeType').touched && createRuleModel.rulesForm.get('chargeType')['errors']?.required}"
+                                emptyMessage="No records found" [forceSelection]="true"
+                                [suggestions]="createRuleModel.chargeTypeFiltered"
+                                (completeMethod)="onTypeChargeCode($event)" (onSelect)="onSelectChargeCode($event)"
+                                (onBlur)="onChargeTypeBlur($event, 'chargeType')"
+                                (input)="onInputChargeType($event)">
+                            </p-autoComplete>
+                            <label class="label-style chargeAlign" for="chargeType"
+                                [ngClass]="{'labelAligns': (createRuleModel?.rulesForm.get('chargeType')['errors']?.required || createRuleModel?.rulesForm.get('chargeType')['errors']?.touched)}">
+                                <span>Charge Type</span>
+                            </label>
+                            <span class="errorHeight">
+                                <p-message severity="error" text="Provide a Charge Type"
+                                    *ngIf="createRuleModel.rulesForm.get('chargeType').touched && createRuleModel.rulesForm.get('chargeType')['errors']?.required">
+                                </p-message>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 pad0">
+                        <div class="ui-g-4 pad-left0 ui-float-label mar-top16 date-field-float-eff ratesCalendar rulescalendarinput pad-bot0">
+                            <p-calendar #cal
+                                [ngClass]="{'errorMsg':createRuleModel.isCorrectEffDateFormat || createRuleModel?.inValidEffDate || createRuleModel?.inValidDate ||(createRuleModel?.rulesForm.get('effectiveDate').touched && !createRuleModel?.rulesForm.get('effectiveDate').value)}"
+                                formControlName="effectiveDate" [showIcon]="true" name="effectiveDate"
+                                appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy" [showOnFocus]="true"
+                                yearRange="1900:2099" (onSelect)="onDateSelected($event, 'effectiveDate')"
+                                (onBlur)="onDateSelected($event, 'effectiveDate')"
+                                (onInput)="typedDateValidate($event,'effectiveDate')"
+                                [minDate]="createRuleModel?.effectiveMinDate"
+                                [maxDate]="createRuleModel?.effectiveMaxDate"></p-calendar>
+                            <label class="label-style" for="effectiveDate"
+                                [ngClass]="{'labelAligns': (!createRuleModel?.rulesForm.get('effectiveDate').value || createRuleModel?.rulesForm.get('effectiveDate')['errors']?.invalid)}">Effective
+                                Date</label>
+                            <div class="errorHeight">
+                                <p-message severity="error" text="Provide a valid date" *ngIf="createRuleModel.isCorrectEffDateFormat"></p-message>
+                                <p-message severity="error" text="Provide Effective Date"
+                                    *ngIf="!createRuleModel.isCorrectEffDateFormat && createRuleModel?.rulesForm.get('effectiveDate').touched && !createRuleModel?.rulesForm.get('effectiveDate').value">
+                                </p-message>
+                                <p-message severity="error" text="Provide a valid date"
+                                    *ngIf="((createRuleModel?.rulesForm.get('effectiveDate')['errors']?.invalid || createRuleModel.inValidEffDate || createRuleModel.inValidDate) && !(createRuleModel?.rulesForm.get('effectiveDate').touched && !createRuleModel?.rulesForm.get('effectiveDate').value) && !createRuleModel.isCorrectEffDateFormat)">
+                                </p-message>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label mar-top16 date-field-float-exp ratesCalendar rulescalendarinput pad-bot0">
+                            <p-calendar
+                                [ngClass]="{'errorMsg':createRuleModel.isCorrectExpDateFormat || createRuleModel?.inValidExpDate || createRuleModel?.inValidDate ||(createRuleModel?.rulesForm.get('expirationDate').touched && !createRuleModel?.rulesForm.get('expirationDate').value)}"
+                                formControlName="expirationDate" [showIcon]="true" name="expirationDate"
+                                appendTo="body" yearRange="1900:2099" [showOnFocus]="true" yearRange="1900:2099"
+                                (onSelect)="onDateSelected($event, 'expirationDate')"
+                                (onBlur)="onDateSelected($event, 'expirationDate')"
+                                (onInput)="typedDateValidate($event,'expirationDate')"
+                                [minDate]="createRuleModel?.expirationMinDate"
+                                [maxDate]="createRuleModel?.expirationMaxDate"></p-calendar>
+                            <label class="label-style" for="expirationDate"
+                                [ngClass]="{'labelAligns': (!createRuleModel?.rulesForm.get('expirationDate').value || createRuleModel?.rulesForm.get('expirationDate')['errors']?.invalid)}">Expiration
+                                Date</label>
+                            <div class="errorHeight">
+                                <p-message severity="error" text="Provide a valid date" *ngIf="createRuleModel.isCorrectExpDateFormat"></p-message>
+                                <p-message severity="error" text="Provide Expiration Date"
+                                    *ngIf="!createRuleModel.isCorrectExpDateFormat && createRuleModel?.rulesForm.get('expirationDate').touched && !createRuleModel?.rulesForm.get('expirationDate').value">
+                                </p-message>
+                                <p-message severity="error" text="Provide a valid date"
+                                    *ngIf="(((createRuleModel?.rulesForm.get('expirationDate').touched && createRuleModel?.rulesForm.get('expirationDate')['errors']?.invalid) || (createRuleModel?.inValidExpDate || createRuleModel?.inValidDate)) && !(createRuleModel?.rulesForm.get('expirationDate').touched && !createRuleModel?.rulesForm.get('expirationDate').value) && !createRuleModel.isCorrectExpDateFormat)">
+                                </p-message>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon" header="Additional Options" selected="true">
+                    <div class="ui-g">
+                        <app-rates-optional-attributes #optionalFields
+                            [chargeType]="createRuleModel?.businessUnitBasedOnChargeType"
+                            [selectedChargeType]="createRuleModel.rulesForm.get('chargeType').value"
+                            class="optionalFields ui-g-12 pad0" (isBusinessUnitShow)="onBusinessUnitShow($event)">>
+                        </app-rates-optional-attributes>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color" header="Documentation" selected="true">
+                    <app-standard-view-documentation #documentation
+                        (createDocumentation)="createDocumentation($event)"
+                        (validateFormFields)="validateFieldsForDocumentation($event)"
+                        [formfieldsValue]="createRuleModel.rulesForm" [optionalFields]="optionalFields"
+                        [agreementID]="agreementID"
+                        [documenationContext]="createRuleModel.createDocumentationText"
+                        [fieldValues]="createRuleModel"></app-standard-view-documentation>
+                </p-accordionTab>
+                <div *ngIf="createRuleModel.isAveragingRules">
+                    <p-accordionTab class="accord-color" header="Averaging" selected="true">
+                        <div class="ui-g">
+                            <app-averaging-rules class="ui-g-12 pad0" #averagingRules></app-averaging-rules>
+                        </div>
+                    </p-accordionTab>
+                </div>
+                <div class="mar-top20 mar-bot20 position-rel cursor-pointer" *ngIf="!createRuleModel.isSuspend">
+                    <span><em class="icon-Circle_Add_Solid iconColor"></em><span
+                            class="pad-left10 alternateChargeFont">
+                            Add Conditions (optional)</span></span>
+                </div>
+                <div *ngIf="createRuleModel.isFreeRules">
+                    <p-accordionTab class="accord-color" header="Free" selected="true">
+                        <app-free-rule (referenceGridData)="displayReferenceGrid($event)" #freeRuleTab>
+                        </app-free-rule>
+                    </p-accordionTab>
+                </div>
+                <div *ngIf="createRuleModel.isNotification">
+                    <p-accordionTab class="accord-color" header="Notify By" selected="true">
+                        <app-notify-by #appNotifyBy>
+                        </app-notify-by>
+                    </p-accordionTab>
+                </div>
+                <div *ngIf="createRuleModel.isNotification">
+                    <p-accordionTab class="accord-color" header="Notify When" selected="true">
+                        <app-notify-when #appNotifyWhen>
+                        </app-notify-when>
+                    </p-accordionTab>
+                </div>
+                <p-accordionTab *ngIf="createRuleModel.isFreeRules" class="accord-color accordionIcon"
+                    header="Reference" selected="true">
+                    <app-referencedata-list #referenceTable [agreementID]="agreementID"
+                        [showReferenceGrid]="createRuleModel.showReferenceGrid"></app-referencedata-list>
+                </p-accordionTab>
+                <div *ngIf="createRuleModel.isArrival">
+                    <p-accordionTab class="accord-color" header="Arrival Grace Period" selected="true">
+                        <div class="ui-g arrivalPeriod">
+                            <div class="ui-g-12">
+                                <div class="ui-inputgroup ui-float-label arrivalPeriod ui-g-3">
+                                    <input type="text" class="ui-g-3 arrivalGracePeriod" pInputText
+                                        formControlName="arrivalGraceAmount"
+                                        (input)="onFormKeypress($event,'arrivalGraceAmount')"
+                                        (blur)="onBlurGracePeriod($event.target?.value)"
+                                        (focus)="onfocusAmount('arrivalGraceAmount')">
+                                    <p-autoComplete formControlName="arrivalGrace" [dropdown]="true"
+                                        [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                                        name="arrivalGrace" class="ui-g-9 pad0 gracePeriod"
+                                        [ngClass]="{'errorMsg':createRuleModel.rulesForm.get('arrivalGrace').touched && createRuleModel.rulesForm.get('arrivalGrace')['errors']?.required}"
+                                        emptyMessage="No records found" [forceSelection]="true"
+                                        [suggestions]="createRuleModel.gracePeriodFiltered"
+                                        (completeMethod)="onTypeGracePeriod($event)"
+                                        (onBlur)="onBlurArrivalGrace($event)">
+                                    </p-autoComplete>
+                                    <label class="label-style graceAlign" for="arrivalGrace"
+                                        [ngClass]="{'labelAligns': (createRuleModel?.rulesForm.get('arrivalGrace')['errors']?.required || createRuleModel?.rulesForm.get('arrivalGrace')['errors']?.touched)}">
+                                        <span>Grace Period</span>
+                                    </label>
+                                </div>
+                                <div class="ui-g-12 pad0">
+                                    <div class="errorHeight ui-g-3 pad0">
+                                        <p-message severity="error" text="Provide Grace Period"
+                                            *ngIf="((createRuleModel.rulesForm.get('arrivalGrace').touched && createRuleModel.rulesForm.get('arrivalGrace')['errors']?.required) || (createRuleModel.rulesForm.get('arrivalGraceAmount').touched && createRuleModel.rulesForm.get('arrivalGraceAmount')['errors']?.required)) || ((createRuleModel.rulesForm.get('arrivalGraceAmount').touched && createRuleModel.rulesForm.get('arrivalGraceAmount')['errors']?.pattern) || (createRuleModel.rulesForm.get('arrivalGraceAmount').touched && createRuleModel.rulesForm.get('arrivalGraceAmount')['errors']?.invalid))">
+                                        </p-message>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </div>
+            </p-accordion>
+        </form>
+    </div>
+    <p-footer class="pull-right footer clearfix">
+        <label class="alternateUndoFont iconColor">Undo</label>
+        <button type="text" pButton label="Cancel" class="ui-button-secondary" appShortcut="ctrl+alt+2"
+            (click)="onCancelAccessorialRule()"></button>
+        <button type="text" appShortcut="ctrl+alt+1" pButton label="Save" class="ui-button-primary mar-left15"
+            (click)="onSaveAccessorialRule()"></button>
+    </p-footer>
+</div>
+
+<p-dialog header="Save Options" [(visible)]="createRuleModel.isShowSavePopup" [modal]="true" [responsive]="true"
+    [width]="475" [minWidth]="470"  [minY]="70"  [baseZIndex]="10000">
+    <div class="freeRuleSavePopupContent">
+        <span class="saveHeaderPopup">Save & Close</span>
+        <span>Save current rule and return to Agreement Details.</span>
+    </div>
+    <ng-container *ngIf="createRuleModel.isFreeRules">
+        <div class="freeRuleSavePopupContent">
+            <span class="saveHeaderPopup">Save & Create New</span><span>Save current rule and create a new, blank
+                rule.</span>
+        </div>
+        <div class="freeRuleSavePopupContent">
+            <span class="saveHeaderPopup">Save & Create Copy</span><span>Save and copy the current rule to a new
+                rule.</span>
+        </div>
+    </ng-container>
+    <p-footer>
+        <button [ngClass]="{'mar-right10':createRuleModel.isFreeRules}" type="button" pButton
+            (click)="savePopupCancel()" label="Cancel" class="ui-button-secondary"></button>
+        <button *ngIf="!createRuleModel.isFreeRules" type="button" pButton (click)="ruleSave()" label="Save & Close"
+            class="ui-button-primary"></button>
+        <p-splitButton *ngIf="createRuleModel.isFreeRules" class="freeRuleSplitSave" [appendTo]="body"
+            (onClick)="ruleSave()" label="Save & Close"   [model]="items">
+        </p-splitButton>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRuleModel.ruleCancel" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to cancel without saving your work?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onCancelPopupClose()" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onNavigate()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRuleModel.isNavigationChange" [modal]="true" [responsive]="true"
+    [width]="450" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>You are about to lose all the changes. Do you want to proceed?</div>
+    <p-footer>
+        <button type="button" pButton (click)="navigationPopupCancel()" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onNavigationChange()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

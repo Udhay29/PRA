@@ -1,0 +1,32 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+/deep/.view-panel .ui-panel {
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, .2);
+}
+
+/deep/.optional-fields {
+    .ui-dropdown,
+    .ui-float-label {
+        width: 100% !important;
+    }
+}
+
+.labelAlign {
+    top: 48% !important;
+}
+
+.pad-bot12 {
+    padding-bottom: 12px;
+}
+
+.freeTypeAlign {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+}
+.errorHeight {
+    height: 18px;
+}
+.mar-top5{
+    margin-top: 5px;
+}

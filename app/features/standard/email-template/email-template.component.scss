@@ -1,0 +1,172 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.emptyGrid{
+height:100%;
+position: relative;
+}
+.header-height{
+height: 45px;
+position: relative;
+}
+.main-content /deep/ .ui-table-scrollable-wrapper{
+    height: calc(100vh - 330px);
+}
+.main-content /deep/ .ui-table.ui-widget{
+    height: calc(100vh - 207px);
+}
+.main-content /deep/ .ui-table-scrollable-body{
+    height: calc(100vh - 365px);
+}
+.main-content {
+    box-shadow: 0 0 10px grey;
+    background: white;
+    padding: 0;
+    border-radius: 7px;
+    min-height: calc(100vh - 285px);
+    height: 250px;
+    /deep/ .ui-table-scrollable-wrapper.ng-star-inserted{
+        min-height: calc(100vh - 328px);
+    }
+    /deep/.ui-table .ui-table-caption.ui-widget-header{
+        border-bottom: 1px solid $grey-lite48;
+        padding: 5px 0px 5px 5px;
+    }
+    /deep/.ui-table .ui-paginator-bottom.ui-paginator{
+        border-top:1px solid $grey-lite48;
+    }
+}
+.center-container {
+    height: calc(100vh - 386px);
+    position: relative;
+    width: calc(100vw - 256px);
+}
+
+.display-middle {
+    width: calc(100vw - 256px);
+    text-align: center;
+    line-height: 40px;
+    @include getTypographyStyles("display3");
+    color: $grey-dark27;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.message-wrapper {
+@include getTypographyStyles("h2");
+color: $grey-dark27;
+font-size:50px;
+height: calc(100vh - 295px);
+position: relative;
+width: calc(100vw - 256px);
+}
+.dot-position {
+    border: 0px;
+    color: rgba(105, 105, 105, 1);
+    background: transparent;
+    min-width:20px;
+    margin-left: 8px;
+    cursor: pointer;
+} 
+
+.minimum-column-width {
+    box-sizing: border-box;
+    @include getTypographyStyles("h6");
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+    padding-bottom: 5px !important;
+    padding-left: 12px !important;
+}
+.headerHeight {
+    padding-top: 5px;
+    height: 35px;
+}
+.thHeaderRow{
+    font-weight:bold;
+}
+.minimum-column-widthdata {
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden !important;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-overflow: ellipsis !important;
+    height: 50px;
+    padding-left: 12px !important;
+}
+
+.absPosition {
+    position: absolute;
+    top: calc(100vh - 319px);
+    width: 144px;
+    right: 0px;
+}
+
+.tableHeading{
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.buttonStyle {
+    background: transparent;
+    padding:14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    height: 44px;
+    color: $grey-dark27;
+}
+.filterColor{
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+  }
+
+.pad-left30 {
+    padding-left: 30px !important;
+}
+ .tableFooter {
+    max-height: 60px !important;
+}
+
+.searchAndDotWidth{
+    float: right;
+    right: 0px;
+    width: 362px;
+    }
+.iconsHolderPosition {
+    position: relative;
+    top:11px;
+    left:20px;
+}
+
+.checkbox-alignment {
+    padding-left: 10px !important;
+    text-align: center;
+}
+.heading-display {
+    display: inline-block;
+}
+
+.alignPos{
+    position: absolute;
+    right:103px;
+}
+.tableName{
+    padding-left:10px;   
+}
+.searchWidth {
+    width:254px;
+}
+
+.iconsHolder  {
+    position: relative;
+    bottom:3px;
+}
+
+.icon-Menu_Overflow {
+    margin-right:5px;
+}

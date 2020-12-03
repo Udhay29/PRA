@@ -1,0 +1,155 @@
+<section class="createChargeWrapper ui-g-12 nopadding dropshadow split-container">
+
+  <!-- split header starts -->
+  <div class="split-header">
+    <div class="header">
+      <span class="title">
+        Create Charge
+      </span>
+      <button class="icon-button icon-Menu_Close close-position" (click)="onClickClose()"></button>
+    </div>
+  </div>
+  <!-- split header ends -->
+
+  <!-- split body starts -->
+  <div class="split-body split-height">
+    <form [formGroup]="createChargesModel.createChargesForm">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 pad-top15">
+          <div class="ui-g-6 ui-md-6 ui-lg-6 pad-left0 pad-right0 ">
+            <span class="ui-float-label ui-md-12 ui-lg-12 rightMargin">
+              <input id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText formControlName="chargeIdentifier"
+                autocomplete="off" maxlength="10">
+              <label for="chargeIdentifier" class="pad-left5">Charge Identifier</label>
+            </span>
+            <p-message class="error_Msg" severity="error" text="Provide a Charge Identifier" *ngIf="createChargesModel.createChargesForm.get('chargeIdentifier').touched && createChargesModel.createChargesForm.get('chargeIdentifier')['errors']?.required"></p-message>
+          </div>
+          <div class="ui-g-6 ui-md-6 ui-lg-6 pad-left0 pad-right0">
+            <span class="ui-float-label ui-md-12 ui-lg-12">
+              <input id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText formControlName="chargeName"
+                autocomplete="off" maxlength="80">
+              <label for="chargeName" class="pad-left5">Name</label>
+            </span>
+            <p-message class="error_Msg" severity="error" text="Provide a Name" *ngIf="createChargesModel.createChargesForm.get('chargeName').touched && createChargesModel.createChargesForm.get('chargeName')['errors']?.required"></p-message>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12 pad-top10">
+          <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top15 textarea-float">
+            <textarea class="form-control ui-md-12 ui-lg-12 descBorderRadius" formControlName="chargeDescription"
+              maxlength="500" [rows]="5 " [cols]="30" pInputTextarea></textarea>
+            <label class="ui-md-12 ui-lg-12 ui-g-12 font12 text-gray" for="chargeDescription">Description
+              <span class="pull-right mar-right20 text-gray font12">optional</span>
+            </label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12 pad-right10 pad-left10">
+          <p-selectButton [options]="createChargesModel.selectButtonOptions" formControlName="chargeType" name="chargeType"
+            (onChange)="onChangeChargeType($event)"></p-selectButton>
+        </div>
+        <div class="ui-g-12" *ngIf="createChargesModel.associateChargeFlag">
+          <div class="ui-g-12 ui-md-12 ui-lg-12 pad-top15 pad-right0">
+            <div class="ui-g">
+              <div class="ui-md-6 ui-lg-6 pad-left0 pad-right0">
+                <span class="ui-float-label ui-md-12 ui-lg-12 pad-left0">
+                  <p-multiSelect defaultLabel="" [showHeader]="false" [options]="createChargesModel.businessUnitList"
+                    formControlName="businessUnit" [filter]="true" (onChange)="onChangeBusinessUnit($event)"></p-multiSelect>
+                  <label for="businessUnit" class="pad-left0">Business Unit</label>
+                </span>
+                <p-message class="error_Msg" severity="error" text="Provide a Business Unit" *ngIf="createChargesModel.createChargesForm.get('businessUnit').touched && createChargesModel.createChargesForm.get('businessUnit')['errors']?.required"></p-message>
+              </div>
+              <div class="ui-md-6 ui-lg-6 pad-left0 pad-right0">
+                <span class="ui-float-label ui-md-12 ui-lg-12 pad-left5 leftMargin">
+                  <p-multiSelect defaultLabel="" [showHeader]="false" [options]="createChargesModel.serviceOfferingList"
+                    formControlName="serviceOffering" (onChange)="onChangeServiceOffering($event)" [filter]="true"></p-multiSelect>
+                  <label for="serviceOffering" class="pad-left0">Service Offering</label>
+                </span>
+                <p-message class="error_Msg" severity="error" text="Provide a Service Offering" *ngIf="createChargesModel.createChargesForm.get('serviceOffering').touched && createChargesModel.createChargesForm.get('serviceOffering')['errors']?.required"></p-message>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12 pad-right0">
+            <div class="ui-g">
+              <div class="ui-md-6 ui-lg-6 pad-left0 pad-right0">
+                <span class="ui-float-label ui-md-12 ui-lg-12 pad-left0">
+                  <p-multiSelect defaultLabel="" [showHeader]="false" [options]="createChargesModel.rateTypeList"
+                    formControlName="rateType" (onChange)="onChangeRateType($event)" [filter]="true"></p-multiSelect>
+                  <label for="rateType" class="pad-left0">Rate Type</label>
+                </span>
+                <p-message class="error_Msg" severity="error" text="Provide a Rate Type" *ngIf="createChargesModel.createChargesForm.get('rateType').touched && createChargesModel.createChargesForm.get('rateType')['errors']?.required"></p-message>
+              </div>
+              <div class="ui-md-6 ui-lg-6 pad-left0 pad-right0">
+                <span class="ui-float-label ui-md-12 ui-lg-12 pad-left5 leftMargin">
+                  <p-autoComplete class="ui-autocomplete  ng-dirty ng-invalid" [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
+                    formControlName="applicationLevel" field="value" [suggestions]="createChargesModel.applicationTypeLevelList"
+                    [dropdown]="true" field="value" (completeMethod)="getApplicationLevelTypeList($event)" (onSelect)="onSelectApplicationLevel($event)"
+                    [forceSelection]="true" (onClear)="onClearDropDown('applicationLevel')"></p-autoComplete>
+                  <label for="applicationLevel" class="pad-left0">Application Level</label>
+                </span>
+                <p-message class="error_Msg" severity="error" text="Provide a Application Level" *ngIf="createChargesModel.createChargesForm.get('applicationLevel').touched && createChargesModel.createChargesForm.get('applicationLevel')['errors']?.required"></p-message>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="ui-md-6 ui-lg-6 pad-left0 pad-right0">
+              <span class="ui-float-label ui-md-12 ui-lg-12 pad-left0 rightMargin">
+                <p-autoComplete class="ui-autocomplete  ng-dirty ng-invalid" [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
+                  formControlName="usage" field="value" [suggestions]="createChargesModel.usageListValues" [dropdown]="true"
+                  field="value" (completeMethod)="getUsageList($event)" (onSelect)="onSelectUsageType($event)"
+                  [forceSelection]="true" (onClear)="onClearDropDown('usage')"></p-autoComplete>
+                <label for="usage" class="pad-left0">Usage</label>
+              </span>
+              <p-message class="error_Msg" severity="error" text="Provide a Usage" *ngIf="createChargesModel.createChargesForm.get('usage').touched && createChargesModel.createChargesForm.get('usage')['errors']?.required"></p-message>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <span class="ui-float-label ui-md-6 ui-lg-6" *ngFor="let data of createChargesModel.checkBoxList">
+              <p-checkbox class="font12" [(ngModel)]="createChargesModel.checkBoxValue" [ngModelOptions]="{standalone: true} "
+                value={{data}}  label={{data}} (onChange)="onChangeCheckboxList($event, data)"></p-checkbox>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12 pad-top15 pad-right0">
+            <div class="ui-g-12 ui-md-6 ui-lg-6 calenderContainer pad-left0 pad-right0">
+              <div class='ui-md-12 ui-lg-12 ui-float-label pad-left0'>
+                <p-calendar [style]="{ 'width': '100%'} " [inputStyle]="{ 'width': '100%'} " formControlName="effectiveDate"
+                  [showIcon]="true " dateFormat="mm/dd/yy" (onSelect)="onDateSelected($event, 'effectiveDate')"
+                  (onInput)="onTypeDate($event, 'effectiveDate')"[maxDate]="createChargesModel.effectiveMaxDate" [disabledDates]="this.createChargesModel.disabledEffDatesList"></p-calendar>
+                <label for="effectiveDate ">Effective Date</label>
+              </div>
+              <p-message class="error_Msg" severity="error" text="Provide a Effective Date" *ngIf="createChargesModel.createChargesForm.get('effectiveDate').touched && createChargesModel.createChargesForm.get('effectiveDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide valid date" *ngIf="createChargesModel.createChargesForm.get('effectiveDate').touched && createChargesModel.createChargesForm.get('effectiveDate')['errors']?.invalid && createChargesModel.invalidDateFlag"></p-message>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6 calenderContainer pad-left0 pad-right0">
+              <div class='ui-md-12 ui-lg-12 ui-float-label dateMargin'>
+                <p-calendar [style]="{ 'width': '100%'}" [inputStyle]="{ 'width': '100%'}" formControlName="expirationDate"
+                  [showIcon]="true" dateFormat="mm/dd/yy" [minDate]="createChargesModel.effectiveMinDate" (onSelect)="onDateSelected($event, 'expirationDate')"
+                  (onInput)="onTypeDate($event, 'expirationDate')" [disabledDates]="this.createChargesModel.disabledExpDatesList"></p-calendar>
+                <label for="expirationDate ">Expiration Date</label>
+              </div>
+              <p-message class="error_Msg" severity="error" text="Provide a Expiration Date" *ngIf="createChargesModel.createChargesForm.get('expirationDate').touched && createChargesModel.createChargesForm.get('expirationDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide valid date" *ngIf="createChargesModel.createChargesForm.get('expirationDate').touched && createChargesModel.createChargesForm.get('expirationDate')['errors']?.invalid && createChargesModel.invalidDateFlag"></p-message>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- split body ends -->
+
+  <!-- split footer starts -->
+  <div class="split-footer pad10">
+    <span class=" btnMargin pull-right button-align">
+      <button type="text" pButton label="Cancel" (click)="onClickClose()" class="ui-button-secondary"></button>
+      <button type="text" pButton label="Save" (click)="onClickSaveCharge()" class="ui-button-primary mar-left15"></button>
+    </span>
+  </div>
+  <!-- split footer ends -->
+
+</section>
+<p-dialog header="Confirmation" [(visible)]="createChargesModel.isCancelClicked" [modal]="true" [responsive]="true"
+  [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="onPopupNo()" class="ui-button-secondary" label="No"></button>
+    <button type="button" pButton (click)="onPopupYes(false)" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

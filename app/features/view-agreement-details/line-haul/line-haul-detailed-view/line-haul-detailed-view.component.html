@@ -1,0 +1,193 @@
+<div [ngClass]="{'loader': detailedViewModel?.pageLoading}" [appJbhLoader]="detailedViewModel?.pageLoading">
+    <div class="ui-g ui-fluid ui-md-12 pad-bot0 pad-top0 breadcrumb">
+        <p-breadcrumb data-attr="viewagreement-linehaul-linehauldetailedview-breadcrumb" class="ui-md-12 breadCrumbList pad-bot0 pad-top0 pad-bot"
+            [model]="detailedViewModel?.breadCrumbList"></p-breadcrumb>
+    </div>
+
+    <h1 class="pad-left15 mar-top0 mar-bot0 pad-bot2">{{agreementData?.customerAgreementName}}
+
+        <button data-attr="viewagreement-linehaul-linehauldetailedview-cancel-button" appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10 overflow-menu"
+            [disabled]="(detailedViewModel.lineHaulOverview?.recordStatus | titlecase) !== 'Active'"
+            (click)="onMenu.toggle($event)"></button>
+
+    </h1>
+    <p-menu data-attr="viewagreement-linehaul-linehauldetailedview-popup-menu" #onMenu popup="popup" styleClass="lineHaulDetailsMenu menu-overlay arrowtopbox font12"
+        [model]="detailedViewModel.overflowMenuList" appendTo="body"></p-menu>
+    <div class="ui-g ui-md-12 pad-top0 pad-left5">
+        <div class="ui-g-3 pad-left10">
+            <div class="ui-g-12 pad0 dropshadow borderValue overview-wrapper">
+                <div class=" ui-g-12 line-haul-heading-pad line-haul-heading pad-bot20">
+                    <span class="pad-left5">Line Haul Overview</span>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-12 pad-top10">
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Status</label>
+                            <span class="overview-values pad-left10"
+                                *ngIf="detailedViewModel?.lineHaulOverview?.recordStatus">{{detailedViewModel?.lineHaulOverview?.recordStatus
+                                | titlecase}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Effective Date</label>
+                            <span class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.effectiveDate
+                                | date:'MMM d, yyyy'}}
+                            </span>
+                        </div>
+                        <div class="ui-g-11 pad-left10 pad-top0 pad-bot20 expiration-date-border">
+                            <label class="label-style">Expiration Date</label>
+                            <span class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.expirationDate
+                                | date:'MMM d, yyyy'}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 pad-top10">
+                        <div class="ui-g-12 pad-left10 pad-bot0 alignContract">
+                            <label class="label-style">Contract
+                            </label>
+                            <span class="overview-values pad-left10"
+                                *ngIf="detailedViewModel?.lineHaulOverview?.customerAgreementContractName">{{detailedViewModel?.lineHaulOverview?.customerAgreementContractName}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Section</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.customerAgreementContractSectionName}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Business Unit</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.financeBusinessUnitName}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Service Offering</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.serviceOfferingCode}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Transit Mode</label>
+                            <span
+                                class="overview-values  pad-left10">{{detailedViewModel?.lineHaulOverview?.transitMode}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Service Level</label>
+                            <span class="overview-values pad-left10"
+                                *ngIf="detailedViewModel?.lineHaulOverview?.serviceLevelCode">{{detailedViewModel?.lineHaulOverview?.serviceLevelCode}}
+                            </span>
+                            <span *ngIf="!detailedViewModel?.lineHaulOverview?.serviceLevelCode"
+                                class="overview-values pad-left10">-
+                                -
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Operational Service</label>
+                            <span *ngIf="detailedViewModel?.operationalServices">
+                                <span class="overview-values  pad-left10"
+                                    *ngFor="let operationalService of detailedViewModel?.operationalServices; index as i">{{operationalService}}
+                                    <span *ngIf="i !== detailedViewModel?.operationalServices?.length - 1">,</span>
+                                </span>
+                            </span>
+                            <span class="overview-values pad-left10"
+                                *ngIf="!detailedViewModel?.operationalServices?.length">-
+                                -</span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Equipment Category</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.equipmentClassificationCodeDescription}}
+                            </span>
+                        </div>
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Equipment Type</label>
+                            <span class="overview-values  pad-left10"
+                                *ngIf="detailedViewModel?.lineHaulOverview?.equipmentTypeCode">{{detailedViewModel?.lineHaulOverview?.equipmentTypeCodeDescription}}
+                            </span>
+                            <span class="overview-values pad-left10"
+                                *ngIf="!detailedViewModel?.lineHaulOverview?.equipmentTypeCode">-
+                                -</span>
+                        </div>
+                        <div class="ui-g-11 pad-left10 pad-top0 pad-bot20 expiration-date-border pad-bot0">
+                            <label class="label-style">Equipment Length</label>
+                            <span class="overview-values pad-left10"
+                                *ngIf="detailedViewModel?.lineHaulOverview?.equipmentLengthQuantity">{{detailedViewModel?.lineHaulOverview?.equipmentLengthQuantity}}
+                                {{detailedViewModel?.lineHaulOverview?.unitOfEquipmentLengthMeasurementCode}}
+                            </span>
+                            <span class="overview-values pad-left10"
+                                *ngIf="!detailedViewModel?.lineHaulOverview?.equipmentLengthQuantity">-
+                                -</span>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 pad-top10">
+                        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+                            <label class="label-style">Priority</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.priorityLevelNumber}}</span>
+                        </div>
+                        <div class="ui-g-11 pad-left10 pad-top0 pad-bot20 expiration-date-border">
+                            <label class="label-style">Overridden Priority</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.overriddenPriority}}</span>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 pad-top10">
+                        <div class="ui-g-12 pad-left10 pad-top0">
+                            <label class="label-style">Award Status</label>
+                            <span
+                                class="overview-values pad-left10">{{detailedViewModel?.lineHaulOverview?.lineHaulAwardStatusTypeName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-9 pad-left0 pad-right0">
+            <app-line-haul-details [lineHaulValues]="detailedViewModel?.lineHaulOverview"></app-line-haul-details>
+        </div>
+    </div>
+    <section class="lineHaulDetailsWrapper">
+        <p-dialog  data-attr="viewagreement-linehaul-linehauldetailedview-inactivateRate-dialog" header="Inactivate Line Haul Rate" [(visible)]="detailedViewModel.inactivatePopup" [modal]="true"
+            [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+            <form [formGroup]="detailedViewModel?.inactivateForm" autocomplete="off">
+                <div>Do you want to proceed? If Yes, please select a date to inactivate the</div>
+                <div>selected Line Haul Rate.</div>
+                <div class="ui-g-12 ui-md-7 ui-lg-7 calenderContainer pad-left0 pad-right0">
+                    <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top30 pad-left0 lineHaulCalendar">
+                        <p-calendar data-attr="viewagreement-linehaul-linehauldetailedview-expirationDate-calendar" #cal formControlName="expirationDate" [showIcon]="true" name="expirationDate"
+                            appendTo="body" (onBlur)="onBlurDateValidate($event)" [maxDate]="detailedViewModel?.maxDate"
+                            (onInput)="onTypeDate($event);cal.currentMonth=detailedViewModel.expDate?.getMonth();cal.currentYear=detailedViewModel.expDate?.getFullYear()"
+                            panelStyleClass="linehaul-expire-date" yearRange="1900:2099"></p-calendar>
+                        <label
+                            [ngClass]="{'label-align' : detailedViewModel?.inactivateForm.get('expirationDate').pristine}"
+                            for="expirationDate">Expiration
+                            Date</label>
+                    </div>
+                    <p-message severity="error" text="Provide Expiration Date"
+                        *ngIf="detailedViewModel?.inactivateForm.get('expirationDate').touched && detailedViewModel?.inactivateForm.get('expirationDate')['errors']?.required">
+                    </p-message>
+                    <p-message severity="error" text="Provide a  valid date"
+                        *ngIf="detailedViewModel?.inactivateForm.get('expirationDate').touched && detailedViewModel?.inactivateForm.get('expirationDate')['errors']?.invalid">
+                    </p-message>
+                </div>
+            </form>
+            <p-footer>
+                <button data-attr="viewagreement-linehaul-createlinehaul-cancel-button" type="button" pButton (click)="onClickCancel()" class="ui-button-secondary addnew_btn"
+                    label="Cancel"></button>
+                <button data-attr="viewagreement-linehaul-createlinehaul-cancel-button" type="button" pButton (click)="onClickInactivate()" label="Inactivate"
+                    class="ui-button-primary addnew_btn"></button>
+            </p-footer>
+        </p-dialog>
+    </section>
+    <p-dialog data-attr="viewagreement-linehaul-linehauldetailedview-proceed-dialog" header="Proceed?" [(visible)]="detailedViewModel.showPopupForPriorEffDate" [modal]="true"
+        [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <span>Inactivation date prior to effective date. Would you like to delete?</span>
+        <p-footer>
+            <button data-attr="viewagreement-linehaul-linehauldetailedview-cancel-button" type="button" pButton (click)="onClickCancel('Cancel Inactivation')" class="ui-button-secondary"
+                label="Cancel"></button>
+            <button data-attr="viewagreement-linehaul-linehauldetailedview-cancel-button" type="button" pButton (click)="onClickProceed()" label="Proceed" class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+
+</div>

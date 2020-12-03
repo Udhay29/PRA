@@ -1,0 +1,61 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.docTextDiv {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.textArea {
+    min-height: 140px;
+    margin-top: 15px;
+    padding-left: 0px;
+    padding-top: 0px;
+    resize: none;
+    border-color: $white;
+    width: 100%;
+}
+
+.refreshedText {
+    color: $primary-blue;
+    font-size: 1.1em;
+    font-weight: 100;
+    .icon-Circle_Check_Solid {
+        position: relative;
+        top: 2px;
+        right: 6px;
+    }
+}
+.attachment-field {
+    color :$grey;
+}
+.attachment-container {
+    border-bottom: 1px solid $grey;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.reset-color {
+    color: $blue;
+    cursor: pointer;
+    border:0px;
+    text-decoration: none;
+    position: relative;
+    top: 6px;
+    background-color: $white;
+    padding: 0px;
+}
+.textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.noDocPopup {
+    .headerDetails {
+        padding-bottom: 14px;
+    }
+    .header {
+        color: $grey-dark27;
+    }
+    .details {
+        padding-left: 7px;
+    }
+}

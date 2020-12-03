@@ -1,0 +1,482 @@
+<div #top></div>
+<div [ngClass]="{'loader': createRatesModel.loading || createRatesModel.createRatesValidation.chargeTypeloading}"
+    [appJbhLoader]="createRatesModel.loading || createRatesModel.createRatesValidation.chargeTypeloading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12">
+    <p-breadcrumb class="pad-left10 breadcrumb" [model]="createRatesModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 *ngIf="!createRatesModel.isEditFlagEnabled" class="text-uppercase headingAlign">
+                {{createRatesModel?.agreementDetails?.customerAgreementName}} -
+                CREATE RATE SETUP
+            </h1>
+            <h1 *ngIf="createRatesModel.isEditFlagEnabled" class="text-uppercase headingAlign">
+                {{createRatesModel?.agreementDetails?.customerAgreementName}} -
+                EDIT RATE SETUP
+            </h1>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="ui-g-12 align-error-panel" *ngIf="createRatesModel?.errorMsg">
+        <p-messages closable="true" [value]="createRatesModel.inlineErrormessage" class="duplicate-err-msg">
+        </p-messages>
+    </div>
+    <div class="ui-g-12 pad-top0">
+        <div class="accordionHeight">
+            <p-accordion [multiple]="true">
+                <form [formGroup]="createRatesModel?.ratesForm" autocomplete="off">
+                    <p-accordionTab class="accord-color accordionIcon" header="Setup" selected="true">
+                        <div class="ui-g"
+                            [ngClass]="{'mar-bot15' : (createRatesModel.ratesDocumentLevel==='contract' || createRatesModel.ratesDocumentLevel==='section')}">
+                            <div
+                                class="ui-g-3 ui-float-label mar-top16 pad-left0 date-field-float-eff ratesCalendar pad-bot0">
+                                <p-calendar #cal
+                                    [ngClass]="{'errorMsg':createRatesModel.isCorrectEffDateFormat || createRatesModel?.createRatesValidation?.inValidEffDate || createRatesModel?.createRatesValidation?.inValidDate ||(createRatesModel?.ratesForm.get('effectiveDate').touched &&  !createRatesModel?.ratesForm.get('effectiveDate').value)}"
+                                    formControlName="effectiveDate" [showIcon]="true" name="effectiveDate"
+                                    appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy"
+                                    (onSelect)="onDateSelected($event, 'effectiveDate')"
+                                    (onBlur)="onDateSelected($event.srcElement.value, 'effectiveDate')"
+                                    (onInput)="typedDateValidate($event,'effectiveDate')" yearRange="1900:2099"
+                                    [minDate]="createRatesModel?.createRatesValidation.effectiveMinDate"
+                                    [maxDate]="createRatesModel?.createRatesValidation.effectiveMaxDate"></p-calendar>
+                                <label class="label-style" for="effectiveDate"
+                                    [ngClass]="{'labelAligns': (!createRatesModel?.ratesForm.get('effectiveDate').value || createRatesModel?.ratesForm.get('effectiveDate')['errors']?.invalid)}">Effective
+                                    Date</label>
+                                <div class="errorHeight">
+                                     <p-message severity="error" text="Provide a valid date" *ngIf="createRatesModel.isCorrectEffDateFormat">
+                                            </p-message>
+                                    <p-message severity="error" text="Provide Effective Date"
+                                        *ngIf="!createRatesModel.isCorrectEffDateFormat && createRatesModel?.ratesForm.get('effectiveDate').touched && !createRatesModel?.ratesForm.get('effectiveDate').value">
+                                    </p-message>
+                                    <p-message severity="error" text="Provide a valid date"
+                                        *ngIf="((createRatesModel?.ratesForm.get('effectiveDate').touched && createRatesModel?.ratesForm.get('effectiveDate')['errors']?.invalid || createRatesModel.createRatesValidation.inValidDate) && !(createRatesModel?.ratesForm.get('effectiveDate').touched && !createRatesModel?.ratesForm.get('effectiveDate').value) && !createRatesModel.isCorrectEffDateFormat)">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 ui-float-label mar-top16 date-field-float-exp ratesCalendar pad-bot0">
+                                <p-calendar
+                                    [ngClass]="{'errorMsg':createRatesModel.isCorrectExpDateFormat || createRatesModel?.createRatesValidation.inValidExpDate || createRatesModel?.createRatesValidation.inValidDate ||(createRatesModel?.ratesForm.get('expirationDate').touched && !createRatesModel?.ratesForm.get('expirationDate').value)}"
+                                    formControlName="expirationDate" [showIcon]="true" name="expirationDate"
+                                    appendTo="body" yearRange="1900:2099"
+                                    (onSelect)="onDateSelected($event, 'expirationDate')"
+                                    (onBlur)="onDateSelected($event.srcElement.value, 'expirationDate')"
+                                    (onInput)="typedDateValidate($event,'expirationDate')" yearRange="1900:2099"
+                                    [minDate]="createRatesModel?.createRatesValidation.expirationMinDate"
+                                    [maxDate]="createRatesModel?.createRatesValidation.expirationMaxDate"
+                                   >
+                                </p-calendar>
+                                <label class="label-style" for="expirationDate"
+                                    [ngClass]="{'labelAligns': (!createRatesModel?.ratesForm.get('expirationDate').value || createRatesModel?.ratesForm.get('expirationDate')['errors']?.invalid)}">Expiration
+                                    Date</label>
+                                <div class="errorHeight">
+                                    <p-message severity="error" text="Provide a valid date" *ngIf="createRatesModel.isCorrectExpDateFormat">
+                                            </p-message>
+                                    <p-message severity="error" text="Provide Expiration Date"
+                                        *ngIf="!createRatesModel.isCorrectExpDateFormat && createRatesModel?.ratesForm.get('expirationDate').touched && !createRatesModel?.ratesForm.get('expirationDate').value">
+                                    </p-message>
+                                    <p-message severity="error" text="Provide a valid date"
+                                        *ngIf="(((createRatesModel?.ratesForm.get('expirationDate').touched && createRatesModel?.ratesForm.get('expirationDate')['errors']?.invalid) || (createRatesModel?.createRatesValidation.inValidExpDate || createRatesModel?.createRatesValidation.inValidDate)) && !(createRatesModel?.ratesForm.get('expirationDate').touched && !createRatesModel?.ratesForm.get('expirationDate').value) && !createRatesModel.isCorrectExpDateFormat)">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 ui-float-label fieldWidth  mar-top17 pad-bot0">
+                                <p-autoComplete [suggestions]="createRatesModel.chargeTypeFiltered"
+                                    formControlName="chargeType" [dropdown]="true"
+                                    (completeMethod)="onTypeChargeCode($event)" (onSelect)="onSelectChargeCode($event)"
+                                    [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                                    name="chargeType"
+                                    [ngClass]="{'errorMsg':createRatesModel.ratesForm.get('chargeType').touched && createRatesModel.ratesForm.get('chargeType')['errors']?.required}"
+                                    (onBlur)="onautoCompleteBlur($event, 'chargeType')"
+                                    (onClear)="onClearDropDown('chargeType')" emptyMessage="No records found"
+                                    [forceSelection]="true" (input)="onInputChargeType($event)"></p-autoComplete>
+                                <label class="label-style chargeAlign" for="chargeType"
+                                    [ngClass]="{'labelAligns': (createRatesModel?.ratesForm.get('chargeType')['errors']?.required || createRatesModel?.ratesForm.get('chargeType')['errors']?.touched)}">
+                                    <span>Charge Type</span>
+                                </label>
+                                <span class="errorHeight">
+                                    <p-message severity="error" text="Provide a Charge Type"
+                                        *ngIf="createRatesModel.ratesForm.get('chargeType').touched && createRatesModel.ratesForm.get('chargeType')['errors']?.required">
+                                    </p-message>
+                                </span>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="ui-g-3 ui-float-label fieldWidth  mar-top17 pad-right0 pad-bot0">
+                                <input type="text" pInputText formControlName="customerName" name="originDescription"
+                                    maxlength="80" class="width_value">
+                                <label class="label-style chargeAlign ui-g-12 pad0 left15">
+                                    <span>Customer’s Charge Name</span>
+                                    <span class="optional-text pad-right26 pull-right">optional</span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="ui-g mar-top8">
+                            <div class="ui-g-3 ui-float-label fieldWidth currency pad-left0 pad-bot0">
+                                <p-autoComplete [suggestions]="createRatesModel.currencyCodeFiltered" field="label"
+                                    name="currency" formControlName="currency"
+                                    (completeMethod)="onTypeCurrencyType($event)" [style]="{'width':'100%'}"
+                                    field="label" [forceSelection]="true" [dropdown]="true"
+                                    [inputStyle]="{'width':'100%'}"
+                                    (onClear)="onClearDropDown('currency')" emptyMessage="No records found"
+                                    [ngClass]="{'errorMsg':createRatesModel.ratesForm.get('currency').touched && createRatesModel.ratesForm.get('currency')['errors']?.required}"
+                                    (onBlur)="onCurrencyTypeBlur($event)"></p-autoComplete>
+                                <label class="label-style ui-g-12 chargeAlign pad0 left15">
+                                    <span>Currency</span>
+                                </label>
+                                <div class="errorHeight">
+                                    <p-message severity="error" text="Select Currency Type"
+                                        *ngIf="createRatesModel.ratesForm.get('currency').touched && createRatesModel.ratesForm.get('currency')['errors']?.required">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-9  mar-bot15 pad-top10">
+                                <span class="pad-left10">
+                                    <p-checkbox name="groupname" value="Waived" label="Waived" formControlName="waived"
+                                        (onChange)="onWaivedCheckboxSelect($event)" binary="true"></p-checkbox>
+                                </span>
+                                <span *ngIf="createRatesModel.waivedFlag">
+                                    <p-checkbox name="groupname" value="Calculate Rate Manually"
+                                        label="Calculate Rate Manually" formControlName="calculateRate"
+                                        (onChange)="onCalulateRateManuallyChecked($event)" binary="true"></p-checkbox>
+                                    <p-checkbox name="groupname" value="Pass-Through" label="Pass-Through"
+                                        formControlName="passThrough" (onChange)="onPassThroughChecked($event)"
+                                        binary="true">
+                                    </p-checkbox>
+                                    <p-checkbox name="groupname" value="Roll-Up" label="Roll-Up"
+                                        formControlName="rollUp" (onChange)="onRollUpChecked($event)" binary="true">
+                                    </p-checkbox>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g">
+                            <div class="ui-g-5 documentationLevel pad0">
+                                <div>
+                                    <label class="label-style pad-left10">Level</label>
+                                </div>
+                                <p-selectButton [options]="createRatesModel.documentationLevel"
+                                    (onOptionClick)="onChangeRateDocumentLevel($event)"
+                                    formControlName="documentationLevel"></p-selectButton>
+                            </div>
+                        </div>
+                        <div class="ui-g mar-top16" *ngIf="createRatesModel.ratesDocumentLevel==='contract'">
+                            <app-contract-list #contract
+                                [effectiveDate]="createRatesModel.createRatesValidation.effectiveDate"
+                                [expirationDate]="createRatesModel.createRatesValidation.expirationDate"
+                                [agreementId]="createRatesModel.agreementDetails?.customerAgreementID"
+                                [selectedCurrency]="createRatesModel.ratesForm.get('currency').value"
+                                [editContractValues]="createRatesModel.editContractValues"
+                                (contractData)="getContractDetails($event)" (rowChange)="removeDocumentation()"
+                                [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                (isAceesorialEditInContract)="setEditRateFlagToFalse($event)">
+                            </app-contract-list>
+                        </div>
+                        <div class="ui-g mar-top16" *ngIf="createRatesModel.ratesDocumentLevel==='section'">
+                            <app-sections #sectionListModel
+                                [effectiveDate]="createRatesModel.createRatesValidation.effectiveDate"
+                                [expirationDate]="createRatesModel.createRatesValidation.expirationDate"
+                                [agreementId]="createRatesModel.agreementDetails?.customerAgreementID"
+                                [selectedCurrency]="createRatesModel.ratesForm.get('currency').value"
+                                [editSectionValues]="createRatesModel?.editSectionValues"
+                                [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                (sectionData)="getsectionDetails($event)" (rowChange)="removeDocumentation()"
+                                (isAceesorialEditInSection)="setEditRateFlagToFalse($event)">
+                            </app-sections>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="accord-color accordionIcon" header="Additional Options" selected="true">
+                        <div class="ui-g">
+                            <app-rates-optional-attributes #optionalFields class="optionalFields"
+                                [chargeType]="createRatesModel?.buSoBasedOnChargeType"
+                                (selectedBuSo)=selectedBuSoOnly($event)
+                                (businessUnitServiceOfferingSelected)=busoselect($event)
+                                [selectedChargeType]="createRatesModel.ratesForm.get('chargeType').value"
+                                [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                (setEditRateFlagToFalse)="setEditRateFlagToFalse($event)"
+                                (isBusinessUnitShow)="onBusinessUnitShow($event)">
+                            </app-rates-optional-attributes>
+                        </div>
+                        <div class="ui-g mar-bot0">
+                            <app-billto-list #billTo
+                                [agreementId]="createRatesModel.agreementDetails?.customerAgreementID"
+                                [rateType]="createRatesModel.ratesDocumentLevel"
+                                [contractValue]="createRatesModel.selectedContractValue"
+                                [sectionValue]="createRatesModel.selectedSectionValue"
+                                [effectiveDate]="createRatesModel.createRatesValidation.effectiveDate"
+                                [expirationDate]="createRatesModel.createRatesValidation.expirationDate"
+                                (rowChange)=removeDocumentation()
+                                [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                [editBillToValues]="createRatesModel?.editBillToValues"
+                                (isAceesorialEditInBillTo)="setEditRateFlagToFalse($event)"></app-billto-list>
+                        </div>
+                    </p-accordionTab>
+                    <div class="mar-top20 mar-bot20 position-rel cursor-pointer"
+                        *ngIf="!createRatesModel?.alternateCharge">
+                        <span (click)=addAlternateCharge()><em class="icon-Circle_Add_Solid iconColor"></em><span
+                                class="pad-left10 alternateChargeFont">
+                                Add Alternate Charge (optional)</span></span>
+                    </div>
+                    <div class="position-rel">
+                        <p-accordionTab class="accord-color accordionIcon" *ngIf="createRatesModel?.alternateCharge"
+                            header="Alternate Charge" selected="createRatesModel?alternateCharge">
+                            <div class="alternateChargeContent">
+                                Use the alternate charge when the following are exceeded:
+                            </div>
+                            <div class="ui-g mar-top30">
+                                <div class="ui-g-3 pad-left0">
+                                    <div class="ui-float-label setWidth">
+                                        <input formControlName="quantity" id="float-input" type="text" pInputText
+                                            (blur)="onQuantityBlur($event.target?.value)"
+                                            [ngClass]="{'errorMsg': (createRatesModel?.ratesForm.controls.quantity.touched && createRatesModel?.ratesForm.controls.quantity.invalid)}">
+                                        <label for="float-input">Quantity</label>
+                                    </div>
+                                    <div class="errorHeight setWidth">
+                                        <p-message severity="error" text="Provide Quantity"
+                                            *ngIf="(createRatesModel?.ratesForm.controls.quantity.touched && createRatesModel?.ratesForm.controls.quantity.invalid)">
+                                        </p-message>
+                                    </div>
+                                </div>
+                                <div class="ui-g-3">
+                                    <div class="ui-float-label setWidth">
+                                        <p-autoComplete formControlName="quantityType"
+                                            [suggestions]="createRatesModel.alternateChargeQuantityFiltered"
+                                            [style]="{'width':'100%'}" [dropdown]="true" field="label"
+                                            (completeMethod)="onTypeQuantityType($event)"
+                                            (onSelect)="onSelectQuantityType($event)"
+                                            (onBlur)="onAutoCompleteFiledsBlurred($event.target.value,'quantityType')"
+                                            [forceSelection]="true">
+                                        </p-autoComplete>
+                                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                                            Quantity Type
+                                        </label>
+                                    </div>
+                                    <div class="errorHeight setWidth">
+                                        <p-message severity="error" text="Provide Quantity Type"
+                                            *ngIf="(createRatesModel?.ratesForm.controls.quantityType.invalid && createRatesModel?.ratesForm.controls.quantityType.touched)">
+                                        </p-message>
+                                    </div>
+                                </div>
+                                <div class="ui-g-3">
+                                    <span class="ui-float-label setWidth">
+                                        <p-autoComplete formControlName="alternateChargeType" [style]="{'width':'100%'}"
+                                            field="label" [dropdown]="true" emptyMessage="No records found"
+                                            [forceSelection]="true"
+                                            [suggestions]="createRatesModel.alternateChargeTypeFiltered"
+                                            (completeMethod)="onTypeAlternateChargeType($event)"
+                                            (onSelect)="onSelectAlternateChargeType($event)"
+                                            (onBlur)="onAutoCompleteFiledsBlurred($event.target.value,'alternateChargeType')">
+                                        </p-autoComplete>
+                                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                                            Alternate Charge Type
+                                        </label>
+                                    </span>
+                                    <div class="errorHeight setWidth">
+                                        <p-message severity="error" text="Provide Alternate Charge Type"
+                                            *ngIf="(createRatesModel?.ratesForm.controls.alternateChargeType.invalid && createRatesModel?.ratesForm.controls.alternateChargeType.touched)">
+                                        </p-message>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                                <span (click)="removeCharges()"><em
+                                        class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                    <span class="remove-rate-btn  remove-rate-btn-txt pad-left10">Remove
+                                        Charge</span></span>
+                            </div>
+                        </p-accordionTab>
+                    </div>
+                    <p-accordionTab class="accord-color" header="Documentation" selected="true">
+                        <app-view-documentation #documentation (createDocumentation)="createDocumentation($event)"
+                            (validateFormFields)="validateFieldsForDocumentation($event)"
+                            [formfieldsValue]="createRatesModel.ratesForm" [fieldValues]="createRatesModel"
+                            [optionalFields]="optionalFields" [billTo]="billTo" [agreementID]="agreementID"
+                            [documenationContext]="createRatesModel.createDocumentationText"
+                            [isEditFlagEnabled]="createRatesModel.isEditFlagEnabled"></app-view-documentation>
+                    </p-accordionTab>
+                    <div class="mar-top20 pad-bot20">
+                    <span class="mar-top20 pad-bot20 cursor-pointer"
+                        *ngIf="!createRatesModel.isAddRateClicked && !createRatesModel.isAddStairStepClicked">
+                        <span (click)='onAddRates()'><em class="icon-Circle_Add_Solid iconColor"></em> <span
+                                class="add-rate-btn pad-left10">Add
+                                Rates</span></span>
+                    </span>
+
+                    <div *ngIf="createRatesModel.isAddRateClicked" class="position-rel">
+                        <p-accordionTab header="Rates" selected="false">
+                            <div class="ui-g pad0">
+                                <div class=" ui-g-12 pad0">
+                                    <app-add-rates #addRates [buSo]="createRatesModel?.buSo"
+                                        [checkBoxAttributes]="createRatesModel.CheckBoxAttributes"
+                                        [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                        [addRateEditResponse]=" createRatesModel?.addRateEditResponse"
+                                        [editAccessorialWholeResponse]="createRatesModel?.editAccessorialWholeResponse">
+                                    </app-add-rates>
+                                </div>
+                            </div>
+                            <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                                <span (click)='removeAllRates()'><em
+                                        class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                    <span class="remove-rate-btn remove-rate-btn-txt pad-left10">Remove All
+                                        Rates</span></span>
+                            </div>
+                            <div *ngIf="!createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="mar-top15 pad-bot20 cursor-pointer addChargesText">
+                                        <span (click)='onAdditonalChargesClicked()'><em
+                                                class="icon-Circle_Add_Solid iconColor"></em> <span
+                                                class="pad-left10 textAlign">Add
+                                                Additional Charges</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 pad0 pad-top15">
+                                        <app-additional-charges
+                                            [selectedChargeType]="createRatesModel.ratesForm.get('chargeType').value"
+                                            [chargeTypeValues]="createRatesModel.createRatesValidation.chargeCodeResponse"
+                                            (removeAll)="removeAllAdditionalCharges()"
+                                            [selectedBuSo]="createRatesModel.selectedBuSo"
+                                            [editAdditionalChargeResponse]="createRatesModel.editAdditionalChargeResponse"
+                                            [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                            #addCharges>
+                                        </app-additional-charges>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </div>
+                    <span class="mar-top20 pad-bot20 cursor-pointer mar-left125"
+                        *ngIf="!createRatesModel.isAddStairStepClicked && !createRatesModel.isAddRateClicked">
+                        <span (click)='onAddStairStepRates()'><em class="icon-Circle_Add_Solid iconColor"></em> <span
+                                class="add-rate-btn pad-left10">Add Stair-Step Rate</span>
+                        </span>
+                    </span>
+                    <div *ngIf="createRatesModel.isAddStairStepClicked" class="position-rel">
+                        <p-accordionTab header="Stair-Step Rate" selected="false" #myDiv>
+                            <div class="ui-g pad0">
+                                <div class=" ui-g-12 pad0">
+                                    <app-add-stair-step #addStairStepRates [buSo]="createRatesModel?.buSo"
+                                        [isEditAccessorialStairStepRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                        [addStairStepRateEditResponse]=" createRatesModel?.addStairStepRateEditResponse"
+                                        [editAccessorialWholeResponse]="createRatesModel?.editAccessorialWholeResponse">
+                                    </app-add-stair-step>
+                                </div>
+                            </div>
+                            <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                                <span (click)='removeAllStairStepRates()'><em
+                                        class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                    <span class="remove-rate-btn remove-rate-btn-txt pad-left10">Remove All
+                                        Rates</span></span>
+                            </div>
+                            <div *ngIf="!createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="mar-top15 pad-bot20 cursor-pointer addChargesText">
+                                        <span (click)='onAdditonalChargesClicked()'><em
+                                                class="icon-Circle_Add_Solid iconColor"></em> <span
+                                                class="pad-left10 textAlign">Add
+                                                Additional Charges</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 pad0 pad-top15">
+                                        <app-additional-charges
+                                            [selectedChargeType]="createRatesModel.ratesForm.get('chargeType').value"
+                                            [chargeTypeValues]="createRatesModel.createRatesValidation.chargeCodeResponse"
+                                            (removeAll)="removeAllAdditionalCharges()"
+                                            [selectedBuSo]="createRatesModel.selectedBuSo"
+                                            [editAdditionalChargeResponse]="createRatesModel.editAdditionalChargeResponse"
+                                            [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                            #addCharges>
+                                        </app-additional-charges>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </div>
+                </div>
+
+                </form>
+            </p-accordion>
+        </div>
+        <p-footer class="pull-right footer clearfix">
+            <button type="text" pButton label="Cancel" (click)="onRateCancel()" class="ui-button-secondary"
+                appShortcut="ctrl+alt+2"></button>
+            <button type="text" appShortcut="ctrl+alt+1" pButton label="Save" class="ui-button-primary mar-left15"
+                (click)="onSaveRateSetUp()"></button>
+        </p-footer>
+    </div>
+
+</div>
+<p-dialog header="Confirmation" [(visible)]="createRatesModel.rateCancel" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to Cancel without saving your work?</span>
+    <p-footer>
+        <button type="button" pButton (click)="onHideCancelPop('documentationCancel')" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onDontSave()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Save Options" [(visible)]="createRatesModel.isShowSavePopup" [modal]="true" [responsive]="true"
+    [width]="475" [minWidth]="470"  [minY]="70"  [baseZIndex]="10000" appendTo="body">
+    <div class="createRatesSplitSaveContent">
+        <span class="saveHeaderPopup">Save & Close</span>
+        <span>Save current rate setup and return to Agreement Details.</span>
+    </div>
+    <ng-container *ngIf="!createRatesModel.isEditFlagEnabled">
+        <div class="createRatesSplitSaveContent">
+            <span class="saveHeaderPopup">Save & Create New</span><span>Save current rate setup and create a new, blank
+                rate setup.</span>
+        </div>
+        <div class="createRatesSplitSaveContent">
+            <span class="saveHeaderPopup">Save & Create Copy</span><span>Save and copy the current rate setup to a new
+                rate setup.</span>
+        </div>
+    </ng-container>
+    <p-footer>
+        <button type="button" pButton (click)="savePopupNo()" label="Cancel"
+            class="ui-button-secondary mar-right18"></button>
+        <button type="button" pButton (click)="savePopupYes()" label="Save & Close" class="ui-button-primary"
+            *ngIf="createRatesModel.isEditFlagEnabled"></button>
+        <p-splitButton *ngIf="!createRatesModel.isEditFlagEnabled" (onClick)="onSaveCloseClicked()" [appendTo]="body"
+            appShortcut="ctrl+alt+2" label="Save & Close" [model]="createRatesModel.saveCloseDropDown"
+            class="createRatesSplitSave" (onClick)="savePopupYes()"></p-splitButton>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRatesModel.isAlternateChargeChange" [modal]="true"
+    [responsive]="true" [width]="450" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>Are you sure you would like to remove the Alternate Charge?</div>
+    <p-footer>
+        <button type="button" pButton (click)="retainAlternateCharge()" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="removeAlternateCharge()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRatesModel.addRateCancel" [modal]="true" [responsive]="true"
+    [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to remove all of the rates?</span>
+    <p-footer>
+        <button type="button" pButton (click)="createRatesModel.addRateCancel=false" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onRemoveRates()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRatesModel.addStairRateCancel" [modal]="true" [responsive]="true"
+    [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+    <span>Are you sure you would like to remove all of the rates?</span>
+    <p-footer>
+        <button type="button" pButton (click)="createRatesModel.addStairRateCancel=false" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onRemoveStairStepRates()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog header="Confirmation" [(visible)]="createRatesModel.rateNavigateCancel" (onHide)="onPopupClose()"
+    [modal]="true" [responsive]="true" [width]="450" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div>You are about to lose all the changes. Do you want to proceed?</div>
+    <p-footer>
+        <button type="button" pButton (click)="onHidePop('rateNavigateCancel')" class="ui-button-secondary"
+            label="No"></button>
+        <button type="button" pButton (click)="onDontSaveNavigate()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,119 @@
+<div [ngClass]="{'loader': ratingsModel.isPageLoading}" [appJbhLoader]="ratingsModel?.isPageLoading"></div>
+<div class="ui-g ui-fluid filterClass">
+    <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!ratingsModel.filterFlag)}">
+        <app-rating-rule-filter (loadDataGrid)="onLoadFilter($event)" [agreementID]="ratingsModel.agreementID">
+        </app-rating-rule-filter>
+    </div>
+    <div class="filterClass page-scroll"
+        [ngClass]="{'ui-g-9': ratingsModel.filterFlag,'ui-g-6': ratingsModel.isSplitView, 'ui-g-12': !ratingsModel.isSplitView && !ratingsModel.filterFlag, 'noresultHeight': ratingsModel.noResultFoundFlag }">
+        <div *ngIf="ratingsModel?.noResultFoundFlag && ratingsModel?.onLoadindicator" class="displaymiddle mar-bot20">
+            <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+            <button data-attr="viewagreement-ratingrule-createRatingRule-button"  type="text" (click)="checkRatingRule()" pButton label="Create Agreement Rating Rule"
+                class="ui-button-primary mar-top5 mar-left5"></button>
+        </div>
+        <p-table *ngIf="!ratingsModel?.noResultFoundFlag || !ratingsModel?.onLoadindicator"
+            class="full-width tableWrapper ratingRuleListTable" [value]="ratingsModel.ratingList" selectionMode="single"
+            [paginator]="setPaginator()" (onLazyLoad)="loadGridData($event)"
+            [rows]="ratingsModel.tableSize" [lazy]="true" [loading]="ratingsModel.isShowLoader" [customSort]="true"
+            [rowsPerPageOptions]="[25,50,75,100]" [first]="ratingsModel.pageStart" [loading]="ratingsModel.isShowLoader"
+            [totalRecords]="ratingsModel.gridDataLength" (onRowSelect)="onRowSelect($event)"
+            (onRowUnselect)="onRowSelect($event)" scrollable="true" scrollHeight="calc(100vh - 427px)"
+            [resizableColumns]="true" columnResizeMode="expand">
+            <ng-template pTemplate="caption">
+                <div class="ui-g table-caption">
+                    <div [ngClass]="{'ui-md-6': ratingsModel.isSplitView && !ratingsModel.filterFlag, 'ui-md-8': !ratingsModel.isSplitView && !ratingsModel.filterFlag,
+                     'ui-md-7': ratingsModel.filterFlag && !ratingsModel.isSplitView}" class="labelwidth">
+                        <span class="tableName align-title">Rating Rule</span>
+                    </div>
+                    <div [ngClass]="{'ui-md-6': ratingsModel.isSplitView && !ratingsModel.filterFlag, 'ui-md-4': !ratingsModel.isSplitView && !ratingsModel.filterFlag,
+                                         'ui-md-5': ratingsModel.filterFlag && !ratingsModel.isSplitView}"
+                        class=" buttonwidth pad0">
+                        <div class="grid-icons pull-right">
+                            <div appShortcut class="mar-top10">
+                                <span class="filter-menu-icon"><button data-attr="viewagreement-ratingrule-filter-button"  appShortcut="ctrl+alt+f"
+                                        [ngClass]="{'filterColor': ratingsModel.filterFlag}"
+                                        class="icon-Filter_Solid icon-button buttonStyle pad0" (click)="onFilterClick()"
+                                        appShortcut="ctrl+alt+f"></button></span>
+                                <span class="filter-menu-icon mar-right5"><button data-attr="viewagreement-ratingrule-menu-button"  appShortcut=" ctrl+alt+o"
+                                        class="icon-Menu_Overflow icon-button buttonStyle pad0"
+                                        (click)="onClickRatingRuleOverflowIcon(menuOverlay, $event)"
+                                        appShortcut="ctrl+alt+o" *ngIf="ratingsModel.gridDataLength !== 0"></button></span>
+                            </div>
+                            <p-menu  data-attr="viewagreement-ratingrule-menu-menu"  #menuOverlay #menu popup="popup" [model]="ratingsModel.dropdownValue"
+                                styleClass="menu-overlay arrowtopbox font12" appendTo="body">
+                                <a #downloadExcel></a>
+                            </p-menu>
+                        </div>
+                        <div class="alignPos">
+                            <div class="ui-inputgroup search-box pull-right">
+                                <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                                <input data-attr="viewagreement-ratingrule-searchbox-input" type="text" pInputText placeholder="Search" appShortcut="alt+s"
+                                    (keyup)="getGridValues($event, 'searchBox')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="ratingsModel?.tableColumns.length > 0">
+                    <col *ngFor="let thisCol of ratingsModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr *ngIf="!ratingsModel.noResultFoundFlag">
+                    <th class="th-width table-heading" *ngFor="let thisCol of ratingsModel.tableColumns"
+                        pResizableColumn [pSortableColumn]="thisCol.name" pTooltip={{thisCol.name}}
+                        tooltipPosition="top">
+                        {{thisCol.name}}
+                        <p-sortIcon  data-attr="viewagreement-ratingrule-sort-sortIcon-{{thisCol.name}}" [field]="thisCol.name"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="ratingsModel.noResultFoundFlag">
+                    <td colspan="8">
+                        <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+                            <span class="display-middle display-3">No results found</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr  [attr.data-attr]="'viewagreement-ratingrule-row-tr-' +  rowIndex" [pSelectableRow]="rowData" *ngIf="ratingsModel.gridDataLength !== 0">
+                    <td *ngFor="let col of ratingsModel.tableColumns" class="textwrap ui-resizable-column td-width"
+                        pTooltip={{rowData[col.property]}} tooltipPosition="top">
+                        <span
+                            *ngIf="(rowData[col.property]) && col.property !== 'Contract' && col.property !== 'BusinessUnitServiceOffering' && col.property !== 'SectionName'"
+                            class="capitalize-first-word newLine">{{ rowData[col.property] }}</span>
+                        <span
+                            *ngIf="(rowData[col.property]) && col.property === 'Contract' || col.property === 'BusinessUnitServiceOffering' || col.property === 'SectionName'"
+                            class="capitalize-first-word newLine">
+                            <div *ngFor="let list of rowData[col.property] let k=index">
+                                <span *ngIf="k<2">{{ list }}</span>
+                            </div>
+                            <span *ngIf="rowData[col.property].length > 2">more</span>
+                            <span *ngIf="rowData[col.property].length === 0" pTooltip="--"
+                                tooltipPosition="top">--</span>
+                        </span>
+                        <span *ngIf="!(rowData[col.property])" class="capitalize-first-word newLine" pTooltip="--"
+                            tooltipPosition="top"> -- </span>
+                    </td>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <tr>
+                    <td colspan="12">
+                        <span class="pull-right pad-right15 pad4" [hidden]="ratingsModel.isSplitView">
+                            <button data-attr="viewagreement-ratingrule-createRule-button"  type="text" pButton *ngIf="!ratingsModel.isSplitView" label="Create Rating Rule"
+                                (click)="createRatingRule(false, true)" class="ui-button-primary mar-left5"></button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="ratingsModel.isSplitView">
+        <app-view-rating-rule-detail (closeClickEvent)="closeClick($event)"
+            (closeClickEventOnInactivate)="closeOnInactivate($event)" [agreementId]="ratingsModel.agreementID"
+            [uniqueDocID]="ratingsModel.uniqueDocID"></app-view-rating-rule-detail>
+    </div>
+</div>

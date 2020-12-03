@@ -1,0 +1,102 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.wrapper {
+    padding: 0 0.5em;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.icon-button {
+    background: 0 0;
+    border: none;
+}
+
+.col-width {
+    width: 20%;
+    padding-right: 10px;
+    float: left;
+}
+
+.view-panel {
+    /deep/.ui-panel-content-wrapper .ui-panel-content {
+        padding: 10px !important;
+    }
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.panel {
+    /deep/.ui-panel {
+        width: 99%;
+    }
+}
+
+.heading-text {
+    color: $grey-dark27;
+    display: block;
+}
+
+.div-height {
+    height: calc(100vh - 305px);
+}
+
+.displaymiddle {
+    height: 50vh;
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 10vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.overflow-menu {
+    color: rgba(0, 0, 0, 40);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    &:hover {
+        color: #00aafc;
+    }
+    &:active {
+        color: #00557e;
+    }
+}
+
+.standardNameText {
+    line-height: 10px;
+}
+
+/deep/.view-panel .ui-panel {
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, .2);
+}
+
+.accessorialTab {
+    position: relative;
+    bottom: 19px;
+}
+
+.tableAlign {
+    max-height: 52px;
+}
+.breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+}

@@ -1,0 +1,39 @@
+<p-steps data-attr="createagreement-steplist-steps" class="agreement-steps" [model]="createAgreementModel.stepsList" [readonly]="false" [activeIndex]="createAgreementModel.activeIndex" (activeIndexChange)="onIndexChange($event)" *ngIf="!createAgreementModel.isCarrierAgreement"></p-steps>
+<div class="pad-left10">
+  <p-breadcrumb data-attr="createagreement-breadcrumblist-breadcrumb" styleClass="pad-left7" [model]="createAgreementModel.breadCrumbList" *ngIf="createAgreementModel.isCarrierAgreement"></p-breadcrumb>
+  <div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper">
+      <h1 class="text-uppercase" [ngClass]="{'mar-top0': createAgreementModel.isCarrierAgreement}" i18n="create agreement title @@createAgrTitle">create agreement {{createAgreementModel.agreementName}}</h1>
+    </div>
+  </div>
+  <app-agreement-details *ngIf="createAgreementModel.isShowAgreementDetails"></app-agreement-details>
+  <app-add-contracts (contractFormCheck) = "formCheck($event)" [isIndexChange]="createAgreementModel.clickedIndex" *ngIf="createAgreementModel.isShowContract"></app-add-contracts>
+  <app-add-section (sectionFormCheck) = "formCheck($event)" [isIndexChange]="createAgreementModel.clickedIndex" *ngIf="createAgreementModel.isShowSection"></app-add-section>
+  <app-add-cargo (cargoFormStatus) = "formCheck($event)" [isIndexChange]="createAgreementModel.clickedIndex" *ngIf="createAgreementModel.isShowCargo"></app-add-cargo>
+  <p-dialog data-attr="createagreement-savechanges-dialog" header="Save Changes?" [(visible)]="createAgreementModel.isPopupVisible" [modal]="true"
+  [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000"
+  *ngIf="!createAgreementModel.isCarrierAgreement">
+    <span>{{createAgreementModel.popupMessage}}</span>
+    <p-footer>
+      <button data-attr="createagreement-savechanges-popupdontsave-button" type="button" pButton (click)="onDontSave()" class="ui-button-secondary" label=" Don't Save"></button>
+      <button data-attr="createagreement-savechanges-popuponSave-button" type="button" pButton (click)="onSave()" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+  </p-dialog>
+  <p-dialog data-attr="createagreement-confirmation-dialog" header="Confirmation" [(visible)]="createAgreementModel.isPopupVisible" [modal]="true"
+  [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000"
+  *ngIf="createAgreementModel.isCarrierAgreement">
+    <span>{{createAgreementModel.popupMessage}}</span>
+    <p-footer>
+      <button data-attr="createagreement-confirmation-popupno-button" type="button" pButton (click)="clickNo()" class="ui-button-secondary" label="No"></button>
+      <button data-attr="createagreement-confirmation-popupyes-button" type="button" pButton (click)="clickYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+  </p-dialog>
+  <p-dialog data-attr="createagreement-formChangedPopup-dialog" header="Save Changes?" [(visible)]="createAgreementModel.formChangedPopup" [modal]="true"
+  [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You made changes to the agreement that were not saved</span>
+    <p-footer>
+      <button data-attr="createagreement-formChangedPopup-popupdontsave-button" type="button" pButton (click)="onDonotSave()" class="ui-button-secondary" label="Don't Save"></button>
+      <button data-attr="createagreement-formChangedPopup-popuponsave-button" type="button" pButton (click)="onSave()" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+  </p-dialog>
+</div>

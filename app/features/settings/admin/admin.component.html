@@ -1,0 +1,39 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper container" [appJbhLoader]="adminModel?.pageLoading">
+  <form [formGroup]="settingForm">
+    <!-- Charges -->
+    <!-- <h4 class="heading-style">System </h4> -->
+    <p-table [value]="adminModel.systemTableValues">
+      <ng-template pTemplate="caption">
+        <div class="ui-g">
+          <div class="ui-md-9 ui-lg-9 tableHeading">System</div>
+          <div class="ui-md-3 ui-lg-3">
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon">
+                <i class="fa fa-search"></i>
+              </span>
+              <input id="text" appShortcut="" autocomplete="off" type="text" pInputText placeholder="Search"
+                data-attr="empty-plan-search-bar">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <div>
+              <p class="pad-left15 font12" (click)="onClickCharges(rowData)">
+                <span>{{rowData.label}}</span>
+                <i class="icon-Chevron_Next pull-right mar-right10 font18 text-gray" (click)="onClickCharges(rowData)"></i>
+              </p>
+          </div>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr class="borderColor">
+          <td class="pad25"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </form>
+</div>

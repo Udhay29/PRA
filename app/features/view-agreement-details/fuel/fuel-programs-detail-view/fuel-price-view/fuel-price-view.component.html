@@ -1,0 +1,247 @@
+<div class="ui-g-12 pad0 mar-top15 pad-top-style pad-right15">
+  <div
+    class=" ui-g-12 line-haul-heading dropshadow pad-left0 stopCard pad-right0 borderValue overview-wrapper pad-top-style">
+    <p-table>
+      <ng-template pTemplate="caption">
+        <div class="ui-g">
+          <div class=" ui-g-12 pad-bot15 pad-top20 pad-left15 fuel-haul-heading">
+            <span class="">Fuel Price Basis</span>
+          </div>
+          <div class="ui-g-12 pad0 headingAlign"></div>
+          <div class="ui-g-12 pad-align">
+            <div class="ui-g-12 pad0 pad-left15 pad-right5"
+              *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName === 'Weekly'">
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Price Change Occurence</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Week To Apply</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.weekToApplyDTO?.weekToApplyName; else notShowWeekToApply">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.weekToApplyDTO?.weekToApplyName}}</label>
+                </ng-container>
+                <ng-template #notShowWeekToApply>
+                  <label class="content-text">- -</label>
+                </ng-template>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Day of Week</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.priceChangeWeekDayName; else notShowpriceChangeWeek">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.priceChangeWeekDayName}}</label>
+                </ng-container>
+                <ng-template #notShowpriceChangeWeek>
+                  <label class="content-text">- -</label>
+                </ng-template>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Use Fuel Price as of</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName === 'Rolling Average'">
+                  <label class="heading-text content-text">Weeks in Average</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.averageWeekQuantity">
+                    <span
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByWeekDTO?.averageWeekQuantity}}</span>
+                  </ng-container>
+                </ng-container>
+              </span>
+              <span class="ui-g-12 pad0">
+                <span class="ui-g-6 pad0">
+                  <label class="content-text heading-text">Price Source</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName">
+                    <label
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName}}</label>
+                  </ng-container>
+                </span>
+                <span class="ui-g-6 pad0">
+                  <label class="heading-text content-text">Delay for Holiday</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.holidayDelayIndicator=== 'Y'; else noholidayindicator">
+                    <span class="content-text">Yes</span>
+                  </ng-container>
+                  <ng-template #noholidayindicator>
+                    <span class="content-text">No</span>
+                  </ng-template>
+                </span>
+              </span>
+              <span class="ui-g-12 border-bottom pad-top10"></span>
+            </div>
+            <div class="ui-g-12 pad0 pad-left15 pad-right5"
+              *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName === 'Monthly'">
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Price Change Occurence</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Price Change Day of Month</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.priceChangeMonthDayNumber; else notShowDayOfMonth">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.priceChangeMonthDayNumber}}</label>
+                </ng-container>
+                <ng-template #notShowDayOfMonth>
+                  <label class="content-text">- -</label>
+                </ng-template>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Use Fuel Price as of</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName === 'Rolling Average'">
+                  <label class="content-text heading-text">Months in Average</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.averageMonthQuantity">
+                    <label
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.averageMonthQuantity}}</label>
+                  </ng-container>
+                </ng-container>
+              </span>
+              <span class="ui-g-12 pad0">
+                <span class="ui-g-6 pad0">
+                  <label class="content-text heading-text">Price Source</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName">
+                    <label
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName}}</label>
+                  </ng-container>
+                </span>
+                <span class="ui-g-6 pad0">
+                  <label class="heading-text content-text">Delay for Holiday</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.holidayDelayIndicator=== 'Y'; else noholidayindicator">
+                    <span class="content-text">Yes</span>
+                  </ng-container>
+                  <ng-template #noholidayindicator>
+                    <span class="content-text">No</span>
+                  </ng-template>
+                </span>
+              </span>
+              <span class="ui-g-12 border-bottom pad-top10"></span>
+            </div>
+            <div class="ui-g-12 pad0 pad-left15 pad-right5"
+              *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName === 'Last Day of Month'">
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Price Change Occurence</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceChangeOccurrenceTypeDTO?.fuelPriceChangeOccurrenceTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <label class="content-text heading-text">Use Fuel Price as of</label>
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName">
+                  <label class="content-text">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName}}</label>
+                </ng-container>
+              </span>
+              <span class="ui-g-6 pad0">
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceFactorTypeDTO?.fuelPriceFactorTypeName === 'Rolling Average'">
+                  <label class="content-text heading-text">Months in Average</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.averageMonthQuantity">
+                    <label
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisByMonthDTO?.averageMonthQuantity}}</label>
+                  </ng-container>
+                </ng-container>
+              </span>
+              <span class="ui-g-12 pad0">
+                <span class="ui-g-6 pad0">
+                  <label class="content-text heading-text">Price Source</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName">
+                    <label
+                      class="content-text">{{fuelPriceViewModel?.fuelPriceItems?.fuelPriceSourceTypeDTO?.fuelPriceSourceTypeName}}</label>
+                  </ng-container>
+                </span>
+                <span class="ui-g-6 pad0">
+                  <label class="heading-text content-text">Delay for Holiday</label>
+                  <ng-container
+                    *ngIf="fuelPriceViewModel?.fuelPriceItems?.holidayDelayIndicator=== 'Y'; else noholidayindicator">
+                    <span class="content-text">Yes</span>
+                  </ng-container>
+                  <ng-template #noholidayindicator>
+                    <span class="content-text">No</span>
+                  </ng-template>
+                </span>
+              </span>
+              <span class="ui-g-12 border-bottom pad-top10"></span>
+            </div>
+            <div class="ui-g-12 pad0 pad-bot">
+              <span class="pad0">
+                <ng-container
+                  *ngIf="fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.averageRegionIndicator === 'Y'">
+                  <label class="heading-text content-text pad-left15">Averaging</label>
+                  <span class="content-text">Yes</span>
+                  <div>
+                    <label class="heading-text content-text pad-left15">Region</label>
+                    <div class="content-text mar-bot pad-left15">{{fuelPriceViewModel.districtDataArray.join(', ')}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngIf="(fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.averageRegionIndicator === 'N') && (fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.fuelPriceBasisRegionTypeDTO?.fuelPriceBasisRegionTypeName === 'National')">
+                  <label class="heading-text content-text pad-left15 pad-right0">Region</label>
+                  <div class="content-text pad-left15">
+                    {{fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.fuelPriceBasisRegionTypeDTO?.fuelPriceBasisRegionTypeName}}
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngIf="(fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.averageRegionIndicator === 'N') && (fuelPriceViewModel?.fuelPriceItems?.fuelPriceBasisRegionSetDTO?.fuelPriceBasisRegionTypeDTO?.fuelPriceBasisRegionTypeName === 'Custom')">
+                  <label class="heading-text content-text pad-left15">Averaging</label>
+                  <label class="content-text">No</label>
+                  <p-table [columns]="fuelPriceViewModel.tableColumns" [value]="fuelPriceViewModel.fuelListDisplay">
+                    <ng-template pTemplate="header" let-columns>
+                      <tr class="table-header">
+                        <th class="header-column-width" *ngFor="let col of columns">
+                          <span>
+                            {{col.name}}
+                          </span>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns">
+                      <tr [pSelectableRow]="rowData" class="min-col-width">
+                        <td *ngFor="let col of columns" pTooltip={{data[col.property]}} tooltipPosition="top">
+                          {{(col?.name !== '') ? data[col.property]: ''}}
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </ng-container>
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,0 +1,230 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.clearFix {
+    clear: both;
+}
+.text-gray {
+    color: #939393;
+}
+.displayBlock {
+    display: block;
+}
+.displayInline {
+    display: inline;
+}
+/deep/ .ui-inputswitch.ui-widget.ui-widget-content.ui-corner-all {
+    background-color: #939393;
+}
+/deep/ .ui-inputswitch.ui-widget.ui-widget-content.ui-corner-all.ui-inputswitch-checked {
+    background-color: #007dba
+}
+/deep/ .ui-inputswitch:hover {
+    background-color: #00aafc !important;
+}
+/deep/ .ui-multiselect {
+    width: 100% !important;
+}
+.carrier {
+    padding: 0px !important;
+}
+.optional-pad{
+    padding-right: 23px;
+    float: right !important;
+}
+.width100{
+    width: 100%;
+}
+.mar-bottom10{
+    margin-bottom: 10px;
+}
+.bth_style{
+    background:none !important;
+}
+
+.optional-text {
+    position: absolute;
+    right: 10px;
+    margin-top: -1.75em;
+    top: 5px;
+    color: #939393;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.01rem;
+    text-transform: none;
+}
+.label-text{
+    left: 12px;
+    top: 50%;
+    padding-left: 9px;
+    margin-top: -.5em;
+    transition: 0.3s ease all;
+    color: #939393;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.01rem;
+    text-transform: none;
+}
+.border-align{
+    padding-left: 5px;
+}
+.typeahead-float-label {
+    label {
+        margin-top: 0px !important;
+        top: 28%;
+        left: 12px;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-.75em - 6px);
+        left: 10px;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-.75em - 6px);
+        left: 10px;
+        font-size: 12px;
+    }
+  }
+
+   /deep/.textarea-float textarea:not(:focus):not(.ui-state-filled):not(:-webkit-autofill) ~ label:not(.char-limit) {
+      top: .5em !important;
+  }
+  .pad-left5{
+      padding-left: 5px;
+  }
+
+  .mar-top30{
+      margin-top:30px;
+  }
+  .pad-left20{
+      padding-left:20px;
+  }
+  .label-align{
+      width:calc(100% - 80px);
+      padding-left:10px;
+  }
+.pad-right10{
+    padding-right:10px;
+}
+.mar-top5{
+    margin-top: 5px;
+}
+.pad-top10{
+    padding-top:3px;
+}
+.calenderContainer{
+    .ui-float-label > label {
+        left: 32px !important;
+    }
+    .ui-float-label .ui-inputwrapper-focus ~ label, .ui-float-label .ui-inputwrapper-filled ~ label {
+        left: 20px !important;
+    }
+}
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.addTop{
+    top: -.65em !important;
+    font-size: 12px;
+}
+.error_Msg{
+    position: relative;
+    bottom: 5px;
+}
+.text-name{
+    text-transform: uppercase;
+}
+.block-class{
+    display: block;
+}
+.checkbox-align{
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+.radioLabelFix{
+     /deep/ .ui-radiobutton-label{
+    padding-left: 3px;
+   }
+}
+.pad-left0{
+    padding-left: 0px;
+}
+.wrapper /deep/ p-breadcrumb .ui-breadcrumb ul .ui-breadcrumb-chevron {
+    margin-top: 3px !important;
+}
+.noresize{
+    resize: none;
+}
+.mileageLevel /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted {
+    width: 33.33% !important;
+}
+.mileageLevel /deep/ .ui-selectbutton.ui-buttonset.ui-widget.ui-corner-all {
+    width: 100% !important;
+    padding-right: 80px;
+}
+.mileageTabAlign {
+    width: 57.3333%;
+}
+.alignBusinessUnit {
+    width: 48.6667%
+}
+.applyMargin20 {
+    margin-top: 20px;
+}
+.applyMargin35 {
+    margin-top: 35px;
+}
+.contract-align {
+    padding-top: 35px;
+}
+.agreementDefaultAlign {
+    min-height: 94px;
+}
+.systemParametersAlign /deep/ .ui-chkbox-label {
+    padding-left: 5px;
+}
+.systemParametersAlign span :first-child {
+padding-left: 10px;
+}
+.sectionTable /deep/ .ui-table-caption.ui-widget-header.ng-star-inserted {
+    border: 1px solid $grey;
+    border-radius: 6px 6px 0 0;
+}
+
+.mileageCarrier /deep/ .ui-autocomplete-panel .ui-autocomplete-list-item {
+  @include getTypographyStyles("body2");
+}
+.disabledField {
+    pointer-events: none;
+}
+.heading-text {
+    color: $grey-dark27;
+  }
+  .content-text {
+    display: block;
+    @include getTypographyStyles("body2");
+  }
+  .content-height {
+    line-height: 30px;
+  }
+  .readOnlyLabel {
+      margin-top: -10px;
+  }
+.ui-inputwrapper-filled {
+    top: -0.75em !important;
+}
+.labelMarginRight {
+    margin-right: 3.8em;
+}
+.labelAlign {
+    top: 48% !important;
+}

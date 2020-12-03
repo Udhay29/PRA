@@ -1,0 +1,51 @@
+<div class="ui-g-12 grid-wrapper pad-top0 pad-bot0 tableStyle">
+    <p-table #searchTable class="full-width tableWrapper table-height search-table" [ngClass]="{'data':!searchGridModel.isDefaultText && !searchGridModel.isResultsFound,'noData':searchGridModel.isDefaultText || (!searchGridModel.isDefaultText && searchGridModel.isResultsFound)}"
+        [value]="searchGridModel.gridData" selectionMode="single" [paginator]="searchGridModel.isPaginatorFlag" [rows]="searchGridModel.tableSize" [lazy]="true" [loading]="searchGridModel.isShowLoader" [customSort]="true" (onLazyLoad)="loadGridData($event)"
+        [rowsPerPageOptions]="[25,50,75,100]" [first]="searchGridModel.pageStart" [totalRecords]="searchGridModel.searchGridDataLength" (onRowSelect)="onRowSelect($event)" scrollable="true" scrollHeight="calc(100vh - 344px)" [resizableColumns]="true" columnResizeMode="expand">
+        <ng-template pTemplate="caption">
+            <div class="ui-g headerStyle">
+                <div class="ui-md-6 ui-lg-6 tableHeading custom-line-height">Agreements</div>
+                <div class="ui-md-6 ui-lg-6">
+                    <div class="iconsHolder">
+                        <div appShortcut class="ui-md-6 ui-lg-6 grid-icons pull-right caption-right">
+                            <button data-attr="searchagreement-searchgrid-filter-button" appShortcut="ctrl+alt+f" class="icon-Filter_Solid icon-button iconColorChange" [ngClass]="{ 'Active': searchGridModel.isIconFlag }" (click)="onSearchClicked()"></button>
+                            <button data-attr="searchagreement-searchgrid-menu-button" appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button iconColorChange"></button>
+                        </div>
+                        <p-menu data-attr="searchagreement-searchgrid-menu-pmenu" #menuOverlay #menu popup="popup" [model]='searchGridModel?.dropdownValue' styleClass="menu-overlay arrowtopbox font12" appendTo="body">
+                        </p-menu>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup *ngIf="searchGridModel?.tableColumns.length > 0 && !searchGridModel.isDefaultText && !searchGridModel.isResultsFound">
+                <col *ngFor="let thisCol of searchGridModel.tableColumns">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr *ngIf="!searchGridModel.isDefaultText && searchGridModel.tableColumns && !searchGridModel.isResultsFound">
+                <th *ngFor="let thisCol of searchGridModel.tableColumns" pResizableColumn [pSortableColumn]="thisCol.name" [ngClass]="{'mincolwidth headpad table-heading':(searchGridModel.isSearchFlag), 'thDisplay': !thisCol.isVisible}">
+                    {{thisCol.name}}
+                    <p-sortIcon data-attr="searchagreement-searchgrid-header-sortIcon-{{thisCol.name}}" [field]="thisCol.name"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <div class="ui-md-12 ui-lg-12 message-wrapper text-gray" *ngIf="!searchGridModel.isDefaultText && searchGridModel.isResultsFound">
+                <span class="display-middle">No results found for {{searchGridModel.advanceSearchFormValue}}</span>
+            </div>
+            <div class="ui-md-12 ui-lg-12 message-wrapper text-gray" *ngIf="searchGridModel.isDefaultText">
+                <span class="display-middle display-3">Please search to view agreement</span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <div class="ui-md-12 ui-lg-12 message-wrapper text-gray" *ngIf="searchGridModel.isDefaultText">
+                <span class="display-middle display-3">Please search to view agreement</span>
+            </div>
+            <tr [attr.data-attr]="'searchagreement-searchgrid-row-tr-' +  rowIndex" [pSelectableRow]="rowData" *ngIf="searchGridModel.searchGridDataLength !== 0">
+                <td *ngFor="let col of searchGridModel.tableColumns" [ngClass]="{'mincolwidth':(searchGridModel.isSearchFlag), 'thDisplay': !col.isVisible}" class="textwrap ui-resizable-column" title={{rowData[col.property]}}>
+                    {{rowData['_source'][col.property]}}
+                </td>
+        </ng-template>
+    </p-table>
+</div>

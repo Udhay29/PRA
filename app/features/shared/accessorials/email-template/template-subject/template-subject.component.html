@@ -1,0 +1,49 @@
+<div class="ui-g" [formGroup]="subjectForm">
+  <div class="ui-g-12 pad0" *ngIf="masterData">
+    <ng-container *ngIf="masterData['subjectText']">
+      <ng-container *ngFor="let subjectText of masterData['subjectText']; let i=index;">
+        <div *ngIf="subjectText['name'] !== ''" class="mar-bot30 heading6" [ngClass]="{'mar-bot10': i !== masterData['subjectText']}">
+          {{subjectText['name']}}
+        </div>
+      </ng-container>
+    </ng-container>
+    <div *ngIf="!masterData['subjectText']['length']" class="mar-bot30 heaading6">
+      No subject text was found in Master template.
+    </div>
+  </div>
+  <div class="ui-g-12 pad0 ui-float-label textAreaWrapper width100">
+    <textarea class="textArea" rows="5" cols="150" pInputTextarea id="textareavalue" formControlName="subjectText"></textarea>
+    <label class="textAreaLabel textAreaValue ui-md-12 ui-lg-12 ui-g-12">
+      <span>Text</span>
+      <span class="optional-text pull-right pad-right22" *ngIf="checkRequiredStatus('subjectText')">optional</span>
+    </label>
+  </div>
+  <div class="ui-g-12 pad0 height25">
+    <p-message severity="error" text="Provide text" *ngIf="subjectForm.controls['subjectText'].touched &&
+  subjectForm.controls['subjectText'].invalid"></p-message>
+  </div>
+  <div class="ui-g-12 pad0" *ngIf="masterData">
+    <ng-container *ngIf="masterData['subjectDataElements']">
+      <div *ngFor="let subjectDataElement of masterData['subjectDataElements']; let i=index;" class="mar-bot30 heading6"
+        [ngClass]="{'mar-top10': i !== 0}">
+        {{subjectDataElement['name']}}
+      </div>
+    </ng-container>
+    <div *ngIf="!masterData['subjectDataElements']['length']" class="mar-bot30 heaading6">
+      No data elements were found in Master template.
+    </div>
+  </div>
+  <div class="ui-g-12 pad0 ui-float-label width100" [ngClass]="{'mar-top10': !masterData}">
+    <p-autoComplete [suggestions]="subjectElements" field="name" [forceSelection]="true" emptyMessage="No records found"
+      (completeMethod)="filterSubjectData($event)" [dropdown]="true" [multiple]="true" formControlName="subjectDataElements">
+    </p-autoComplete>
+    <label class="label-style ui-g-12 pad0 errorAlign">
+      <span>Data Elements</span>
+      <span class="optional-text pull-right pad-right40" *ngIf="checkRequiredStatus('subjectDataElements')">optional</span>
+    </label>
+  </div>
+  <div class="ui-g-12 pad0 height20">
+    <p-message severity="error" text="Provide data elements" *ngIf="subjectForm.controls['subjectDataElements'].touched &&
+    subjectForm.controls['subjectDataElements'].invalid"></p-message>
+  </div>
+</div>

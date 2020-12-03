@@ -1,0 +1,142 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.table-heading {
+    @include getTypographyStyles("h3");
+  }
+  .line-details {
+    color: $grey-dark66;
+    @include getTypographyStyles("body2");
+}
+/deep/.addCharges-table-container {
+  border:  1px solid $grey-lite70 !important;
+  thead tr th:nth-of-type(1) {
+    width: 34%;
+}
+
+thead tr th:nth-of-type(2), thead tr th:nth-of-type(3) {
+    width: 33%;
+}
+thead tr th:nth-of-type(4) {
+    width: 40px;
+}
+
+.ui-table td {
+    padding-left: 8px;
+}
+.ui-inputgroup-addon {
+  border: none !important;
+  box-shadow: none !important;
+  background: none;
+  min-width: 1em;
+  padding: 8px 1px;
+  height: 25px;
+}
+.ui-inputtext, ::-webkit-input-placeholder{
+  font-size: 1em !important; 
+}
+
+:-ms-input-placeholder {
+  font-size: 1em !important; 
+}
+
+input {
+  margin-left: -8px !important;
+}
+
+input:disabled {
+  opacity: .4;
+}
+
+p-autocomplete .ui-autocomplete .ui-inputtext::-webkit-input-placeholder {
+  font-size: 1em !important; 
+}
+p-autocomplete .ui-autocomplete .ui-inputtext {
+  font-size: 1em !important; 
+}
+p-dropdown .ui-dropdown .ui-dropdown-label.ui-placeholder {
+  font-size: 1em;
+}
+p-autocomplete .ui-autocomplete .ui-button-icon-only {
+  top: -3px;
+  right: 6px;
+}
+.ui-table .ui-table-caption.ui-widget-header {
+  min-height: 0px;
+  padding: 5px 12px 0px 10px;
+}
+.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted{
+height: 25px;
+line-height: 1px;
+}
+}
+/deep/.addCharges-table-container .ui-table-wrapper table {
+    overflow: visible !important;
+}
+/deep/.addCharges-table-container .ui-inputtext, 
+/deep/.chargeType-dropdown .ui-dropdown {
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+    background: inherit;
+    height: 25px;
+}
+
+/deep/td.chargeType-dropdown {
+   .ui-dropdown-label {
+      padding-left: 0;
+      color: $black !important;
+  }
+  .ui-dropdown-panel {
+      margin-left: -2px;
+  }
+  position: relative;
+  overflow: visible !important;
+  .ui-autocomplete-panel  {
+      left: -8px !important;
+  }
+}
+
+.addrow, 
+.removerow {
+    color: $primary-blue;    
+    display: block;
+    float: right;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.removerow {
+    color: $red;
+    margin-right: 5px;
+}
+.remove-charge{
+    position:absolute;
+    top:10px;
+    right:10px;
+    @include getTypographyStyles("h5");
+    color:$red;
+}
+.remove-charge-btn{
+    position:relative;
+    top:2px;
+    right:5px;
+}
+
+.thHeaderRow {
+  padding-top:8px !important;
+  padding-bottom: 0px !important;
+}
+
+.thBodyData {
+  padding-top:8px !important;
+  padding-bottom: 8px !important;
+}
+.addon-error {
+  span {
+      background-color: $red-lite90 !important;
+  }
+}
+.amountInput {
+  line-height: 0.5 !important;
+}

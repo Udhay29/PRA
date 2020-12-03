@@ -1,0 +1,152 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+
+.headingAlign {
+    margin-top: 0 !important;
+}
+
+.breadcrumb {
+  /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+      vertical-align: bottom !important;
+  }
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.accordionHeight {
+  min-height: calc(100vh - 14em);
+  /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+      margin-bottom: 15px;
+      padding-top: 30px;
+  }
+}
+
+.custom-accordion-body {
+  /deep/ .ui-accordion-content-wrapper .ui-accordion-content {
+    padding-top: 20px !important;
+  }
+}
+
+.custom-accordion-setup {
+  /deep/ .ui-accordion-content-wrapper .ui-accordion-content {
+    padding-top: 0px !important;
+  }
+}
+
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 100px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-accordion-header {
+  display: inline;
+}
+
+.custom-button-wrapper {
+  color: $primary-blue;
+}
+
+.btn-align {
+  margin-right: 30px;
+  clear: both;
+}
+
+.header-style {
+  text-overflow: ellipsis !important;
+  color: $white;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: calc(100% - 35px);
+  vertical-align: middle;
+}
+
+.overflow-color {
+  color: $white;
+  opacity: 0.8;
+  font-size: 14px !important;
+  float: right;
+}
+
+.batching-style /deep/ .icon-Chevron_Up {
+  position: absolute;
+  right: 30px;
+  color: $white;
+  opacity: 0.7;
+}
+
+.batching-style /deep/ .ui-panel .ui-panel-titlebar {
+  background-color: $primary-blue;
+  height: 50px;
+  line-height: 53px;
+}
+
+.batching-style /deep/ .icon-Chevron_Down {
+  position: absolute;
+  right: 30px;
+  color: $white;
+  opacity: 0.7;
+}
+
+.eye-icon {
+  padding-right: 5px;
+  padding-left: 43.1rem;
+}
+
+.view-mapping-style {
+  color: $white;
+  cursor: pointer;
+  font-family: "Proxima Nova SEMIBOLD",Helvetica,Arial,Sans-Serif;
+  font-size: 1rem;
+  line-height: 3.2rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.header-right {
+  font-size: 14px !important;
+  margin-right: 3.5em;
+  margin-left: -3rem;
+}
+
+.icon-right-margin{
+  margin-right: 0.3em;
+}
+
+.mapping-right {
+  font-size: 14px !important;
+  margin-right: 2.1em;
+  margin-left: -3rem;
+}
+
+.circle-icon {
+  padding-right: 5px;
+}
+
+.default-mapping-right {
+  font-size: 14px !important;
+}
+
+.default-overflow-right {
+  margin-right: 2.5em;
+}
+
+.batching-style /deep/ #ui-panel-1 {
+  margin-bottom: 15px !important;
+}
+
+.batch-overflow-width {
+  width: 50px;
+}
+
+.batch-view-margin {
+  margin-right: 3em;
+}

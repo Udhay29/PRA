@@ -1,0 +1,97 @@
+<div [ngClass]="{'loader': billToModel.loading}" [appJbhLoader]="billToModel.loading"></div>
+<p-growl [(value)]="msgs"></p-growl>
+<div class="ui-fluid contract-custom-cls pad-bot20">
+    <div class="ui-md-12 pad0">
+        <p-table #bilToTable class="main-content" [columns]="billToModel.tableColumns"
+            [value]="billToModel?.billToGridValues" [scrollable]="true" [resizableColumns]="true" scrollHeight="150px"
+            [globalFilterFields]="['billToDetails','customerAgreementContractSectionName','customerContractName']"
+            [filterDelay]="0" (onFilter)="onFilter($event.filteredValue.length)" (onRowSelect)="onRowSelect($event)"
+            [(selection)]="billToModel.selectedBillTo" (onRowUnselect)="onRowUnselect($event)"
+            (onHeaderCheckboxToggle)="onHeaderCheckboxToggle()" sortMode="multiple"
+            [multiSortMeta]="multiSortMeta" (onSort)="onSort($event)" selectionMode="multiple" datakey="customerAgreementID">
+
+            <ng-template pTemplate="caption">
+
+                <div class="ui-g table-caption header-height  pad-bot0">
+                    <div class="ui-g-9">
+                        <span class="tableName alignHeading" *ngIf="billToModel.isDocumentsDetailedView">
+                            Bill to Accounts
+                        </span>
+                        <span class="tableName alignHeading" *ngIf="!billToModel.isDocumentsDetailedView">Bill to
+                            Accounts (optional)
+                        </span>
+                    </div>
+                    <div class="iconsHolder ui-g-3 ui-md-3 pull-right pad0"
+                        *ngIf="!billToModel.billToContractEmptyValue && !billToModel.billToSectionEmptyValue">
+                        <div appShortcut class="pull-right pad0 full-width">
+                            <div class="ui-inputgroup pad0 ui-g-12 getGridValuesInput">
+                                <span class="ui-inputgroup-addon">
+                                    <em class="fa fa-search"></em>
+                                </span>
+                                <input type="text" pInputText placeholder="Search" appShortcut="alt+s"
+                                    [(ngModel)]="billToModel.billToSearchValue"
+                                    (keyup)="bilToTable.filterGlobal($event.target.value, 'contains')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="billToModel?.tableColumns.length">
+                    <col *ngFor="let thisCol of billToModel?.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr class="pad0 mar0 table-header" *ngIf="billToModel.filteredValuesLength !== 0">
+
+                    <th class="checkbox-column table-header-checkbox thHeaderRow" *ngIf="!detailedViewFlag">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pResizableColumn *ngFor="let col of columns" [pSortableColumn]="col.property">
+                        {{col.name}}
+                        <p-sortIcon [field]="col.property"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr
+                    *ngIf="billToModel.billToContractEmptyValue && !billToModel.billToSectionEmptyValue && !billToModel?.filteredValuesLength">
+                    <td colspan="4">
+                        <div class="ui-g-12 message-wrapper">
+                            <span class="display-middle_rate mar0">Please select a Contract</span>
+                            <span class="display-middle_rate mar0 mar-bot20">to view and select Bill to Accounts</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr
+                    *ngIf="billToModel.billToSectionEmptyValue && !billToModel.billToContractEmptyValue && !billToModel?.filteredValuesLength">
+                    <td colspan="4">
+                        <div class="ui-g-12 message-wrapper">
+                            <span class="display-middle_rate mar0">Please select a Section</span>
+                            <span class="display-middle_rate mar0 mar-bot20">to view and select Bill to Accounts</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr
+                    *ngIf="!billToModel.billToContractEmptyValue && !billToModel.billToSectionEmptyValue && billToModel.filteredValuesLength === 0">
+                    <td colspan="4">
+                        <div class="ui-g-12 message-wrapper">
+                            <span class="display-middle_rate">No results found</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns"
+                class="tableHeight">
+                <tr class="pad0 mar0 ">
+
+                    <td class="checkbox-column width10 thHeaderRow thRow" *ngIf="!detailedViewFlag">
+                        <p-tableCheckbox [value]="rowData" name="checkBox" (click)="$event.stopPropagation()"
+                            (onChange)="onchang($event)"></p-tableCheckbox>
+                    </td>
+                    <td class="mincolwidth ui-resizable-column thRow" *ngFor="let thisCol of billToModel.tableColumns">
+                        <span class="capitalize-first-word">{{ rowData[thisCol.property] }}</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

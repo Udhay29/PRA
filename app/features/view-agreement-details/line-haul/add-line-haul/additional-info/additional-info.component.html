@@ -1,0 +1,184 @@
+<div [ngClass]="{'loader': additionalInfoModel?.isPageLoaded}" [appJbhLoader]="additionalInfoModel?.isPageLoaded"></div>
+<section class="ui-g additionalInfoWrapper">
+    <div class="ui-g-12 ui-lg-12 ui-md-12 noPadding padTop0">
+        <div class="additionalInfoContainer dropshadow padTop0">
+            <h2 class="heading">Additional Information</h2>
+            <div class="ui-md-12 ui-lg-12 fieldSpacing">
+                <form [formGroup]="additionalInfoModel.additionalInformationForm">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12 lineSpace labelTop">
+                            <div class="ui-g-4 ui-md-4 ui-lg-4 pad-left0 noPadding pad-right0 mar-right20">
+                                <span class="ui-float-label noPadding ui-md-12 ui-lg-12 pad-left0">
+                                    <p-multiSelect data-attr="viewagreement-linehaul-additionalinfo-billToCode-multiSelect"
+                                     [ngClass]="additionalInfoModel.billToCodes?.length > 0 ? 'topClass' : ''"
+                                        defaultLabel="" [options]="additionalInfoModel.billToCodeList" [showHeader]="additionalInfoModel.billToCodeList?.length > 0"
+                                        formControlName="billToCode" [filter]="true" filterBy="value.billToName"
+                                        (onChange)="onChangeBillToCode($event)" resetFilterOnHide="true"></p-multiSelect>
+                                    <label for="billToCode" class="pad-left0 fullWidth">
+                                        <span>Bill To Code</span>
+                                        <span class="optional-text-color pull-right labelMarginRight">optional</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="ui-g-4 ui-md-4 ui-lg-4 noPadding pad-left0 pad-right0">
+                                <span class="ui-float-label noPadding ui-md-12 ui-lg-12 pad-left0">
+                                    <p-multiSelect data-attr="viewagreement-linehaul-additionalinfo-carrierCode-multiSelect" defaultLabel="" [options]="additionalInfoModel.carrierList"
+                                        [ngClass]="additionalInfoModel.carriers?.length > 0 ? 'topClass' : ''"
+                                        [showHeader]="additionalInfoModel.carrierList?.length > 0" formControlName="carrierCode"
+                                        [filter]="true" filterBy="value.name" (onChange)="onChangeCarriers($event)" resetFilterOnHide="true"></p-multiSelect>
+                                    <label for="carrierCode" class="pad-left0 fullWidth">
+                                        <span>Carrier Code</span>
+                                        <span class="pull-right optional-text-color labelMarginRight">optional</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12 lineStyle">
+                            <div class="ui-g-4 ui-md-4 ui-lg-4 noPadding pad-left0 pad-right0 mar-right20">
+                                <span class="ui-float-label ui-md-12 ui-lg-12  noPadding pad-left0">
+                                    <p-autoComplete data-attr="viewagreement-linehaul-additionalinfo-mileagePreference-autocomplete" class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+                                        [inputStyle]="{'width': '100%'}" [suggestions]="additionalInfoModel.mileagePreferenceList"
+                                        formControlName="mileagePreference" field="value" [dropdown]="true"
+                                        (completeMethod)="getMileagePreferenceList($event)" (onSelect)="onSelectMileagePreference($event)"
+                                        (onClear)="onClearDropDown('mileagePreference')" [forceSelection]="true"></p-autoComplete>
+                                    <label for="mileagePreference" class="pad-left0 fullWidth">
+                                        <span>Mileage Preference</span>
+                                        <span class="pull-right optional-text-color labelMarginRight">optional</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="ui-g-4 ui-md-4 ui-lg-4 noPadding pad-left0 pad-right0">
+                                <div class="noPadding ui-md-12 ui-lg-12">
+                                    <span class="ui-float-label ui-g">
+                                        <label for="mileageRange" class="topPosition">Mileage Range</label>
+                                        <input data-attr="viewagreement-linehaul-additionalinfo-mileagerangefrom-input" class="ui-md-5 ui-lg-5" type="text" pInputText formControlName="mileageRangeFrom"
+                                            autocomplete="off" maxlength="9" (focus)="removePrecision($event, 'mileageRangeFrom')"
+                                            (blur)="onBlurRange($event, 'mileageRangeFrom')">
+                                        <span class="ui-md-2 ui-lg-2 text-center text-gray font12">To</span>
+                                        <input data-attr="viewagreement-linehaul-additionalinfo-mileagerangeto-input" class="ui-md-5 ui-lg-5" type="text" pInputText formControlName="mileageRangeTo"
+                                            autocomplete="off" maxlength="9" (focus)="removePrecision($event, 'mileageRangeTo')"
+                                            (blur)="onBlurRange($event, 'mileageRangeTo')">
+                                        <span class="optional-text optional-text-color postionLeft">optional</span>
+                                    </span>
+                                </div>
+                                <div [ngClass]="{'error-height': (additionalInfoModel.mileageInvalidFlag || additionalInfoModel.mileageInputFlag)}">
+                                    <p-message class="error_Msg" severity="error" text="Provide a valid mileage range"
+                                        *ngIf="additionalInfoModel.mileageInvalidFlag || additionalInfoModel.mileageInputFlag"></p-message>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-12 ui-lg-12 lineStyle topLabel">
+                            <div class="ui-g-4 ui-md-4 ui-lg-4 pad-left0 noPadding pad-right0 mar-right20">
+                                <div class="noPadding ui-md-12 ui-lg-12">
+                                    <span class="ui-float-label ui-g">
+                                        <label for="weightRange" class="topPosition">Weight Range</label>
+                                        <input data-attr="viewagreement-linehaul-additionalinfo-weightrangefrom-input" class="ui-md-5 ui-lg-5 pad-left10" type="text" pInputText
+                                            formControlName="weightRangeFrom" autocomplete="off" maxlength="9" (focus)="removePrecision($event, 'weightRangeFrom')"
+                                            (blur)="onBlurRange($event, 'weightRangeFrom')">
+                                        <span class="ui-md-2 ui-lg-2  text-center text-gray font12">To</span>
+                                        <input data-attr="viewagreement-linehaul-additionalinfo-weightrangeto-input" class="ui-md-5 ui-lg-5 pad-left10" type="text" pInputText
+                                            formControlName="weightRangeTo" autocomplete="off" maxlength="9" (focus)="removePrecision($event, 'weightRangeTo')"
+                                            (blur)="onBlurRange($event, 'weightRangeTo')">
+                                        <span class="optional-text optional-text-color postionLeft">optional</span>
+                                    </span>
+                                </div>
+                                <div [ngClass]="{'error-height': ((additionalInfoModel.additionalInformationForm.get('weightRangeFrom').touched && additionalInfoModel.additionalInformationForm.get('weightRangeTo').touched && additionalInfoModel.additionalInformationForm.get('weightRangeFrom')['errors']?.required && additionalInfoModel.additionalInformationForm.get('weightRangeTo')['errors']?.required)) || (additionalInfoModel.weightInvalidFlag || additionalInfoModel.weightInputFlag)}">
+                                    <p-message class="error_Msg" severity="error" text="Provide Weight Range" *ngIf="(additionalInfoModel.additionalInformationForm.get('weightRangeFrom').touched && additionalInfoModel.additionalInformationForm.get('weightRangeTo').touched && additionalInfoModel.additionalInformationForm.get('weightRangeFrom')['errors']?.required && additionalInfoModel.additionalInformationForm.get('weightRangeTo')['errors']?.required)"></p-message>
+                                    <p-message class="error_Msg" severity="error" text="Provide a valid weight range"
+                                        *ngIf="additionalInfoModel.weightInvalidFlag || additionalInfoModel.weightInputFlag"></p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-4 ui-md-4 ui-lg-4  noPadding pad-left0 pad-right0">
+                                <span class="ui-float-label ui-md-12 ui-lg-12 pad-left0 noPadding">
+                                    <p-autoComplete data-attr="viewagreement-linehaul-additionalinfo-weightUnitOfMeasure-autocomplete" class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+                                        [inputStyle]="{'width': '100%'}" [suggestions]="additionalInfoModel.weightUnitList"
+                                        formControlName="weightUnitOfMeasure" field="value" [dropdown]="true"
+                                        (completeMethod)="getWeightUnitMeasure($event)" (onBlur)="onBlurWeightUnit()"
+                                        (onSelect)="onSelectWeightUnitMeasure($event)" (onClear)="onClearDropDown('weightUnitOfMeasure')"
+                                        [forceSelection]="true"></p-autoComplete>
+                                    <label for="weightUnitOfMeasure" class="pad-left0">Weight Unit of Measure</label>
+                                </span>
+                                <div [ngClass]="{'error-height':(additionalInfoModel.additionalInformationForm.get('weightUnitOfMeasure').touched && additionalInfoModel.additionalInformationForm.get('weightUnitOfMeasure')['errors']?.required)} ">
+                                    <p-message class="error_Msg" severity="error" text="Provide Weight unit of measure"
+                                        *ngIf="(additionalInfoModel.additionalInformationForm.get('weightUnitOfMeasure').touched && additionalInfoModel.additionalInformationForm.get('weightUnitOfMeasure')['errors']?.required)"></p-message>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12 lineStyle borderNone">
+                            <span class="ui-float-label noPadding ui-md-4 ui-lg-4" *ngFor="let data of additionalInfoModel.checkBoxList let i=index" >
+                                <p-checkbox [attr.data-attr]="'viewagreement-linehaul-additionalinfo-checkbox-' + i" class="font12" [(ngModel)]="additionalInfoModel.checkBoxValue"
+                                    [ngModelOptions]="{standalone: true} " value={{data}} label={{data}} (onChange)="onChangeCheckboxList($event, data)"></p-checkbox>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="ui-g-12 footer">
+    <span class="pull-right button-align">
+        <a data-attr="viewagreement-linehaul-additionalinfo-cancel-anchor" class="inactivate-link" (click)="onClickCancel()" appShortcut="ctrl+alt+3">Cancel</a>
+        <button data-attr="viewagreement-linehaul-additionalinfo-back-button" type="text" pButton label="Back" (click)="onClickBack()" class="ui-button-secondary mar-left15"></button>
+        <button data-attr="viewagreement-linehaul-additionalinfo-review-button" type="text" pButton label="Review" (click)="onClickReview()" class="ui-button-primary mar-left15"></button>
+    </span>
+</div>
+<section class="addiInfoPopup">
+    <p-dialog data-attr="viewagreement-linehaul-additionalinfo-saveDraftConfirmation-dialog" header="Save Changes?" [(visible)]="additionalInfoModel.showCancelPopup" [modal]="true" [responsive]="true"
+        [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <div>You will lose the Line Haul information as you leave without saving.</div>
+        <div>Do you like to save the Line Haul as a draft before you leave?</div>
+        <p-footer>
+            <button data-attr="viewagreement-linehaul-additionalinfo-dontsavedraft-button" type="button" pButton (click)="onClickDontSave()" class="ui-button-secondary" label=" Don't Save"></button>
+            <button data-attr="viewagreement-linehaul-additionalinfo-savedraft-button" type="button" pButton (click)="onClickSaveDraft('Save Draft')" label="Save Draft" class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog data-attr="viewagreement-linehaul-additionalinfo-lineHaulMatch-dialog" header="Line Haul Match" [(visible)]="additionalInfoModel.showDuplicatePopup" [modal]="true" [responsive]="true"
+        [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <span>{{additionalInfoModel.duplicateMessage}} match the already existing record.</span><br><br>
+        <span>Would you like to add the Line Haul as a new one or override priority?</span><br><br>
+        <span class="mar-left15">- "Add New" changes the end date of the old Line Haul to the
+            <pre class="textMargin">new effective date.</pre>
+        </span>
+        <span class="mar-left15">- "Override" updates the new Line Haul priority.</span>
+        <p-footer>
+            <button data-attr="viewagreement-linehaul-additionalinfo-addnew-button" type="button" pButton (click)="onClickAddNew()" class="ui-button-secondary addnew_btn" label="Add New"></button>
+            <button data-attr="viewagreement-linehaul-additionalinfo-overridepriority-button" type="button" pButton (click)="onClickOverride()" label="Override Priority" class="ui-button-primary addnew_btn"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog data-attr="viewagreement-linehaul-additionalinfo-confirmOverride-dialog" header="Confirm Override" [(visible)]="additionalInfoModel.showConfirmOverridePopup" [modal]="true"
+        [responsive]="true" [width]="400" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <span class="text-color">Priority</span> <span class="mar-left">{{additionalInfoModel.availablePriorityOrder}}</span><br><br>
+        <form [formGroup]="additionalInfoModel.overrideForm">
+            <div class="ui-md-7 ui-lg-7">
+                <p-autoComplete data-attr="viewagreement-linehaul-additionalinfo-priority-autocomplete" class="ui-autocomplete  ng-dirty ng-invalid" [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
+                    formControlName="priority" field="value" [suggestions]="additionalInfoModel.filteredList"
+                    [dropdown]="true" (completeMethod)="filterPriority($event)" placeholder="Overridden Priority"
+                    (onClear)="onClearDropDown('priority')" [forceSelection]="true" (onSelect)="onSelectOverriddenPriority()">
+                </p-autoComplete>
+                <div class="error-class-height">
+                    <p-message severity="error" text="Provide Priority" *ngIf="(additionalInfoModel.overrideForm.get('priority').touched && additionalInfoModel.overrideForm.get('priority')['errors']?.required)"></p-message>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <button data-attr="viewagreement-linehaul-additionalinfo-canceloverride-button" type="button" pButton (click)="onCancelPriority()" class="ui-button-secondary addnew_btn" label="Cancel"></button>
+            <button data-attr="viewagreement-linehaul-additionalinfo-confirmoverride-button" type="button" pButton (click)="onClickConfirmOverride()" label="Confirm" class="ui-button-primary addnew_btn"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog data-attr="viewagreement-linehaul-additionalinfo-saveChanges-dialog" header="Save Changes?" [(visible)]="additionalInfoModel.isCancelClickedonOverride" [modal]="true"
+        [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <div>You will lose the Line Haul information as you leave without saving.</div>
+        <div>Do you like to save the Line Haul as a draft before you leave?</div>
+        <p-footer>
+
+            <button data-attr="viewagreement-linehaul-additionalinfo-dontsaveoverride-button" type="button" pButton (click)="onClickDontSaveOverride()" class="ui-button-secondary addnew_btn"
+                label=" Don't Save"></button>
+            <button data-attr="viewagreement-linehaul-additionalinfo-saveoverride-button" type="button" pButton (click)="onClickOverrideSave()" label="Save" class="ui-button-primary addnew_btn"></button>
+        </p-footer>
+    </p-dialog>
+</section>

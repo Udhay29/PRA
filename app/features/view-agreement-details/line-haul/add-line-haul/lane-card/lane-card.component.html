@@ -1,0 +1,336 @@
+<div class="wrapper ui-g-12 ui-md-12 mar-left20 pad-bot10">
+  <div class="ui-g-12 dropshadow addlinehaul-container pad-left0 pad-right0 pad-bot0">
+    <div class="addlinehaul-header">
+      <span class="title">
+        Lane
+      </span>
+    </div>
+    <div class="addlinehaul-body">
+      <form [formGroup]="laneCardModel.laneCardForm" autocomplete="off">
+        <div class="ui-md-12 ui-g-12 div-alignment" *ngIf="!laneCardModel.isOriginRangeSelected && laneCardModel.isShowOriginLink">
+          <a data-attr="viewagreement-linehaul-lanecard-addZip-anchor" class="link-style pull-right" href="javascript:void(0)" (click)="addZipRange('origin')">Add Zip Range</a>
+          <div class="clearfix"></div>
+        </div>
+        <div class="ui-md-12 ui-g-12 pad-left10 pad-bot0">
+          <span class="ui-md-5 ui-g-5 mar-top10 pad-left0 pad-bot0">
+            <span class="ui-g-8 ui-md-8 ui-float-label pad-right10 pad-bot0">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originType-autocomplete" [suggestions]="laneCardModel.geographyValuesTyped" name="originType"
+                formControlName="originType" (onSelect)="onOriginTypeSelected($event, 'originPoint', 'originID')"
+                (completeMethod)="onTypeOriginType($event)"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'originType')"
+                [ngClass]="{'ui-inputwrapper-filled': 'laneCardModel.originPoint'}" [dropdown]="true"
+                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label" [forceSelection]="true"
+                (onBlur)="onautoCompleteBlur($event, 'originType')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Origin
+                Type</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Type"
+                  *ngIf="laneCardModel.laneCardForm.get('originType').touched && laneCardModel.laneCardForm.get('originType')['errors']?.required">
+                </p-message>
+              </div>
+              <div class="clearfix"></div>
+            </span>
+            <span class="ui-g-4 ui-md-4 ui-float-label pad-right0 pad-bot0 pad-left0">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originCountry-autocomplete" [suggestions]="laneCardModel.countryFiltered" name="originCountry"
+                formControlName="originCountry" [ngClass]="{'ui-inputwrapper-filled': laneCardModel.isCountryDefault}"
+                (onSelect)="onCountrySelected('originPoint', 'isOriginRangeSelected', 'originPointFrom', 'originPointTo')"
+                (completeMethod)="onTypeCountries($event)" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [dropdown]="true" field="label" [forceSelection]="true"
+                (onBlur)="onautoCompleteBlur($event, 'originCountry')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Origin Country</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Country"
+                  *ngIf="laneCardModel.laneCardForm.get('originCountry').touched && laneCardModel.laneCardForm.get('originCountry')['errors']?.required">
+                </p-message>
+              </div>
+            </span>
+          </span>
+          <span class="ui-md-7 ui-g-7 mar-top10 pad-bot0">
+            <span class="ui-g-12 ui-md-12 ui-float-label pad-right20 pad-left0 pad-bot0"
+            *ngIf="!laneCardModel.isOriginRangeSelected && !laneCardModel.isShowMultipleFieldOrigin">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originPoint-autocomplete" class="ui-g-12 ui-md-12 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'originType', 'originCountry','originPoint')"
+                formControlName="originPoint" name="originPoint" (onSelect)="onOriginPointSelected($event)"
+                field="label" [dropdown]="false" (onClear)="onAutoCompleteClear($event.target['value'], 'originPoint')"
+                (onBlur)="onautoCompleteBlur($event, 'originPoint')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Origin Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPoint').touched && laneCardModel.laneCardForm.get('originPoint')['errors']?.required && !laneCardModel.laneCardForm.get('originPoint').value">
+                </p-message>
+                <p-message severity="error" text="Provide valid Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPoint').touched && !laneCardModel.laneCardForm.get('originPoint')['errors']?.required && laneCardModel?.laneCardForm.get('originPoint')['errors']?.invalid">
+                </p-message>
+              </div>
+            </span>
+            <span class="ui-g-12 ui-md-12 ui-float-label pad-right20 pad-left0 pad-bot0" *ngIf="!laneCardModel.isOriginRangeSelected && laneCardModel.isShowMultipleFieldOrigin">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originPoint-autocomplete" formControlName="originPoint" name="originPoint" [multiple]="true" field="label" [dropdown]="false"
+              [style]="{'width':'100%'}" (onClear)="onAutoCompleteClear($event.target['value'], 'originPoint')"
+              (completeMethod)="onTypeOriginDestPoint($event.query, 'originType', 'originCountry','originPoint')"
+              [suggestions]="laneCardModel.responseData" (onSelect)="onSelectValue($event, 'originPoint', 'laneCardForm')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Origin Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPoint').touched && laneCardModel.laneCardForm.get('originPoint')['errors']?.required">
+                </p-message>
+                <p-message severity="error" text="Provide valid Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPoint').touched && !laneCardModel.laneCardForm.get('originPoint')['errors']?.required && laneCardModel?.laneCardForm.get('originPoint')['errors']?.invalid">
+                </p-message>
+              </div>
+            </span>
+            <span class="ui-g-6 ui-md-6 ui-float-label pad-left0 pad-bot0" *ngIf="laneCardModel.isOriginRangeSelected && !laneCardModel.isShowMultipleFieldOrigin">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originPointFrom-autocomplete" class="ui-g-11 ui-md-11 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'originType', 'originCountry','originPointFrom')"
+                formControlName="originPointFrom" name="originPointFrom"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'originPointFrom')"
+                (onSelect)="onOriginPointSelected($event, 'originPointFrom')" field="label" [dropdown]="false"
+                (onBlur)="onautoCompleteBlur($event, 'originPointFrom')"
+                [ngClass]="{'invalidError': laneCardModel.isOriginRangeError}"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Origin Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPointFrom').touched && laneCardModel.laneCardForm.get('originPointFrom')['errors']?.required && !laneCardModel.laneCardForm.get('originPointFrom').value  && !laneCardModel.isOriginRangeError">
+                </p-message>
+                <p-message severity="error" text="Provide valid Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPointFrom').touched && laneCardModel?.laneCardForm.get('originPointFrom')['errors']?.invalid && !laneCardModel.isOriginRangeError">
+                </p-message>
+              </div>
+              <span class="label-style pad-top15 pad-left10" *ngIf="laneCardModel.isOriginRangeSelected">To</span>
+            </span>
+            <span class="ui-g-6 ui-md-6 ui-float-label pad-right20 pad-bot0"
+              *ngIf="laneCardModel.isOriginRangeSelected && !laneCardModel.isShowMultipleFieldOrigin">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-originPointTo-autocomplete" class="ui-g-12 ui-md-12 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'originType', 'originCountry','originPointTo')"
+                formControlName="originPointTo" name="originPointTo"
+                (onSelect)="onOriginPointSelected($event, 'originPointTo')" field="label" [dropdown]="false"
+                (onBlur)="onautoCompleteBlur($event, 'originPointTo')"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'originPointTo')"
+                [ngClass]="{'invalidError': laneCardModel.isOriginRangeError}"></p-autoComplete>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPointTo').touched && laneCardModel.laneCardForm.get('originPointTo')['errors']?.required && !laneCardModel.laneCardForm.get('originPointTo').value  && !laneCardModel.isOriginRangeError">
+                </p-message>
+                <p-message severity="error" text="Provide valid Origin Point"
+                  *ngIf="laneCardModel.laneCardForm.get('originPointTo').touched && laneCardModel?.laneCardForm.get('originPointTo')['errors']?.invalid && !laneCardModel.isOriginRangeError">
+                </p-message>
+              </div>
+            </span>
+            <div class="error-class-height pad0">
+              <p-message severity="error" text="End Point should be greater than Start Point"
+                *ngIf="(laneCardModel.laneCardForm.get('originPointTo').touched && laneCardModel.isOriginRangeError) || (laneCardModel.laneCardForm.get('originPointFrom').touched && laneCardModel.isOriginRangeError)">
+              </p-message>
+            </div>
+          </span>
+        </div>
+        <div class="ui-md-12 ui-g-12 mar-top20 pad-left10">
+          <div class="ui-md-5 ui-g-5 ui-float-label pad-right0 descriptionLineHaul">
+            <input data-attr="viewagreement-linehaul-lanecard-origindescription-input" type="text" pInputText formControlName="originDescription" name="originDescription" maxlength="80"
+              class="width_value">
+            <label class="label-style labelAlign ui-md-12 ui-lg-12 ui-g-12 pad0">
+              <span>Origin Description</span>
+              <span class="optional-text pull-right mar-right15 pad-right30">optional</span>
+            </label>
+          </div>
+          <div class="ui-md-3 ui-g-3 ui-float-label mar-right20 vendorLineHaul">
+            <input data-attr="viewagreement-linehaul-lanecard-originvendorid-input" type="text" class="width_value-vendor" pInputText formControlName="originVendorId"
+              name="originVendorId" maxlength="30">
+            <label class="label-style labelAlign ui-md-12 ui-lg-12 ui-g-12 pad0">
+              <span>Origin Vendor ID</span>
+              <span class="optional-text pull-right pad-right10">optional</span>
+            </label>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="ui-md-12 ui-g-12 div-alignment" *ngIf="!laneCardModel.isDestinationRangeSelected && laneCardModel.isShowDestinationLink">
+          <a data-attr="viewagreement-linehaul-lanecard-addZipRange-anchor" class="link-style pull-right" href="javascript:void(0)" (click)="addZipRange('destination')">Add Zip Range</a>
+          <div class="clearfix"></div>
+        </div>
+        <div class="ui-md-12 ui-g-12 pad-left10">
+          <span class="ui-md-5 ui-g-5 mar-top10 pad-left0 pad-bot0">
+            <span class="ui-g-8 ui-md-8 ui-float-label pad-right10">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationType-autocomplete" [suggestions]="laneCardModel.geographyValuesTyped" name="destinationType"
+                formControlName="destinationType"
+                (onSelect)="onOriginTypeSelected($event, 'destinationPoint', 'destinationID')"
+                [ngClass]="{'ui-inputwrapper-filled': 'laneCardModel.originPoint'}" [dropdown]="true"
+                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" (completeMethod)="onTypeOriginType($event)"
+                field="label" [forceSelection]="true"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'destinationType')"
+                (onBlur)="onautoCompleteBlur($event, 'destinationType')">
+              </p-autoComplete>
+              <label class="label-style errorLabelAlign">Destination
+                Type</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Type"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationType').touched && laneCardModel.laneCardForm.get('destinationType')['errors']?.required">
+                </p-message>
+              </div>
+            </span>
+            <span class="ui-g-4 ui-md-4 ui-float-label pad-right0 pad-left0">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationCountry-autocomplete" [suggestions]="laneCardModel.countryFiltered" name="destinationCountry"
+                formControlName="destinationCountry"
+                (onSelect)="onCountrySelected('destinationPoint', 'isDestinationRangeSelected', 'destinationPointFrom', 'destinationPointTo')"
+                [ngClass]="{'ui-inputwrapper-filled': laneCardModel.isCountryDefault}" [dropdown]="true"
+                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" (completeMethod)="onTypeCountries($event)"
+                (onBlur)="onautoCompleteBlur($event, 'destinationCountry')" field="label" [forceSelection]="true">
+              </p-autoComplete>
+              <label class="label-style errorLabelAlign">Destination Country</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Country"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationCountry').touched && laneCardModel.laneCardForm.get('destinationCountry')['errors']?.required">
+                </p-message>
+              </div>
+            </span>
+          </span>
+          <span class="ui-md-7 ui-g-7 mar-top10 pad-bot0">
+            <span class=" ui-g-12 ui-md-12 ui-float-label pad-right20 pad-left0 pad-bot0 ui-fluid pad-bot0"
+            *ngIf="!laneCardModel.isDestinationRangeSelected && !laneCardModel.isShowMultipleFieldDestination">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationPoint-autocomplete" class="ui-g-12 ui-md-12 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'destinationType', 'destinationCountry', 'destinationPoint')"
+                formControlName="destinationPoint" name="destinationPoint" field="label" [dropdown]="false"
+                styleClass="width_value" (onBlur)="onautoCompleteBlur($event, 'destinationPoint')"
+                [ngClass]="{'ui-inputwrapper-filled': 'laneCardModel.destinationPoint'}"
+                (onSelect)="onDestinationPointSelected($event)"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'destinationPoint')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Destination
+                Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPoint').touched && laneCardModel.laneCardForm.get('destinationPoint')['errors']?.required && !laneCardModel.laneCardForm.get('destinationPoint').value">
+                </p-message>
+                <p-message severity="error" text="Provide valid Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPoint').touched && !laneCardModel.laneCardForm.get('destinationPoint')['errors']?.required && laneCardModel?.laneCardForm.get('destinationPoint')['errors']?.invalid">
+                </p-message>
+              </div>
+            </span>
+            <span class="ui-g-12 ui-md-12 ui-float-label pad-right20 pad-left0 pad-bot0" *ngIf="!laneCardModel.isDestinationRangeSelected && laneCardModel.isShowMultipleFieldDestination">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationPoint-autocomplete" formControlName="destinationPoint" name="destinationPoint" [multiple]="true" field="label" spellcheck="false"
+              [style]="{'width':'100%'}" (onClear)="onAutoCompleteClear($event.target['value'], 'destinationPoint')"
+              (completeMethod)="onTypeOriginDestPoint($event.query, 'destinationType', 'destinationCountry', 'destinationPoint')"
+              [suggestions]="laneCardModel.responseData" (onSelect)="onSelectValue($event, 'destinationPoint', 'laneCardForm')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Destination Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Point"
+                *ngIf="laneCardModel.laneCardForm.get('destinationPoint').touched && laneCardModel.laneCardForm.get('destinationPoint')['errors']?.required">
+                </p-message>
+                <p-message severity="error" text="Provide valid Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPoint').touched && !laneCardModel.laneCardForm.get('destinationPoint')['errors']?.required && laneCardModel?.laneCardForm.get('destinationPoint')['errors']?.invalid">
+                </p-message>
+              </div>
+            </span>
+            <span class="ui-g-6 ui-md-6 ui-float-label pad-left0 pad-bot0"
+            *ngIf="laneCardModel.isDestinationRangeSelected && !laneCardModel.isShowMultipleFieldDestination">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationPointFrom-autocomplete" class="ui-g-11 ui-md-11 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'destinationType', 'destinationCountry','destinationPointFrom')"
+                formControlName="destinationPointFrom" name="destinationPointFrom"
+                [ngClass]="{'ui-inputwrapper-filled': 'laneCardModel.destinationPoint', 'invalidError': laneCardModel.isDestinationRangeError}"
+                (onSelect)="onDestinationPointSelected($event)" field="label" [dropdown]="false"
+                styleClass="width_value" (onBlur)="onautoCompleteBlur($event, 'destinationPointFrom')"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'destinationPointFrom')"></p-autoComplete>
+              <label class="label-style errorLabelAlign">Destination Point</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPointFrom').touched && laneCardModel.laneCardForm.get('destinationPointFrom')['errors']?.required && !laneCardModel.laneCardForm.get('destinationPointFrom').value">
+                </p-message>
+                <p-message severity="error" text="Provide valid Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPointFrom').touched && laneCardModel?.laneCardForm.get('destinationPointFrom')['errors']?.invalid &&!laneCardModel.isDestinationRangeError">
+                </p-message>
+              </div>
+              <span class="label-style pad-top15 pad-left10" *ngIf="laneCardModel.isDestinationRangeSelected">To</span>
+            </span>
+            <span class="ui-g-6 ui-md-6 ui-float-label pad-right20 pad-bot0"
+            *ngIf="laneCardModel.isDestinationRangeSelected && !laneCardModel.isShowMultipleFieldDestination">
+              <p-autoComplete data-attr="viewagreement-linehaul-lanecard-destinationPointTo-autocomplete" class="ui-g-12 ui-md-12 dropdown pad0" [suggestions]="laneCardModel.responseData"
+                [ngClass]="{'ui-inputwrapper-filled': 'laneCardModel.destinationPoint', 'invalidError': laneCardModel.isDestinationRangeError}"
+                styleClass="width_value"
+                (completeMethod)="onTypeOriginDestPoint($event.query, 'destinationType', 'destinationCountry','destinationPointTo')"
+                formControlName="destinationPointTo" name="destinationPointTo"
+                (onClear)="onAutoCompleteClear($event.target['value'], 'destinationPointTo')"
+                (onSelect)="onDestinationPointSelected($event)" field="label" [dropdown]="false"
+                (onBlur)="onautoCompleteBlur($event, 'destinationPointTo')"></p-autoComplete>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPointTo').touched && laneCardModel.laneCardForm.get('destinationPointTo')['errors']?.required && !laneCardModel.laneCardForm.get('destinationPointTo').value">
+                </p-message>
+                <p-message severity="error" text="Provide valid Destination Point"
+                  *ngIf="laneCardModel.laneCardForm.get('destinationPointTo').touched && laneCardModel?.laneCardForm.get('destinationPointTo')['errors']?.invalid && !laneCardModel.isDestinationRangeError">
+                </p-message>
+              </div>
+            </span>
+            <div class="error-class-height pad0">
+              <p-message severity="error" text="End Point should be greater than Start Point"
+                *ngIf="laneCardModel.laneCardForm.get('destinationPointFrom').touched && laneCardModel.isDestinationRangeError">
+              </p-message>
+            </div>
+          </span>
+        </div>
+        <div class="ui-md-12 ui-g-12 mar-bot20 mar-top10 pad-left10">
+          <div class="ui-md-5 ui-g-5 ui-float-label pad-right0 descriptionLineHaul">
+            <input data-attr="viewagreement-linehaul-lanecard-destinationdescription-input" type="text" pInputText formControlName="destinationDescription" name="destinationDescription"
+              maxlength="80" class="width_value">
+            <label class="label-style labelAlign ui-md-12 ui-lg-12 ui-g-12 pad0">
+              <span>Destination Description</span>
+              <span class="optional-text pull-right mar-right15 pad-right30">optional</span>
+            </label>
+          </div>
+          <div class="ui-md-3 ui-g-3 ui-float-label mar-right20 vendorLineHaul">
+            <input data-attr="viewagreement-linehaul-lanecard-destinationvendorid-input" type="text" class="width_value-vendor" pInputText formControlName="destinationVendorId"
+              name="destinationVendorId" maxlength="30">
+            <label class="label-style labelAlign ui-md-12 ui-lg-12 ui-g-12 pad0">
+              <span>Destination Vendor ID</span>
+              <span class="optional-text pull-right mar-right20 pad-right10">optional</span>
+            </label>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<p-dialog data-attr="viewagreement-linehaul-lanecard-addZipRange-dialog" [(visible)]="laneCardModel.isShowAddRangePopup" [modal]="true" [responsive]="true" [width]="500" [minWidth]="400"
+  [minY]="70" [baseZIndex]="10005" [closable]="false">
+  <p-header>
+    <span class="capitalizeTitle">Add Zip Range</span>
+    <a data-attr="viewagreement-linehaul-lanecard-addZipTitle-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)" role="button" (click)="hidePopup()">
+      <span class="pi pi-times"></span>
+    </a>
+  </p-header>
+  <form [formGroup]="laneCardModel.zipRangeForm">
+    <div class="ui-g-12 ui-md-12 ui-lg-12 pad-left0">
+      <p-messages *ngIf="(laneCardModel.zipRangeForm.get('rangeFrom').touched && laneCardModel?.zipRangeForm.get('rangeFrom')['errors']?.invalid)
+      || (laneCardModel.zipRangeForm.get('rangeTo').touched && laneCardModel?.zipRangeForm.get('rangeTo')['errors']?.invalid) || laneCardModel.isRangeError" [closable]="false"
+      [(value)]="laneCardModel.stripErrorMessage"></p-messages>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 pad-left0">3-Zip Range</div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 pad-left0 pad-right0">
+      <span class="ui-g-6 ui-md-6 ui-lg-6 pad-left0">
+        <p-autoComplete data-attr="viewagreement-linehaul-lanecard-rangeFrom-autocomplete" class="ui-g-11 ui-md-11 dropdown pad0" formControlName="rangeFrom" name="rangeFrom" 
+        (onClear)="onAutoCompleteClear($event.target['value'], 'rangeFrom', true)" (onBlur)="autoCompleteBlur($event, 'rangeFrom')"
+        (completeMethod)="onSearchZip($event.query, 'rangeFrom')" [style]="{'width':'100%'}" (onSelect)="onSelectValue($event, 'rangeFrom', 'zipRangeForm')"
+        field="label" spellcheck="false" [suggestions]="laneCardModel.responseData" emptyMessage="No results found"
+        [ngClass]="{'invalidError': laneCardModel.isRangeError}"></p-autoComplete>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide a Point"
+            *ngIf="laneCardModel.zipRangeForm.get('rangeFrom').touched && laneCardModel.zipRangeForm.get('rangeFrom')['errors']?.required && !laneCardModel.zipRangeForm.get('rangeFrom').value  && !laneCardModel.isRangeError">
+          </p-message>
+        </div>
+        <span class="label-style to-label">To</span>
+      </span>
+      <span class="ui-g-6 ui-md-6 ui-lg-6 rangeto-style">
+        <p-autoComplete data-attr="viewagreement-linehaul-lanecard-rangeTo-autocomplete" class="dropdown pad0" formControlName="rangeTo" name="rangeTo" 
+        (onClear)="onAutoCompleteClear($event.target['value'], 'rangeTo', true)" (onBlur)="autoCompleteBlur($event, 'rangeTo')"
+        (completeMethod)="onSearchZip($event.query, 'rangeTo')" [suggestions]="laneCardModel.responseData" emptyMessage="No results found"
+        field="label" spellcheck="false" (onSelect)="onSelectValue($event, 'rangeTo', 'zipRangeForm')" [ngClass]="{'invalidError': laneCardModel.isRangeError}"></p-autoComplete>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide a Point"
+            *ngIf="laneCardModel.zipRangeForm.get('rangeTo').touched && laneCardModel.zipRangeForm.get('rangeTo')['errors']?.required && !laneCardModel.zipRangeForm.get('rangeTo').value  && !laneCardModel.isRangeError">
+          </p-message>
+        </div>
+      </span>
+    </div>
+  </form>
+  <p-footer>
+    <button data-attr="viewagreement-linehaul-lanecard-cancel-button" type="button" pButton class="ui-button-secondary" (click)="hidePopup()"
+    label="Cancel" ></button>
+    <button data-attr="viewagreement-linehaul-lanecard-add-button" type="button" pButton label="Add" class="ui-button-primary" (click)="addRangeValue()"></button>
+  </p-footer>
+</p-dialog>

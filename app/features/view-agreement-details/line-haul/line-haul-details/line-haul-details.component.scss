@@ -1,0 +1,53 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+.filter-wrapper {
+    background: $white;
+    border-radius: 5px;
+    padding: 0;
+    -webkit-box-shadow: 0 0 4px $grey;
+    box-shadow: 0 0 4px $grey;
+    min-height: 400px;
+}
+
+.line-details {
+    color: $grey-dark66;
+    @include getTypographyStyles("body2");
+}
+
+.rate-values {
+    @include getTypographyStyles('caption1');
+}
+
+.rateTable {
+    /deep/ .ui-table .ui-table-caption.ui-widget-header {
+        padding-bottom: 0px !important;
+    }
+}
+
+.line-haul-heading {
+    @include getTypographyStyles('h3');
+}
+
+/deep/ .stopCard .ui-table-caption.ui-widget-header.ng-star-inserted {
+    padding: 15px 0px 0px 0px;
+}
+
+/deep/ .tableBorder .ui-table-wrapper {
+    border-top: 1px solid $grey-lite70;
+}
+
+.grid-heading {
+    @include getTypographyStyles('h2');
+}
+
+/deep/ .laneCard .ui-table-caption.ui-widget-header.ng-star-inserted {
+    padding-top: 10px;
+    border-bottom: 1px solid #C9C9C9;
+}
+
+.headingAlign {
+    border-bottom: 1px solid #C9C9C9;
+}
+.align-margin{ 
+    margin-top: -5px;
+}

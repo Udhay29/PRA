@@ -1,0 +1,71 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.labelText {
+    font-size: 12px;
+    color: #939393;
+}
+
+.label-style {
+    left:32px;
+}
+
+.lineHaulCalendar /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    width: 100% !important;
+}
+
+.lineHaulBody {
+    min-height: 400px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 3%;
+    right: 2%;
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    padding-left: 0px !important;
+}
+
+.lineHaulCalendar {
+    .errorMsg /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9;
+    }
+    label {
+        left: 37px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        left: 8px !important;
+    }
+    .ui-inputwrapper-filled~label {
+        left: 8px !important;
+    }
+}
+
+.labelAlign {
+    position: absolute;
+    top: 24px;
+}
+
+.lineHaulCalendar /deep/ .ui-float-label .ui-inputwrapper-focus {
+    padding-left: 8px !important;
+}
+
+.errorMsgAlign /deep/.ui-messages ul {
+    padding: 0.2rem 2rem 0 !important;
+}
+
+.headingAlign {
+    margin-top: 0 !important;
+}
+.ui-float-label .ui-inputwrapper-focus ~ label.label-style,
+.ui-float-label .ui-inputwrapper-filled ~ label.label-style {
+  left: 20px;
+  bottom: 5px;
+}
+/deep/.ui-state-default.disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }

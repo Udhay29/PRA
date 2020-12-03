@@ -1,0 +1,98 @@
+<div [ngClass]="{'loader': defaultRatingModel.isPageLoading}" [appJbhLoader]="defaultRatingModel?.isPageLoading"></div>
+<div>
+  <form [formGroup]="defaultRatingModel.defaultRatingForm">
+    <p-breadcrumb [model]="defaultRatingModel.breadCrumbList" class="breadCrumb-pad"></p-breadcrumb>
+    <h1 class="mar-left15 mar-top0 mar-bot5">DEFAULT RATING RULE</h1>
+    <div class="mar-left20" [ngClass]="{'mar-left12': defaultRatingModel.isEditFlag}">
+      <!-- first row -->
+      <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 ">
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngIf="!defaultRatingModel?.isEditFlag">
+          <label class="heading-text content-text">Effective Date</label>
+          <label class="content-text content-height">{{ defaultRatingModel?.effectiveDate }}</label>
+        </span>
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngIf="defaultRatingModel?.isEditFlag">
+          <label class="heading-text content-text pad-left10">Effective Date</label>
+          <label>
+            <p-calendar #cal formControlName="effectiveDate" class="cal-width" [showIcon]="true" name="effectiveDate" appendTo=body dateFormat="mm/dd/yy"
+              [maxDate]="defaultRatingModel.effectiveMaxDate" (onInput)="onTypeDate($event)" [showOnFocus]="false"></p-calendar>
+          </label>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide Effective Date" *ngIf="defaultRatingModel.defaultRatingForm.get('effectiveDate').touched && defaultRatingModel.defaultRatingForm.get('effectiveDate')['errors']?.required"></p-message>
+            <p-message severity="error" text="Provide a valid date" *ngIf="defaultRatingModel.defaultRatingForm.get('effectiveDate').touched && defaultRatingModel.defaultRatingForm.get('effectiveDate')['errors']?.invalid"></p-message>
+          </div>
+        </span>
+        <span class="ui-md-8 ui-lg-8 ui-g-8">
+          <label class="heading-text content-text">Expiration Date</label>
+          <label class="content-text content-height" [ngClass]="{'font-date': defaultRatingModel.isEditFlag}">{{ defaultRatingModel?.expirationDate }}</label>
+        </span>
+      </div>
+      <!-- second row -->
+      <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 default-rate-rule">
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngIf="!defaultRatingModel.isEditFlag">
+          <label class="heading-text content-text">City Substitution</label>
+          <label class="content-text content-height">{{ defaultRatingModel?.citySubstitution }}</label>
+        </span>
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngIf="defaultRatingModel.isEditFlag">
+          <p-checkbox label="City Substitution" value="citySubstitution" formControlName='citySubstitution' [(ngModel)]="defaultRatingModel.city"
+            (onChange)="onChangeOfCitySubstitution($event)"></p-checkbox>
+        </span>
+        <span class="ui-md-8 ui-lg-8 ui-g-8" *ngIf="!defaultRatingModel.isEditFlag">
+          <label class="heading-text content-text">Radius</label>
+          <label class="content-text content-height">{{ defaultRatingModel?.radiusValue }}</label>
+        </span>
+        <span class="ui-md-8 ui-lg-8 ui-g-8 ui-float-label text-field-float" *ngIf="defaultRatingModel.isEditFlag && defaultRatingModel.isCheckBoxSelected"
+          [ngClass]="{'addon-error': (defaultRatingModel.defaultRatingForm.get('radius').touched && defaultRatingModel.defaultRatingForm.get('radius')['errors']?.pattern)}">
+          <input type="text" formControlName="radius" id="radius" style="width:40%;" pattern="[0-9]*" maxlength="3" pInputText autocomplete="off"
+          />
+          <label for="radius">Radius</label>
+          <p class="label-style mar-left10 back-color">Miles</p>
+          <div class="error-class-height">
+            <p-message severity="error"  text="Provide a Radius"  *ngIf="defaultRatingModel.defaultRatingForm.get('radius').touched && defaultRatingModel.defaultRatingForm.get('radius')['errors']?.required"></p-message>
+            <p-message severity="error"  text="Provide a valid Radius"  *ngIf="(defaultRatingModel.defaultRatingForm.get('radius').touched && defaultRatingModel.defaultRatingForm.get('radius')['errors']?.pattern)"></p-message>
+          </div>
+        </span>
+      </div>
+      <!-- third row -->
+      <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 " *ngIf="!defaultRatingModel.isEditFlag">
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngFor="let data of defaultRatingModel?.populateData?.customerRatingRuleConfigurationViewDTOs">
+          <label class="heading-text content-text">{{ data.ruleCriteriaName }}</label>
+          <label class="content-text content-height">{{ data.ruleCriteriaValueName }}</label>
+        </span>
+      </div>
+      <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 mar-top-12" *ngIf="defaultRatingModel.isEditFlag">
+        <span class="ui-md-4 ui-lg-4 ui-g-4" *ngFor="let rulesHead of defaultRatingModel.defaultRules; let i = index">
+          <label class="heading-text content-text">{{ rulesHead.ruleCriteriaName }}</label>
+          <span *ngFor="let rules of rulesHead.ruleCriteriaValues">
+            <p-radioButton class="ui-md-12 ui-lg-12 ui-g-12 pad-left0 radio-pad" name="ruleCriteria{{i+1}}" formControlName="ruleCriteria{{i+1}}"
+              [value]=" rules.ruleCriteriaValueID" label="{{ rules.ruleCriteriaValueName }}" (click)="onRadioClick(i, rulesHead.ruleCriteriaName, rulesHead.value, rules.ruleCriteriaValueName)"
+              [(ngModel)]="rulesHead.value"></p-radioButton>
+          </span>
+
+        </span>
+      </div>
+    </div>
+    <div class="footer-part wrapper" *ngIf="!defaultRatingModel.isEditFlag">
+      <button pButton appShortcut="ctrl+alt+1" label="Edit" class="mar-top5" (click)="onEditClick()"></button>
+    </div>
+    <div class="footer-part wrapper" *ngIf="defaultRatingModel.isEditFlag">
+      <button type="text" pButton label="Cancel" (click)="onClose()" class="ui-button-secondary"></button>
+      <button type="text" pButton label="Save" (click)="onSave()" class="ui-button-primary mar-left15"></button>
+    </div>
+    <p-dialog header="Confirmation" [(visible)]="defaultRatingModel.isSaveChanges" [modal]="true" [responsive]="true" [width]="350"
+      [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+      <span>You are about to lose all the changes. Do you want to proceed?</span>
+      <p-footer>
+        <button type="button" pButton (click)="onHidePop('isSaveChanges')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onDontSave()" label="Yes" class="ui-button-primary"></button>
+      </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="defaultRatingModel.isPopupVisible" [modal]="true" [responsive]="true" [width]="350"
+      [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+      <span>You are about to lose all the changes. Do you want to proceed?</span>
+      <p-footer>
+        <button type="button" pButton (click)="onHidePop('isPopupVisible')" class="ui-button-secondary" label="No"></button>
+        <button type="button" pButton (click)="onClickDontSave()" label="Yes" class="ui-button-primary"></button>
+      </p-footer>
+    </p-dialog>
+  </form>
+</div>

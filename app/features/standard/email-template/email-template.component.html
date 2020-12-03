@@ -1,0 +1,88 @@
+<div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper pad-left5">
+  <div class="parentDiv pad-top0 pad-right0">
+    <p-table class="main-content" #tt appTableKeynav [tableRef]="tt" name="pTable" [rows]="25" sortMode="single"
+      [columns]="viewModel.tableColumns" [paginator]="!viewModel.noResultFlag" [rowsPerPageOptions]="[25,50,100]" [lazy]="true" [value]="viewModel.templateGridValues"
+      [resizableColumns]="true" (onPage)="onPage($event)" (onLazyLoad)="loadConfigValuesLazy($event)" (onRowSelect)="rowClick($event)" [scrollable]="true"
+      [style]="{width:'100%'}" [loading]="viewModel.loading" scrollHeight="calc(100vh - 375px) " [responsive]="true"
+      (onRowSelect)="rowClick($event)" columnResizeMode="fit" selectionMode="single" datakey="emailTemplateTypeName">
+      <ng-template pTemplate="caption">
+        <div class="ui-g-12 table-caption pad0 header-height">
+          <div class="ui-g-6 ui-md-6 mar-top8">
+            <span class="tableName">Email Templates</span>
+          </div>
+          <div class="pad-bot0 ui-g-6 pad-top8 pad-right0" *ngIf="!viewModel.noResultFlag || viewModel.searchFlag === 1">
+            <div class="alignPos">
+              <div class="ui-inputgroup pad-top0 searchWidth">
+                <span class=" ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                <input appShortcut="alt+s" id="fpListSearchText" autocomplete="off" type="text" pInputText placeholder="Search"
+                  (keyup)="onSearch($event)" />
+              </div>
+            </div>
+
+            <div class="iconsHolder pull-right">
+              <button [ngClass]="{'filterColor': viewModel.filterFlag}" class="icon-Filter_Solid icon-button buttonStyle"
+                (click)="onFilterClicked()"></button>
+              <button appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button buttonStyle" (click)="menu.toggle($event)"
+                [disabled]="(viewModel.noResultFlag && viewModel.searchFlag === 1 && !viewModel.loading)"></button>
+              <p-menu #menuOverlay #menu popup="popup" styleClass="menu-overlay font12" appendTo="body" [model]="viewModel?.overFlowMenu">
+                <a href="javascript:void(0);" #downloadExcel></a>
+              </p-menu>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col>
+          <col *ngFor="let thisCol of viewModel.tableColumns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr *ngIf='!viewModel.noResultFlag && !viewModel.loading'>
+          <th class="checkbox-column thHeaderRow checkbox-alignment">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th class="minimum-column-width {{col.columnWidth}} headerHeight" (click)="onSortSelect(col)"
+            pResizableColumn *ngFor="let col of columns" [pSortableColumn]="col.property">
+            <span pTooltip="{{col.name}}" tooltipPosition="top">
+              {{col.name}}
+              <p-sortIcon [field]="col.property"></p-sortIcon>
+            </span>
+          </th>
+        </tr>
+        <tr *ngIf="viewModel.firstCheck && !viewModel.loading">
+          <div class='center-container'>
+            <div class="display-middle">
+                <h4 class="emptyMsgText mar0 mar-bot10">No information</h4>
+                <h4 class="emptyMsgText mar0 mar-bot20">was found to display</h4>
+                <button appShortcut="ctrl+alt+1" type="button" pButton label="Create Master"
+                    (click)="onAddTemplate('master')" class="ui-button-primary"></button>
+            </div>
+        </div>
+        </tr>
+        <tr *ngIf="viewModel.noResultFlag && !viewModel.loading">
+          <div class="ui-g-12 message-wrapper">
+            <span class="display-middle">No Records Found</span>
+            <span class="display-middle">
+            </span>
+          </div>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+
+        <tr *ngIf='!viewModel.noResultFlag && !viewModel.loading' [pSelectableRow]="rowData">
+          <td class="checkbox-column width12 thRow checkbox-alignment">
+            <p-tableCheckbox [value]="rowData" name="checkBox"></p-tableCheckbox>
+          </td>
+          <td class="minimum-column-widthdata {{thisCol.columnWidth}}" *ngFor="let thisCol of viewModel.tableColumns">
+            <span class="capitalize-first-word" pTooltip="{{rowData[thisCol.property]}}" tooltipPosition="top">
+              {{ rowData[thisCol.property] }}
+            </span> </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <p-button *ngIf="viewModel.isDefaultTemplateExist" appShortcut="ctrl+alt+1" (click)="onAddTemplate('default')" class="ui-g-12 ui-md-2 ui-md-offset-10 absPosition"
+          label="Create Default"></p-button>
+      </ng-template>
+    </p-table>
+  </div>

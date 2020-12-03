@@ -1,0 +1,152 @@
+<div [ngClass]="{'loader': viewCarrierMileageModel.isPageLoading }"
+  [appJbhLoader]="viewCarrierMileageModel.isPageLoading">
+</div>
+<div class="ui-g ui-fluid viewMileageGrid">
+  <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!viewCarrierMileageModel.isFilterEnabled)}">
+  </div>
+  <div class="ui-g-9"
+    [ngClass]="{'ui-g-9': viewCarrierMileageModel.isFilterEnabled, 'ui-g-6': viewCarrierMileageModel.isSplitView, 'ui-g-12': !viewCarrierMileageModel.isSplitView  && !viewCarrierMileageModel.isFilterEnabled}">
+    <div class="noInfoMessage"
+      *ngIf="viewCarrierMileageModel?.gridRows.length === 0 && viewCarrierMileageModel.noResultFoundFlag && !viewCarrierMileageModel.isEmptySearch">
+      <div class="displaymiddle mar-bot20">
+        <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+        <button type="text" pButton label="Create Program" class="ui-button-primary mar-top5 mar-left5"
+          (click)="onClickCreateMileage()"></button>
+      </div>
+    </div>
+    <p-table #viewMilageTable appTableKeynav [tableRef]="viewMilageTable"
+      [ngClass]="{ 'no-table':
+      (!viewCarrierMileageModel.gridDataLength && !viewCarrierMileageModel.isEmptySearch),'tableWrapper': (!viewCarrierMileageModel.isSplitView && viewCarrierMileageModel.gridRows.length > 0), 'tableSplitWrapper': (viewCarrierMileageModel.gridRows.length > 0 && viewCarrierMileageModel.isSplitView)}"
+      [value]="viewCarrierMileageModel.gridRows" [rows]=viewCarrierMileageModel?.gridSize [lazy]="true"
+      (onLazyLoad)="loadMileageValuesLazy($event)" (onPage)="loadGridData($event)" [paginator]="setPaginator()"
+      [scrollable]="true" scrollHeight="calc(100vh - 305px)" [resizableColumns]="true" columnResizeMode="expand"
+      [first]="viewCarrierMileageModel.pageStart" [rowsPerPageOptions]="[25,50,75,100]" [pageLinks]="5"
+      [totalRecords]="viewCarrierMileageModel?.gridDataLength" selectionMode="single">
+      <ng-template pTemplate="caption">
+        <div class="ui-g table-caption pad-bot0">
+          <div
+            [ngClass]="{'ui-md-6': viewCarrierMileageModel.isSplitView , 'ui-md-8': !viewCarrierMileageModel.isSplitView}"
+            class="ui-g-8 tableHeading">
+            <span class="tableName alignHeading">Mileage Program</span>
+          </div>
+          <div class="mar-top10 ui-md-4"
+            [ngClass]="{'ui-md-6': viewCarrierMileageModel.isSplitView, 'ui-md-4': !viewCarrierMileageModel.isSplitView }">
+            <div class="ui-inputgroup ui-md-8 ui-g-12 pad-top0 getGridValuesInput searchHolder"
+              [ngClass]="{'ui-md-8': viewCarrierMileageModel.gridRows.length, 'ui-md-10': !viewCarrierMileageModel.gridRows.length}">
+              <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+              <input type="text" pInputText placeholder="Search">
+            </div>
+            <div class="iconsHolder ui-md-4 ui-g-12 pad-top0"
+              [ngClass]="{'ui-md-4': viewCarrierMileageModel.gridRows.length, 'ui-md-2': !viewCarrierMileageModel.gridRows.length}">
+              <div class="grid-icons ui-md-12">
+                <button [ngClass]="{'filterColor': viewCarrierMileageModel.isFilterFlag}"
+                  class="icon-Filter_Solid icon-button buttonStyle ui-md-4" (click)="onFilterClick()"
+                  [disabled]="true"></button>
+                <button class="icon-Preferences_Local icon-button buttonStyle ui-md-4"
+                  (click)="onPreferenceClick()"></button>
+                <button *ngIf="viewCarrierMileageModel.gridRows.length"
+                  class="icon-Menu_Overflow icon-button buttonStyle ui-md-4"
+                  (click)="onClickMileageOverflowIcon(menuOverlay, $event)"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="viewCarrierMileageModel?.gridRows.length > 0">
+          <col *ngFor="let thisCol of viewCarrierMileageModel.tableColumns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr class="pad0 mar0 table-header" *ngIf="viewCarrierMileageModel.gridRows.length > 0">
+          <th class="header-column-width text-bold min-col-width" pResizableColumn
+            *ngFor="let col of viewCarrierMileageModel.tableColumns" [pSortableColumn]="col.label">
+            {{col.label}}
+            <span>
+              <p-sortIcon [field]="col.label"></p-sortIcon>
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr *ngIf="viewCarrierMileageModel.noResultFoundFlag && viewCarrierMileageModel.isEmptySearch">
+          <td colspan="8">
+            <div class="ui-md-12 ui-lg-12 message-wrapper text-gray">
+              <span class="display-middle display-3">No results found</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-data class="tableHeight" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="data" *ngIf="viewCarrierMileageModel.gridRows.length > 0">
+          <td class="mincolwidth  ui-resizable-column" *ngFor="let thisCol of viewCarrierMileageModel.tableColumns"
+            tooltipPosition="top" pTooltip="{{data[thisCol.field]}}">
+            <span *ngIf="data[thisCol.field] && !thisCol.isArray"
+              class="capitalize-first-word">{{data[thisCol.field]}}</span>
+            <span *ngIf="!data[thisCol.field] && !thisCol.isArray" class="capitalize-first-word" pTooltip="- -"
+              tooltipPosition="top">--</span>
+
+            <div *ngIf="thisCol.field === 'billToAccounts' && thisCol.isArray" class="capitalize-first-word">
+              <div *ngFor="let col of data['billToAccounts']; let k=index" class="showFilter mincolwidth width-inherit">
+                <span *ngIf="k<2">{{col}}</span>
+              </div>
+              <span *ngIf="data[thisCol.field]?.length > 2"
+                class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+              <span *ngIf="!data[thisCol.field]?.length" pTooltip="- -" tooltipPosition="top">-- </span>
+            </div>
+
+            <div *ngIf="thisCol.field === 'sections' && thisCol.isArray" class="capitalize-first-word">
+              <div *ngFor="let col of data['sections']; let k=index" class="showFilter mincolwidth width-inherit">
+                <span *ngIf="k<2">{{col}}</span>
+              </div>
+              <span *ngIf="data[thisCol.field]?.length > 2"
+                class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+              <span *ngIf="!data['sections']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+            </div>
+
+            <div *ngIf="thisCol.field === 'businessUnits' && thisCol.isArray" class="capitalize-first-word">
+              <div *ngFor="let col of data['businessUnits']; let k=index">
+                <span *ngIf="k<2">{{col}}</span>
+              </div>
+              <span *ngIf="data[thisCol.field]?.length > 2"
+                class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+              <span *ngIf="!data['businessUnits']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+            </div>
+
+            <div *ngIf="thisCol.field === 'carriers' && thisCol.isArray" class="capitalize-first-word">
+              <div class="mincolwidth  width-inherit" *ngFor="let col of data['carriers']; let k=index">
+                <span *ngIf="k<2">{{col}}</span>
+              </div>
+              <span *ngIf="data[thisCol.field]?.length > 2"
+                class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+              <span *ngIf="!data['carriers']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+            </div>
+
+            <div *ngIf="thisCol.field === 'systemParameters' && thisCol.isArray" class="capitalize-first-word">
+              <div *ngFor="let col of data['systemParameters']; let k=index">
+                <span *ngIf="k<2">{{col}}</span>
+              </div>
+              <span *ngIf="data[thisCol.field]?.length > 2"
+                class="pad-left2">+{{(data[thisCol.field].length - 2)}}</span>
+              <span *ngIf="!data['systemParameters']?.length" pTooltip="- -" tooltipPosition="top">--</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorright" class="tableFooter">
+        <tr
+          *ngIf="(!viewCarrierMileageModel.isSplitView && viewCarrierMileageModel.gridRows.length > 0) || viewCarrierMileageModel.isEmptySearch">
+          <td colspan="12">
+            <span class="pull-right pad-right10 pad10 pad-top0">
+              <button *ngIf="!viewCarrierMileageModel.isSplitView" type="text" pButton label="Create Program"
+                appShortcut="ctrl+alt+1" class="ui-button-primary mar-top0 mar-left5"
+                (click)="onClickCreateMileage()"></button>
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="viewCarrierMileageModel.isSplitView">
+  </div>
+</div>

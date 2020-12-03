@@ -1,0 +1,114 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.split-container {
+    height: 100%;
+    border-radius: 6px;
+    background-color: $white;
+    .split-header {
+        position: relative;
+        overflow-y: hidden;
+        .header {
+            height: 61px;
+            border-bottom: solid 1px $grey-lite70;
+        }
+        .title {
+            top: 19px;
+            padding: 15px;
+            position: relative;
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+        .close-position {
+            float: right;
+            margin: 20px 15px 15px 15px;
+        }
+        .secondHeader {
+            height: 35px;
+            border-bottom: solid 1px $grey-lite70;
+        }
+        .secondTitle {
+            color: #939393;
+            font-weight: normal;
+            font-size: 12px;
+            position: relative;
+            top: 4px;
+            padding: 0px 17px;
+        }
+    }
+    .split-body {
+        width: 100%;
+        padding: 5px;
+        height:calc(100vh - 768px);
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .default-height {
+        height: calc(100vh - 365px);
+    }
+    .split-height {
+        height: calc(100vh - 383px);
+    }
+    .split-footer {
+        height: 60px;
+        position: relative;
+        overflow-y: hidden;
+        border-top: solid 1px $grey-lite70;
+    }
+}
+.error_Msg{
+    position: relative;
+    bottom: 8px;
+}
+.createChargeWrapper {
+    /deep/ .ui-multiselect {
+        width: 100% !important;
+    }
+    .calenderContainer{
+        .ui-float-label > label {
+            left: 32px !important;
+        }
+        .ui-float-label .ui-inputwrapper-focus ~ label, .ui-float-label .ui-inputwrapper-filled ~ label {
+            left: 20px !important;
+        }
+    }
+    /deep/ .ui-selectbutton.ui-buttonset.ui-widget.ui-corner-all.ui-buttonset-2 {
+        width: 100% !important;
+    }
+    /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted {
+        width: 50% !important;
+    }
+    /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted.ui-state-active {
+        width: 50% !important;
+    }
+    .descBorderRadius {
+        border-radius: 5px;
+    }
+}
+textarea.ui-state-filled ~ label,
+textarea:focus ~ label {
+top: calc(-0.75em - 6px);
+left: 10px;
+font-size: 12px;
+}
+/deep/.textarea-float
+textarea:not(:focus):not(.ui-state-filled):not(:-webkit-autofill)
+~ label:not(.char-limit) {
+top: 0.5em !important;
+}
+.button-align{
+    padding-top:6px;
+}
+.btnMargin{
+    padding-right: 5px;
+}
+.rightMargin{
+    padding-right: 3px !important;
+}
+.leftMargin{
+    padding-left: 3px !important;
+}
+.dateMargin{
+    padding-left: 3px !important;
+}

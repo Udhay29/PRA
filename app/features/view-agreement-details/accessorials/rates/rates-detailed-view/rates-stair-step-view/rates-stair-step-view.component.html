@@ -1,0 +1,82 @@
+<div class="ui-g">
+    <p-table [value]="stairStepModel.stairListRateValues" class="mar-bot10">
+        <ng-template pTemplate="caption">
+            <span class="tableName alignHeading">Stair-Step Rate</span>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="th-width table-heading">Rate Type</th>
+                <th class="th-width table-heading">Rounding</th>
+                <th class="th-width table-heading">Minimum Amount</th>
+                <th class="th-width table-heading">Maximum Amount</th>
+                <th class="th-width table-heading">Maximum Applied When</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td *ngFor="let col of stairStepModel.rateTableColumns">
+                    <span *ngIf="rowData[col.property]!=='null' && (col.property === 'minimumAmount' ||  col.property === 'maximumAmount')">{{
+                        rowData[col.property] | currency:'USD':'symbol':'1.2-4' }}</span>
+                    <span *ngIf=" rowData[col.property]!=='null' && (col.property !== 'minimumAmount' &&  col.property !== 'maximumAmount')">{{
+                        rowData[col.property]}}</span>
+                    <span *ngIf="!rowData[col.property] && rowData[col.property] !==0">--</span>
+                    </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-table [value]="stairStepModel.stairListStairValues" class="tablemargin">
+        <ng-template pTemplate="caption">
+            <span class="tableName alignHeading">Steps</span>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="th-width table-heading">Step</th>
+                <th class="th-width table-heading">From Quantity</th>
+                <th class="th-width table-heading">To Quantity</th>
+                <th class="th-width table-heading">Rate Amount</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td *ngFor="let col of stairStepModel.stairStepTableColumns">
+                    <span *ngIf="col.property!=='stepNumber' && col.property==='stairStepRateAmount'">{{
+                    rowData[col.property] | currency:'USD':'symbol':'1.2-4' }}</span>
+                    <span *ngIf="col.property==='stepNumber' && rowData[col.property]=== 0">Free</span>
+                    <span *ngIf="col.property==='fromQuantity' || col.property==='toQuantity' || (col.property==='stepNumber' && rowData[col.property]!== 0 )">{{
+                    rowData[col.property] }}</span>
+                    <span *ngIf="!rowData[col.property] && rowData[col.property] !== 0">--</span>
+                    </td> 
+            </tr>
+        </ng-template>
+    </p-table>
+    <div *ngIf="detailedViewResponse.rateItemizeIndicator" class="ui-md-12 ui-lg-12 mar-top10 mar-bot10">
+        <label class="label-style">Itemized Rates </label>
+        <span class="mar-left10 textColor" *ngIf="detailedViewResponse.rateItemizeIndicator==='1'">Yes</span>
+        <span class="mar-left10 textColor" *ngIf="detailedViewResponse.rateItemizeIndicator==='0'">No</span>
+    </div>
+    <p-table [value]="stairStepModel.stairListAdditionalValues" *ngIf="detailedViewResponse.customerAccessorialRateAdditionalChargeDTOs?.length > 0">
+        <ng-template pTemplate="caption">
+                <div class="ui-g table-caption header-height pad-bot0">
+                        <span>Additional Charges</span>
+                    </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Charge Type</th>
+                <th>Rate Type</th>
+                <th>Rate Amount</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td *ngFor="let col of stairStepModel.additionalChargesColumns">
+                    <span *ngIf="col.property!=='additionalRateAmount'">
+                        {{ rowData[col.property] }} </span>
+                    <span *ngIf="col.property==='additionalRateAmount'" class="capitalize-first-word">{{ rowData[col.property] |
+                        currency:'USD':'symbol':'1.2-4'}}</span>
+                    <span *ngIf="!rowData[col.property]">--</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

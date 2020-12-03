@@ -1,0 +1,79 @@
+<div class="averaging pad-bot5">
+    <form [formGroup]="averagingRulesModel.averagingForm">
+        <div class="ui-g-3 documentationType pad-left0">
+            <div class="pad0 ui-float-label timeFrameAlign">
+                <p-autoComplete name="timeFrame" formControlName="timeFrame" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true" field="label" [suggestions]="averagingRulesModel?.averageTimeFrameFiltered" (completeMethod)="onTypeTimeFrame($event)"
+                    (onSelect)="onChangeTimeFrame($event)" emptyMessage="No records found" [forceSelection]="true" (onBlur)="onBlurTimeFrame($event.target.value)"></p-autoComplete>
+                <label for="timeFrame" class="label-style">Timeframe</label>
+            </div>
+            <div class="error-class-height">
+                <p-message severity="error" text="Provide a timeframe" *ngIf="averagingRulesModel.averagingForm.get('timeFrame').touched && averagingRulesModel.averagingForm.get('timeFrame')['errors']?.required">
+                </p-message>
+            </div>
+        </div>
+        <div class="ui-g-3" *ngIf="averagingRulesModel.isWeekly">
+            <div class="pad0 ui-g-12 ui-float-label">
+                <p-autoComplete name="dayOfWeek" class="heightError" formControlName="dayOfWeek" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [multiple]="true" [dropdown]="true" field="label" [suggestions]="averagingRulesModel?.dayOfWeekValues" (completeMethod)="getWeekDays($event)"
+                    emptyMessage="No records found" [forceSelection]="true">
+                </p-autoComplete>
+                <label for="dayOfWeek" class="label-style ui-g-12 pad0">Day of Week</label>
+            </div>
+            <div class="error-class-height">
+                <p-message severity="error" text="Provide a day of week" *ngIf="averagingRulesModel.averagingForm.get('dayOfWeek').touched && averagingRulesModel.averagingForm.get('dayOfWeek')['errors']?.required">
+                </p-message>
+            </div>
+        </div>
+        <div class="ui-g-9 labelErrorAlign" *ngIf="averagingRulesModel.isMonthly">
+            <div class="ui-g-4 radioBtns" style="width:165px; margin-bottom:10px">
+                <div class="eachAlign">
+                    <p-radioButton class="radio-pad" *ngFor="let item of averagingRulesModel?.monthlyAveragingTypes , let i = index" name="fuelPriceBasisTypes" value={{item.value}} label={{item.label}} formControlName="monthlyAveragingTypes" [(ngModel)]="averagingRulesModel.selectedValue"
+                        (click)="onclickMonthlyTypes(item)"></p-radioButton>
+                </div>
+            </div>
+            <div class="pad0 ui-g-4" *ngIf="averagingRulesModel.isEachDay">
+                <div class=" ui-g-12  pad-right20 pad-top0">
+                    <div class="pad0 ui-float-label ui-g-12">
+                        <p-autoComplete name="specificDays" class="heightError" formControlName="specificDay" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [multiple]="true" [dropdown]="true" field="label" [suggestions]="averagingRulesModel?.specificDayValue" (completeMethod)="getSpecificDayValues($event)"
+                            emptyMessage="No records found" [forceSelection]="true">
+                        </p-autoComplete>
+                        <label for="specificDays" class="label-style ui-g-12 pad0">
+                        Specific Day</label>
+                    </div>
+                    <div class="error-class-height">
+                        <p-message severity="error" text="Provide a specific day" *ngIf="averagingRulesModel.averagingForm.get('specificDay').touched && averagingRulesModel.averagingForm.get('specificDay')['errors']?.required">
+                        </p-message>
+                    </div>
+                </div>
+
+            </div>
+            <div class="pad0 ui-g-8" *ngIf="averagingRulesModel.isOnTheDay">
+                <div class="ui-g-6 ui-float-label pad-right10 pad-top0">
+                    <div class="pad0 ui-float-label ui-g-12">
+                        <p-autoComplete name="frequency" formControlName="frequency" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true" field="label" [suggestions]="averagingRulesModel?.frequencyValues" (completeMethod)="getFrequencyData($event)" emptyMessage="No records found"
+                            [forceSelection]="true">
+                        </p-autoComplete>
+                        <label for="frequency" class="label-style ui-g-12 pad0">
+                        Frequency</label>
+                    </div>
+                    <div class="error-class-height">
+                        <p-message severity="error" text="Provide a frequency" *ngIf="averagingRulesModel.averagingForm.get('frequency').touched && averagingRulesModel.averagingForm.get('frequency')['errors']?.required">
+                        </p-message>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-float-label pad-top0">
+                    <div class="pad0 ui-float-label ui-g-12">
+                        <p-autoComplete name="monthlyDay" formControlName="monthlyDay" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true" field="label" [suggestions]="averagingRulesModel?.frequencysubTypeValues" (completeMethod)="getFrequencySubTypeData($event)"
+                            emptyMessage="No records found" [forceSelection]="true">
+                        </p-autoComplete>
+                        <label for="monthlyDay" class="label-style ui-g-12 pad0">
+                        Day</label>
+                    </div>
+                    <div class="error-class-height">
+                        <p-message severity="error" text="Provide a day" *ngIf="averagingRulesModel.averagingForm.get('monthlyDay').touched && averagingRulesModel.averagingForm.get('monthlyDay')['errors']?.required">
+                        </p-message>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

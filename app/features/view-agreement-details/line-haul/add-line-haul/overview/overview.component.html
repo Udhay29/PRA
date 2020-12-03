@@ -1,0 +1,156 @@
+<form [formGroup]="overviewModel.overviewForm">
+    <div class="wrapper ui-g-12 ui-md-12 pad-top10 pad-bot0">
+      <div class="ui-g-12 ui-md-12 mar-left20 overview-container pad-left0 pad-right0">
+        <div class="overview-header">
+          <span class="title">
+            Overview
+          </span>
+        </div>
+        <div class="clearfix marginAlign">
+          <div class="ui-g-12 pad-top15 mar-bot20 pad-bot10 rowAlign borderAlign">
+            <div class="ui-g-3 ui-float-label pad-right10">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-sectionValue-autocomplete" [suggestions]="overviewModel.sectionValuesList" name="SectionValue" formControlName="sectionValue"
+                (completeMethod)="onTypeSectionValue($event)" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [dropdown]="true" field="label" (onSelect)="onSectionSelected($event.value)" [forceSelection]="true"
+                (onBlur)="onautoCompleteBlur($event, 'sectionValue')" emptyMessage="No records found"></p-autoComplete>
+              <label for="agreementType" class="label-style errorAlign">Section</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Section" *ngIf="overviewModel.overviewForm.get('sectionValue').touched && overviewModel.overviewForm.get('sectionValue')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+            <div class="ui-g-3 contractAlign pad-right5 pad-left0">
+              <span class="label-style">Contract</span><br>
+              <div *ngIf="!overviewModel?.contractName">
+                <span data-attr="viewagreement-linehaulOverview-nullContract-span" class="textAlign mar-left20">--</span>
+              </div>
+              <div *ngIf="overviewModel?.contractName">
+                <span data-attr="viewagreement-linehaulOverview-transContract-span" *ngIf="!overviewModel?.contractName?.label" class="textAlign">(Transactional)-{{overviewModel?.contractName?.value}}</span>
+                <span data-attr="viewagreement-linehaulOverview-contract-span" *ngIf="overviewModel?.contractName?.label" class="textAlign">{{overviewModel?.contractName?.label}}-{{overviewModel?.contractName?.value}}</span>
+              </div>
+            </div>
+            <div class="ui-g-3 contractAlign pad-right5">
+              <span class="label-style">Priority</span><br>
+              <span data-attr="viewagreement-linehaulOverview-priorityLevelNumber-span" class="textAlign" *ngIf="overviewModel.priorityLevelNumber">{{overviewModel?.priorityLevelNumber}}</span>
+              <span data-attr="viewagreement-linehaulOverview-nullPriorityLevelNumber-span" class="textAlign mar-left14" *ngIf="!overviewModel.priorityLevelNumber">--</span>
+            </div>
+            <div class="ui-g-3 ui-float-label">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-overriddenPriority-autocomplete" [suggestions]="overviewModel.overRiddenPriorityFiltered" name="overRiddenPriority"
+                (completeMethod)="onTypePriorityValue($event)" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [dropdown]="true" field="label" (onSelect)="onPrioritySelected($event.value)" (onClear)="onClearDropDown('overriddenPriority')"
+                formControlName="overriddenPriority" [forceSelection]="true" emptyMessage="No records found">
+              </p-autoComplete>
+              <label for="overRiddenPriority errorAlign" class="label-style ui-g-12 pad0 errorAlign">
+                <span>Overridden Priority</span><span class="optional-text pull-right mar-right10">optional</span></label>
+            </div>
+          </div>
+          <div class="ui-g-12  pad-right20 pad-top20 mar-bot20 pad-bot10 rowAlign borderAlign">
+            <div class="ui-g-3 ui-float-label pad-right10">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-businessUnit-autocomplete" class="full-width" [style]="{'width':'100%'}" formControlName="businessUnit" id="float-input"
+                type="text" [suggestions]="overviewModel.businessUnitFiltered" (completeMethod)="onTypeBusinessValue($event)"
+                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true" field="label" (onSelect)="businsessUnitSelected($event['value'])"
+                [forceSelection]="true" (onBlur)="onautoCompleteBlur($event, 'businessUnit')" (onClear)="onClearDropDown('businessUnit')" emptyMessage="No records found"></p-autoComplete>
+              <label for="businessUnit" class="label-style errorAlign">Business
+                Unit</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Business Unit" *ngIf="overviewModel.overviewForm.get('businessUnit').touched && overviewModel.overviewForm.get('businessUnit')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+            <div class="ui-g-3 ui-float-label pad-right5 pad-left0">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-serviceOffering-autocomplete" class="full-width" id="float-input" (completeMethod)="onTypeServiceOffering($event)"
+                formControlName="serviceOffering" type="text" [suggestions]="overviewModel.serviceOfferingData"
+                (onSelect)="serviceOfferingSelected($event)" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [forceSelection]="true" [dropdown]="true" field="label" (onClear)="onClearDropDown('serviceOffering')" (onBlur)="onServiceOfferingBlurred($event)" 
+                emptyMessage="No records found"></p-autoComplete>
+              <label for="serviceOffering" class="label-style errorAlign">Service
+                Offering</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Service Offering" *ngIf="overviewModel.overviewForm.get('serviceOffering').touched && overviewModel.overviewForm.get('serviceOffering')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+            <div class="ui-g-3 transitAlign pad-right5">
+              <span class="label-style">Transit Mode</span><br>
+              <span data-attr="viewagreement-linehaulOverview-nullTransitMode-span" *ngIf="!overviewModel?.transitMode?.value" class="textAlign mar-left30">--</span>
+              <span data-attr="viewagreement-linehaulOverview-transitMode-span" *ngIf="overviewModel?.transitMode?.value" class="textAlign">{{overviewModel?.transitMode?.value}}</span>
+            </div>
+            <div class="ui-g-3 ui-float-label pad-right2">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-serviceLevel-autocomplete" class="full-width" id="float-input" (completeMethod)="onTypeServiceLevel($event)"
+                formControlName="serviceLevel" type="text" [suggestions]="overviewModel.serviceLevelData" (onBlur)="onserviceLevelBlurred('serviceLevel')"
+                (onSelect)="serviceLevelSelected($event.value)" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [dropdown]="true" field="label" (onClear)="onClearDropDown('serviceLevel')" [forceSelection]="true" emptyMessage="No records found"></p-autoComplete>
+              <label for="equipmentType" class="label-style ui-g-12 pad0 errorAlign">
+                <span>Service
+                  Level</span><span class="optional-text pull-right mar-right10">optional</span></label>
+            </div>
+          </div>
+          <div class="ui-g-12 pad-right20 pad-top20 mar-bot20 pad-bot10 borderAlign rowAlign">
+            <div class="ui-g-3 ui-float-label pad-right5">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-equipmentCategory-autocomplete" [style]="{'width':'100%'}" id="float-input" formControlName="equipmentCategory" type="text"
+                (completeMethod)="onTypeEquipmentCategory($event)" [suggestions]="overviewModel.equipmentCategoryList"
+                (onSelect)="equipmentCategorySelected($event['value'])" (onBlur)="onEquipmentBlur($event, 'equipmentCategory')"
+                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true" [forceSelection]="true"
+                field="label" (onClear)="onClearDropDown('equipmentCategory')" (onBlur)="onautoCompleteBlur($event, 'equipmentCategory')" emptyMessage="No records found">
+              </p-autoComplete>
+              <label for="equipmentCategory" class="label-style errorAlign">Equipment
+                Category</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Equipment Category" *ngIf="overviewModel.overviewForm.get('equipmentCategory').touched && overviewModel.overviewForm.get('equipmentCategory')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+            <div class="ui-g-3 ui-float-label pad-right5">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-equipmentType-autocomplete" id="float-input" formControlName="equipmentType" [suggestions]="overviewModel.equipmentTypeList"
+                (onSelect)="equipmentTypeSelected($event.value)" (completeMethod)="onTypeEquipmentType($event)" (onBlur)="equipmentFieldblurred()"
+                (onClear)="onClearDropDown('equipmentType')" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                [dropdown]="true" field="label" [forceSelection]="true" (onBlur)="onEquipmentBlur($event, 'equipmentType')" emptyMessage="No records found"></p-autoComplete>
+              <label for="equipmentType" class="label-style ui-g-12 pad0 errorAlign">
+                <span>Equipment Type</span><span class="optional-text pull-right mar-right25">optional</span></label>
+              <p-message severity="error" *ngIf="overviewModel.isEquipmentTypeRequired" text="Provide a Equipment Type"></p-message>
+            </div>
+            <div class="ui-g-3 ui-float-label pad-right20">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-equipmentLength-autocomplete" id="float-input" formControlName="equipmentLength" [suggestions]="overviewModel.equipmentLengthList"
+                (completeMethod)="onTypeEquipmentLength($event)" (onSelect)="equipmentLengthSelected($event.value)"
+                (onBlur)="equipmentFieldblurred()" (onClear)="onClearDropDown('equipmentLength')" [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}" [dropdown]="true" field="label" [forceSelection]="true" emptyMessage="No records found"></p-autoComplete>
+              <label for="equipmentLength errorAlign" class="label-style errorAlign ui-g-12 pad0">
+                <span>Equipment Length</span><span class="optional-text pull-right mar-right25">optional</span></label>
+            </div>
+          </div>
+  
+          <div class="ui-g-12  pad-top20 mar-bot5 pad-bot20 rowAlign">
+            <div class="ui-g-3 ui-float-label pad-right5">
+              <p-multiSelect [options]="overviewModel.operationalServices" filter="false" maxSelectedLabels="1"
+              data-attr="viewagreement-linehaulOverview-operationalServices-multiSelect"
+                formControlName="operationalServices" placeholder="Operational Services" [style]="{'width':'100%'}"
+                defaultLabel="" (onBlur)="onserviceLevelBlurred('operationalServices')" (onChange)="operationalServiceSelected($event)"
+                [ngClass]="{'ui-inputwrapper-filled': overviewModel.isOperationalService}" resetFilterOnHide="true">
+              </p-multiSelect>
+              <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign">
+                <span>Operational
+                  Service</span>
+                <span class="optional-text pull-right mar-right25">optional</span></label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a operational Service" *ngIf="overviewModel.overviewForm.get('operationalServices').touched && overviewModel.overviewForm.get('operationalServices')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+            <div class="ui-g-3 ui-float-label pad-right20">
+              <p-autoComplete data-attr="viewagreement-linehaulOverview-awardStatus-autocomplete" id="float-input" [suggestions]="overviewModel.awardStatusList" (completeMethod)="onTypeAwardStatus($event)"
+                formControlName="awardStatus" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [dropdown]="true"
+                field="label" (onSelect)="awardStatusSelected($event.value)" [forceSelection]="true" (onBlur)="onautoCompleteBlur($event, 'awardStatus')"></p-autoComplete>
+              <label for="awardStatus" class="label-style errorAlign" emptyMessage="No records found">Award
+                Status</label>
+              <div class="error-class-height">
+                <p-message severity="error" text="Provide a Award Status" *ngIf="overviewModel.overviewForm.get('awardStatus').touched && overviewModel.overviewForm.get('awardStatus')['errors']?.required">
+                </p-message>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </form>

@@ -1,0 +1,61 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.line-haul-heading {
+    @include getTypographyStyles('h2');
+    border-bottom: 1px solid #C9C9C9;
+}
+.overview-values {
+    @include getTypographyStyles('caption1');
+}
+.line-haul-heading-pad{
+    padding: 15px 0px 20px 14px;
+}
+.expiration-date-border {
+    border-bottom: 1px solid $grey-lite70;
+}
+.borderValue {
+  border-radius: 6px;
+}
+.icon-button {
+  background: 0 0;
+  border: none;
+}
+.overview-wrapper {
+  background: $white;
+}
+.alignContract {
+  width: 90%;
+}
+
+    /deep/.lineHaulDetailsMenu.menu-overlay.arrowtopbox.font12.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-menu-dynamic.ui-shadow{
+        width:12%
+  }
+
+
+.lineHaulDetailsWrapper {
+    /deep/  .ui-float-label > label {
+        left: 28px;
+    }
+    /deep/ .ui-float-label .ui-inputwrapper-focus ~ label, .ui-float-label .ui-inputwrapper-filled ~ label {
+        left: 7px;
+    } 
+ }
+
+ .breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+
+    /deep/ ul {
+        padding-bottom: 2px;
+    }
+}
+
+.pad-bot {
+    /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+        padding-bottom: 0px;
+        padding-left: 3px;
+    }
+ }
+ 

@@ -1,0 +1,11 @@
+.container {
+    /deep/ p-tabview .ui-tabview.ui-tabview-top > .ui-tabview-nav {
+        border: none !important;
+         margin-left:6px;
+    }
+}
+.breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+}

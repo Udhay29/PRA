@@ -1,0 +1,54 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.errorMsg /deep/ .ui-inputtext {
+    border-color: $red !important;
+    background-color: $red-lite90;
+}
+
+.labelAligns {
+    position: absolute;
+    top: 23px;
+}
+
+.autoCompleteWidth {
+    width: 100%
+}
+.timePeriodInput {
+    width: 25% !important;
+}
+.timePeriod {
+    .ui-float-label input:focus~label,
+    .ui-float-label input.ui-state-filled~label,
+    .ui-float-label .ui-inputwrapper-focus~label,
+    .ui-float-label .ui-inputwrapper-filled~label {
+        position: absolute;
+        left: 10px !important;
+        top: calc(-0.95em - 2px);
+    }
+}
+.timeFrame {
+    /deep/ input.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
+        border-radius: 0px 6px 6px 0px;
+    }
+}
+.floatLabelAlign {
+    position: absolute;
+    top: 18px;
+    left: 33% !important;
+}
+.optional-row {
+    .ui-float-label input:focus~label,
+    .ui-float-label input.ui-state-filled~label,
+    .ui-float-label .ui-inputwrapper-focus~label,
+    .ui-float-label .ui-inputwrapper-filled~label {
+        top: -1.1em;
+    }
+}
+
+.heightOFError {
+    height: 13px;
+}
+.errorAlign {
+    position: absolute;
+    top: 18px;
+}

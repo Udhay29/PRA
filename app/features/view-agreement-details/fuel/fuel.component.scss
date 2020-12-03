@@ -1,0 +1,178 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.iconColorChange {
+    display: inline-block;
+    position: relative;
+}
+
+.width20 {
+    width: 20px;
+}
+
+.min-col-width {
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mincolwidth {
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.newLine {
+    white-space: pre-line;
+}
+
+.filterColor {
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.messageDisplay {
+    width: 100% !important;
+}
+
+.displaymiddle {
+    padding-top: calc(50vh - 280px);
+    justify-content: center;
+    align-items: center;
+    text-align: center
+}
+
+.message-wrapper {
+    height: calc(100vh - 503px);
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableFooter {
+    max-height: 60px !important;
+}
+
+.page-scroll {
+    /deep/ .ui-table .ui-paginator-bottom.ui-paginator,
+    .ui-table .ui-table-summary {
+        padding-top: 12px;
+        padding-bottom: 1px;
+    }
+}
+
+.ui-inputgroup.getGridValuesInput>span.ui-inputgroup-addon {
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    border: none;
+    height: 30px;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext {
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background: transparent;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:focus {
+    border-left: 1px solid #007dba;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:not([disabled]):hover {
+    border: 1px solid #00aafc;
+}
+
+.emptyTableWrapper /deep/ .ui-table-scrollable-view {
+    height: calc(100vh - 390px) !important;
+    >.ui-table-scrollable-body {
+        >table.ui-table-scrollable-body-table {
+            width: 100% !important;
+            colgroup {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.fuelWrapper {
+    /deep/.tableWrapper .ui-table-scrollable-body {
+        min-height: calc(100vh - 490px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/.emptyTableWrapper .ui-table-scrollable-body {
+        overflow: hidden !important;
+    }
+    /deep/.emptyTableWrapper .ui-table-scrollable-body-table {
+        width: 100% !important;
+    }
+    /deep/ .emptyTable .ui-table .ui-table-scrollable-body {
+        height: calc(100vh - 380px) !important;
+        max-height: calc(100vh - 380px) !important;
+    }
+    /deep/ .ui-table-caption.ui-widget-header.ng-star-inserted {
+        border-bottom: 1px solid #efefef;
+        min-height: 60px;
+        padding: 15px !important;
+    }
+    /deep/ .emptyTable .ui-table-caption.ui-widget-header {
+        border-bottom: none;
+    }
+    .noHoverColor {
+        background: none !important;
+    }
+    /deep/td.noInfoMessage {
+        width: 100%;
+    }
+}
+
+.grid-icons {
+    display: inline-block;
+}
+
+.search-box {
+    width: 254px;
+    top: 1px;
+}
+
+.filter-menu-icon {
+    padding: 7.5px 14px;
+}
+
+.filter-pad20 {
+    padding-left: 20px !important;
+}
+
+.more-pad40 {
+    padding-left: 40px !important;
+}
+
+.absPosition {
+    position: absolute;
+    right: 15px;
+    margin-top: 12px;
+    bottom: 13px;
+}

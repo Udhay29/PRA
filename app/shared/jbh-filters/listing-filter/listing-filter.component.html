@@ -1,0 +1,30 @@
+<p-accordion [multiple]="true" class='accordian-container'>
+<p-accordionTab [selected]="!isPanelClosed" [attr.data-attr]="'listingFilter-' +  filterConfig?.title + '-accordionTab'"
+ class="nopadding  dateFilter list-filter-style"  [(selected)]="isChildrAccordianOpened" [ngClass]="{'no-border': isChildrAccordianOpened || !isPanelClosed, 
+  'pointer-events-none': !isPanelClosed && !filterConfig?.isStatus}"
+   >
+  <p-header class="header-style">
+    <span class="filter-title" pTooltip={{filterConfig?.title}} tooltipPosition="top" >{{filterConfig?.title}}</span>
+    <span class="pull-right"  *ngIf="selectedValues.length > 0">({{selectedValues.length}})</span>
+  </p-header>
+  <div class="ui-g" >
+    <div class="ui-g-12 ui-inputgroup mar-top0 pad-top0 pad-left10" *ngIf="filterConfig?.inputFlag">
+      <span class="ui-inputgroup-addon ">
+        <em class="icon-Search"  [attr.data-attr]="'listingFilter-' +  filterConfig?.title + '-icon'"></em>
+      </span>
+      <input [attr.data-attr]="'listingFilter-' +  filterConfig?.title + '-input'" [(ngModel)]="autocompleteFilter" pInputText placeholder="Search" (input)="onSearch($event.target.value)">
+    </div>
+    <span class="ui-g-12 error-message" *ngIf="errorMessage">{{errorMessage}}</span>
+    <p-scrollPanel class="ui-g-12" [style]="{width: '100%', height: scrollHeight}" *ngIf="filteredItemList.length > 0">
+      <ul class="pad0 mar0 pad-bot10">
+        <li class="check-list" *ngFor="let item of filteredItemList; let index=index">
+          <span class="checkbox-title" *ngIf="item.label">           
+            <p-checkbox [attr.data-attr]="'listingFilter-' +  filterConfig?.title + '-input-' + index" name="groupname" pTooltip={{item.label}} tooltipPosition="top" [value]="item" [label]="item.label" [(ngModel)]="selectedValues" (onChange)="onCheckBoxSelect()"></p-checkbox>
+          </span>
+        </li>
+      </ul>
+    </p-scrollPanel>
+    <button [attr.data-attr]="'listingFilter-' +  filterConfig?.title + '-button'" class="icon-text-button reset-color" (click)="onReset()">Reset</button>
+  </div>
+</p-accordionTab>
+</p-accordion>

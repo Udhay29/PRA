@@ -1,0 +1,52 @@
+<p-accordion [multiple]="true" class='accordian-container'>
+    <p-accordionTab [selected]="!isPanelClosed" [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-accordionTab'" class="nopadding dateFilter" [(selected)]="isChildMileageAccordianOpened" [ngClass]="{'no-border': isChildMileageAccordianOpened}" 
+     expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+            <p-header class="header-style">
+              <span class="filter-title"  pTooltip={{filterModel.filterName}} tooltipPosition="top">{{filterModel.filterName}}</span>
+            </p-header>
+            <div class="ui-g mar-bot20 pad-left15">
+              <p-radioButton   [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-radioButton-1'" class="ui-md-5 ui-g-5 pad0" name={{filterModel.dateRadioName}} value="Date" label="Date"
+                [(ngModel)]="filterModel[filterModel.dateRadioName]"
+                (click)="dateRadioToggle(true, filterModel.effectiveParameter.dateOnly,filterModel.effectiveParameter.dateName,filterModel.effectiveAndParameter.dateName, filterModel.effectiveExactMatchParameter.dateName ,  filterModel.effectiveExactMatchParameter.index)"
+                checked="checked">{{filterModel.dateRadioName}} </p-radioButton>
+              <p-radioButton  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-radioButton-2'" class="ui-md-7 ui-g-7 pad0" name={{filterModel.dateRadioName}} value="Date Range" label="Date Range"
+                [(ngModel)]="filterModel[filterModel.dateRadioName]"
+                (click)="dateRadioToggle(false, filterModel.effectiveParameter.dateOnly,filterModel.effectiveParameter.dateName, filterModel.effectiveAndParameter.dateName, filterModel.effectiveExactMatchParameter.dateName ,  filterModel.effectiveExactMatchParameter.index)">
+              </p-radioButton>
+            </div>
+            <div *ngIf="filterModel[filterModel.effectiveParameter.dateOnly]">
+              <p-calendar  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-calendar-1'" #cal class="effective-date date-field-float" showIcon="true" dateFormat="mm/dd/yy" [showOnFocus]="false"
+                (onBlur)="onDateRangeBlur(filterModel.effectiveExactMatchParameter)"
+                (onInput)="cal.currentMonth=filterModel[filterModel.effectiveExactMatchParameter.dateName]?.getMonth();cal.currentYear=filterModel[filterModel.effectiveExactMatchParameter.dateName]?.getFullYear()"
+                (onSelect)="onDateRangeSelect(filterModel.effectiveExactMatchParameter)" placeholder="Pick a Date"
+                [(ngModel)]="filterModel[filterModel.effectiveExactMatchParameter.dateName]"></p-calendar>
+              <div class="mar-top15 mar-left-9">
+                <p-checkbox  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-checkbox'" name="effDate" value="Match Exact Date" label="Match Exact Date" [(ngModel)]="effDate"
+                  (onChange)="matchExactDate($event, filterModel.effectiveExactMatchParameter)"></p-checkbox>
+              </div>
+            </div>
+            <div class="ui-g" *ngIf="filterModel[filterModel.effectiveParameter.dateOnly] === false">
+              <span class="ui-md-12 ui-g-12  label-style pad-left12">Between</span>
+              <div class="ui-g-12 ui-float-label  mar-bot5">
+                <p-calendar  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-calendar-2'" #cal class="effective-date" showIcon="true" dateFormat="mm/dd/yy" [showOnFocus]="false"
+                  (onBlur)="onDateRangeBlur(filterModel.effectiveParameter)"
+                  (onInput)="cal.currentMonth=filterModel[filterModel.effectiveParameter.dateName]?.getMonth();cal.currentYear=filterModel[filterModel.effectiveParameter.dateName]?.getFullYear()"
+                  (onSelect)="onDateRangeSelect(filterModel.effectiveParameter)" placeholder="Pick a Date"
+                  [(ngModel)]="filterModel[filterModel.effectiveParameter.dateName]"></p-calendar>
+              </div>
+
+              <div class="ui-g-12 pad-left0 pad-right0">
+                <span class="ui-md-12 ui-g-12   label-style pad-left12">And</span>
+                <div class="ui-float-label ui-md-12 ui-g-12">
+                  <p-calendar  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-calendar-3'" #cal class="effective-date" showIcon=" true" calendarIcon="icon-Chevron_Down" [showOnFocus]="false"
+                    dateFormat="mm/dd/yy" (onBlur)="onDateRangeBlur(filterModel.effectiveAndParameter)"
+                    (onInput)="cal.currentMonth=filterModel[filterModel.effectiveAndParameter.dateName]?.getMonth();cal.currentYear=filterModel[filterModel.effectiveAndParameter.dateName]?.getFullYear()"
+                    (onSelect)="onDateRangeSelect(filterModel.effectiveAndParameter)" placeholder="Pick a Date"
+                    [(ngModel)]="filterModel[filterModel.effectiveAndParameter.dateName]"></p-calendar>
+                </div>
+              </div>
+            </div>
+            <button  [attr.data-attr]="'dateFilter-' +  filterModel.filterName + '-button'" class="icon-text-button reset-color pad-top10 pad-left0 mar-left0"
+              (click)="clearDate(filterModel.effectiveParameter.dateName, filterModel.effectiveAndParameter.dateName,  filterModel.effectiveAndParameter.index, filterModel.effectiveExactMatchParameter.dateName);resetRadio(filterModel.dateRadioName,filterModel.effectiveParameter.dateOnly,'effDate',filterModel.effectiveParameter.exactMatch)">Reset</button>
+    </p-accordionTab>
+</p-accordion>

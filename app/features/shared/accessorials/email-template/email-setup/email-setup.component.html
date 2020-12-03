@@ -1,0 +1,23 @@
+<div class="ui-g">
+  <div class="ui-g-12 pad0">
+    <p-messages [(value)]="emailTemplateModel.duplicateMessages"></p-messages>
+  </div>
+</div>
+<div class="ui-g pad-top30" [formGroup]="setUpForm">
+  <div class="ui-g-3 pad0 ui-float-label">
+    <p-autoComplete [suggestions]="emailTemplateModel.filteredChargeTypes" [dropdown]="true" (completeMethod)="getFilteredSuggestions($event, 'filteredChargeTypes')"
+      (onSelect)="checkDuplicate()" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="chargeType"
+      emptyMessage="No records found" [forceSelection]="true" formControlName="chargeType" (onBlur)="onBlur($event, 'chargeType')"></p-autoComplete>
+    <label class="label-style ui-g-12 pad0 errorAlign">
+      <span>Charge Type</span>
+    </label>
+  </div>
+  <div class="ui-g-3 pad0 mar-left15 ui-float-label">
+    <p-autoComplete [suggestions]="emailTemplateModel.filterednotifications" [dropdown]="true" (completeMethod)="getFilteredSuggestions($event, 'filterednotifications')"
+      (onSelect)="checkDuplicate()" [style]="{'width':'100%'}" field="name" [inputStyle]="{'width':'100%'}" name="chargeType"
+      emptyMessage="No records found" [forceSelection]="true" formControlName="notificationType" (onBlur)="onBlur($event, 'notificationType')"></p-autoComplete>
+    <label class="label-style ui-g-12 pad0 errorAlign">
+      <span>Notification Type</span>
+    </label>
+  </div>
+</div>

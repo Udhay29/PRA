@@ -1,0 +1,157 @@
+.additionalInfoWrapper {
+    /deep/ .ui-multiselect {
+        width: 100% !important;
+    }
+    .error-class-height {
+        height: 5px;
+    }
+    /deep/ .ui-float-label>label {
+        left: 5px;
+    }
+       .labelTop + .lineStyle > div{
+        margin-top: 20px;
+    }
+    .lineStyle + .topLabel > div{
+        margin-top: 20px;
+    }
+    /deep/ .ui-float-label .ui-inputwrapper-focus ~ label, .ui-float-label .ui-inputwrapper-filled ~ label {
+        top: -1em;
+    }
+}
+.error-height {
+  height: 5px;
+}
+.additionalInfoContainer {
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    margin: 0px 10px 10px 10px;
+    border-radius: 5px;
+}
+.optional-text-color{
+    color: #B2B2B2;
+}
+.optional-text {
+    position: absolute;
+    right: 10px;
+    margin-top: -1.7em;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.01rem;
+    text-transform: none;
+}
+.labelMarginRight {
+    margin-right: 2.8em;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.lineStyle {
+    padding: 19px 25px 24px 0px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.topPosition {
+    top: unset ;
+    bottom: 100%;
+    margin-bottom: .5em;
+}
+
+.postionLeft {
+    left: 44%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.margin11 {
+    margin: 11px;
+}
+
+.heading {
+    border-bottom: 1px solid #E2E2E2;
+    margin: 0px;
+    padding: 15px;
+    border-radius: 5px 5px 0 0;
+}
+.lineSpace {
+  border-bottom: 1px solid #e3e3e3;
+  padding: 22px 25px 24px 0;
+}
+.fieldSpacing {
+    padding: 5px 30px 5px 25px;
+}
+
+.borderNone {
+    border: none !important;
+}
+
+.mar-left {
+    margin-left: 10px;
+    font-size: 16px;
+}
+.addiInfoPopup{
+    /deep/.ui-dialog .ui-dialog-content {
+        overflow: unset;
+    }
+}
+.text-color {
+    color: #C9C9C9;
+    font-size: 13px;
+    padding-left: 6px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+    /deep/ .ui-button {
+        font-family: "Helvetica Neue LT Pro 65", Helvetica, Arial, sans-serif;
+    }
+    .backBtn {
+        border: 1px solid #c9c9c9;
+    }
+    .cancelBtn {
+        min-width: 80px;
+    }
+}
+
+.addnew_btn {
+    font-family: "Helvetica Neue LT Pro 65", Helvetica, Arial, sans-serif !important;
+}
+
+.additionalInfoWrapper {
+    @media (min-width: 992px) {
+        .noPadding {
+            padding: 0px;
+        }
+        .labelTop + .lineStyle > div{
+            margin-top: 10px;
+        }
+        .lineStyle + .topLabel > div{
+            margin-top: 10px;
+        }
+    }
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.textMargin {
+    margin: 0 0 15px 15px;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Arial, Helvetica, sans-serif;
+}
+.topClass + label {
+    top: -1em !important;
+}

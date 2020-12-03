@@ -1,0 +1,79 @@
+<form [formGroup]="settingForm">
+  <h4 class="heading-style">Security</h4>
+  <div class="ui-md-6 ui-float-label">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">Rate Agreement Viewed by Branches</label>
+  </div>
+  <div class="ui-md-6 ui-float-label">
+    <p-autoComplete class="display mar-top5" [suggestions]="documentationTypesList" field="operationalGroupCode" formControlName="documentationTypes"
+      [maxlength]="30" [multiple]="true"></p-autoComplete>
+    <label for="documentationTypes">Rate Agreement Viewed By Business Units</label>
+  </div>
+  <div class="border-style">
+    <h4 class="heading-style">Agreement Notifications</h4>
+    <div class="ui-md-3 ui-float-label">
+      <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+      <label for="documentationTypes">Notification Before Expiration</label>
+    </div>
+    <div class="ui-md-3 ui-float-label">
+      <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+      <label for="documentationTypes">Since Agreement Changes</label>
+    </div>
+  </div>
+  <h4 class="heading-style">Quotes</h4>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">International Quote Length</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Domestic Quote Length</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Default LTL Weight</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Maximum Below Recommended</label>
+  </div>
+  <h4 class="heading-style">International Currency Conversion Markup</h4>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Currency</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Business Unit</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Full Truck Load Markup %</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Less Than TruckLoad Markup %</label>
+  </div>
+  <h4 class="heading-style">Global LTL Warning Shipping Limits</h4>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes"> Density Threshold</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Linear Warning Level</label>
+  </div>
+  <div class="ui-md-3 inlineBlock">
+    <label for="documentationTypes">Cubic Capacity Warning Levels</label>
+    <p-inputSwitch formControlName="proposalAutoExpire"></p-inputSwitch>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Cubic Warning Level</label>
+  </div>
+  <div class="ui-md-3 ui-float-label">
+    <input formControlName="proposalAutoExpire" type="text" style="width:100%;" name="proposalAutoExpire" pInputText />
+    <label for="documentationTypes">Weight Warning</label>
+  </div>
+</form>

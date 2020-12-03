@@ -1,0 +1,124 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+/deep/.documentationDetailsMenu.menu-overlay.arrowtopbox.font12.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-menu-dynamic.ui-shadow{
+    width:12%
+}
+.overFlowIcon {
+    background: none;
+    border: none;
+}
+.overFlowIcon:hover {
+    color: $blue;
+    cursor: pointer;
+  }
+  .overFlowIcon:focus {
+    outline: none;
+  }
+.textColor {
+    color: $grey-dark66;
+}
+.documentationAccordian {
+    .ui-table-caption.ui-widget-header.ng-star-inserted {
+        padding-bottom: 0px;
+        min-height: 45px;
+    }
+    /deep/.ui-table {
+        border-radius: unset !important;
+        border: 1px solid $grey-lite48;
+        box-shadow: none;
+    }
+}
+.documentationDetailedViewWrapper {
+    /deep/.ui-accordion .ui-accordion-content-wrapper {
+        margin-bottom: 10px !important;
+    }
+    /deep/.ui-table {
+        border: 1px solid $grey-lite48;
+        box-shadow: none;
+    }
+    /deep/.ui-table-caption.ui-widget-header.ng-star-inserted {
+        padding-left: 10px;
+    }
+}
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.top0{
+    top: 0px !important;
+}
+.wordBreak{
+    word-break: break-all;
+}
+.contractTable{
+    /deep/.ui-table-thead > tr > th:first-child {
+        width: 60% !important;
+    }
+    /deep/.ui-table-tbody > tr > td:first-child {
+        width: 60% !important;
+    }
+}
+.sectionTable{
+    /deep/.ui-table-thead > tr > th:nth-child(2) {
+        width: 40% !important;
+    }
+    /deep/.ui-table-tbody > tr > td:nth-child(2) {
+        width: 40% !important;
+    }
+}
+.textArea {
+    margin-top: 10px;
+    padding-left: 0px;
+    padding-top: 0px;
+    resize: none;
+    border-color: $white;
+    width: 100%;
+}
+.textAreaWrapper /deep/ textarea.ui-inputtext {
+    min-height: 0px !important;
+    height: auto;
+}
+.mar-left0{
+    margin-left: 0px;
+}
+.attachbor{
+    border-block-end: 1px solid $grey-lite48; 
+}
+.txt{
+    text-align-last: right;
+}
+.txtleft{
+    text-align-last: left;
+}
+.nodecor{
+    text-decoration: none;
+}
+.pad-left60{
+    padding-left: 60px !important;
+}
+.padDate{
+    padding-left: 80px !important;
+}
+.padAddedBy{
+    padding-left: 120px !important;
+}
+.documentDetailedViewscroll {
+    height: calc(100vh - 200px) !important;
+    overflow: auto;
+    }
+.breadCrumbList /deep/ .ui-breadcrumb .ui-breadcrumb-chevron {
+    margin-top: 3px !important;
+}
+.documentationBillTo{
+/deep/ p-table[datakey] .ui-table tbody > tr > td:first-child, 
+/deep/ p-table[datakey] .ui-table thead > tr > th:first-child{
+    min-width: unset !important;
+    width: unset !important;
+}
+}

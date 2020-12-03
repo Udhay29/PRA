@@ -1,0 +1,12 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="ui-g ui-fluid feature-container" [appJbhLoader]="configurableModel?.pageLoading">
+<app-general #settingForm [dataList]="configDataList"></app-general>
+
+<!-- Buttons -->
+<div appShortcut class="footer-part wrapper ui-md-12">
+    <button type="text" pButton label="Save" class="pull-right  ui-button-primary" appShortcut="ctrl+alt+1"
+        (click)="submitForm()"></button>
+    <button type="text" pButton label="Cancel" class="mar-right20 pull-right ui-button-secondary"
+        appShortcut="ctrl+alt+2" (click)="onCancelClick()"></button>
+</div>
+</div>

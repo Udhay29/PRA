@@ -1,0 +1,333 @@
+<div [ngClass]="{'loader': viewMileageModel.pageLoading}" [appJbhLoader]="viewMileageModel?.pageLoading"></div>
+<div class="split-wrapper">
+    <div class="ui-g-12 pad0 dropshadow split-container view-form-content">
+        <div class="split-header pad10">
+            <span class="title">Program Detail</span>
+            <button data-attr="viewagreement-viewMileage-mileageDetails-close-button" class="icon-button icon-Menu_Close close-position  iconColorChange" (click)="onClose()"></button>
+        </div>
+        <div class="split-body ">
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text breakClass">Program Name </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageProgramName; else notShowEffDate">
+                        <div class="content-text breakClass">{{viewMileageModel.mileageDetails.mileageProgramName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Business Unit </label>
+                    <div *ngIf="viewMileageModel.mileageDetails.financeBusinessUnitAssociations?.length; else notShowContract">
+                        <ul class="comma-list">
+                            <li *ngFor="let contract of viewMileageModel.mileageDetails.financeBusinessUnitAssociations" class="content-text">{{contract}}</li>
+                        </ul>
+                    </div>
+                    <ng-template #notShowContract>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Agreement Default</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.agreementDefaultIndicator; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.agreementDefaultIndicator}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Contract </label>
+                    <div *ngIf="viewMileageModel.mileageDetails.contractAssociations?.length; else notShowContract">
+                        <ul class="comma-list">
+                            <li *ngFor="let contract of viewMileageModel.mileageDetails.contractAssociations" class="content-text">{{contract.contractDisplayName}}</li>
+                        </ul>
+                    </div>
+                    <ng-template #notShowContract>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Section</label>
+                    <div *ngIf="viewMileageModel.mileageDetails.sectionAssociations?.length; else notShowContract">
+                        <ul class="comma-list">
+                            <li *ngFor="let section of viewMileageModel.mileageDetails.sectionAssociations" class="content-text">{{section.customerAgreementContractSectionName}}</li>
+                        </ul>
+                    </div>
+                    <ng-template #notShowContract>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">System</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageSystemName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.mileageSystemName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">System Version</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageSystemVersionName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.mileageSystemVersionName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Distance Unit </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.unitOfDistanceMeasurementCode; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.unitOfDistanceMeasurementCode}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Geography Type </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.geographicPointTypeName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.geographicPointTypeName }}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Route Type</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageRouteTypeName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.mileageRouteTypeName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Calculation Type</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageCalculationTypeName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.mileageCalculationTypeName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Border Miles Parameter</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageBorderMileParameterTypeName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.mileageBorderMileParameterTypeName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Decimal Precision</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.decimalPrecisionIndicator; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.decimalPrecisionIndicator}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Carrier </label>
+                    <div *ngIf="viewMileageModel.mileageDetails.carrierAssociations?.length; else notShowContract">
+                        <ul class="comma-list">
+                            <li *ngFor="let carrier of viewMileageModel.mileageDetails.carrierAssociations" class="content-text">{{carrier.name +' ('+carrier.code+')' }}</li>
+                        </ul>
+                    </div>
+                    <ng-template #notShowContract>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Status</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.invalidReasonType; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.invalidReasonType}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">System Parameter </label>
+                    <div *ngIf="viewMileageModel.mileageDetails.mileageSystemParameters?.length; else notShowContract">
+                        <ul class="comma-list">
+                            <li *ngFor="let system of viewMileageModel.mileageDetails.mileageSystemParameters" class="content-text">{{system.mileageSystemParameterName}}</li>
+                        </ul>
+                    </div>
+                    <ng-template #notShowContract>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Effective Date </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.effectiveDate; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.effectiveDate}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Expiration Date</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.expirationDate; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.expirationDate}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text ">Notes</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.mileageProgramNoteText; else notShowEffDate">
+                        <div class="content-text breakClass">{{viewMileageModel.mileageDetails.mileageProgramNoteText}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Created By </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.createUserId; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.createUserId}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Created On</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.createTimestamp; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.createTimestamp}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Created Program</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.createProgramName; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.createProgramName}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Original Effective Date </label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.effectiveDate; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.originalEffectiveDate}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                <div class="">
+                    <label class="heading-text content-text">Original Expiration Date</label>
+                    <ng-container *ngIf="viewMileageModel.mileageDetails.expirationDate; else notShowEffDate">
+                        <div class="content-text">{{viewMileageModel.mileageDetails.originalExpirationDate}}</div>
+                    </ng-container>
+                    <ng-template #notShowEffDate>
+                        <div class="content-text">--</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0  splitSubContainer mar-top15 pad-top8 pad-right10">
+                <span class="title2">Last Version</span>
+            </div>
+            <div class="ui-g splitBodyPadding">
+                <div class="ui-md-6 ui-g-6 ui-lg-6 pad0">
+                    <div class="">
+                        <label class="heading-text content-text">Last Updated By</label>
+                        <ng-container *ngIf="viewMileageModel.mileageDetails.lastUpdateUserId; else notShowEffDate">
+                            <div class="content-text">{{viewMileageModel.mileageDetails.lastUpdateUserId}}</div>
+                        </ng-container>
+                        <ng-template #notShowEffDate>
+                            <div class="content-text">--</div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="ui-md-6 ui-g-6 ui-lg-6 pad0 splitBodyPadding">
+                    <div class="">
+                        <label class="heading-text content-text">Last Updated On</label>
+                        <ng-container *ngIf="viewMileageModel.mileageDetails.lastUpdateTimestamp; else notShowEffDate">
+                            <div class="content-text">{{viewMileageModel.mileageDetails.lastUpdateTimestamp}}</div>
+                        </ng-container>
+                        <ng-template #notShowEffDate>
+                            <div class="content-text">--</div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="ui-md-6 ui-g-6 ui-lg-6 pad0">
+                    <div class="">
+                        <label class="heading-text content-text">Last Updated Program</label>
+                        <ng-container *ngIf="viewMileageModel.mileageDetails.lastUpdateProgramName; else notShowEffDate">
+                            <div class="content-text">{{viewMileageModel.mileageDetails.lastUpdateProgramName}}</div>
+                        </ng-container>
+                        <ng-template #notShowEffDate>
+                            <div class="content-text">--</div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="split-footer">
+            <span class="pull-right mar-top12">
+        <span class="pull-right mar-top6">
+          <a data-attr="viewagreement-viewMileage-mileageDetails-history-a" href="javascript:void(0)" class="inactivate-link mar-right20 text-size">History</a>
+          <p-splitButton data-attr="viewagreement-viewMileage-mileageDetails-active-splitButton" *ngIf="viewMileageModel.mileageDetails?.invalidReasonType === 'Active'" label="Inactivate" styleClass="ui-button-secondary" class="mar-right15 split-size"></p-splitButton>
+          <p-splitButton data-attr="viewagreement-viewMileage-mileageDetails-inActive-splitButton" *ngIf="viewMileageModel.mileageDetails?.invalidReasonType === 'Inactive'" label="Reactivate" styleClass="ui-button-secondary" class="mar-right15 split-size"></p-splitButton>
+          <button data-attr="viewagreement-viewMileage-mileageDetails-edit-button" type="text" *ngIf="viewMileageModel.mileageDetails?.invalidReasonType === 'Active'" pButton label="Edit" class="ui-button-primary mar-right15" (click)="onClickEdit()"></button>
+        </span>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div [ngClass]="{'loader': priorityModel.loading }" [appJbhLoader]="priorityModel.loading"></div>
+<div class="ui-g ui-fluid viewPriorityGrid">
+    <div class="ui-md-12">
+        <p-table #priorityTable class="priorityTable full-width" [value]="priorityModel?.gridRows"
+            selectionMode="single" [paginator]="priorityModel?.isPaginatorFlag" (onLazyLoad)="loadGridData($event)"
+            [rows]="priorityModel?.tableSize" [lazy]="true" [customSort]="true" [rowsPerPageOptions]="[25,50,75,100]"
+            [first]="priorityModel?.pageStart" [totalRecords]="priorityModel?.gridDataLength" [scrollable]="true"
+            [style]="{width: '100%'}" scrollHeight="calc(100vh - 400px)" [resizableColumns]="true"
+            [ngClass]="{'tableWrapper': (!priorityModel.isSplitView && priorityModel?.gridRows?.length > 0), 'emptyTableWrapper': priorityModel?.isEmptyFlag }">
+            <ng-template pTemplate="caption">
+                <div class="ui-g table-caption pad-bot0">
+                    <div class="ui-g-8 tableHeading">
+                        <span class="tableName">Line Haul Priorities</span>
+                    </div>
+                    <div class="pad-bot0 ui-g-4">
+                        <div class="ui-inputgroup ui-md-8 ui-g-12 pad-top0 getGridValuesInput">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input type="text" pInputText placeholder="Search" appShortcut="alt+s"
+                                (keyup)="getGridValues($event)">
+                        </div>
+                        <div class="ui-g-4 pull-left pad-top6">
+                            <span appShortcut class="grid-icons">
+                                <button [disabled]=true
+                                    class="icon-Filter_Solid icon-button buttonStyle ui-g-6 pad0"></button>
+                                <button [disabled]=true
+                                    class="icon-Menu_Overflow icon-button buttonStyle ui-g-6 pad0 overflow-menu"
+                                    (click)='menu.toggle($event)'></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="priorityModel?.gridRows.length > 0">
+                    <col *ngFor="let thisCol of priorityModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr *ngIf="priorityModel?.gridRows.length > 0">
+                    <th class="min-col-width ui-resizable-column" pResizableColumn
+                        *ngFor="let col of priorityModel.tableColumns" [pSortableColumn]="col.label"
+                        pTooltip="{{col.label}}" tooltipPosition="top">
+                        {{col.label}}
+                        <span>
+                            <p-sortIcon class="sortIcon" [field]="col.label"></p-sortIcon>
+                        </span>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="priorityModel?.isEmptyFlag" class="noHoverColor">
+                    <td colspan="2">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10">No records found</h4>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="priorityModel.tableColumns">
+                <tr *ngIf="priorityModel?.gridRows.length > 0">
+                    <td class="min-col-width textwrap ui-resizable-column"
+                        *ngFor="let col of priorityModel.tableColumns" pTooltip="{{rowData[col.property]}}"
+                        tooltipPosition="top">
+                        <span class="tableRow" *ngIf="rowData[col.property]">
+                            {{rowData[col.property]}}
+                        </span>
+                        <span *ngIf="!rowData[col.property]">--</span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+
+            </ng-template>
+        </p-table>
+    </div>
+</div>

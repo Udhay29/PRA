@@ -1,0 +1,291 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.textAlign {
+    text-align: right;
+}
+
+.header-style {
+    width: calc(100% - 30px);
+    display: inline-block;
+    @include getTypographyStyles("body2");
+    color: $grey-dark66;
+    .filter-title {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: calc(100% - 40px);
+        float: left;
+    }
+}
+
+.sectionsFilterPanel {
+    /deep/ .ui-panel-titlebar-icon {
+        margin-left: 0.75em;
+    }
+    /deep/.ui-panel .ui-panel-titlebar {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+
+.sectionFilter_icon1 /deep/.icon-Chevron_Up:before {
+    content: ""!important;
+}
+
+.sectionFilter_icon1 /deep/.ui-panel {
+    box-shadow: none !important;
+}
+
+.error-message {
+    color: $grey-dark27;
+}
+
+.check-list {
+    padding: 5px 0;
+}
+
+.reset-color {
+    color: $primary-blue;
+}
+
+.filterOptions {
+    text-decoration: none;
+    color: $primary-blue;
+    @include getTypographyStyles("h5");
+}
+
+.filter-wrapper {
+    background: $white;
+    border-radius: 5px;
+    padding: 0;
+    -webkit-box-shadow: 0 0 6px $grey-dark27;
+    box-shadow: 0 0 6px $grey-dark27;
+    border-collapse: separate;
+}
+
+.clearSearch {
+    @include getTypographyStyles("body1");
+    cursor: pointer;
+    text-decoration: none;
+    background: transparent;
+    border: 0px;
+    color: $primary-blue;
+}
+
+.buttonLink {
+    background-color: transparent;
+    color: $blue;
+    border: none;
+}
+
+.filter-scroll {
+    overflow-y: scroll;
+    min-height: calc(100vh - 348px);
+    max-height: calc(100vh - 348px);
+    padding-right: 0px;
+    margin-bottom: 5px;
+}
+
+.searchScrollPanel /deep/ .ui-scrollpanel-bar-x {
+    display: none !important;
+}
+
+.filter-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: $white;
+}
+
+.filter-scroll::-webkit-scrollbar-thumb {
+    background-color: $grey-lite48;
+    outline: 1px solid $grey-lite48;
+    border-radius: 5px;
+}
+
+.filter-scroll::-webkit-scrollbar-thumb:hover {
+    background: $grey;
+}
+
+.pheader {
+    @include getTypographyStyles("body2");
+    color: $grey-dark66;
+}
+
+.main-container-wrapper .form-wrapper.showfiltercls {
+    box-shadow: none;
+}
+
+.filterIconFocus>a:hover,
+.overflowMenuFocus>a:hover {
+    text-decoration: none;
+}
+
+.filterIconFocus:focus,
+.overflowMenuFocus:focus {
+    outline-color: -webkit-focus-ring-color auto 5px;
+}
+
+.date-field-float {
+    margin-top: 17px;
+    label {
+        margin-top: 0px !important;
+        top: 38%;
+        left: 19px;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-.75em - 3px);
+        left: -4px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-.75em - 3px);
+        left: -4px !important;
+        font-size: 12px;
+    }
+}
+
+.filter-common-style {
+    /deep/ .reset-color {
+        background-color: $white;
+        text-decoration: none;
+        color: $primary-blue;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-top: 7px;
+        border: 0;
+        z-index: 9;
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+    /deep/ .icon-Money {
+        color: black;
+        padding-top: 3px;
+    }
+    /deep/ .ui-inputgroup.ui-search-group {
+        .ui-inputgroup-addon {
+            position: absolute;
+            z-index: 1;
+            border: none !important;
+        }
+        .ui-inputtext {
+            border: none !important;
+        }
+    }
+    /deep/ .ui-search-group {
+        border: 1px solid $grey !important;
+        border-radius: 6px;
+        padding: 0px 0px 0px 0px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    /deep/ .ui-search-group:hover {
+        border: thin solid $blue !important;
+        border-radius: 6px;
+        .ui-inputgroup-addon {
+            border: none !important;
+        }
+        .ui-inputtext {
+            border: none !important;
+        }
+    }
+    /deep/ .ui-autocomplete .ui-inputtext {
+        padding-left: 35px !important;
+    }
+    .filterPanels /deep/ .ui-panel .ui-panel-content-wrapper .ui-panel-content {
+        padding: 10px 20px 20px 20px;
+    }
+    /deep/ .ui-panel {
+        border-radius: 0px !important;
+    }
+    /deep/ .ui-panel .ui-panel-content-wrapper {
+        border-top: none;
+    }
+    .filterPanels /deep/ .ui-panel .ui-panel-titlebar-icon {
+        float: none;
+    }
+    .filterPanels /deep/ ul {
+        list-style-type: none;
+        padding-left: 10px;
+    }
+}
+
+.filter-common-style .filter-wrapper {
+    float: left;
+    width: 100%;
+}
+
+/deep/ .ui-timepicker>div a {
+    padding-top: 5px;
+}
+
+.filterHeader {
+    border-bottom: 1px solid $grey-lite70;
+}
+
+.filterPanels /deep/ .ui-panel .ui-panel-content-wrapper .ui-panel-content {
+    padding: 0px 0px 0px 5px !important;
+}
+
+.datecss /deep/ .ui-panel .ui-panel-content-wrapper .ui-panel-content {
+    padding: 0px 0px 0px 20px !important;
+}
+
+
+.accordionHeight {
+    min-height: calc(100vh - 279px);
+    /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+        margin-bottom: none;
+    }
+  }
+  
+  :host ::ng-deep .accordionHeight .ui-accordion .ui-accordion-header:hover {
+    background-color: $white;
+  }
+  
+  :host ::ng-deep .accordionHeight .ui-accordion .ui-accordion-header {
+    background-color: $white;
+    border-bottom: solid 1px $grey-lite70;
+    padding: 0px;
+  }
+  
+  :host ::ng-deep .custom-accordion-segment .ui-accordion .ui-accordion-header a {
+    padding-left:15px;
+    .ui-accordion-toggle-icon {
+      position: absolute;
+      right: 5px;
+      color: $primary-blue;
+      top: -2px;
+    }
+  }
+  
+  .no-border {
+    /deep/ .ui-accordion-header{
+      border-bottom: none !important;
+    }
+  }
+  
+  .dateFilter {
+    ::ng-deep .ui-accordion-content.ui-widget-content  {
+      padding: 0px 15px 20px;
+   }
+  }
+  
+  .boxshadow-white{
+    ::ng-deep .ui-accordion-content-wrapper:not(.ui-accordion-content-wrapper-overflown) {
+      box-shadow: 0 2px 4px 0px rgba(255, 255, 255, 0.2) !important;
+    }
+    }
+
+    
+.pointer-events-none {
+    /deep/ .ui-accordion-header {
+        pointer-events: none;
+    }
+    /deep/ .ui-accordion-toggle-icon {
+      display: none;
+    }
+  }
+
+    

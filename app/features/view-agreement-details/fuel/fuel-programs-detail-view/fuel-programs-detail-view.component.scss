@@ -1,0 +1,12 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+.icon-button {
+  background: 0 0;
+  border: none;
+  color: grey;
+  font-size: 15px;
+  line-height: 9px;
+}
+.settingsWrapper /deep/ p-breadcrumb .ui-breadcrumb ul .ui-breadcrumb-chevron {
+  margin-top: 5px !important;
+}

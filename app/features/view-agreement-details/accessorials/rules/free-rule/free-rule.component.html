@@ -1,0 +1,103 @@
+<form [formGroup]="freeRuleModel?.freeRulesForm" autocomplete="off">
+    <div class="ui-g">
+        <div class="ui-g-3 ui-float-label fieldWidth  mar-top15 pad-left0">
+            <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                name="freeRuleType" formControlName="freeRuleType" [suggestions]="freeRuleModel.freeRuleTypesFiltered"
+                emptyMessage="No records found" [forceSelection]="true" (onSelect)="onSelectFreeType($event)"
+                (completeMethod)="onTypeFreeType($event)" (onBlur)="onFreeTypeBlur($event, 'freeRuleType')" class="free-type-jasmine"></p-autoComplete>
+            <label class="label-style freeTypeAlign" for="freeRuleType" [ngClass]="{'labelAligns': (freeRuleModel?.freeRulesForm.get('freeRuleType')['errors']?.required
+            || freeRuleModel?.freeRulesForm.get('freeRuleType')['errors']?.touched)}">
+                <span>Free Type</span>
+            </label>
+            <div class="errorHeight">
+                <p-message severity="error" text="Select Free Type" *ngIf="freeRuleModel.freeRulesForm.get('freeRuleType').touched
+           && freeRuleModel.freeRulesForm.get('freeRuleType')['errors']?.required">
+                </p-message>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div *ngIf="freeRuleModel.isFreeRuleTypeQuantity" class="ui-g-3 ui-float-label fieldWidth  mar-top15 pad-left0">
+            <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                name="quantityType" formControlName="quantityType" [suggestions]="freeRuleModel.quantityTypesFiltered"
+                emptyMessage="No records found" [forceSelection]="true" (onSelect)="onSelectQuantityType($event)"
+                (completeMethod)="onTypeQuantityType($event)" (onBlur)="onFreeTypeBlur($event, 'quantityType')" class="quantity-type-jasmine"></p-autoComplete>
+            <label class="label-style freeTypeAlign" for="quantityType" [ngClass]="{'labelAligns': (freeRuleModel?.freeRulesForm.get('quantityType')['errors']?.required
+            || freeRuleModel?.freeRulesForm.get('quantityType')['errors']?.touched)}">
+                <span>Quantity Type</span>
+            </label>
+            <div class="errorHeight">
+                <p-message severity="error" text="Select Quantity Type" *ngIf="freeRuleModel.freeRulesForm.get('quantityType').touched
+           && freeRuleModel.freeRulesForm.get('quantityType')['errors']?.required">
+                </p-message>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div *ngIf="freeRuleModel.isFreeRuleTypeQuantity && (freeRuleModel.isFreeRuleTimeType || freeRuleModel.isFreeRuleDistanceType)"
+            class="ui-g-3 ui-float-label fieldWidth  mar-top15 pad-left0">
+            <input type="text" pInputText formControlName="quantity" name="quantity" (blur)="onQuantityBlur($event.target?.value)"
+                (keypress)="onQuantityKeyPress($event)" class="width_value">
+            <label class="label-style freeTypeAlign" for="quantity" [ngClass]="{'labelAligns': (freeRuleModel?.freeRulesForm.get('quantity')['errors']?.invalid
+            || freeRuleModel?.freeRulesForm.get('quantity')['errors']?.touched)}">
+                <span>Quantity </span>
+            </label>
+            <div class="errorHeight">
+                <p-message severity="error" text="Provide Quantity" *ngIf="freeRuleModel.freeRulesForm.get('quantity').touched
+           && freeRuleModel.freeRulesForm.get('quantity')?.invalid">
+                </p-message>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div *ngIf="freeRuleModel.isFreeRuleTypeQuantity && freeRuleModel.isFreeRuleTimeType" class="ui-g-3 ui-float-label fieldWidth  mar-top15 pad-left0">
+            <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                name="timeType" formControlName="timeType" [suggestions]="freeRuleModel.timeTypesFiltered" emptyMessage="No records found"
+                [forceSelection]="true" (completeMethod)="onTypeTimeType($event)" (onBlur)="onFreeTypeBlur($event, 'timeType')" class="type-time-jasmine"></p-autoComplete>
+            <label class="label-style freeTypeAlign" for="timeType" [ngClass]="{'labelAligns': (freeRuleModel?.freeRulesForm.get('timeType')['errors']?.required
+            || freeRuleModel?.freeRulesForm.get('timeType')['errors']?.touched)}">
+                <span>TimeFrame</span>
+            </label>
+            <div class="errorHeight">
+                <p-message severity="error" text="Select TimeFrame" *ngIf="freeRuleModel.freeRulesForm.get('timeType').touched
+           && freeRuleModel.freeRulesForm.get('timeType')['errors']?.required">
+                </p-message>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div *ngIf="freeRuleModel.isFreeRuleTypeQuantity && freeRuleModel.isFreeRuleTimeType" class="ui-g-12 ui-float-label fieldWidth  mar-top5 pad-left0">
+
+            <p-checkbox binary="true" label="Start Free Time on Customer Requested Delivery Date" [(ngModel)]="requestedDeliveryDate"
+                formControlName='requestedDeliveryDate'>
+
+            </p-checkbox>
+        </div>
+
+        <div *ngIf="freeRuleModel.isFreeRuleTypeQuantity && freeRuleModel.isFreeRuleDistanceType" class="ui-g-3 ui-float-label fieldWidth mar-top15 pad-left0">
+            <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+                name="distanceType" formControlName="distanceType" [suggestions]="freeRuleModel.distanceTypesFiltered"
+                emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeDistanceType($event)"
+                (onBlur)="onFreeTypeBlur($event, 'distanceType')"></p-autoComplete>
+            <label class="label-style freeTypeAlign" for="distanceType" [ngClass]="{'labelAligns': (freeRuleModel?.freeRulesForm.get('distanceType')['errors']?.required
+            || freeRuleModel?.freeRulesForm.get('distanceType')['errors']?.touched)}">
+                <span>Distance</span>
+            </label>
+            <div class="errorHeight">
+                <p-message severity="error" text="Select Distance" *ngIf="freeRuleModel.freeRulesForm.get('distanceType').touched
+           && freeRuleModel.freeRulesForm.get('distanceType')['errors']?.required">
+                </p-message>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div *ngIf="freeRuleModel.isFreeRuleTypeEvent" class="ui-g-9 ui-float-label fieldWidth mar-top10">
+            <app-free-event-type #freeTypeEventTab (displayEventReferenceGrid)="displayReferenceGrid($event)">
+            </app-free-event-type>
+        </div>
+        <div *ngIf="freeRuleModel.isFreeRuleTypeCalendar" class="ui-g-9 ui-float-label fieldWidth mar-top10">
+            <app-free-calendar #freeTypeCalendarTab>
+            </app-free-calendar>
+        </div>
+
+    </div>
+</form>

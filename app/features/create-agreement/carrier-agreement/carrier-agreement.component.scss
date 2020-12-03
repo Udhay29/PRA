@@ -1,0 +1,82 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.first-column {
+  width: 50% !important;
+}
+.column-field-align {
+/deep/.ui-autocomplete-input {
+  width: 100%;
+  }
+}
+.leftPlace {
+  margin-top: 0px !important;
+  top: 28%;
+  left: 34px;
+}
+.table-header {
+  @include getTypographyStyles("h6");
+  color: $grey-dark66;
+}
+
+.table-caption {
+  max-height: 30px;
+}
+.inactivate-link {
+  @include getTypographyStyles("body1");
+  text-decoration: none;
+}
+.text-field-float {
+  margin-top: 17px;
+  label {
+    margin-top: 2px !important;
+    top: 30%;
+    left: 17px;
+  }
+  input.ui-state-filled ~ label,
+  input:focus ~ label {
+    margin-top: 0px !important;
+    top: calc(-0.75em - 3px);
+    left: 12px;
+    font-size: 12px;
+  }
+}
+.width-100 {
+  width: 100% !important;
+}
+.wrapper {
+  padding: 0 0.5em;
+}
+.footer-part {
+  position: fixed;
+  bottom: 3%;
+  right: 2%;
+}
+.duplicate-message {
+  /deep/ .ui-messages .ui-messages-icon {
+    left: 26px;
+  }
+  /deep/ .ui-messages ul li .ui-messages-summary {
+    padding: 0px 0 0 24px;
+  }
+  /deep/.ui-messages ul li .ui-messages-detail {
+    padding-left: 23px;
+  }
+}
+.carrier-table{
+  &.heightExceed /deep/ .ui-table-scrollable-wrapper /deep/ .ui-table-scrollable-header-box{
+  margin-right: 8px !important;
+  }
+  /deep/.ui-table{
+     table tbody > tr > td:first-child {
+      padding-left: 10px !important;
+      padding-bottom: 19px !important;
+    }
+    table thead > tr:first-child > th:first-child {
+      padding-left: 10px !important;
+    }
+  }
+  /deep/ .ui-table-caption {
+  border-bottom: 1px solid $grey-lite48 !important;
+  }
+} 
+ 

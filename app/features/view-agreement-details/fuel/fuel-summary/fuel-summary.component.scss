@@ -1,0 +1,269 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.text-field-float {
+  margin-top: 17px;
+  label {
+    margin-top: 0px !important;
+    top: 38%;
+    left: 17px;
+  }
+  input.ng-touched + label{
+    top:28%;
+  }
+  input.ui-state-filled ~ label,
+  input:focus ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px;
+    font-size: 12px;
+  }
+}
+
+.date-field-float {
+  margin-top: 17px;
+  label {
+    margin-top: 0px !important;
+    top: 28%;
+    left: 34px;
+  }
+  .ui-inputwrapper-focus ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px !important;
+    font-size: 12px;
+  }
+  .ui-inputwrapper-filled ~ label {
+    top: calc(-0.75em - 3px);
+    left: 15px !important;
+    font-size: 12px;
+  }
+  /deep/.ui-datepicker {
+    z-index: 9999 !important;
+  }
+  /deep/.ui-inputtext {
+    width: 100%;
+  }
+}
+
+.ui-float-label .ui-inputwrapper-focus ~ label.leftPlace,
+.ui-float-label .ui-inputwrapper-filled ~ label.leftPlace {
+  left: 0.5em;
+}
+
+.multiselect-field {
+  margin-top: 10px;
+  .ui-float-label > label {
+    top: 2em !important;
+   left: 15px !important;
+  }
+  .ui-inputwrapper-focus~label, .ui-inputwrapper-filled~label, .ng-dirty.ng-valid~label {
+    top: -.75em !important;
+  }
+}
+
+.typeahead-float-nested-label {
+  margin-top: 7px;
+  label {
+      margin-top: 0px !important;
+      top: 30%;
+      left: 12px;
+  }
+  .ui-inputwrapper-focus~label {
+      top: calc(-.75em - 6px);
+      left: 10px;
+      font-size: 12px;
+  }
+  .ui-inputwrapper-filled~label {
+      top: calc(-.75em - 6px);
+      left: 10px;
+      font-size: 12px;
+  }
+  textarea.ui-state-filled ~ label,
+  textarea:focus ~ label {
+    top: calc(-0.75em - 6px);
+    left: 10px;
+    font-size: 12px;
+  }
+}
+
+.bottom-line {
+  border-bottom: solid 2px $grey-lite70;
+}
+
+.top-10 {
+  top: -10px;
+}
+
+.noresize {
+  resize: none;
+  width: 100%;
+}
+
+.textarea-float {
+  margin-top: 10px;
+  width: 100%;
+}
+/deep/.ui-state-default.disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+.label-style {
+  pointer-events: none;
+  float: right;
+  margin-top: -1.5em;
+  margin-right: 1.0em;
+  transition: 0.3s ease all;
+  color: #939393;
+  font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.01rem;
+  text-transform: none;
+  line-height: 1;
+}
+.table-caption {
+  min-height: 30px;
+}
+.ui-inputgroup.search-field > span.ui-inputgroup-addon{
+  position:absolute;
+  left:6px;
+  top:3px;
+  border:none;
+  height:30px;
+}
+.ui-inputgroup.search-field > input.ui-inputtext{
+  border-left: 1px solid #c9c9c9;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding-left: 35px;
+  z-index: 9;
+  background:transparent;
+}
+.ui-inputgroup.search-field > input.ui-inputtext:focus{
+  border-left:1px solid #007dba;
+}
+.ui-inputgroup.search-field > input.ui-inputtext:not([disabled]):hover{
+  border:1px solid #00aafc;
+}
+.codesdisplaymiddle {
+  padding-top: 9vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.itemListTable h4,
+h4 {
+  text-align: center;
+}
+
+.loader {
+  position: fixed !important;
+  z-index: 888888888;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.select-option {
+  margin-bottom: 10px;
+}
+.displaymiddle{
+  h4{
+    width: 100%;
+    text-align: center;
+    margin-top:6%;
+  }
+}
+.itemListTable {
+  display: block;
+  padding-bottom: 30px;
+  padding-top: 10px;
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 10px;
+  /deep/ .ui-table-scrollable-view {
+    padding-bottom: 40px;
+    min-height: 300px;
+  }
+  /deep/ .ui-table {
+      /deep/ .ui-table-scrollable-header table, /deep/ .ui-table-scrollable-body table{
+          min-width: 100%;
+      }
+    /deep/ .ui-table-thead /deep/ .ui-sortable-column {
+      .label {
+        min-width: 100px;
+        display: inline-block;
+      }
+    }
+
+    /deep/ .ui-table-caption.ui-widget-header {
+      padding: 5px 10px;
+
+      .ui-md-3 .ui-g {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+.multiselect-field /deep/ .ui-float-label {
+  .ui-inputwrapper-filled.ng-dirty.ng-valid, .ui-inputwrapper-focus.ng-touched.ng-invalid,
+  .ui-inputwrapper-focus.ng-untouched.ng-invalid, .ui-inputwrapper-focus, .ng-dirty.ng-valid
+  {
+    ~ label.business-label{
+      top:-5px !important;
+    }
+  }
+}
+span.optional{
+    font-size: 0.75rem;
+    color: #939393;
+    display: block;
+    text-align: right;
+    padding: 5px 0;
+    letter-spacing: normal
+}
+.affiliation-table{
+   /deep/ .ui-table-scrollable-view {
+      padding-bottom: 40px;
+      min-height: 300px;
+    }
+    /deep/ .ui-table {
+      /deep/ .ui-table-scrollable-header table, /deep/ .ui-table-scrollable-body table{
+          min-width: 100%;
+      }
+    }
+  }
+.business-label + div.error-class-height{
+  position: relative;
+  top:-4px;
+}
+.ui-float-label textarea:focus ~ label:not(.char-limit){
+   top:-1.2em;
+}
+.textAreaValue {
+  position: absolute;
+  top: 12px ;
+  left: 10px;
+}
+.textAreaValue /deep/.ui-float-label textarea:active~label:not(.char-limit),
+.ui-float-label textarea:focus~label:not(.char-limit),
+.ui-float-label textarea.ui-state-filled~label:not(.char-limit),
+.ui-float-label textarea:-webkit-autofill~label:not(.char-limit) {
+  top: -10px !important;
+}
+.ui-float-label textarea:not(:focus):not(.ui-state-filled):not(:-webkit-autofill) ~ label:not(.char-limit) {
+margin-top: 0.65em !important;
+}
+.ui-float-label > label[for="programName"] + div.error-class-height{
+  float: left;
+}
+.error-height {
+  height: 5px;
+}
+.clearFix {
+  clear: both;
+}
+.notes-position {
+  padding: 10px 2px 0 0;
+}

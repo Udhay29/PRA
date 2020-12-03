@@ -1,0 +1,162 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.custom-line-height {
+    line-height: 3rem;
+}
+
+.iconColorChange {
+    display: inline-block;
+    position: relative;
+    padding: 7px 8px 3px;
+}
+
+.filterColor {
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+}
+
+.filterClass {
+    /deep/.ui-table .ui-table-caption.ui-widget-header {
+        border-bottom: 1px solid #e3e3e3 !important;
+        padding: 0 10px;
+    }
+    /deep/.data .ui-table-scrollable-body {
+        min-height: calc(100vh - 441px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/.noData .ui-table-scrollable-body {
+        min-height: calc(100vh - 400px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/.ui-table-scrollable-body {
+        max-height: calc(100vh - 450px) !important;
+    }
+    /deep/.tableSplitWrapper .ui-table-scrollable-body {
+        min-height: calc(100vh - 335px) !important;
+    }
+    /deep/.ui-table-caption {
+        border-bottom: 1px solid $grey-lite70 !important;
+    }
+    /deep/.ui-table-scrollable-footer-table {
+        width: 100% !important;
+    }
+    /deep/ .ui-panel-content {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    /deep/ .filter-common-style /deep/ .ui-autocomplete /deep/ .ui-inputtext {
+        padding-left: 36px !important;
+    }
+}
+
+.table-caption {
+    height: 60px;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+.tableHeading {
+    @include getTypographyStyles("h2");
+}
+
+.message-wrapper {
+    height: calc(100vh - 441px);
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableFooter {
+    max-height: 60px !important;
+}
+
+.pad4 {
+    padding: 4px;
+}
+
+.marg-top5 {
+    margin-top: -5px;
+}
+
+.page-scroll {
+    /deep/ .ui-table .ui-paginator-bottom.ui-paginator,
+    .ui-table .ui-table-summary {
+        padding-top: 12px;
+        padding-bottom: 1px;
+    }
+}
+
+.ui-inputgroup.getGridValuesInput>span.ui-inputgroup-addon {
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    border: none;
+    height: 30px;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext {
+    border-left: 1px solid #c9c9c9;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 35px;
+    z-index: 9;
+    background: transparent;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:focus {
+    border-left: 1px solid #007dba;
+}
+
+.ui-inputgroup.getGridValuesInput>input.ui-inputtext:not([disabled]):hover {
+    border: 1px solid #00aafc;
+}
+
+.contractListTable /deep/.ui-table-scrollable-wrapper /deep/.ui-table-scrollable-view {
+    /deep/.ui-table-scrollable-body-table,
+    /deep/.ui-table-scrollable-header-table {
+        min-width: 800px;
+    }
+    /deep/.ui-table-scrollable-header /deep/.ui-table-scrollable-header-table /deep/.ui-sortable-column,
+    /deep/.ui-table-scrollable-body /deep/.ui-table-scrollable-body-table td {
+        width: 100%;
+    }
+}
+
+/deep/.page-scroll.ui-g-12 .contractListTable /deep/.ui-table-scrollable-wrapper /deep/.ui-table-scrollable-view {
+    /deep/.ui-table-scrollable-body-table,
+    /deep/.ui-table-scrollable-header-table {
+        width: 100% !important;
+    }
+}
+
+.filter-label-column {
+    /deep/.ui-float-label {
+        >label {
+            left: 20px;
+        }
+        /deep/.ui-inputwrapper-filled+label,
+        /deep/.ui-inputwrapper-focus+label {
+            left: -5px;
+        }
+    }
+    /deep/.ui-panel-titlebar-icon:hover {
+        text-decoration: none;
+    }
+}
+
+.contractListTable.noData /deep/ .ui-table-scrollable-wrapper /deep/ .ui-table-scrollable-view /deep/ .ui-table-scrollable-body-table {
+    width: 100% !important;
+    min-width: 0;
+}

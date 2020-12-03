@@ -1,0 +1,89 @@
+<div [ngClass]="{'loader': cargoReleaseModel?.loading}" [appJbhLoader]="cargoReleaseModel?.loading"></div>
+<div class="ui-g ui-fluid filterClass">
+    <div class="ui-g-3 ui-md-3" [ngClass]="{'hideFilter':(!cargoReleaseModel.filterEnabled)}">
+        <app-cargo-release-filter (filterKey)="getFilterKey($event)" (filtersSelected)="loadGridBasedOnFilter($event)" [defaultAmount]="cargoReleaseModel.cargoAmount" [agreementId]="agreementID" (clearAllFilters)="clearFilters()" [sourceData]="cargoReleaseModel.sourceData">
+        </app-cargo-release-filter>
+    </div>
+    <div class="cargoTable" [ngClass]="{'ui-g-9': cargoReleaseModel.filterEnabled, 'ui-g-6 splitView': cargoReleaseModel.isSplitView, 'ui-g-12': !cargoReleaseModel.isSplitView  && !cargoReleaseModel.filterEnabled }">
+        <p-table #cargoTable [ngClass]="{'tableWrapper': (!cargoReleaseModel.isSplitView && cargoReleaseModel.paginationData.length > 0),  'tableSplitWrapper': (cargoReleaseModel.isSplitView && cargoReleaseModel.paginationData.length > 0),
+             'emptyCaption': (cargoReleaseModel.cargoList.length === 0 && !cargoReleaseModel.isSearchGrid && cargoReleaseModel.noResultFoundFlag),'cargoReleaseTblHeight':cargoReleaseModel.cargoList.length > 0}" #dataTable [value]="cargoReleaseModel.cargoList"
+            [first]="cargoReleaseModel?.pageStart" [totalRecords]="cargoReleaseModel?.gridDataLength" selectionMode="single" (onRowSelect)="onRowSelect($event)" [rows]="cargoReleaseModel?.pageSize" [rowsPerPageOptions]="[25,50,75,100]" [lazy]="true" [pageLinks]="5"
+            [paginator]="cargoReleaseModel.isPagination" [scrollable]="true" class="cargotable" [columns]="cargoReleaseModel.tableColumns" [totalRecords]="cargoReleaseModel.totalRecords" [resizableColumns]="true" columnResizeMode="expand" (onLazyLoad)="lazyLoadCargoDetails($event)">
+            <ng-template pTemplate="caption">
+                <div *ngIf="cargoReleaseModel.cargoList.length !== 0 || cargoReleaseModel.isSearchGrid" class="ui-g table-caption">
+                    <div class="mar-top3 ui-md-4">
+                        <span class="tableName">{{cargoReleaseConstants.tableTitle}}</span>
+                    </div>
+                    <div class="pad0 pull-right ui-md-8">
+                        <div class="grid-icons pull-right pad-top0">
+                            <div appShortcut class="mar-top5">
+                                <button data-attr="viewagreement-cargorelease-filter-button" appShortcut="ctrl+alt+f" [ngClass]="{'filterColor': cargoReleaseModel.filterFlag}" class="icon-Filter_Solid icon-button iconColorChange pad0" (click)="onFilterClick()" appShortcut="ctrl+alt+f"></button>
+                                <button data-attr="viewagreement-cargorelease-menubtn-button" appShortcut=" ctrl+alt+o" class="icon-Menu_Overflow icon-button iconColorChange pad0" (click)="menu.toggle($event)" appShortcut="ctrl+alt+o"></button>
+                            </div>
+                            <p-menu #menuOverlay #menu popup="popup" [model]="cargoReleaseModel.items" styleClass="menu-overlay" appendTo="body">
+                                <a #downloadExcel></a>
+                            </p-menu>
+                        </div>
+                        <div class="ui-inputgroup pad-top0 mar-right10 pull-right" [ngClass]="cargoReleaseModel.isSplitView ? 'split-search': 'search-box'">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input data-attr="viewagreement-cargorelease-searchbar-input" type="text" pInputText placeholder="Search" appShortcut="alt+s" (keyup)="getGridValues($event, 'searchBox')">
+                        </div>
+                        <p-menu data-attr="viewagreement-cargorelease-menu-pmenu" #menuOverlay #menu popup="popup" [model]="cargoReleaseModel.items" styleClass="menu-overlay" appendTo="body">
+                            <a #downloadExcel></a>
+                        </p-menu>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="cargoReleaseModel?.tableColumns.length">
+                    <col *ngFor="let thisCol of cargoReleaseModel?.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr *ngIf="cargoReleaseModel.cargoList.length === 0 && !cargoReleaseModel.isSearchGrid && cargoReleaseModel.noResultFoundFlag">
+                    <td class="noInfoMessage">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                            <button data-attr="viewagreement-cargorelease-noinfocreatecargo-button" type="text" pButton label="Create Cargo Release" class="ui-button-primary mar-top5 mar-left5"></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="cargoReleaseModel.noResultFoundFlag && cargoReleaseModel.isSearchGrid">
+                    <td class="noInfoMessage" colspan="8">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10">No records found</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="pad0 mar0 table-header" *ngIf="cargoReleaseModel?.cargoList.length > 0">
+                    <th class="minimum-column-width tooltip textwrap" *ngFor="let thisCol of columns" [pSortableColumn]="thisCol.field" pResizableColumn pTooltip={{thisCol.label}} tooltipPosition="top"> {{thisCol.label}}
+                        <p-sortIcon data-attr="viewagreement-cargorelease-header-sorticon" class="sortIcon" [field]="thisCol.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" let-columns="columns" class="tableHeight">
+                <tr [attr.data-attr]="'viewagreement-cargorelease-row-tr-' +  rowIndex" [pSelectableRow]="rowData">
+                    <td class="minimum-column-width tooltip ui-resizable-column" *ngFor="let thisCol of columns" pTooltip={{data[thisCol.field]}} tooltipPosition="top">
+                        <div *ngIf="thisCol.isArray">
+                            <div *ngFor="let col of data[thisCol.field]">
+                                <div class="textwrap"> {{col}} </div>
+    </div>
+</div>
+<span *ngIf="!thisCol.isArray" class="capitalize-first-word textwrap">{{data[thisCol.field]}}</span>
+</td>
+</tr>
+</ng-template>
+<ng-template pTemplate="paginatorright" class="tableFooter">
+    <span class="pull-right pad-right10 pad4" *ngIf="cargoReleaseModel?.cargoList.length !== 0  || cargoReleaseModel.isSearchGrid">
+                    <button data-attr="viewagreement-cargorelease-createcargo-button" type="text" pButton
+                        label="Create Cargo Release" appShortcut="ctrl+alt+1"
+                        class="ui-button-primary mar-top5 mar-left5 absPosition"
+                        *ngIf="!cargoReleaseModel.isSplitView"></button>
+                </span>
+</ng-template>
+</p-table>
+</div>
+<div *ngIf="cargoReleaseModel.isSplitView" class="ui-g-6 ui-md-6">
+    <app-view-cargo-release [viewScreenData]="cargoReleaseModel.viewGridData" [agreementID]="this.agreementID" (closeClick)="closeClick($event)"></app-view-cargo-release>
+</div>
+</div>

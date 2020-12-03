@@ -1,0 +1,96 @@
+<div [ngClass]="{'loader': viewCarrierAgreementModel?.isPageLoaded}"
+  [appJbhLoader]="viewCarrierAgreementModel?.isPageLoaded"></div>
+<div class="mar-left5 breadcrumb mar-top5">
+  <p-breadcrumb styleClass="pad-left10 main" [model]="viewCarrierAgreementModel.breadCrumbList"></p-breadcrumb>
+  <div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left10">
+      <h1 class="text-uppercase mar0 AgreementNameText">{{viewCarrierAgreementModel.agreementDetails?.agreementName}}
+        <button appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10" [disabled]=true
+          data-attr="empty-plan-overflow-menu"></button>
+      </h1>
+    </div>
+  </div>
+  <p-panel class="ui-g-12 ui-lg-12 ui-md-12 panel mar-left5 view-panel mar-top3 pad-right20" [header]='false'
+    [showHeader]='false'>
+    <div class="wrapper">
+      <span class="col-width">
+        <label class="heading-text">Agreement Type</label>
+        <label>{{viewCarrierAgreementModel.agreementDetails?.agreementType}}</label>
+      </span>
+      <span class="col-width">
+        <label class="heading-text">Agreement</label>
+        <label>{{viewCarrierAgreementModel.agreementDetails?.agreementName}}</label>
+      </span>
+      <span class="col-width">
+        <label class="heading-text">Carriers</label>
+        <label
+          *ngIf="viewCarrierAgreementModel.agreementDetails?.carriers && viewCarrierAgreementModel.agreementDetails?.carriers.length === 1">{{viewCarrierAgreementModel.agreementDetails?.carriers[0].carrierName}}
+          ({{viewCarrierAgreementModel.agreementDetails?.carriers[0].carrierCode}}) </label>
+        <label
+          *ngIf="viewCarrierAgreementModel.agreementDetails?.carriers && viewCarrierAgreementModel.agreementDetails?.carriers.length > 1">{{viewCarrierAgreementModel.agreementDetails?.carriers[0].carrierName}}
+          ({{viewCarrierAgreementModel.agreementDetails?.carriers[0].carrierCode}}) </label>
+        <label>
+          <a class="inactivate-link"
+            *ngIf="viewCarrierAgreementModel.agreementDetails?.carriers && viewCarrierAgreementModel.agreementDetails?.carriers.length > 1"
+            href="javascript:void(0)"
+            (click)="op.toggle($event)">+{{viewCarrierAgreementModel.agreementDetails?.carriers.length-1}}</a>
+        </label>
+        <p-overlayPanel #op class="businessOverlay">
+          <p class="mar0" *ngFor="let carrier of viewCarrierAgreementModel?.overlayData; let k=index">
+            <span class="carrier-display">{{carrier}}
+            </span>
+          </p>
+        </p-overlayPanel>
+      </span>
+      <span class="col-width">
+        <label class="heading-text">Status</label>
+        <label>{{viewCarrierAgreementModel.agreementDetails?.agreementStatus}}</label>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+  </p-panel>
+  <div class="ui-g-12 ui-lg-12 ui-md-12 tableAlign pad-bot0">
+    <form [formGroup]="viewCarrierAgreementModel.dropdownForm">
+      <p-dropdown class="ui-g-2 ui-lg-2 ui-md-2 pad-top20" formControlName="dropdown"
+        [options]="viewCarrierAgreementModel.detailsList" name="detailList" [autoWidth]="false"
+        (onChange)="onChangeValue($event.value)"></p-dropdown>
+    </form>
+    <div class="programTab" *ngIf="viewCarrierAgreementModel.isShowViewMileageFlag">
+      <p-tabView class="ui-g-10 ui-lg-10 ui-md-10">
+        <p-tabPanel class="pad-top0" header="MILEAGE PROGRAM">
+        </p-tabPanel>
+        <p-tabPanel class="pad-top0" header="CUSTOM SYSTEM" [disabled]="true">
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+  <div class="displaymiddle mar-bot20" *ngIf="viewCarrierAgreementModel.isShowLineHaul">
+    <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+    <button type="text" pButton label="Add Line Haul" class="ui-button-primary mar-top5 mar-left5"></button>
+  </div>
+  <div class="ui-g-12 ui-lg-12 ui-md-12 pad-left0" *ngIf="viewCarrierAgreementModel.isShowSections">
+    <app-carrier-section [agreementDetails]="viewCarrierAgreementModel.agreementDetails" (loaderEvent)="loader($event)">
+    </app-carrier-section>
+  </div>
+  <div class="ui-g-12 ui-lg-12 ui-md-12 pad-left0" *ngIf="viewCarrierAgreementModel.isShowViewMileageFlag">
+    <app-carrier-mileage (loaderEvent)="loader($event)">
+    </app-carrier-mileage>
+  </div>
+</div>
+<p-dialog [(visible)]="viewCarrierAgreementModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="200" [minY]="70" [baseZIndex]="10005" [closable]="false">
+  <p-header>
+    <span class="capitalizeTitle">Confirmation</span>
+    <a [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)"
+      role="button" (click)="popupCancel()">
+      <span class="pi pi-times"></span>
+    </a>
+  </p-header>
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="popupCancel()" class="ui-button-secondary" label="No"
+      data-attr="carrieragreement-details-popupno-button"></button>
+    <button type="button" pButton (click)="popupYes()" label="Yes" class="ui-button-primary"
+      data-attr="carrieragreement-details-popupyes-button"></button>
+  </p-footer>
+</p-dialog>

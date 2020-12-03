@@ -1,0 +1,117 @@
+<div [ngClass]="{'loader': defaultValueModel?.isPageLoading}" [appJbhLoader]="defaultValueModel?.isPageLoading"></div>
+<div class="ui-g mar-left10">
+  <p-breadcrumb [model]="defaultValueModel.breadCrumbList" styleClass="pad-left0"></p-breadcrumb>
+  <div class="pad0 ui-md-12 ui-lg-12 ui-g-12">
+    <h1 class="text-uppercase mar-top3 mar-bot5">{{defaultValueModel.breadCrumbList[2].label}} - Business</h1>
+  </div>
+  <form [formGroup]="defaultValueModel?.defaultValuesForm" class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+    <h3 class="ui-md-12 ui-g-12 ui-lg-12 pad-left10 mar-top0 mar-bot25">Maximum Days Set by Super User</h3>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-left0 pad-top0">
+        <input type="text" class="ui-md-12 ui-g-12 ui-lg-12 pad-left10" pInputText autocomplete="off"
+          formControlName="superUserBackDate" name="superUserBackDate" spellcheck="false" maxlength="3" />
+        <label for="superUserBackDate" class="wrapper">Days for Back Date</label>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days for Back Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserBackDate').touched && defaultValueModel.defaultValuesForm.get('superUserBackDate')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days for Back Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserBackDate').touched && defaultValueModel.defaultValuesForm.get('superUserBackDate')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-top0">
+        <input type="text" class="ui-md-12 ui-g-12 ui-lg-12 pad-left10" pInputText autocomplete="off"
+          formControlName="superUserFutureDate" name="superUserFutureDate" spellcheck="false" maxlength="3" />
+        <label for="superUserFutureDate">Days for Future Date</label>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days for Future Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserFutureDate').touched && defaultValueModel.defaultValuesForm.get('superUserFutureDate')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days for Future Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserFutureDate').touched && defaultValueModel.defaultValuesForm.get('superUserFutureDate')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-top0">
+        <input type="text" class="ui-md-11 ui-g-11 ui-lg-11 pad-left10" pInputText autocomplete="off"
+          formControlName="superUserDaysAllowed" name="superUserDaysAllowed" spellcheck="false" maxlength="3" />
+        <label for="superUserDaysAllowed">Days Updates Allowed</label>
+        <span class="ui-md-1 ui-g-1 ui-lg-1 info-icon"
+        pTooltip="Super user can update up-to {{defaultValueModel.defaultValuesForm.get('superUserDaysAllowed').value}} days from the creation date, without changing the effective date." tooltipPosition="top">
+          <em class=" icon-Circle_Info_Solid font16"></em>
+        </span>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days Updates Allowed"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserDaysAllowed').touched && defaultValueModel.defaultValuesForm.get('superUserDaysAllowed')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days Updates Allowed"
+            *ngIf="defaultValueModel.defaultValuesForm.get('superUserDaysAllowed').touched && defaultValueModel.defaultValuesForm.get('superUserDaysAllowed')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+    <h3 class="ui-md-12 ui-g-12 ui-lg-12 pad-left10 mar-bot25">Maximum Days Set by User</h3>
+    <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-left0 pad-top0">
+        <input type="text" class="ui-md-12 ui-g-12 ui-lg-12 pad-left10" pInputText autocomplete="off"
+          formControlName="userBackDate" name="userBackDate" spellcheck="false" maxlength="3" />
+        <label for="userBackDate" class="wrapper">Days for Back Date</label>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days for Back Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userBackDate').touched && defaultValueModel.defaultValuesForm.get('userBackDate')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days for Back Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userBackDate').touched && defaultValueModel.defaultValuesForm.get('userBackDate')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-top0">
+        <input type="text" class="ui-md-12 ui-g-12 ui-lg-12 pad-left10" pInputText autocomplete="off"
+          formControlName="userFutureDate" name="userFutureDate" spellcheck="false" maxlength="3" />
+        <label for="userFutureDate">Days for Future Date</label>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days for Future Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userFutureDate').touched && defaultValueModel.defaultValuesForm.get('userFutureDate')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days for Future Date"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userFutureDate').touched && defaultValueModel.defaultValuesForm.get('userFutureDate')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-3 ui-lg-3 ui-g-3 text-field-float pad-top0">
+        <input type="text" class="ui-md-11 ui-g-11 ui-lg-11 pad-left10" pInputText autocomplete="off"
+          formControlName="userDaysAllowed" name="userDaysAllowed" spellcheck="false" maxlength="3" />
+        <label for="userDaysAllowed">Days Updates Allowed</label>
+        <span class="ui-md-1 ui-g-1 ui-lg-1 info-icon"
+        pTooltip="User can update up-to {{defaultValueModel.defaultValuesForm.get('userDaysAllowed').value}} days from the creation date, without changing the effective date." tooltipPosition="top">
+          <em class=" icon-Circle_Info_Solid font16"></em>
+        </span>
+        <div class="error-class-height">
+          <p-message severity="error" text="Provide Days Updates Allowed"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userDaysAllowed').touched && defaultValueModel.defaultValuesForm.get('userDaysAllowed')['errors']?.required">
+          </p-message>
+          <p-message severity="error" text="Provide valid Days Updates Allowed"
+            *ngIf="defaultValueModel.defaultValuesForm.get('userDaysAllowed').touched && defaultValueModel.defaultValuesForm.get('userDaysAllowed')['errors']?.numbersOnly">
+          </p-message>
+        </div>
+      </span>
+    </div>
+  </form>
+  <div class="default-page-footer">
+    <button type="button" pButton label="Cancel" (click)="onCancel()" class="ui-button-secondary mar-right15"
+    data-attr="viewagreement-fuelsummary-cancel-button" appShortcut="ctrl+alt+2"></button>
+    <button type="button" pButton label="Save" (click)="onSave()" class="ui-button-primary"
+    data-attr="viewagreement-fuelsummary-save-button" appShortcut="ctrl+alt+1"></button>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<p-dialog header="Confirmation" [(visible)]="defaultValueModel.isPopupVisible" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="onPopupCancel()" class="ui-button-secondary" label="No"></button>
+    <button type="button" pButton (click)="onPopupProceed()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

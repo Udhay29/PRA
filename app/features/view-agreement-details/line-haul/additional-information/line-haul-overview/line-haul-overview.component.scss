@@ -1,0 +1,25 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.line-haul-heading {
+    @include getTypographyStyles('h2');
+    border-bottom: 1px solid #E2E2E2;
+}
+.overview-values {
+    @include getTypographyStyles('caption1');
+}
+.line-haul-heading-pad{
+    padding: 15px 0px 15px 14px;
+}
+.expiration-date-border {
+    border-bottom: 1px solid $grey-lite70;
+}
+.rateSection :nth-child(2) div {
+    border-bottom: 1px solid $grey-lite70;
+}
+.borderValue {
+  border-radius: 6px;
+}
+.alignContract {
+    width: 90%;
+  }

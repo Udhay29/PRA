@@ -1,0 +1,280 @@
+<div [ngClass]="{'loader': ratesDetailedViewModel.isLoading}" [appJbhLoader]="ratesDetailedViewModel.isLoading"></div>
+<div class="ui-g ratesDetailedViewWrapper pad10">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="ratesDetailedViewModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-top0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0">
+            <h1 class="text-uppercase headingAlign mar0">
+                {{ratesDetailedViewModel?.agreementDetails?.customerAgreementName}} - VIEW RATE SETUP
+                <button appShortcut="ctrl+alt+o" class="overFlowIcon icon-Menu_Overflow icon-button pad10  overFlowIconFont overflow-menu" (click)="onClickOverflowIcon(onMenu, $event)" data-attr="empty-plan-overflow-menu"></button>
+            </h1>
+            <p-menu #onMenu popup="popup" styleClass="ratesDetailsMenu menu-overlay arrowtopbox font12" [model]="ratesDetailedViewModel.overflowMenuList" appendTo="body"></p-menu>
+        </div>
+    </div>
+    <div class="ui-g-12 pad-top0 rateDetailedViewscroll">
+        <div class="accordionHeight">
+            <p-accordion [multiple]="true">
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Setup" selected="true">
+                    <div class="ui-g" [ngClass]="{'mar-bot15' : (ratesDetailedViewModel.ratesDetailedViewResponse?.level==='contract' || ratesDetailedViewModel.ratesDetailedViewResponse?.level==='section')}">
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Charge Type</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.chargeTypeName">{{ratesDetailedViewModel.ratesDetailedViewResponse.chargeTypeName}}
+                                    ({{ratesDetailedViewModel.ratesDetailedViewResponse.chargeTypeCode}})
+                                </span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.chargeTypeName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Customer Charge Name</label>
+                                <span class="mar-left10 textColor wordBreak" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.customerChargeName">{{ratesDetailedViewModel.ratesDetailedViewResponse.customerChargeName}}</span>
+                                <span class="mar-left10 textColor wordBreak" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.customerChargeName">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Level</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.level">{{ratesDetailedViewModel.ratesDetailedViewResponse.level}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.level">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Rate Setup Status</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.status">{{ratesDetailedViewModel.ratesDetailedViewResponse.status}}</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.status">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Dates</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Effective Date</label>
+                                <span class="mar-left10 textColor">{{ratesDetailedViewModel.rateEffectiveDate}}</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Expiration Date</label>
+                                <span class="mar-left10 textColor">{{ratesDetailedViewModel.rateExpirationDate}}</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Other</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Waived</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.waived">Yes</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.waived">No</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Calculate Rate Manually</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.calculateRateManually">Yes</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.calculateRateManually">No</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Pass-Through</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.passThrough">Yes</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.passThrough">No</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Roll-Up</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.rateSetupStatus">Yes</span>
+                                <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.rateSetupStatus">No</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g mar-top16 contractTable">
+                        <app-contract-list #contract *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse?.contracts && !ratesDetailedViewModel.ratesDetailedViewResponse?.sections" [detailedViewFlag]="ratesDetailedViewModel.ratesDetailedViewFlag" [contractDetail]="ratesDetailedViewModel['ratesDetailedViewResponse']?.contracts">
+                        </app-contract-list>
+                    </div>
+                    <div class="ui-g mar-top16 sectionTable ratesBillTo" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse?.sections">
+                        <app-sections #section [detailedViewFlag]="ratesDetailedViewModel.ratesDetailedViewFlag" [sectionDetail]="ratesDetailedViewModel['ratesDetailedViewResponse']?.sections">
+                        </app-sections>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon mar-bot10" header="Additional Setup" selected="true">
+                    <div class="ui-g" [ngClass]="{'mar-bot15' : (ratesDetailedViewModel.ratesDocumentLevel==='contract' || ratesDetailedViewModel.ratesDocumentLevel==='section')}">
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <h4 class="mar0">Additional Details</h4>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Business Unit and Service Offering</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.businessUnitServiceOffering!==''">{{ratesDetailedViewModel.businessUnitServiceOffering}}</span>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.businessUnitServiceOffering===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                <label class="label-style">Carrier (Code)</label>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.carriers!==''">{{ratesDetailedViewModel.carriers}}</span>
+                                <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.carriers===''">--</span>
+                            </div>
+                            <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.sectionAccounts">
+                                <label class="label-style">Bill to Accounts</label>
+                                <span class="mar-left10 textColor">--</span>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0 pad-left0">
+                                <h4 class="mar0">Service</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Service Level</label>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.serviceLevelList!==''">{{ratesDetailedViewModel.serviceLevelList}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.serviceLevelList===''">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Requested Service</label>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.requestServiceDTOs">{{ratesDetailedViewModel.reqService}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.requestServiceDTOs">--</span>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-float-label fieldWidth pad-right0 pad-bot0">
+                                <h4 class="mar0">Equipment</h4>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Category</label>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.equipmentCategoryCode">{{ratesDetailedViewModel.ratesDetailedViewResponse.equipmentCategoryCode}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.equipmentCategoryCode">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Type</label>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.equipmentTypeDescription">{{ratesDetailedViewModel.ratesDetailedViewResponse.equipmentTypeDescription}}</span>
+                                    <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.equipmentTypeDescription">--</span>
+                                </div>
+                                <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+                                    <label class="label-style">Equipment Length</label>
+                                    <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.equipmentLength">{{ratesDetailedViewModel.ratesDetailedViewResponse.equipmentLength}}
+                                        {{ratesDetailedViewModel.ratesDetailedViewResponse.equipmentLengthDescription}}
+                                        in Length</span>
+                                    <span class="mar-left10 textColor" *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.equipmentLength">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g mar-top16 ratesBillTo" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.sectionAccounts">
+                            <app-billto-list #billTo [detailedViewFlag]="ratesDetailedViewModel.ratesDetailedViewFlag" [billToDetailsFromView]="ratesDetailedViewModel.ratesDetailedViewResponse?.sectionAccounts">
+                            </app-billto-list>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO" class="accord-color mar-bot10" header="Alternate Charge" selected="true">
+                    <div class="ui-g">
+                        <p class="ui-g-12 mar-top0">Use the alternate charge when the following are exceeded:</p>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <label class="label-style">Quantity <span class="mar-left10 textColor"
+                                    *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.customerAlternateChargeThresholdQuantity">{{ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.customerAlternateChargeThresholdQuantity}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.customerAlternateChargeThresholdQuantity">--</span></label>
+
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <label class="label-style">Quantity Type <span class="mar-left10 textColor"
+                                    *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.accessorialRateAlternateChargeQuantityTypeName">{{ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.accessorialRateAlternateChargeQuantityTypeName}}</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.accessorialRateAlternateChargeQuantityTypeName">--</span></label>
+
+                        </div>
+                        <div class="ui-g-4 ui-float-label fieldWidth pad-right0 pad-bot0">
+                            <label class="label-style">Alternate Charge Type <span class="mar-left10 textColor"
+                                    *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.alternateChargeTypeName">{{ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.alternateChargeTypeName}}
+                                    ({{ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.alternateChargeCode}})</span>
+                                <span class="mar-left10 textColor"
+                                    *ngIf="!ratesDetailedViewModel.ratesDetailedViewResponse.customerAccessorialRateAlternateChargeViewDTO?.alternateChargeTypeName">--</span></label>
+
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color ratesAccordian mar-bot10" header="Rates" selected="true" *ngIf="ratesDetailedViewModel?.ratesTableData.length">
+                    <p-table [columns]="ratesDetailedViewModel.ratesTableColumns" [value]="ratesDetailedViewModel?.ratesTableData" [scrollable]="true" [resizableColumns]="true" scrollHeight="150px">
+                        <ng-template pTemplate="caption">
+                            <div class="ui-g table-caption header-height pad-bot0">
+                                <span class="tableName alignHeading">Rates</span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="th-width table-heading" *ngFor="let col of ratesDetailedViewModel.ratesTableColumns" pResizableColumn>
+                                    {{col.name}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData class="tableHeight">
+                            <tr>
+                                <td class="mincolwidth ui-resizable-column thRow" *ngFor="let col of ratesDetailedViewModel.ratesTableColumns">
+                                    <span *ngIf="col.property!=='rateAmount' && col.property!=='minimumAmount' && col.property!=='maximumAmount'" class="capitalize-first-word">{{ rowData[col.property] }}</span>
+                                    <span *ngIf="col.property==='rateAmount' || col.property==='minimumAmount' || col.property==='maximumAmount'" class="capitalize-first-word">{{ rowData[col.property] |
+                                        currency:'USD':'symbol':'1.2-4'}}</span>
+                                    <span *ngIf="!rowData[col.property] && rowData[col.property] !== 0">--</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="ui-md-12 ui-lg-12 mar-top15" *ngIf="ratesDetailedViewModel?.ratesTableData.length > 1">
+                        <label class="label-style">Rate Operator</label>
+                        <span class="mar-left10 textColor">{{ratesDetailedViewModel.ratesDetailedViewResponse.groupRateTypeName}}</span>
+                    </div>
+                    <div *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.rateItemizeIndicator" class="ui-md-12 ui-lg-12 mar-top10 mar-bot15 pad-top0">
+                        <label class="label-style">Itemized Rates</label>
+                        <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.rateItemizeIndicator==='1'">Yes</span>
+                        <span class="mar-left10 textColor" *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse.rateItemizeIndicator==='0'">No</span>
+                    </div>
+                    <div class="ui-g mar-top10" *ngIf="ratesDetailedViewModel?.additionalChargesTableData.length > 0">
+                        <p-table [columns]="ratesDetailedViewModel.additionalChargesColumns" [value]="ratesDetailedViewModel?.additionalChargesTableData" [scrollable]="true" [resizableColumns]="true" scrollHeight="150px">
+                            <ng-template pTemplate="caption">
+                                <div class="ui-g table-caption header-height pad-bot0">
+                                    <span class="tableName alignHeading">Additional Charges</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="th-width table-heading" *ngFor="let col of ratesDetailedViewModel.additionalChargesColumns" pResizableColumn>
+                                        {{col.name}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData class="tableHeight">
+                                <tr>
+                                    <td class="mincolwidth ui-resizable-column thRow" *ngFor="let col of ratesDetailedViewModel.additionalChargesColumns">
+                                        <span *ngIf="col.property !== 'additionalRateAmount'" class="capitalize-first-word">{{ rowData[col.property] }}</span>
+                                        <span *ngIf="col.property === 'additionalRateAmount'">{{ rowData[col.property] | currency:'USD':'symbol':'1.2-4' }}</span>
+                                        <span *ngIf="!rowData[col.property] && rowData[col.property] !== 0">--</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab *ngIf="ratesDetailedViewModel.ratesDetailedViewResponse?.customerAccessorialStairRateDTO" class="accord-color mar-bot10" header="Stair-Step Rate" selected="true">
+                    <app-rates-stair-step-view [detailedViewResponse]="ratesDetailedViewModel.ratesDetailedViewResponse">
+                    </app-rates-stair-step-view>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color mar-bot10" header="Documentation" selected="true">
+                    <div class="ui-g">
+                        <div class="docTextDiv pad-right11" [ngClass]="{'ui-g-6': ratesDetailedViewModel?.instructionalText, 'ui-g-12': !ratesDetailedViewModel?.instructionalText}">
+                            <h4 class="mar0">Legal</h4>
+                            <div class="textAreaWrapper">
+                                <textarea class="textArea" maxlength="6000" [ngModelOptions]="{standalone: true}" disabled="true" rows="5" cols="100" pInputTextarea>{{ratesDetailedViewModel.legalText}}</textarea>
+
+                            </div>
+                        </div>
+                        <div class="ui-g-6 docTextDiv pad-left11" *ngIf="ratesDetailedViewModel?.instructionalText">
+                            <h4 class="mar0">Instructional</h4>
+                            <div class="textAreaWrapper">
+                                <textarea class="textArea" maxlength="6000" [ngModelOptions]="{standalone: true}" disabled="true" rows="5" cols="100" pInputTextarea>{{ratesDetailedViewModel?.instructionalText}}</textarea>
+
+                            </div>
+                        </div>
+                        <div class="ui-g-12" *ngIf="ratesDetailedViewModel.attachments?.length">
+                                <div class = "ui-g-12 pad-bot10 pad-left0"><span class="docTextDiv pad-left0">Attachments</span></div>
+                                <div>
+                                    <div class="ui-g-12 pad0" *ngFor = "let attach of ratesDetailedViewModel.attachments;let index=index"
+                                    [ngClass]="{'attachment-container':index==ratesDetailedViewModel.attachments.length -1}">
+                                        <span class="ui-g-3 pad-left0 textwrap">{{attach['documentName']}}</span>
+                                        <span class="ui-g-3 attachment-field textwrap">{{attach['accessorialAttachmentTypeName']}}</span>
+                                        <span class="ui-g-3 attachment-field">Added on {{attach['createTimestamp'] | date: 'd/M/yy HH:mm'}} </span>
+                                        <span class="ui-g-2 attachment-field textwrap">Added by {{attach['createUserID']}}</span>
+                                        <div class="ui-g-1 pad0">
+                                            <button class="icon-text-button reset-color pull-right" (click)="onReset()">View</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        <p-footer class="pull-right footer clearfix">
+            <button appShortcut="ctrl+alt+1" type="text" pButton label="Close" class="ui-button-primary mar-left15" (click)="onClickClose()"></button>
+        </p-footer>
+    </div>
+</div>

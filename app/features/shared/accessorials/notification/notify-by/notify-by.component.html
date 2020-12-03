@@ -1,0 +1,90 @@
+<div class="ui-g">
+  <form [formGroup]="notifyByModel?.notifyByForm" class="ui-g-12 pad-left0">
+    <div class="ui-g-12 ui-md-12 pad-left0">
+      <div class="ui-g-12 ui-md-3 ui-float-label fieldWidth pad-left0">
+        <p-autoComplete formControlName="notificationType" [dropdown]="true" [style]="{'width':'100%'}" field="label"
+          [inputStyle]="{'width':'100%'}" name="notificationType"
+          [ngClass]="{'errorMsg':notifyByModel.notifyByForm.controls['notificationType'].touched && !notifyByModel.notifyByForm.controls['notificationType'].value}"
+          emptyMessage="No records found" [forceSelection]="true" [suggestions]="notifyByModel.suggestionResult"
+          (completeMethod)="onDropDownClick($event,'NotificationType')" (onBlur)="onBlurNotificationType($event)">
+        </p-autoComplete>
+        <label class=" label-style ruleAlign" for="notificationType"
+          [ngClass]="{'labelAligns': notifyByModel.notifyByForm.controls['notificationType'].touched || !notifyByModel.notifyByForm.controls['notificationType'].value}">
+          <span>Notification Type</span>
+        </label>
+        <div class="errorHeight">
+          <p-message severity="error" text="Provide a Notification Type"
+            *ngIf="notifyByModel.notifyByForm.controls['notificationType'].touched && !notifyByModel.notifyByForm.controls['notificationType'].value">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="marTop10 marLeft10">
+          <p-checkbox name="notifyBy" value="Email" label="Email" (onChange)="checkBoxChange()"
+            [formControl]="notifyByModel?.notifyByForm.controls['selectionCheckbox']"></p-checkbox>
+        </div>
+
+        <div class="marTop10">
+          <p-checkbox name="notifyBy" value="Website" label="Website" (onChange)="checkBoxChange()"
+            [formControl]="notifyByModel?.notifyByForm.controls['selectionCheckbox']">
+          </p-checkbox>
+        </div>
+        <div class="marTop10">
+          <p-checkbox name="notifyBy" value="Manual" label="Manual" (onChange)="checkBoxChange()"
+            [formControl]="notifyByModel?.notifyByForm.controls['selectionCheckbox']"></p-checkbox>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-12 pad-left0">
+      <div class="ui-g-6 ui-md-6 pad-left0"
+        *ngIf="notifyByModel?.notifyByForm.controls.selectionCheckbox.value.indexOf('Email') >= 0">
+        <h3>Email</h3>
+        <div class="ui-g-12 ui-md-6 ui-float-label fieldWidth pad-left0 pad-top0 marTop30">
+          <p-autoComplete formControlName="emailNotificationType" [dropdown]="true" [style]="{'width':'100%'}"
+            field="label" [inputStyle]="{'width':'100%'}" name="notificationType"
+            [ngClass]="{'errorMsg':notifyByModel.notifyByForm.controls['emailNotificationType'].touched && !notifyByModel.notifyByForm.controls['emailNotificationType'].value}"
+            emptyMessage="No records found" [forceSelection]="true" [suggestions]="notifyByModel.suggestionResult"
+            (completeMethod)="onDropDownClick($event,'TemplateType')" (onBlur)="onBluremailNotificationType($event)">
+          </p-autoComplete>
+          <label class="label-style ruleAlign" for="notificationType"
+            [ngClass]="{'errorAlign': notifyByModel.notifyByForm.controls['emailNotificationType'].touched || !notifyByModel.notifyByForm.controls['emailNotificationType'].value}">
+            <span>Template Type</span>
+          </label>
+          <div class="errorHeight">
+            <p-message severity="error" text="Provide a Template Type"
+              *ngIf="notifyByModel.notifyByForm.controls['emailNotificationType'].touched && !notifyByModel.notifyByForm.controls['emailNotificationType'].value">
+            </p-message>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+          <button pButton class="add-ques-btn" icon="icon-Menu_Edit icon-styles" iconPos="left" type="button"
+            label="Edit Template (optional)"></button>
+        </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 pad-left0"
+        *ngIf="notifyByModel?.notifyByForm.controls.selectionCheckbox.value.indexOf('Website') >= 0" [ngClass]="{'ui-g-12 ui-md-12':notifyByModel?.notifyByForm.controls.selectionCheckbox.value.indexOf('Website') >= 0 &&
+        !(notifyByModel?.notifyByForm.controls.selectionCheckbox.value.indexOf('Email') >= 0)}">
+        <h3>Website</h3>
+        <div class="ui-g-12 ui-md-12  fieldWidth pad-left0 pad-top0 marTop30">
+          <span class="ui-float-label ui-g-12 ui-md-12 pad-top0 pad-left0">
+            <input [ngClass]="{'error-cell': notifyByModel.validUrlCheck}" id="float-input" type="text"
+              class="ui-g-12 ui-md-12" formControlName="websiteDesc" maxlength="notifyByModel.websiteLimt"
+              (blur)="patternCheck()" pInputText autocomplete="off">
+            <label for="float-input" class="labelAdjust">Website
+              Address</label>
+          </span>
+          <div class="errorHeight">
+            <p-message severity="error" text="Provide a Valid Website
+              Address" *ngIf="notifyByModel.validUrlCheck && !(notifyByModel.notifyByForm.controls['websiteDesc'].touched && !notifyByModel.notifyByForm.controls['websiteDesc'].value)">
+            </p-message>
+            <p-message severity="error" text="Provide a Website
+              Address" *ngIf="notifyByModel.notifyByForm.controls['websiteDesc'].touched && !notifyByModel.notifyByForm.controls['websiteDesc'].value">
+            </p-message>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

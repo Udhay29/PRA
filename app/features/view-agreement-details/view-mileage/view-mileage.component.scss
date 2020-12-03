@@ -1,0 +1,183 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.table-caption {
+    min-height: 30px;
+}
+
+.tableHeading {
+    padding-top: 10px;
+}
+
+/deep/.tableWrapper .ui-table-caption {
+    border-bottom: 1px solid $grey-lite48 !important;
+}
+
+.message-wrapper {
+    height: calc(100vh - 360px);
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+.noInfoMessage {
+    height: calc(100vh - 375px) !important;
+    padding-top: 16vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: $white;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.no-table {
+    display: none;
+}
+
+.noresultHeight {
+    /deep/ .ui-table-scrollable-body {
+        min-height: calc(100vh - 337px) !important;
+    }
+    /deep/.ui-table-scrollable-body-table {
+        width: 100% !important;
+    }
+}
+
+.tableHeight {
+    height: 80vh;
+}
+
+.table-header {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+}
+
+.iconColorChange {
+    display: inline-block;
+    position: relative;
+}
+
+.header-column-width {
+    width: 140px;
+    white-space: initial;
+    word-break: break-all;
+}
+
+.row-column-width {
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.min-col-width {
+    width: 130px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include getTypographyStyles('button')
+}
+
+.mincolwidth {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableFooter {
+    height: 60px !important;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.viewMileageGrid /deep/ .ui-table-scrollable-body {
+    height: calc(100vh - 445px) !important
+}
+
+.viewMileageGrid /deep/ .ui-paginator-bottom.ui-paginator.ui-widget.ui-widget-header.ui-unselectable-text.ui-helper-clearfix.ng-star-inserted {
+    border-top: 1px solid $grey-lite48;
+    margin-top: 5px;
+}
+
+.viewMileageGrid {
+    /deep/.ui-table .ui-table-caption.ui-widget-header {
+        padding-left: 12px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-bottom: 1px solid $grey-lite48 !important;
+    }
+    /deep/ .ui-table p-paginator .ui-paginator-bottom.ui-paginator {
+        padding-bottom: 0px;
+    }
+    /deep/ p-tabview .ui-tabview.ui-tabview-top>.ui-tabview-nav {
+        height: 29px;
+    }
+}
+
+/deep/.ui-table-scrollable-footer-table {
+    width: 100% !important;
+}
+
+.displaybold {
+    font-size: 12px;
+    font-weight: bold !important;
+}
+
+.font20 {
+    font-size: 20px;
+}
+
+.overflow-menu {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    &:hover {
+        color: #00aafc;
+    }
+    &:active {
+        color: #00557e;
+    }
+}
+
+.subColumnsBackground {
+    background-color: inherit !important;
+}
+
+/deep/.mileageMenuOverlay.menu-overlay {
+    padding-left: 14px;
+}
+
+.filterColor {
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+}
+
+.alignHeading {
+    text-align: center;
+    position: relative;
+    top: 6px;
+}
+
+.search-field {
+    width: 254px;
+    top: 2px;
+}

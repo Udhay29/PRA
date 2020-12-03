@@ -1,0 +1,318 @@
+<div [ngClass]="{'loader': createMileageModel?.isPageLoaded}" [appJbhLoader]="createMileageModel?.isPageLoaded"></div>
+<div class=" wrapper mar-left15">
+  <p-breadcrumb [model]="createMileageModel.breadCrumbList" styleClass="mar-left15 mar-top5"></p-breadcrumb>
+</div>
+<section class="ui-g">
+  <h2 class="pad-left20 text-name" *ngIf="!createMileageModel.isEditFlag">
+    {{createMileageModel.carrierAgreement?.agreementName}}</h2>
+  <h2 *ngIf="createMileageModel.isEditFlag">EDIT MILEAGE</h2>
+  <div class="ui-md-12 ui-lg-12">
+    <form class="filter-form" [formGroup]="createMileageModel.createMileageForm" (keydown.enter)="$event.preventDefault()">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.carrierSegmentFilteredList"
+              formControlName="carrierSegment" field="value" [dropdown]="true"
+              (completeMethod)="getCarrierSegmentList()"
+              (onSelect)="onSelectDropdown($event,'carrierSegment'); onSelectCarrierSegment($event)"
+              (onClear)="onClearDropDown('carrierSegment')" [forceSelection]="true">
+            </p-autoComplete>
+            <label for="system" class="pad-left10">Carrier Segment</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a Carrier Segment"
+            *ngIf="createMileageModel.createMileageForm.get('carrierSegment').touched && createMileageModel.createMileageForm.get('carrierSegment')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.businessUnitDataList"
+              formControlName="financeBusinessUnitCode" field="value" [dropdown]="true"
+              (completeMethod)="getBusinessUnitDataList($event)" (onSelect)="onChangeBusinessUnit($event)"
+              (onClear)="onClearDropDown('financeBusinessUnitCode')" [forceSelection]="true">
+            </p-autoComplete>
+            <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0" for="businessUnit ">
+              <span>Business Unit</span>
+              <span class="optional-text pad-right40 pull-right pad-top18">optional</span>
+            </label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Provide a Program Name"
+            *ngIf="createMileageModel.createMileageForm.get('financeBusinessUnitCode').touched && createMileageModel.createMileageForm.get('financeBusinessUnitCode')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <input id="float-input" class="ui-md-12 ui-lg-12 pad-left10" type="text" pInputText
+              formControlName="mileageProgramName" autocomplete="off" maxlength="80">
+            <label for="mileageProgramName" class="pad-left10">Program Name</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Provide a Program Name"
+            *ngIf="createMileageModel.createMileageForm.get('mileageProgramName').touched && createMileageModel.createMileageForm.get('mileageProgramName')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-top10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.systemDataList"
+              formControlName="system" field="value" [dropdown]="true" (completeMethod)="getSystemDataList($event)"
+              (onSelect)="onSelectSystemName($event)" (onClear)="onClearDropDown('system')" [forceSelection]="true">
+            </p-autoComplete>
+            <label for="system" class="pad-left10">System</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a system Name"
+            *ngIf="createMileageModel.createMileageForm.get('system').touched && createMileageModel.createMileageForm.get('system')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.systemVersionList"
+              formControlName="systemVersion" field="value" [dropdown]="true"
+              (completeMethod)="getSystemVersionList($event)" (onSelect)="onSelectSystemVersion($event)"
+              (onClear)="onClearDropDown('systemVersion')" [forceSelection]="true"></p-autoComplete>
+            <label for="systemVersion" class="pad-left10">System Version</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a system version"
+            *ngIf="createMileageModel.createMileageForm.get('systemVersion').touched && createMileageModel.createMileageForm.get('systemVersion')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}" [suggestions]="createMileageModel.distanceUnitList"
+              formControlName="distanceUnit" field="value" [dropdown]="true"
+              (completeMethod)="getMileageUnitsList($event)" (onSelect)="onSelectDropdown($event, 'distanceUnit')"
+              [forceSelection]="true" (onClear)="onClearDropDown('distanceUnit')"></p-autoComplete>
+            <label for="distanceUnit" class="pad-left10">Distance Unit</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a distance unit"
+            *ngIf="createMileageModel.createMileageForm.get('distanceUnit').touched && createMileageModel.createMileageForm.get('distanceUnit')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-top10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete  ng-dirty ng-invalid" [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}" [suggestions]="createMileageModel.geographyTypeList"
+              formControlName="geographyType" field="value" [dropdown]="true"
+              (completeMethod)="getGeographyTypeList($event)"
+              (onSelect)="onSelectDropdown($event, 'geographicPointType')" [forceSelection]="true"
+              (onClear)="onClearDropDown('geographyType')"></p-autoComplete>
+            <label for="geographyType" class="pad-left10">Geography Type</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a geography type"
+            *ngIf="createMileageModel.createMileageForm.get('geographyType').touched && createMileageModel.createMileageForm.get('geographyType')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.routeTypeList"
+              formControlName="routeType" field="value" [dropdown]="true" (completeMethod)="getRouteTypeList($event)"
+              (onSelect)="onSelectDropdown($event, 'mileageRouteType')" [forceSelection]="true"
+              (onClear)="onClearDropDown('routeType')"></p-autoComplete>
+            <label for="routeType" class="pad-left10">Route Type</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a route type"
+            *ngIf="createMileageModel.createMileageForm.get('routeType').touched && createMileageModel.createMileageForm.get('routeType')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
+          <span class="ui-float-label ui-md-12 ui-lg-12">
+            <p-autoComplete class="ui-autocomplete  ng-dirty ng-invalid" [style]="{'width': '100%'}"
+              [inputStyle]="{'width': '100%'}" [suggestions]="createMileageModel.calculationTypeList"
+              formControlName="calculationType" field="value" [dropdown]="true"
+              (completeMethod)="getCalculationTypeList($event)"
+              (onSelect)="onSelectDropdown($event, 'mileageCalculationType')" [forceSelection]="true"
+              (onClear)="onClearDropDown('calculationType')"></p-autoComplete>
+            <label for="calculationType" class="pad-left10">Calculation Type</label>
+          </span>
+          <p-message class="ui-messages-error error_Msg" severity="error" text="Select a calculation type"
+            *ngIf="createMileageModel.createMileageForm.get('calculationType').touched && createMileageModel.createMileageForm.get('calculationType')['errors']?.required">
+          </p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-top10">
+        <div class="ui-g-12 ui-md-4 ui-lg-4 calenderContainer">
+          <div class='ui-md-12 ui-lg-12 ui-float-label'>
+            <p-calendar #effectiveCal [style]="{ 'width': '100%'} " [inputStyle]="{ 'width': '100%'}"
+              formControlName="effectiveDate" [showIcon]="true" dateFormat="mm/dd/yy"
+              (onSelect)="onDateSelected($event, 'effectiveDate')" [minDate]="createMileageModel.effectiveMinDate"
+              [maxDate]="createMileageModel.effectiveMaxDate "
+              (onBlur)="onTypeDate($event, 'effectiveDate') ;effectiveCal.currentMonth=createMileageModel.effDate?.getMonth();effectiveCal.currentYear=createMileageModel.effDate?.getFullYear()"
+              [disabledDates]="createMileageModel.disabledEffDatesList "></p-calendar>
+            <label for="effectiveDate">Effective Date</label>
+          </div>
+          <p-message severity="error" class="error_Msg" text="Provide an effective Date"
+            *ngIf="createMileageModel.createMileageForm.get(
+                'effectiveDate').touched && createMileageModel.createMileageForm.get( 'effectiveDate')[ 'errors']?.required"></p-message>
+          <p-message severity="error" class="error_Msg" text="Provide a valid date"
+            *ngIf="createMileageModel.createMileageForm.get(
+                'effectiveDate').touched && createMileageModel.createMileageForm.get( 'effectiveDate')[ 'errors']?.invalid"></p-message>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-lg-4 calenderContainer">
+          <div class='ui-md-12 ui-lg-12 ui-float-label'>
+            <p-calendar #expirationCal [style]="{ 'width': '100%'}" [inputStyle]="{ 'width': '100%'} "
+              formControlName="expirationDate" [showIcon]="true" dateFormat="mm/dd/yy"
+              (onSelect)="onDateSelected($event, 'expirationDate') " [minDate]="createMileageModel.expirationMinDate"
+              [maxDate]="createMileageModel.expirationMaxDate"
+              (onBlur)="onTypeDate($event, 'expirationDate') ;expirationCal.currentMonth=createMileageModel.expDate?.getMonth();expirationCal.currentYear=createMileageModel.expDate?.getFullYear()"
+              [disabledDates]="createMileageModel.disabledExpDatesList"></p-calendar>
+            <label for="expirationDate">Expiration Date</label>
+          </div>
+          <p-message severity="error" class="error_Msg" text="Provide an expiration Date"
+            *ngIf="createMileageModel.createMileageForm.get(
+                'expirationDate').touched && createMileageModel.createMileageForm.get( 'expirationDate')[ 'errors']?.required"></p-message>
+          <p-message severity="error" class="error_Msg" text="Provide a valid date"
+            *ngIf="createMileageModel.createMileageForm.get(
+                'expirationDate').touched && createMileageModel.createMileageForm.get( 'expirationDate')[ 'errors']?.invalid"></p-message>
+        </div>
+      </div>
+      <div class="ui-g mar-top10 border-style mar-left10">
+      </div>
+      <div class="ui-g mar-top10 border-align">
+        <div class="ui-md-4">
+          <label for="decimalPrecisionIndicator" class="label-text">Decimal Precision</label>
+          <div class="pad-top5">
+            <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="decimalPrecisionIndicator" class="input_switch"
+              (onChange)="onChangedecimalPrecisionIndicator($event)"></p-inputSwitch>
+          </div>
+        </div>
+        <div class="ui-md-7 ui-lg-7 font12 radioLabelFix">
+          <label class="font12 text-gray label-text">Border Miles Parameter</label>
+          <br>
+          <p-radioButton *ngFor="let BorderMilesParameter of createMileageModel.borderParameter; let i = index"
+            id="{{i+1}}" name="borderMilesParameter" [value]="BorderMilesParameter.mileageBorderMileParameterTypeID"
+            [label]="BorderMilesParameter.mileageBorderMileParameterTypeName"
+            [(ngModel)]="createMileageModel.borderCrossingParameter" [ngModelOptions]="{standalone: true}"
+            (click)="onClickBorderMilesParameter(BorderMilesParameter, selectedValue, i+1);">
+          </p-radioButton>
+        </div>
+      </div>
+      <div class="ui-g mar-top10 border-style mar-left10">
+      </div>
+      <div *ngIf="createMileageModel.isSystemParametersFlag " class="ui-g mar-top20 pad-left10">
+        <div class="ui-md-12 ui-lg-12  pad-left0">
+          <label class=" mar0 label-text parametre-label"><span>System Parameters</span>
+          </label>
+        </div>
+        <span *ngFor="let data of createMileageModel.systemParameters" class="block-class checkbox-align font12 ">
+          <p-checkbox name="systemparameters" class="font12" [(ngModel)]="createMileageModel.systemParametersList"
+            [ngModelOptions]="{standalone: true}" value={{data.label}}  label={{data.value}}
+            (onChange)="onChangeCheckboxValue($event, data)"></p-checkbox>
+        </span>
+      </div>
+      <div class="ui-g-12 ui-g mar-top10 pad-left10 pad-right10 mar-bot10">
+        <div class="ui-md-4">
+          <label for="lineHaulOverride" class="label-text">Line Haul Override</label>
+          <div class="pad-top5">
+            <p-inputSwitch onLabel="Yes" offLabel="No" class="input_switch"></p-inputSwitch>
+          </div>
+        </div>
+        <div class="ui-g-5">
+          <div>
+            <label class="label-style pad-left10">Customer Affiliation</label>
+          </div>
+          <p-selectButton formControlName="mileageLevel" [options]="createMileageModel.mileageLevel" name="mileageLevel"
+            (onOptionClick)="onChangeMileageLevel($event.option)" [(ngModel)]="createMileageModel.selectedMileageLevel">
+          </p-selectButton>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <p-message class="ui-messages-error error_Msg deprecated-message ui-growl-image icon-Circle_Warning"
+          severity="error" text="{{createMileageModel.carrierValidationMessage}}"
+          *ngIf="createMileageModel.isCarrierSelectionFlag">
+        </p-message>
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+          <span class="ui-md-12 ui-lg-12 ui-g-12 " *ngIf="createMileageModel.carrierList.length> 1">
+            <p-table #codestableCarr [value]="createMileageModel.carrierList"
+              [columns]="createMileageModel.codesTableColumns" [rows]="10"
+              [(selection)]="createMileageModel.selectedCodesList" [resizableColumns]="false"
+              (onRowSelect)="onSelectCarrier($event)" class="itemListTable main-content"
+              (onRowUnselect)="onDeSelectCarrier($event)" [scrollable]="true" scrollHeight="260px"
+              [globalFilterFields]="['value','displayName']" [filterDelay]="0">
+              <ng-template pTemplate="caption">
+                <div class="ui-g table-caption header-height  pad-bot0">
+                  <div class="ui-g-9">
+                    <span>Carriers (Optional)
+                    </span>
+                  </div>
+                  <div class="iconsHolder ui-md-3 ui-lg-3 pull-right pad0">
+                    <div class="ui-g">
+                      <div class=" ui-md-11 ui-lg-11 ui-inputgroup">
+                        <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                        <input type="text" id="codeSearchText" appShortcut="" autocomplete="off"
+                          [ngModelOptions]="{standalone: true}" pInputText placeholder="Search" appShortcut=""
+                          [(ngModel)]="createMileageModel.searchInputValue"
+                          (input)="codestableCarr.filterGlobal($event.target.value, 'contains')"
+                          data-attr="create-carrier-mileage-billto-search" (keyup)="onCheckCarrierLength($event)">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr class="pad0 mar0 table-header">
+                  <th class="width10 checkbox-column">
+                  </th>
+                  <th class="calculated-width" *ngFor="let thisCol of createMileageModel.codesTableColumns"
+                    pResizableColumn pTooltip={{thisCol.label.code}} tooltipPosition="top">
+                    {{thisCol.label.code}} </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex" class="tableHeight">
+                <tr [pSelectableRow]="rowData" class="pad0 mar0 table-header ng-star-inserted">
+                  <td class="width10 checkbox-column">
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                  </td>
+                  <td class=" calculated-width ui-resizable-column"
+                    *ngFor="let thisCol of createMileageModel.codesTableColumns" pTooltip={{data[thisCol.value]}}
+                    tooltipPosition="top">
+                    <span> {{ rowData[thisCol.displayName] }} </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="createMileageModel.isNoResultFoundFlag">
+                  <td colspan="8">
+                    <div class="ui-md-12 ui-lg-12 message-wrapper">
+                      <span class="display-middle">No results found</span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+          <span class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top20 textarea-float">
+            <textarea class="noresize form-control ui-md-12 ui-lg-12" formControlName="notes" maxlength="500" [rows]="5"
+              [cols]="30" pInputTextarea></textarea>
+            <label class="ui-md-12 ui-lg-12 ui-g-12 font12 text-gray" for="notes">Notes
+              <span class="pull-right mar-right20 text-gray font12">optional</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g mar-top10 pull-right mar-bottom10">
+        <button pButton label="Cancel" class="mar-left10 ui-button-secondary btn_style" (click)="onCancel()"></button>
+        <button *ngIf="!createMileageModel.isEditFlag" pButton label="Save" class="mar-left15"
+          (click)="onClickCreate()"></button>
+      </div>
+    </form>
+  </div>
+</section>
+<p-dialog header="Confirmation" [(visible)]="createMileageModel.isSaveChanges" [modal]="true" [responsive]="true"
+  [minY]="70" [baseZIndex]="10000" class="dialogWidth">
+  <span>{{createMileageModel.popupMessage}}</span>
+  <p-footer>
+    <button type="button" pButton (click)="onPopupNo()" class="ui-button-secondary" label="No"></button>
+    <button type="button" pButton (click)="onPopupYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

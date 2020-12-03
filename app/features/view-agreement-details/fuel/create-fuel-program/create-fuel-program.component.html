@@ -1,0 +1,20 @@
+<div [ngClass]="{'loader': createFuelProgramModel?.isPageLoading}"
+[appJbhLoader]="createFuelProgramModel?.isPageLoading"></div>
+<p-steps class="fuel-steps" [model]="createFuelProgramModel.stepsList" [readonly]="false"
+[activeIndex]="createFuelProgramModel.activeIndex" (activeIndexChange)="onIndexChange($event)"></p-steps>
+<div class="ui-g mar-left10">
+  <div class="ui-md-12 ui-lg-12 ui-g-12">
+    <h1 class="text-uppercase" i18n="create agreement title @@createAgrTitle">create fuel program {{createFuelProgramModel.agreementName}}</h1>
+  </div>
+</div>
+
+<app-fuel-summary *ngIf="createFuelProgramModel?.isShowFuelSummary" (fuelLoaderEvent)="loader($event)"></app-fuel-summary>
+<p-dialog data-attr="viewagreement-fuelcreate-confirmation-dialog" header="Confirmation" [(visible)]="createFuelProgramModel.isSaveChanges" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button type="button" pButton (click)="onPopupCancel()" class="ui-button-secondary" label="No" data-attr="viewagreement-fuelcreate-popupno-button"></button>
+    <button type="button" pButton (click)="onPopupYes()" label="Yes" class="ui-button-primary" data-attr="viewagreement-fuelcreate-popupyes-button"></button>
+  </p-footer>
+</p-dialog>
+<app-fuel-calculation-details *ngIf="createFuelProgramModel.isShowFuelCalculationDetails"></app-fuel-calculation-details>
+<app-fuel-price-basis *ngIf="createFuelProgramModel.isShowFuelPriceBasis"></app-fuel-price-basis>

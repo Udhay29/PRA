@@ -1,0 +1,57 @@
+<div class="ui-g ui-fluid feature-container filter-common-style">
+  <div class="filter-wrapper documentationFilterPanel pad-bot5">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 mar-top10 pad-left15 pad-bot15 filterHeader">
+        <div class="ui-g-6">
+          <strong class="filter-heading">Filter By</strong>
+        </div>
+        <div class="ui-g-6 textAlign">
+          <button pButton class="ui-button-secondary clearSearch pad0" (click)="onClearAllFilters()">Clear
+            Filters
+          </button>
+        </div>
+      </div>
+      <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel">
+          <div class="accordionHeight  custom-accordion-segment">
+              <p-accordion [multiple]="true" class='accordian-container'>
+        <p-accordionTab class="nopadding dateFilter documentation-panel-style boxShadow-white" [(selected)]="isEffecDRAccordianOpened" [ngClass]="{'no-border': isEffecDRAccordianOpened}"
+           expandIcon="icon-Chevron_Down"
+          collapseIcon="icon-Chevron_Up">
+          <p-header class="header-style">
+            <span class="filter-title">Setup</span>
+          </p-header>
+          <div>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.documentationType"
+              (itemsSelected)="onListingItemsSelected($event, 'documentationType', 3, false)"></app-listing-filter>
+
+            <app-autocomplete-filter class="chargeTypePanel pad-bot1" #filtercomp [config]="filterConfig.chargeType"
+              (itemsSelected)="onListingItemsSelected($event, 'chargeType', 4, true)"></app-autocomplete-filter>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.contract"
+              (itemsSelected)="onListingItemsSelected($event, 'contract', 5, true)"></app-listing-filter>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.section"
+              (itemsSelected)="onListingItemsSelected($event, 'section', 6, true)"></app-listing-filter>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.businessUnit"
+              (itemsSelected)="onListingItemsSelected($event, 'businessUnitServiceoffering', 7, true)">
+            </app-listing-filter>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.carrier"
+              (itemsSelected)="onListingItemsSelected($event, 'carrier', 8, true)"></app-listing-filter>
+
+            <app-listing-filter class="documentPanel" #filtercomp [config]="filterConfig.billToAccount"
+              (itemsSelected)="onListingItemsSelected($event, 'billToAccount', 9, true)"></app-listing-filter>
+
+              <app-listing-filter class="documentPanel" #filtercomp *ngIf="documentationFilerModel.isStatusFlag" [config]="filterConfig.status"
+              [selectedList]="documentationFilerModel.statusSelectedList" (isCollapsed)="onStatusCollapsed($event)"
+              (itemsSelected)="onListingItemsSelected($event, 'status', 1, false)" (resetCall)="onResetEvent($event)">
+            </app-listing-filter>
+          </div>
+        </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+</div>

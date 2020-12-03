@@ -1,0 +1,15 @@
+<p-accordion [multiple]="true" class='accordian-container'>
+    <p-accordionTab [selected]="!isPanelClosed" [attr.data-attr]="'radioFilter-' +  filterConfig?.title + '-accordionTab'" class="nopadding dateFilter" [(selected)]="isRadioFilterAccordianOpened" [ngClass]="{'no-border': isRadioFilterAccordianOpened}" 
+ expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+  <p-header class="header-style">
+    <span class="filter-title">{{filterConfig?.title}}</span>
+  </p-header>
+  <div class="ui-g">
+    <div class="ui-g-12 pad-bot10 pad-top0">
+      <p-radioButton  [attr.data-attr]="'radioFilter-' +  filterConfig?.title + '-radioButton'" class="ui-g-12" *ngFor="let item of itemList" name="groupname" [value]="item" [label]="item.label" [(ngModel)]="selectedValue"
+        (click)="onRadioSelect(item)"></p-radioButton>
+    </div>
+    <button class="icon-text-button reset-color" (click)="onReset()">Reset</button>
+  </div>
+  </p-accordionTab>
+  </p-accordion>

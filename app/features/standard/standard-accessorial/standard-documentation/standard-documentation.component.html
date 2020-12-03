@@ -1,0 +1,39 @@
+<div class="ui-g ui-fluid contract-custom-cls">
+  <div class="ui-md-12">
+      <p-table selectionMode="multiple" class="tableWrapper">
+          <ng-template pTemplate="caption">
+              <div class="ui-g table-caption pad-bot0">
+                  <div class="ui-g-8 pad-left0">
+                      <span class="tableName alignHeading">Documentation</span>
+                  </div>
+                  <div class="pad-bot0 ui-g-4">
+                      <div class="ui-inputgroup ui-md-9 ui-g-12 pad-top8">
+                          <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                          <input type="text" pInputText placeholder="Search">
+                      </div>
+                      <div class="iconsHolder ui-md-3 ui-g-12 pad-right0 pad-left10">
+                          <div appShortcut class="grid-icons ui-md-12 pad-right0 ">
+                              <button class="icon-Filter_Solid icon-button buttonStyle ui-md-5"></button>
+                              <button class="icon-Menu_Overflow icon-button buttonStyle ui-md-7 pad-right0"></button>
+                          </div>
+                          <p-menu #menuOverlay #menu popup="popup" styleClass="menu-overlay" appendTo="body">
+                          </p-menu>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <td class="noInfoMessage">
+                      <div class="displaymiddle mar-bot20">
+                          <h4 class="emptyMsgText mar0 mar-bot10">No information</h4>
+                          <h4 class="emptyMsgText mar0 mar-bot20">was found to display</h4>
+                          <button type="text" pButton label="Create Standard Documentation" class="ui-button-primary mar-top5 mar-left5"
+                              (click)="onCreateDocumentation()"></button>
+                      </div>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+</div>

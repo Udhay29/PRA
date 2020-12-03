@@ -1,0 +1,275 @@
+<form [formGroup]="freeCalendarModel?.freeCalendarForm" autocomplete="off">
+  <div class="ui-g">
+    <div class="ui-g-4 ui-float-label fieldWidth pad-left0">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="calendarType"
+        formControlName="calendarType" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'calendarType')"
+        (onSelect)="onSelectCalendarType($event.value)" [suggestions]="freeCalendarModel.calendarTypesFiltered"
+        (onBlur)="onCalendarFormControlBlur($event, 'calendarType')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="calendarType" [ngClass]="{'labelAligns': (freeCalendarModel?.freeCalendarForm.get('calendarType')['errors']?.required
+              || freeCalendarModel?.freeCalendarForm.get('calendarType')['errors']?.touched)}">
+        <span>Date Type</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Date Type" *ngIf="freeCalendarModel?.freeCalendarForm.get('calendarType').touched
+             && freeCalendarModel.freeCalendarForm.get('calendarType')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+
+    <div *ngIf="freeCalendarModel.isRelativeCalendarType" class="ui-g-4 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="timeFrame"
+        formControlName="timeFrame" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'timeFrame')"
+        (onSelect)="onSelectTimeFrame($event.value)" [suggestions]="freeCalendarModel.timeFramesFiltered" (onBlur)="onCalendarFormControlBlur($event, 'timeFrame')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="timeFrame" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('timeFrame')?.errors?.required || freeCalendarModel?.freeCalendarForm.get('timeFrame')?.errors?.touched)}">
+        <span>Timeframe</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Timeframe" *ngIf="freeCalendarModel?.freeCalendarForm.get('timeFrame')?.touched
+                     && freeCalendarModel?.freeCalendarForm.get('timeFrame')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div *ngIf="freeCalendarModel.isRelativeTimeFrameMonthly" class="ui-g-4 ui-float-label fieldWidth">
+      <p-autoComplete class="heightError" [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+        name="months" formControlName="months"
+        emptyMessage="No records found" [forceSelection]="true"
+        (completeMethod)="onTypeCalendarAutoComplete($event,'months')"
+        (onBlur)="onCalendarFormControlBlur($event, 'months')"
+        [suggestions]="freeCalendarModel.monthsFiltered" [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="months" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('months')?.errors?.required
+         || freeCalendarModel?.freeCalendarForm.get('months')?.errors?.touched)}">
+        <span>Month</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Month" *ngIf="freeCalendarModel?.freeCalendarForm.get('months')?.touched
+                   && freeCalendarModel?.freeCalendarForm.get('months')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div *ngIf="freeCalendarModel.isRelativeTimeFrameWeekly" class="ui-g-4 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="dayOfWeek"
+        formControlName="dayOfWeek" (onSelect)="onSelectDayOfWeek($event.value,$event.label)" emptyMessage="No records found"
+        [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'dayOfWeek')" [suggestions]="freeCalendarModel.dayOfWeekFiltered"
+        class="heightError" [multiple]="true" [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="dayOfWeek" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.required
+         || freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.touched)}">
+        <span>Day of Week</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Day of Week" *ngIf="freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.touched
+                   && freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div *ngIf="freeCalendarModel.isSpecificCalendarType" class="ui-g-4 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" (onSelect)="onSelectMonth($event.value)" [style]="{'width':'100%'}" field="label"
+        [inputStyle]="{'width':'100%'}" name="months" formControlName="months" emptyMessage="No records found"
+         (onBlur)="onCalendarFormControlBlur($event, 'months')"
+        [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'months')" [suggestions]="freeCalendarModel.monthsFiltered"
+        [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="months" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('months')?.errors?.required
+             || freeCalendarModel?.freeCalendarForm.get('months')?.errors?.touched)}">
+        <span>Month</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Month" *ngIf="freeCalendarModel?.freeCalendarForm.get('months')?.touched
+                       && freeCalendarModel?.freeCalendarForm.get('months')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div *ngIf="freeCalendarModel.isSpecificCalendarType" class="ui-g-4 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" class="heightError" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+        name="dayOfMonth" formControlName="dayOfMonth" emptyMessage="No records found" [forceSelection]="true"
+        (completeMethod)="onTypeCalendarAutoComplete($event,'dayOfMonth')" [suggestions]="freeCalendarModel.dayOfMonthFiltered"
+        (onBlur)="onCalendarFormControlBlur($event, 'dayOfMonth')"
+        [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="dayOfMonth" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('dayOfMonth')?.errors?.required
+               || freeCalendarModel?.freeCalendarForm.get('dayOfMonth')?.errors?.touched)}">
+        <span>Day of Month</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Day of Month" *ngIf="freeCalendarModel?.freeCalendarForm.get('dayOfMonth')?.touched
+                         && freeCalendarModel?.freeCalendarForm.get('dayOfMonth')?.errors?.required">
+        </p-message>
+        <p-message severity="error" text="The year selected does not have the dates specified" *ngIf="freeCalendarModel?.freeCalendarForm.errors?.invalidDayOfMonth">
+        </p-message>
+      </div>
+    </div>
+  </div>
+  <div  class="ui-g mar-top15 mar-left34 pad-top10" *ngIf="freeCalendarModel.isRelativeTimeFrameWeekly">
+      <div class="ui-g-3 ui-float-label fieldWidth displayBlock pad-left0">
+       <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="applyIf"
+         formControlName="applyIf" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'applyIf')"
+         (onSelect)="onSelectApplyIf($event.value)" [suggestions]="freeCalendarModel.applyIfFiltered" (onBlur)="onCalendarFormControlBlur($event, 'applyIf')"></p-autoComplete>
+       <label class="label-style freeTypeAlign" for="applyIf" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required || freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.touched)}">
+         <span>Apply If</span>
+       </label>
+       <div class="errorHeight">
+         <p-message severity="error" text="Select Apply If" *ngIf="freeCalendarModel?.freeCalendarForm.get('applyIf')?.touched
+              && freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required">
+         </p-message>
+       </div>
+     </div>
+      <div *ngIf="freeCalendarModel.isEventName" class="ui-g-3 ui-float-label fieldWidth">
+       <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="eventTypes"
+         formControlName="eventTypes" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'eventTypes')"
+         [suggestions]="freeCalendarModel.eventTypesFiltered" (onBlur)="onCalendarFormControlBlur($event, 'eventTypes')"></p-autoComplete>
+       <label class="label-style freeTypeAlign" for="eventType" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required
+           || freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.touched)}">
+         <span>Event Name</span>
+       </label>
+       <div class="errorHeight">
+         <p-message severity="error" text="Select Event Name" *ngIf="freeCalendarModel?.freeCalendarForm.get('eventTypes')?.touched
+              && freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required">
+         </p-message>
+       </div>
+     </div>
+     <div *ngIf="freeCalendarModel.isRelativeWeeklyAppliesToOccurence" class="ui-g-3 ui-float-label fieldWidth">
+       <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="appliesToOccurrence"
+         class="heightError" formControlName="appliesToOccurrence" emptyMessage="No records found" [forceSelection]="true"
+         (completeMethod)="onTypeCalendarAutoComplete($event,'appliesToOccurrence')" [suggestions]="freeCalendarModel.appliesToOccurrenceFiltered"
+         [multiple]="true"></p-autoComplete>
+       <label class="label-style freeTypeAlign" for="appliesToOccurrence" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('appliesToOccurrence')?.errors?.required
+             || freeCalendarModel?.freeCalendarForm.get('appliesToOccurrence')?.errors?.touched)}">
+         <span>Applies To Occurrence</span>
+       </label>
+       <div class="errorHeight">
+         <p-message severity="error" text="Select Applies To Occurrence" *ngIf="freeCalendarModel?.freeCalendarForm.get('appliesToOccurrence')?.touched
+                && freeCalendarModel?.freeCalendarForm.get('appliesToOccurrence')?.errors?.required">
+         </p-message>
+       </div>
+     </div>
+     </div>
+  <div class="ui-g mar-top15 mar-left34 pad-top10" *ngIf="freeCalendarModel.isSpecificCalendarType">
+    <div *ngIf="freeCalendarModel.isSpecificCalendarType" class="ui-g-3 ui-float-label fieldWidth pad-left0">
+      <input placeholder="optional" type="text" class="year" pInputText formControlName="year" name="year" (keypress)="onYearKeyPress($event)" (paste)="false"
+       class="width_value">
+      <label class="label-style freeTypeAlign" for="year" [ngClass]="{'labelAligns': (freeCalendarModel?.freeCalendarForm.get('year')['errors']?.invalid
+            || freeCalendarModel?.freeCalendarForm.get('year')['errors']?.touched)}">
+        <span>Year </span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Please select valid year" *ngIf="freeCalendarModel?.freeCalendarForm.get('year')?.touched
+           && freeCalendarModel?.freeCalendarForm.get('year')?.errors?.invalid">
+        </p-message>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div *ngIf="freeCalendarModel.isSpecificCalendarType" class="ui-g-3 ui-float-label fieldWidth">
+      <input placeholder="optional" maxlength="80" type="text" pInputText formControlName="holidayName" name="holidayName"
+        class="holidayName">
+      <label class="label-style freeTypeAlign" for="holidayName" [ngClass]="{'labelAligns': (freeCalendarModel?.freeCalendarForm.get('holidayName')['errors']?.invalid
+      || freeCalendarModel?.freeCalendarForm.get('holidayName')['errors']?.touched)}">
+        <span>Name of Day</span>
+      </label>
+    </div>
+      <div *ngIf="freeCalendarModel.isSpecificCalendarType"
+      class="ui-g-3 ui-float-label fieldWidth displayBlock">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="applyIf"
+        formControlName="applyIf" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'applyIf')"
+        (onSelect)="onSelectApplyIf($event.value)" [suggestions]="freeCalendarModel.applyIfFiltered" (onBlur)="onCalendarFormControlBlur($event, 'applyIf')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="applyIf" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required || freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.touched)}">
+        <span>Apply If</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Apply If" *ngIf="freeCalendarModel?.freeCalendarForm.get('applyIf')?.touched
+             && freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+     <div *ngIf="freeCalendarModel.isEventName" class="ui-g-3 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="eventTypes"
+        formControlName="eventTypes" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'eventTypes')"
+        [suggestions]="freeCalendarModel.eventTypesFiltered" (onBlur)="onCalendarFormControlBlur($event, 'eventTypes')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="eventType" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required
+          || freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.touched)}">
+        <span>Event Name</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Event Name" *ngIf="freeCalendarModel?.freeCalendarForm.get('eventTypes')?.touched
+             && freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g mar-top15 mar-left34 pad-top10 " *ngIf="freeCalendarModel.isRelativeTimeFrameMonthly">
+    <div class="ui-g-3 ui-float-label fieldWidth pad-left0">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="occurrence"
+        formControlName="occurrence" class="heightError" emptyMessage="No records found" [forceSelection]="true"
+        (completeMethod)="onTypeCalendarAutoComplete($event,'occurrence')" [suggestions]="freeCalendarModel.occurrenceFiltered"
+        (onBlur)="onCalendarFormControlBlur($event, 'occurrence')" [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="occurrence" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('occurrence')?.errors?.required
+               || freeCalendarModel?.freeCalendarForm.get('occurrence')?.errors?.touched)}">
+        <span>Frequency</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Frequency" *ngIf="freeCalendarModel?.freeCalendarForm.get('occurrence')?.touched
+                         && freeCalendarModel?.freeCalendarForm.get('occurrence')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="dayOfWeek"
+        formControlName="dayOfWeek" class="heightError" emptyMessage="No records found" [forceSelection]="true"
+        (completeMethod)="onTypeCalendarAutoComplete($event,'dayOfWeek')" [suggestions]="freeCalendarModel.dayOfWeekFiltered"
+        (onBlur)="onCalendarFormControlBlur($event, 'dayOfWeek')"  [dropdown]="true" field="label"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="dayOfWeek" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.required
+               || freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.touched)}">
+        <span>Day</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Day" *ngIf="freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.touched
+                         && freeCalendarModel?.freeCalendarForm.get('dayOfWeek')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth displayBlock">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="applyIf"
+        formControlName="applyIf" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'applyIf')"
+        (onSelect)="onSelectApplyIf($event.value)" [suggestions]="freeCalendarModel.applyIfFiltered" (onBlur)="onCalendarFormControlBlur($event, 'applyIf')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="applyIf" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required || freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.touched)}">
+        <span>Apply If</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Apply If" *ngIf="freeCalendarModel?.freeCalendarForm.get('applyIf')?.touched
+             && freeCalendarModel?.freeCalendarForm.get('applyIf')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+    <div *ngIf="freeCalendarModel.isEventName" class="ui-g-3 ui-float-label fieldWidth">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="eventTypes"
+        formControlName="eventTypes" emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onTypeCalendarAutoComplete($event,'eventTypes')"
+        [suggestions]="freeCalendarModel.eventTypesFiltered" (onBlur)="onCalendarFormControlBlur($event, 'eventTypes')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="eventType" [ngClass]="{'labelAligns':(freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required
+          || freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.touched)}">
+        <span>Event Name</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Event Name" *ngIf="freeCalendarModel?.freeCalendarForm.get('eventTypes')?.touched
+             && freeCalendarModel?.freeCalendarForm.get('eventTypes')?.errors?.required">
+        </p-message>
+      </div>
+    </div>
+  </div>
+  
+
+  <div *ngIf="freeCalendarModel.isCannotBeChargeableDay pad-top10" class="ui-g">
+    <div class="ui-g-6 ui-float-label fieldWidth mar-left34 additionalOptions">
+      <h2 class="mar-bot11">Additional Options</h2>
+      <span class="mar-top0 mar-bot11 chosen-day">The following applies to the chosen
+        <ng-Container *ngIf="freeCalendarModel.isSpecificCalendarType">
+            Day of Month.
+        </ng-Container>
+        <ng-Container *ngIf="freeCalendarModel.isRelativeTimeFrameWeekly">
+            Day of Week.
+        </ng-Container>
+        <ng-Container *ngIf="freeCalendarModel.isRelativeTimeFrameMonthly">
+            Day.
+        </ng-Container>
+      </span>
+      <p-checkbox binary="true" label="Cannot Be First Chargeable Day" 
+        formControlName='cannotBeFirstChargeableDay'>
+      </p-checkbox>
+    </div>
+  </div>
+</form>

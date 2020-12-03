@@ -1,0 +1,207 @@
+<div [ngClass]="{'loader': ratingsModel.isPageLoading}" [appJbhLoader]="ratingsModel?.isPageLoading"></div>
+<div class="split-wrapper">
+    <div class="ui-g-12 pad0 dropshadow split-container view-form-content">
+        <div class="split-header">
+            <span data-attr="viewagreement-viewRatingrule-splitViewTitle-span" class="title">{{ ratingsModel.splitViewTitle }}</span>
+            <button data-attr="viewagreement-viewRatingrule-close-button" class="icon-button icon-Menu_Close close-position iconColorChange" (click)="onClose()"></button>
+        </div>
+        <div class="split-body">
+            <div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-effectiveDateHdr-label" class="heading-text content-text">Effective Date </label>
+            <ng-container *ngIf="ratingsModel.ratingRulesDetail.effectiveDate; else notShowEffDate">
+              <label data-attr="viewagreement-viewRatingrule-effectiveDate-label" class="content-text">&nbsp; &nbsp;{{ratingsModel.ratingRulesDetail.effectiveDate}}</label>
+            </ng-container>
+            <ng-template #notShowEffDate>
+              <label data-attr="viewagreement-viewRatingrule-effectiveDatenull-label" class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-expectiveDateHdr-label" class="heading-text content-text">Expiration Date</label>
+            <ng-container *ngIf="ratingsModel.ratingRulesDetail.expirationDate; else notShowExpDate">
+              <label data-attr="viewagreement-viewRatingrule-effectiveDate-label" class="content-text">&nbsp; &nbsp;{{ratingsModel.ratingRulesDetail.expirationDate}}</label>
+            </ng-container>
+            <ng-template #notShowExpDate>
+              <label data-attr="viewagreement-viewRatingrule-effectiveDatenull-label" class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label  data-attr="viewagreement-viewRatingrule-citySubsHdr-label" class="heading-text content-text">City Substitution</label>
+            <ng-container *ngIf="ratingsModel.ratingRulesDetail.citySubstitutionIndicator">
+              <label data-attr="viewagreement-viewRatingrule-citySubs-label" class="content-text">&nbsp;
+                &nbsp;{{ratingsModel.ratingRulesDetail.citySubstitutionIndicator === 'Y' ? 'Yes' : 'No'}}</label>
+            </ng-container>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-radiusHdr-label" class="heading-text content-text">Radius</label>
+            <ng-container *ngIf="ratingsModel.ratingRulesDetail.citySubstitutionRadiusValue; else notShowRadius">
+              <label data-attr="viewagreement-viewRatingrule-radius-label" class="content-text">&nbsp;
+                &nbsp;{{ratingsModel.ratingRulesDetail.citySubstitutionRadiusValue}}&nbsp;Miles</label>
+            </ng-container>
+            <ng-template #notShowRadius>
+              <label  data-attr="viewagreement-viewRatingrule-radiusNA-label" class="content-text">&nbsp; &nbsp;N/A</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-hazmatHdr-label" class="heading-text content-text">Hazmat Charge Rules</label>
+            <ng-container *ngIf="ruleConfig['Hazmat Charge Rules']; else notShowHazmat">
+              <label  data-attr="viewagreement-viewRatingrule-hazmatHdr-label" class="content-text">&nbsp; &nbsp;{{ruleConfig['Hazmat Charge Rules']}}</label>
+            </ng-container>
+            <ng-template #notShowHazmat>
+              <label data-attr="viewagreement-viewRatingrule-hazmatHdrnull-label" class="content-text"> --</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-congChargeHdr-label" class="heading-text content-text">Congestion Charge</label>
+            <ng-container *ngIf="ruleConfig['Congestion Charge']; else notShowCongestion">
+              <label data-attr="viewagreement-viewRatingrule-congCharge-label" class="content-text">&nbsp; &nbsp;{{ruleConfig['Congestion Charge']}}</label>
+            </ng-container>
+            <ng-template #notShowCongestion>
+              <label data-attr="viewagreement-viewRatingrule-congChargenull-label" class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-flatRateHdr-label" class="heading-text content-text">Flat Rate With Stops</label>
+            <ng-container *ngIf="ruleConfig['Flat Rate With Stops']; else notShowStops">
+              <label data-attr="viewagreement-viewRatingrule-flatRate-label" class="content-text">&nbsp; &nbsp;{{ruleConfig['Flat Rate With Stops']}}</label>
+            </ng-container>
+            <ng-template #notShowStops>
+              <label data-attr="viewagreement-viewRatingrule-flatRateNull-label" class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-agreementDefaultHdr-label" class="heading-text content-text">Agreement Default</label>
+            <ng-container *ngIf="ratingsModel.ratingRulesDetail.agreementDefaultFlag">
+              <label data-attr="viewagreement-viewRatingrule-agreementDefault-label" class="content-text">&nbsp; &nbsp;{{ratingsModel.ratingRulesDetail.agreementDefaultFlag}}</label>
+            </ng-container>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-contractHdr-label" class="heading-text content-text">Contract</label>
+            <div
+              *ngIf="ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs?.length > 1; else contractCheckSingle">
+              <div *ngFor="let contract of ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs">
+                <label  data-attr="viewagreement-viewRatingrule-contractName1-label" class="content-text">&nbsp; &nbsp;{{(contract.contractType === 'Transactional') ? '('+contract.contractType+') '
+                  +contract.customerContractName :
+                  contract.contractNumber+' ('+contract.customerContractName+')'}}</label>
+              </div>
+            </div>
+            <ng-template #contractCheckSingle>
+              <ng-container
+                *ngIf="ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs?.length == 1; else notShowContract">
+                <label   data-attr="viewagreement-viewRatingrule-contractName2-label" class="content-text">&nbsp;
+                  &nbsp;{{ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs[0].contractType === 'Transactional' ? '('+ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs[0].contractType +
+                      ') '+ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs[0].customerContractName :
+                      ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs[0].contractNumber +' ('+ ratingsModel.ratingRulesDetail.customerAgreementContractAssociationViewDTOs[0].customerContractName+')'}}</label>
+              </ng-container>
+            </ng-template>
+            <ng-template #notShowContract>
+              <label  data-attr="viewagreement-viewRatingrule-contractNull-label"  class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-busoHdr-label" class="heading-text content-text">Business Unit and Service Offerings</label>
+            <div
+              *ngIf="ratingsModel.ratingRulesDetail.businessUnitServiceOfferingViewDTOs?.length > 1; else businessCheckSingle">
+              <div *ngFor="let business of ratingsModel.ratingRulesDetail.businessUnitServiceOfferingViewDTOs">
+                <label data-attr="viewagreement-viewRatingrule-buso1-label" class="content-text">&nbsp; &nbsp;{{business.financeBusinessUnitCode}} -
+                  {{business.serviceOfferingCode}}</label>
+              </div>
+            </div>
+            <ng-template #businessCheckSingle>
+              <ng-container
+                *ngIf="ratingsModel.ratingRulesDetail.businessUnitServiceOfferingViewDTOs?.length == 1; else notShowBusiness">
+                <label data-attr="viewagreement-viewRatingrule-buso2-label" class="content-text">&nbsp;
+                  &nbsp;{{ratingsModel.ratingRulesDetail.businessUnitServiceOfferingViewDTOs[0].financeBusinessUnitCode}}
+                  -
+                  {{ratingsModel.ratingRulesDetail.businessUnitServiceOfferingViewDTOs[0].serviceOfferingCode}}</label>
+              </ng-container>
+            </ng-template>
+            <ng-template #notShowBusiness>
+              <label data-attr="viewagreement-viewRatingrule-busoNull-label" class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                    <span class="">
+            <label data-attr="viewagreement-viewRatingrule-sectionHdr-label" class="heading-text content-text">Section</label>
+            <div
+              *ngIf="ratingsModel.ratingRulesDetail.customerAgreementContractSectionAssociationViewDTOs?.length > 1; else sectionCheckSingle">
+              <div
+                *ngFor="let section of ratingsModel.ratingRulesDetail.customerAgreementContractSectionAssociationViewDTOs">
+                <label data-attr="viewagreement-viewRatingrule-section1-label"  class="content-text">&nbsp; &nbsp;{{section.customerAgreementContractSectionName}}</label>
+              </div>
+            </div>
+            <ng-template #sectionCheckSingle>
+              <ng-container
+                *ngIf="ratingsModel.ratingRulesDetail.customerAgreementContractSectionAssociationViewDTOs?.length == 1; else notShowSection">
+                <label data-attr="viewagreement-viewRatingrule-section2-label"  class="content-text">&nbsp;
+                  &nbsp;{{ratingsModel.ratingRulesDetail.customerAgreementContractSectionAssociationViewDTOs[0].customerAgreementContractSectionName}}</label>
+              </ng-container>
+            </ng-template>
+            <ng-template #notShowSection>
+              <label data-attr="viewagreement-viewRatingrule-sectionNull-label"  class="content-text">&nbsp; &nbsp;--</label>
+            </ng-template>
+          </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="split-footer pad-top2">
+            <span class="pull-right mar-top12">
+        <button data-attr="viewagreement-viewRatingrule-edit-button"  type="text" class="text-size" pButton label="Edit" *ngIf="ratingsModel.ratingRulesDetail.status === 'active'" (click)="navigateToEdit()"
+          class="ui-button-primary mar-right15"></button>
+      </span>
+            <span class="pull-right mar-top12">
+        <button data-attr="viewagreement-viewRatingrule-inactivate-button"  type="text"
+          *ngIf="ratingsModel?.ratingRulesDetail.agreementDefaultFlag === 'No' && ratingsModel.ratingRulesDetail.status === 'active'"
+          pButton label="Inactivate" class="ui-button-secondary mar-right15" (click)="onInactivatePopUpOpen()"></button>
+        <button data-attr="viewagreement-viewRatingrule-reactivate-button"  type="text" *ngIf="ratingsModel.showReactivateButton" pButton label="Reactivate"
+          class="ui-button-secondary mar-right15"></button>
+      </span>
+            <span class="pull-right mar-top18">
+        <a data-attr="viewagreement-viewRatingrule-close-anchor"  href="javascript:void(0)" (click)="onClose()" class="inactivate-link mar-right20 text-size">Close</a>
+      </span>
+        </div>
+    </div>
+</div>
+<p-dialog header="Inactivate Rating Rule" [(visible)]="ratingsModel.showInactivatePopUp" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000" (onHide)="onInactivatePopUpClose()">
+    <form [formGroup]="ratingsModel?.ratingRuleInactivateForm" autocomplete="off">
+        <div>Do you want to proceed? If Yes, then please select the date to inactivate this rating rule.</div>
+        <div class="ui-g-12 ui-md-7 ui-lg-7 pad-left0 pad-right0">
+            <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top30 pad-left0 date-field-float-eff">
+                <p-calendar data-attr="viewagreement-viewRatingrule-expDate-calendar" #cal formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo="body" panelStyleClass="linehaul-expire-date" yearRange="1900:2099" [maxDate]="ratingsModel.maxDate"
+                    [minDate]="ratingsModel.minDate" (onBlur)="onBlurDateValidate($event.srcElement['value'])" (onSelect)="onSelectDateValidate($event)" (onInput)="onTypeDate($event.srcElement['value']); cal.currentMonth=ratingsModel.expDate?.getMonth();cal.currentYear=ratingsModel.expDate?.getFullYear()">
+                </p-calendar>
+                <label [ngClass]="{'label-align' : ratingsModel?.ratingRuleInactivateForm.get('expirationDate').pristine}" for="expirationDate">Expiration
+          Date</label>
+            </div>
+            <p-message severity="error" text="Provide Expiration Date" *ngIf="ratingsModel?.ratingRuleInactivateForm.get('expirationDate').touched && ratingsModel?.ratingRuleInactivateForm.get('expirationDate')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="Provide a  valid date" *ngIf="ratingsModel?.ratingRuleInactivateForm.get('expirationDate').touched && ratingsModel?.ratingRuleInactivateForm.get('expirationDate')['errors']?.invalid">
+            </p-message>
+        </div>
+    </form>
+    <p-footer>
+        <button data-attr="viewagreement-viewRatingrule-popupcancel-button" type="button" pButton (click)="onInactivatePopUpClose()" class="ui-button-secondary" label="Cancel"></button>
+        <button data-attr="viewagreement-viewRatingrule-popupconfirm-button" type="button" pButton label="Confirm" class="ui-button-primary" (click)="onClickConfirmInactivate()"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,55 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.textArea {
+    resize: none;
+}
+
+.heading {
+    @include getTypographyStyles("h5");    
+}
+
+.heading6 {
+    @include getTypographyStyles("h6");    
+}
+
+.remove-icon {
+    color: $red;
+    cursor: pointer;
+    margin-left: 3em;
+}
+
+.text-area-div {
+    align-items: center;
+    display: flex;
+}
+
+.displayBlock {
+    display: block;
+}
+
+.textAreaWrapper {
+    width: 100%;
+}
+
+.textAreaValue {
+    position: absolute;
+    top: 12px !important;
+    left: 10px;
+    line-height: 0;
+    padding-left: 0;
+}
+
+.textAreaValue /deep/.ui-float-label textarea:active~label:not(.char-limit),
+.ui-float-label textarea:focus~label:not(.char-limit),
+.ui-float-label textarea.ui-state-filled~label:not(.char-limit),
+.ui-float-label textarea:-webkit-autofill~label:not(.char-limit) {
+    top: -10px !important;
+}
+
+textarea.ui-state-filled~label,
+textarea:focus~label {
+    top: calc(-0.75em - 1px) !important;
+    left: 10px;
+    font-size: 12px;
+}

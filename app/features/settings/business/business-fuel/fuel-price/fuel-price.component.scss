@@ -1,0 +1,112 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 35%;   
+    padding: 10px;
+    line-height: 40px;
+}
+.message-wrapper {
+    @include getTypographyStyles("h2");
+    height: calc(100vh - 285px);
+    color: $grey-dark27;
+    font-size:50px;
+}
+.filterColor {
+    color: $blue !important;
+    outline: none;
+    cursor: pointer;
+  }
+.buttonStyle.Active {
+    color: $grey;
+    outline: none;
+    cursor: pointer;
+}
+.buttonStyle:hover {
+    color: $blue;
+  }
+.buttonStyle{
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    text-transform: none;
+    background: 0 0;
+    border: none;
+}
+.grid-icons {
+    display: inline-block;
+}
+
+.icon-button {
+    font-size: 16px;
+    height: 16px;
+}
+.filter-menu-icon {
+    padding: 7.5px 14px;
+}
+
+.dot-position {
+    border: 0px;
+    color: rgba(105, 105, 105, 1);
+    background: transparent;
+    cursor: pointer;
+}
+.headerHeightx {
+    padding-top: 5px;
+    height: 35px;
+}
+.main-contentx {
+    box-shadow: 0 0 10px grey;
+    border-radius: 3px;
+    background-color: $grey-lite88;
+    padding: 0;
+    min-height: calc(100vh - 255px);
+    height: 250px;
+}
+.main-contentx /deep/ .ui-paginator-bottom.ui-paginator.ui-widget.ui-widget-header.ui-unselectable-text.ui-helper-clearfix.ng-star-inserted {
+    border-top:1px solid rgba(0, 0, 0, 0.05);
+}
+.main-contentx /deep/.ui-table .ui-table-caption.ui-widget-header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 5px;
+}
+.main-content /deep/ .ui-table-scrollable-wrapper{
+    height: calc(100vh - 345px);
+}
+.main-content /deep/ .ui-table.ui-widget{
+    height: calc(100vh - 225px);
+}
+/deep/.data .ui-table-scrollable-body {
+    height: calc(100vh - 220px) !important;
+  }
+  .noResultHeight /deep/ .ui-table-scrollable-view{
+    height: calc(100vh - 285px);
+}
+.noResult /deep/ .ui-table-scrollable-header-table{
+    width:100% !important
+}
+
+.minimum-column-width {
+    box-sizing: border-box;
+    @include getTypographyStyles("h6");
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+    padding-bottom: 5px !important;
+    padding-left: 12px !important;
+}
+.minimum-column-widthdata {
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden !important;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-overflow: ellipsis !important;
+    height: 50px;
+    padding-left: 12px !important;
+}
+.main-contentx /deep/.ui-table {
+    box-shadow: 0 0 3px $grey-dark27 !important;
+}
+    

@@ -1,0 +1,118 @@
+<div [ngClass]="{'loader': templateModel?.isLoading}" [appJbhLoader]="templateModel?.isLoading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12 pad-bot0 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="templateModel?.masterBreadCrumbList" *ngIf="templateModel?.activeRoute === 'master'">
+    </p-breadcrumb>
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="templateModel?.defaultBreadCrumbList" *ngIf="templateModel?.activeRoute === 'default'">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-left0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0 pad-bot0">
+            <h1 class="text-uppercase headingAlign">
+                {{templateModel?.header}}
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="ui-g">
+    <div class="ui-g-12 pad-left15 pad-top0 accordionHeight">
+        <p-accordion [multiple]="true">
+            <p-accordionTab header="Setup" selected="true" class="custom-accordion-setup" *ngIf="templateModel?.activeRoute === 'default'">
+                <app-email-setup [setUpForm]="templateModel?.templateForm" (duplicateCheck)="changeDuplicateStatus($event)"></app-email-setup>
+            </p-accordionTab>
+            <p-accordionTab header="Subject" selected="true" *ngIf="templateModel?.activeRoute === 'master' || templateModel?.isDefaultCreate">
+                <p-header class="header-style">
+                    <h4 class="custom-accordion-header">Subject</h4>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                       Information
+                    </span>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                    <em class="icon-Circle_Info icon-button info-icon icon-right-margin"></em>
+                    </span>
+                </p-header>
+                <app-template-subject [subjectForm]="templateModel?.templateForm" [dataElements]="templateModel?.subjectElements"
+                    [masterData]="templateModel.masterTemplateData"></app-template-subject>
+            </p-accordionTab>
+            <p-accordionTab header="Body" selected="true" class="custom-accordion-body" *ngIf="templateModel?.activeRoute === 'master' || templateModel?.isDefaultCreate">
+                <p-header class="header-style">
+                    <h4 class="custom-accordion-header">Body</h4>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                      Information
+                    </span>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                    <em class="icon-Circle_Info icon-button info-icon icon-right-margin"></em></span>
+                </p-header>
+                <app-template-body [bodyForm]="templateModel?.templateForm" [dataElements]="templateModel?.BodyElements"
+                    [submitStatus]="templateModel?.submitStatus" [masterData]="templateModel.masterTemplateData"></app-template-body>
+            </p-accordionTab>
+            <p-accordionTab header="Signature" selected="true" *ngIf="templateModel?.activeRoute === 'master' || templateModel?.isDefaultCreate">
+                <p-header class="header-style">
+                    <h4 class="custom-accordion-header">Signature</h4>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                        Information
+                    </span>
+                    <span class="pull-right header-right" *ngIf="templateModel?.activeRoute === 'default'" pTooltip="{{templateModel?.masterInfo}}" tooltipPosition="bottom">
+                    <em class="icon-Circle_Info icon-button info-icon icon-right-margin"></em>
+                    </span>
+                </p-header>
+                <app-template-signature [signatureForm]="templateModel?.templateForm" [submitStatus]="templateModel?.submitStatus"
+                    [masterData]="templateModel.masterTemplateData"></app-template-signature>
+            </p-accordionTab>
+            <button pButton type="button" label="Create Default Excel Attachment (Optional)" class="ui-button-tertiary pad0 mar-bot15"
+                icon="jbh-icon icon-Circle_Add_Solid" (click)="addDefaultExcel()" *ngIf="templateModel?.isDefaultCreate && !templateModel?.isDefaultExcel"></button>
+            <p-panel class="nopadding batching-style" *ngIf="templateModel?.isDefaultCreate && templateModel?.isDefaultExcel"
+                [toggleable]="true" [collapsed]="templateModel.panelDefaultFlag" expandIcon="icon-Chevron_Down"
+                collapseIcon="icon-Chevron_Up" (onAfterToggle)="afterDefaultToggle($event.collapsed)">
+                <p-header class="header-style" pTooltip="" tooltipPosition="bottom">
+                    <h4 class="custom-accordion-header">Default Excel Attachment</h4>
+                        <p-menu #menuOverlay #menu popup="popup" [model]="templateModel.defaultOverflow" styleClass="menu-overlay arrowtopbox font12"
+                            appendTo="body">
+                            <a href="javascript:void(0);" #downloadExcel></a>
+                        </p-menu>
+                        <span class="icon-Menu_Overflow icon-button overflow-color default-overflow-right cursor-pointer" (click)="menu.toggle($event);onOverflowClick($event)"></span>
+                        <span (click)="showPopUp('remove')" class="cursor-pointer pull-right mar-right20">                            
+                            <span class="view-mapping-style  pull-right default-mapping-right">Remove Mapping</span>
+                            <span class="icon-Circle_Remove_Solid icon-button circle-icon pull-right"></span>
+                        </span>
+                </p-header>
+                <app-default-excel [defaultForm]="templateModel?.templateForm" [dataElements]="templateModel?.defaultExcelElements"
+                    [submitStatus]="templateModel?.submitStatus" (setDefaultElements)="setDefaultElements($event)"></app-default-excel>
+            </p-panel>
+            <p-panel class="nopadding batching-style" *ngIf="templateModel?.isDefaultCreate" [toggleable]="true"
+                [collapsed]="templateModel.panelFlag" expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up"
+                (onAfterToggle)="afterToggle($event.collapsed)">
+                <p-header class="header-style" pTooltip="" tooltipPosition="bottom">
+                    <h4 class="custom-accordion-header">Batching Excel Attachment</h4>
+                        <p-menu #menuOverlay #menu popup="popup" [model]="templateModel.batchOverflow" styleClass="menu-overlay arrowtopbox font12"
+                            appendTo="body">
+                            <a href="javascript:void(0);" #downloadExcel></a>
+                        </p-menu>
+                        <span class="icon-Menu_Overflow icon-button overflow-color default-overflow-right cursor-pointer" *ngIf="templateModel?.valuesFromDefault?.length"
+                        (click)="menu.toggle($event);onOverflowClick($event)"></span>
+                        <span (click)="downloadExce('valuesFromBatch', 'Batching')" class="cursor-pointer pull-right mar-right20" [ngClass]="{'batch-view-margin': !templateModel?.valuesFromDefault?.length}">                            
+                            <span class="view-mapping-style  pull-right default-mapping-right">View Mapping</span>
+                            <span class="icon-Eye icon-button circle-icon pull-right"></span>
+                        </span>
+                </p-header>
+                <app-batching-excel [batchForm]="templateModel?.templateForm" [submitStatus]="templateModel?.submitStatus"
+                    [dataElements]="templateModel?.batchExcelElements" (setBatchElements)="setBatchElements($event)"></app-batching-excel>
+            </p-panel>
+
+        </p-accordion>
+    </div>
+    <div class="ui-g-12 padd20">
+        <span class="pull-right">
+            <button appShortcut="ctrl+alt+2" pButton type="button" label="Cancel" class="ui-button-secondary" (click)="cancelTemplate()"></button>
+            <button appShortcut="ctrl+alt+1" pButton type="button" label="Save" class="ui-button-primary mar-left15" (click)="saveTemplate()"></button>
+        </span>
+    </div>
+</div>
+<p-dialog [header]="templateModel.popUpHeader" [(visible)]="templateModel.isShowPopUp" [modal]="true" [responsive]="true"
+    (onHide)="closePopup()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+    <span>{{templateModel.popUpText}}</span>
+    <p-footer>
+        <button type="button" pButton (click)="closePopup()" label="OK" class="ui-button-primary" *ngIf="templateModel.popUpHeader === 'Missing Information'"></button>
+        <button type="button" pButton (click)="closePopup()" label="No" class="ui-button-secondary" *ngIf="templateModel.popUpHeader !== 'Missing Information'"></button>
+        <button type="button" pButton (click)="onProceed()" label="Yes" class="ui-button-primary" *ngIf="templateModel.popUpHeader === 'Cancel Template Creation'"></button>
+        <button type="button" pButton (click)="onRemoveDefault()" label="Yes" class="ui-button-primary" *ngIf="templateModel.popUpHeader === 'Remove Default Excel Attachment'"></button>
+        <button type="button" pButton (click)="onCopyDefault()" label="Yes" class="ui-button-primary" *ngIf="templateModel.popUpHeader === 'Copy from Default Excel Attachment'"></button>
+    </p-footer>
+</p-dialog>

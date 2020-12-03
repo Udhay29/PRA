@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 0 0.5em;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+  margin: 0.64em 0 0.79em 0;
+}
+
+/deep/.agreement-steps {
+  .ui-steps {
+    .ui-steps-item {
+      width: 25% !important;
+      text-align: center !important;
+    }
+  }
+  .ui-steps .ui-steps-item .ui-menuitem-link {
+    width: 100%;
+    text-align: center;
+  }
+}

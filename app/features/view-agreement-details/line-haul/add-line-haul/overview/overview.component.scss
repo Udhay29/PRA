@@ -1,0 +1,70 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.wrapper {
+    height: 100%;
+    padding-right: 50px !important;
+}
+
+
+.transitAlign {
+    position: relative;
+    display: inline-block;
+    top: -25px;
+    left:5px;
+}
+
+.overview-container {
+    height: 100%;
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    background-color: $white;
+    .overview-header {
+        height: 60px;
+        padding: 15px 20px 20px 20px;
+        border-bottom: solid 1px $grey;
+        margin-bottom: 15px;
+        .title {
+            position: relative;
+            color: $grey-dark66;
+            @include getTypographyStyles("h2");
+        }
+    }
+}
+
+.contractAlign {
+    position: relative;
+    display: inline-block;
+    top: -25px;
+    left:5px;
+}
+
+.textAlign {
+    @include getTypographyStyles('body1')
+}
+
+.borderAlign {
+    border-bottom: solid 1px $grey-lite70;
+}
+.errorAlign {
+    position: absolute;
+    top: 17px;
+    margin-top: 0.1em;
+}
+.optional-text {
+    color: $black-opacity30;
+    font-family: "Helvetica Neue LT Pro 55 ROMAN", Helvetica, Arial, Sans-Serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.01rem;
+    text-transform: none;
+    padding-right: 37px;
+    top: -1px;
+    position: relative;
+  }
+  .rowAlign {
+    padding-right: 60px;
+  }
+
+.marginAlign {
+  margin: 0px 5px;
+}

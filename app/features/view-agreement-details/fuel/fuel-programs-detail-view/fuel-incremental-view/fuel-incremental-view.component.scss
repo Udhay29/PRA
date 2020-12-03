@@ -1,0 +1,28 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+
+.clearSearch {
+    @include getTypographyStyles("body2");
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 15px !important;
+    background: transparent;
+    border: 0px;
+    color: $primary-blue;
+  }
+
+/deep/ .ui-table-caption.ui-widget-header.ng-star-inserted {
+  padding: 0px !important;
+}
+
+/deep/ .ui-table .ui-table-caption.ui-widget-header {
+  min-height: 32px;
+}
+
+.tableBorder {
+  border: 1px solid $grey-lite48;
+}
+
+th {
+  font-weight: bold;
+}

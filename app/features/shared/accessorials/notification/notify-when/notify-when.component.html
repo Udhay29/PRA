@@ -1,0 +1,116 @@
+<div class="ui-g">
+  <form [formGroup]="notifyWhenModel?.notifyWhenForm" class="ui-g-12">
+    <div class="ui-g-12 pad-left0">
+      <p-radioButton name="group1" value="Notification Preferred" formControlName="accessorialNotificationRequiredTypes"
+        label="Notification Preferred"></p-radioButton>
+      <p-radioButton name="group1" value="Notification Required" formControlName="accessorialNotificationRequiredTypes"
+        label="Notification Required"></p-radioButton>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth  mar-top25 pad-left0">
+      <p-autoComplete formControlName="frequency" [dropdown]="true" [style]="{'width':'100%'}" field="label"
+        [inputStyle]="{'width':'100%'}" name="frequency"
+        [ngClass]="{'errorMsg':notifyWhenModel.notifyWhenForm.get('frequency').touched && notifyWhenModel.notifyWhenForm.get('frequency')['errors']?.required}"
+        emptyMessage="No records found" (completeMethod)="onDropDownClick($event,'frequency')" [forceSelection]="true"
+        [suggestions]="notifyWhenModel.suggestionResult" (onBlur)="onBlurFrequency($event)"
+        (onSelect)="onSelectFrequency($event)"></p-autoComplete>
+      <label class="label-style ruleAlign" for="frequency"
+        [ngClass]="{'labelAligns': notifyWhenModel.notifyWhenForm.get('frequency').touched || notifyWhenModel.notifyWhenForm.get('frequency')['errors']?.required}">
+        <span>Frequency</span>
+      </label>
+      <div class="errorHeight heightOFError">
+        <p-message severity="error" text="Provide a Frequency"
+          *ngIf="notifyWhenModel.notifyWhenForm.get('frequency').touched && notifyWhenModel.notifyWhenForm.get('frequency')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth  mar-top25"
+      *ngIf="notifyWhenModel.notifyWhenForm.controls.frequency.value?.label ==='Per Event'">
+      <p-autoComplete formControlName="eventOccuranceTime" [dropdown]="true" [style]="{'width':'100%'}" field="label"
+        [inputStyle]="{'width':'100%'}" name="eventOccuranceTime"
+        [ngClass]="{'errorMsg':notifyWhenModel.notifyWhenForm.get('eventOccuranceTime').touched && notifyWhenModel.notifyWhenForm.get('eventOccuranceTime')['errors']?.required}"
+        emptyMessage="No records found" [forceSelection]="true"
+        (completeMethod)="onDropDownClick($event,'eventOccurrenceTime')"
+        [suggestions]="notifyWhenModel.suggestionResult" (onBlur)="onBlureventOccuranceTime($event)"
+        (onSelect)="onSelecteventOccurrenceTime($event)"></p-autoComplete>
+      <label class="label-style ruleAlign" for="eventOccuranceTime"
+        [ngClass]="{'labelAligns': notifyWhenModel.notifyWhenForm.get('eventOccuranceTime').touched || notifyWhenModel.notifyWhenForm.get('eventOccuranceTime')['errors']?.required}">
+        <span>Event Occurrence Time</span>
+      </label>
+      <div class="errorHeight heightOFError">
+        <p-message severity="error" text="Provide a Event Occurrence Time"
+          *ngIf="notifyWhenModel.notifyWhenForm.get('eventOccuranceTime').touched && notifyWhenModel.notifyWhenForm.get('eventOccuranceTime')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth  mar-top25"
+      *ngIf="notifyWhenModel.notifyWhenForm.controls.frequency.value?.label ==='Per Event'">
+      <p-autoComplete formControlName="eventName" [dropdown]="true" [style]="{'width':'100%'}" field="label"
+        [inputStyle]="{'width':'100%'}" name="eventName"
+        [ngClass]="{'errorMsg':notifyWhenModel.notifyWhenForm.get('eventName').touched && notifyWhenModel.notifyWhenForm.get('eventName')['errors']?.required}"
+        emptyMessage="No records found" [forceSelection]="true" (completeMethod)="onDropDownClick($event,'eventName')"
+        [suggestions]="notifyWhenModel.suggestionResult" (onBlur)="onBlureventName($event)"></p-autoComplete>
+      <label class="label-style ruleAlign" for="eventName"
+        [ngClass]="{'labelAligns': notifyWhenModel.notifyWhenForm.get('eventName').touched || notifyWhenModel.notifyWhenForm.get('eventName')['errors']?.required}">
+        <span>Event Name</span>
+      </label>
+      <div class="errorHeight heightOFError">
+        <p-message severity="error" text="Provide a Event Name"
+          *ngIf="notifyWhenModel.notifyWhenForm.get('eventName').touched && notifyWhenModel.notifyWhenForm.get('eventName')['errors']?.required">
+        </p-message>
+      </div>
+    </div>
+    <div class="ui-g-3 timePeriod"
+      *ngIf="notifyWhenModel.notifyWhenForm.controls.frequency.value && 
+      notifyWhenModel.notifyWhenForm.controls.eventOccuranceTime.value
+      && (notifyWhenModel.notifyWhenForm.controls.eventOccuranceTime.value?.label !== 'On Event' && notifyWhenModel.notifyWhenForm.controls.eventOccuranceTime.value?.label !=='On')">
+      <div class="ui-g-12 mar-top25 pad0">
+        <div class="ui-float-label timePeriod ui-inputdropdown-group">
+          <input type="text" appNumbersOnly pInputText class="ui-g-3" formControlName="timeframeInput"
+            (blur)="onBlurInputTimeframe()" maxlength="4">
+          <p-autoComplete formControlName="timeframe" class="ui-g-9 pad0 timeFrame" [dropdown]="true"
+            [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}" name="timeframe"
+            [ngClass]="{'errorMsg':fasle}" emptyMessage="No records found" [forceSelection]="true"
+            (completeMethod)="onDropDownClick($event,'timeFrame')" [suggestions]="notifyWhenModel.suggestionResult"
+            (onBlur)="onBlurtimeframe($event)" (onSelect)="onBlurInputTimeframe()">
+          </p-autoComplete>
+          <label class="label-style floatLabelAlign" for="timeframe" [ngClass]="{'labelAligns':false}">
+            <span>Timeframe</span>
+          </label>
+        </div>
+        <div class="ui-g-12 pad0">
+          <div class="errorHeight heightOFError ui-g-12">
+            <p-message severity="error" text="Provide Timeframe"
+              *ngIf="(notifyWhenModel.notifyWhenForm.get('timeframe').touched && notifyWhenModel.notifyWhenForm.get('timeframe')['errors']?.required) || (notifyWhenModel.notifyWhenForm.get('timeframeInput').touched && notifyWhenModel.notifyWhenForm.get('timeframeInput')['errors']?.required)">
+            </p-message>
+            <p-message severity="error" text="Permitted values are 15,30 and 45 only"
+              *ngIf="notifyWhenModel.minuteErrorMessage &&!((notifyWhenModel.notifyWhenForm.get('timeframe').touched && notifyWhenModel.notifyWhenForm.get('timeframe')['errors']?.required) || (notifyWhenModel.notifyWhenForm.get('timeframeInput').touched && notifyWhenModel.notifyWhenForm.get('timeframeInput')['errors']?.required))">
+            </p-message>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-9 ui-lg-9 ui-md-9 optional-row pad-right0 mar-top25"
+      *ngIf="notifyWhenModel.notifyWhenForm.controls.frequency.value?.label ==='Batch'">
+      <div class=" ui-g-12 ui-lg-12 ui-md-12 pad0">
+        <div class='ui-float-label ui-g-12 pad0'>
+          <p-autoComplete [suggestions]="notifyWhenModel.suggestionResult" [multiple]="true" [forceSelection]="true"
+            field="label" (completeMethod)="onDropDownClick($event,'batchTime')" emptyMessage="No batch time is found"
+            formControlName="batchTime">
+          </p-autoComplete>
+          <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign">
+            <span>Batch Time</span>
+          </label>
+          <div class="ui-g-12 pad0">
+            <div class="errorHeight heightOFError ui-g-12">
+              <p-message severity="error" text="Provide Batch Time"
+                *ngIf="(notifyWhenModel.notifyWhenForm.get('batchTime').touched && notifyWhenModel.notifyWhenForm.get('batchTime')['errors']?.required)">
+              </p-message>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div>
+  </div>
+</div>

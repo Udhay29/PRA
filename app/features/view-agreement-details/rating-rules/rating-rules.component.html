@@ -1,0 +1,320 @@
+<div [ngClass]="{'loader': ratingRulesModel?.isPageLoading||ratingRulesModel?.isRuleLoading}"
+    [appJbhLoader]="ratingRulesModel?.isPageLoading||ratingRulesModel?.isRuleLoading"></div>
+<div class="mar-left10">
+    <p-breadcrumb styleClass="pad-left10 pad-top7 pad-bot3" [model]="ratingRulesModel?.breadCrumbList"
+        data-attr="viewagreement-ratingrule-breadcrumb-navigate"></p-breadcrumb>
+    <div class="ui-g">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left10">
+            <h1 class="text-uppercase mar0">{{ratingRulesModel.agreementDetails?.customerAgreementName}} -
+                {{ratingRulesModel?.breadCrumbList[3]?.label}}</h1>
+        </div>
+        <form [formGroup]="ratingRulesModel?.ratingRulesForm" class="ui-md-12 ui-lg-12 ui-g-12 mar-top6"
+            (keydown.enter)="$event.preventDefault()">
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 mar-top20 date-field-float">
+                    <p-calendar formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" appendTo=body
+                        dateFormat="mm/dd/yy" [minDate]="ratingRulesModel.effectiveMinDate"
+                        [maxDate]="ratingRulesModel.effectiveMaxDate" (onSelect)="onDateSelected($event, 0)"
+                        (onInput)="onTypeDate($event, 'effective')" [showOnFocus]="false"
+                        data-attr="viewagreement-ratingrule-effectivedate-datepicker" [keepInvalid]=false></p-calendar>
+                    <label for="effectiveDate" class="leftPlace">Effective Date</label>
+                    <div class="error-class-height">
+                        <p-message severity="error" text="Provide Effective Date" *ngIf="ratingRulesModel.ratingRulesForm.get('effectiveDate').touched &&
+            ratingRulesModel.ratingRulesForm.get('effectiveDate')['errors']?.required"></p-message>
+                        <p-message severity="error" text="Provide a valid date" *ngIf="ratingRulesModel.ratingRulesForm.get('effectiveDate').touched &&
+            ratingRulesModel.ratingRulesForm.get('effectiveDate')['errors']?.invalid"></p-message>
+                    </div>
+                </span>
+                <span class="ui-md-8 ui-lg-8 ui-g-8 noneditable-field" *ngIf="ratingRulesModel.isAgreementDefault">
+                    <label class="heading-text content-text ui-md-8 ui-lg-8 ui-g-8 expiration-text">Expiration
+                        Date</label>
+                    <label
+                        class="content-text expiration-text ui-md-8 ui-lg-8 ui-g-8">{{ratingRulesModel.ratingRulesForm.get('expirationDate')?.value | date: 'MM/dd/yyyy'}}</label>
+                </span>
+                <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 mar-top20 date-field-float"
+                    *ngIf="!ratingRulesModel.isAgreementDefault">
+                    <p-calendar formControlName="expirationDate" [showIcon]="true" name="expirationDate" appendTo=body
+                        dateFormat="mm/dd/yy" [minDate]="ratingRulesModel.expirationMinDate"
+                        [maxDate]="ratingRulesModel.expirationMaxDate" (onSelect)="onDateSelected($event, 1)"
+                        (onInput)="onTypeDate($event, 'expiration')" [showOnFocus]="false"
+                        data-attr="viewagreement-ratingrule-expirationDate-datepicker"></p-calendar>
+                    <label for="expirationDate" class="leftPlace" [keepInvalid]=true>Expiration Date</label>
+                    <div class="error-class-height">
+                        <p-message severity="error" text="Provide Expiration Date" *ngIf="ratingRulesModel.ratingRulesForm.get('expirationDate').touched &&
+            ratingRulesModel.ratingRulesForm.get('expirationDate')['errors']?.required"></p-message>
+                        <p-message severity="error" text="Provide a valid date" *ngIf="ratingRulesModel.ratingRulesForm.get('expirationDate').touched &&
+            ratingRulesModel.ratingRulesForm.get('expirationDate')['errors']?.invalid"></p-message>
+                    </div>
+                </span>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad0">
+                <span class="ui-md-4 ui-lg-4 ui-g-4 checkbox-align">
+                    <p-checkbox [formControl]="ratingRulesModel?.ratingRulesForm.controls['citySubstitution']"
+                        value="City Substitution" label="City Substitution" inputId="citySubstitution"
+                        (onChange)="onCitySubstitutionChange($event)" [binary]="true"
+                        data-attr="viewagreement-ratingrule-citySubstitution-checkbox"></p-checkbox>
+                </span>
+                <span class="ui-md-8 ui-lg-8 ui-g-8 mar-top10">
+                    <div *ngIf="ratingRulesModel.isShowRadius" class="ui-md-12 ui-lg-12 ui-g-12 pad0">
+                        <div class="ui-md-6 ui-lg-6 ui-g-6 ui-float-label text-field-float pad0 pad-right5">
+                            <input type="text" pInputText formControlName="radius" name="radius" spellcheck="false"
+                                maxlength="3" data-attr="viewagreement-ratingrule-radius-inputtext"
+                                class="ui-md-12 ui-lg-12 ui-g-12" autocomplete="off"
+                                [ngClass]="{'ui-inputwrapper-filled':ratingRulesModel?.ratingRulesForm.get('radius').value }" />
+                            <label for="radius">Radius</label>
+                            <div class="error-class-height">
+                                <p-message severity="error" text="Provide Radius" *ngIf="ratingRulesModel?.ratingRulesForm.get('radius').touched &&
+                ratingRulesModel?.ratingRulesForm.get('radius')['errors']?.required"></p-message>
+                                <p-message severity="error" text="Provide Radius in numeric value" *ngIf="ratingRulesModel?.ratingRulesForm.get('radius').touched &&
+                ratingRulesModel?.ratingRulesForm.get('radius')['errors']?.numbersOnly"></p-message>
+                            </div>
+                        </div>
+                        <label class="ui-md-6 ui-lg-6 ui-g-6 content-text heading-text">Miles</label>
+                    </div>
+                </span>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 mar-right5 mar-left-5 pad0 mar-top5">
+                <span class="ui-md-4 ui-lg-4 ui-g-4">
+                    <label
+                        class="ui-md-12 ui-g-12 ui-lg-12 heading-text content-text">{{ratingRulesModel.ruleCriteriaNameList[0].label}}</label>
+                    <p-radioButton class="ui-md-12 ui-g-12 ui-lg-12 radio-pad"
+                        *ngFor="let item of ratingRulesModel.congestionChargeList, let i = index"
+                        name="congestionCharge" value={{item.ruleCriteriaValueName}}
+                        label={{item.ruleCriteriaValueName}} formControlName="congestionCharge"
+                        [attr.data-attr]="'viewagreement-ratingrule-congestionCharge-radiobutton-' + i" ></p-radioButton>
+                </span>
+                <span class="ui-md-4 ui-lg-4 ui-g-4">
+                    <label
+                        class="ui-md-12 ui-g-12 ui-lg-12 heading-text content-text">{{ratingRulesModel.ruleCriteriaNameList[1].label}}</label>
+                    <p-radioButton class="ui-md-12 ui-g-12 ui-lg-12 radio-pad"
+                        *ngFor="let item of ratingRulesModel.flatRateList, let i = index" name="flatRate"
+                        value={{item.ruleCriteriaValueName}} label={{item.ruleCriteriaValueName}}
+                        formControlName="flatRate" [attr.data-attr]="'viewagreement-ratingrule-flatRate-radiobutton-' + i">
+                    </p-radioButton>
+                </span>
+                <span class="ui-md-4 ui-lg-4 ui-g-4">
+                    <label
+                        class="ui-md-12 ui-g-12 ui-lg-12 heading-text content-text">{{ratingRulesModel.ruleCriteriaNameList[2].label}}</label>
+                    <p-radioButton class="ui-md-12 ui-g-12 ui-lg-12 radio-pad"
+                        *ngFor="let item of ratingRulesModel.hazmatChargeList, let i = index" name="hazmatCharge"
+                        value={{item.ruleCriteriaValueName}} label={{item.ruleCriteriaValueName}}
+                        formControlName="hazmatCharge"  [attr.data-attr]="'viewagreement-ratingrule-hazmatCharge-radiobutton-' + i"
+                        ></p-radioButton>
+                </span>
+            </div>
+            <div *ngIf="!ratingRulesModel?.isAgreementDefault">
+                <div class="ui-md-12 ui-g-12 ui-lg-12 pad0 multiselect-field ">
+                    <span class="ui-float-label ui-md-4 ui-lg-4 ui-g-4 mar-top16">
+                        <p-multiSelect data-attr="viewagreement-ratingrule-businessUnit-multiSelect"
+                        formControlName="businessUnit" [options]="ratingRulesModel.businessUnitServiceOfferingList"
+                        [resetFilterOnHide]="true"
+                        [style]="{'width': '100%'}" name="businessUnit" defaultLabel="" [filter]="true"
+                        (onChange)="onBusinessUnitChange()"
+                        [ngClass]="{'ui-inputwrapper-filled':ratingRulesModel?.ratingRulesForm.get('businessUnit').value
+                        && ratingRulesModel?.ratingRulesForm.get('businessUnit').value.length > 0 }"></p-multiSelect>
+                        <label class="ui-md-12 ui-lg-12 ui-g-12 pad0" for="businessUnit">
+                            <span>Business Unit and Service Offerings</span>
+                            <span class="pull-right optional-class"
+                                *ngIf="ratingRulesModel.isShowOptional">optional</span>
+                        </label>
+                        <div class="error-class-height">
+                            <p-message severity="error" text="Provide Business Unit and Service Offerings"
+                                *ngIf="ratingRulesModel?.ratingRulesForm
+              .get('businessUnit').touched && ratingRulesModel?.ratingRulesForm.get('businessUnit')['errors']?.required"></p-message>
+                        </div>
+                    </span>
+                </div>
+                <div class="ui-md-12 ui-g-12 ui-lg-12">
+                    <span class="ui-float-label pad0 mar-top20">
+                        <label class="top-10" for="affiliation">Affiliation</label>
+                        <p-selectButton data-attr="viewagreement-ratingrule-affiliation-selectButton"
+                            [options]="ratingRulesModel.affiliationList" formControlName="affiliation"
+                            name="affiliation" (onChange)="affiliationChanged($event)"></p-selectButton>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 mar-top23" *ngIf="ratingRulesModel.isShowContract">
+                <p-table #contracttable (onFilter)="isEmptyTable($event,'noContractFoundFlag')"
+                    [resizableColumns]="true" columnResizeMode="expand" [scrollable]="true" class="affiliation-table"
+                    [value]="ratingRulesModel.contractsList" [columns]="ratingRulesModel.tableColumns"
+                    [(selection)]="ratingRulesModel.selectedList"
+                    [globalFilterFields]="['display', 'effectiveDate', 'expirationDate']" [filterDelay]="0"
+                    (onHeaderCheckboxToggle)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    scrollHeight="25vh"
+                    (onRowSelect)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    (onRowUnselect)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    datakey="effectiveDate">
+                    <ng-template pTemplate="caption">
+                        <div class="ui-g table-caption">
+                            <div class="ui-md-9 ui-lg-9">
+                                <span class="tableName">Contract</span>
+                            </div>
+                            <div class="ui-md-3 ui-lg-3">
+                                <div class="searchHolder">
+                                    <div class="ui-inputgroup search-field">
+                                        <span class="ui-inputgroup-addon">
+                                            <i class="icon-Search"></i>
+                                        </span>
+                                        <input id="codeSearchText" appShortcut="" autocomplete="off" type="text"
+                                            pInputText placeholder="Search"
+                                            [globalFilterFields]="ratingRulesModel.searchColumns"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (input)="contracttable.filterGlobal($event.target.value, 'contains')"
+                                            data-attr="viewagreement-ratingrule-contract-search"
+                                            [(ngModel)]="ratingRulesModel.searchInputValue">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup
+                            *ngIf="ratingRulesModel?.contractsList.length > 0 && !ratingRulesModel.noContractFoundFlag">
+                            <col>
+                            <col *ngFor="let thisCol of ratingRulesModel.tableColumns">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr *ngIf="ratingRulesModel?.contractsList?.length === 0 || ratingRulesModel.noContractFoundFlag"
+                            class="bottom-line">
+                            <td colspan="2">
+                                <div class="codesdisplaymiddle heading-text display-3"
+                                    *ngIf="!ratingRulesModel.noContractFoundFlag">No information was found to display
+                                </div>
+                                <div class="codesdisplaymiddle heading-text display-3"
+                                    *ngIf="ratingRulesModel.noContractFoundFlag">No Results Found</div>
+                            </td>
+                        </tr>
+                        <tr class="pad0 mar0"
+                            *ngIf="ratingRulesModel?.contractsList.length > 0 && !ratingRulesModel.noContractFoundFlag">
+                            <th class="checkbox-column table-header-checkbox">
+                                <p-tableHeaderCheckbox data-attr="viewagreement-ratingrules-contractheader-checkbox" appShortcut focusKey="alt+1"></p-tableHeaderCheckbox>
+                            </th>
+                            <th *ngFor="let thisCol of ratingRulesModel?.tableColumns" pResizableColumn class="tooltip"
+                                pTooltip={{thisCol.label}} tooltipPosition="top" class="table-header">
+                                {{thisCol.label}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData" [attr.data-attr]="'viewagreement-ratingrules-contractrow-tr-' +  rowIndex">
+                            <td class="checkbox-column width10">
+                                <p-tableCheckbox [attr.data-attr]="'viewagreement-ratingrules-contractrow-checkbox-' +  rowIndex" [value]="rowData"></p-tableCheckbox>
+                            </td>
+                            <td class="ui-resizable-column" *ngFor="let thisCol of ratingRulesModel.tableColumns">
+                                <span class="capitalize-first-word newLine" class="tooltip"
+                                    pTooltip={{data[thisCol.value]}}
+                                    tooltipPosition="top">{{ data[thisCol.value] }}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 mar-top23" *ngIf="ratingRulesModel.isShowSection">
+                <p-table #ratingtable (onFilter)="isEmptyTable($event,'noSectionFoundFlag')" [resizableColumns]="true"
+                    columnResizeMode="expand" [scrollable]="true" class="affiliation-table"
+                    [value]="ratingRulesModel.sectionList" [columns]="ratingRulesModel.tableSectionColumns"
+                    [(selection)]="ratingRulesModel.sectionSelectedList"
+                    [globalFilterFields]="['contractDetail', 'sectionDetail', 'effectiveDate', 'expirationDate']"
+                    [filterDelay]="0"
+                    (onHeaderCheckboxToggle)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    scrollHeight="25vh"
+                    (onRowSelect)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    (onRowUnselect)="ratingRulesModel.ratingRulesForm.get('selectedData').markAsDirty()"
+                    datakey="effectiveDate">
+                    <ng-template pTemplate="caption">
+                        <div class="ui-g table-caption">
+                            <div class="ui-md-9 ui-lg-9">
+                                <span class="tableName">Sections</span>
+                            </div>
+                            <div class="ui-md-3 ui-lg-3">
+                                <div class="searchHolder">
+                                    <div class="ui-inputgroup search-field">
+                                        <span class="ui-inputgroup-addon">
+                                            <i class="icon-Search"></i>
+                                        </span>
+                                        <input id="codeSearchText" appShortcut="" autocomplete="off" type="text"
+                                            pInputText placeholder="Search"
+                                            [globalFilterFields]="ratingRulesModel.searchColumns"
+                                            (input)="ratingtable.filterGlobal($event.target.value, 'contains')"
+                                            data-attr="viewagreement-ratingrule-section-search"
+                                            [(ngModel)]="ratingRulesModel.searchInputValue"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup
+                            *ngIf="ratingRulesModel?.sectionList?.length > 0 && !ratingRulesModel.noSectionFoundFlag">
+                            <col>
+                            <col *ngFor="let thisCol of ratingRulesModel.tableSectionColumns">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr *ngIf="ratingRulesModel?.sectionList?.length === 0 || ratingRulesModel.noSectionFoundFlag">
+                            <td colspan="2">
+                                <div class="codesdisplaymiddle heading-text display-3"
+                                    *ngIf="!ratingRulesModel.noSectionFoundFlag">No information was found to display
+                                </div>
+                                <div class="codesdisplaymiddle heading-text display-3"
+                                    *ngIf="ratingRulesModel.noSectionFoundFlag">No Results Found</div>
+                            </td>
+                        </tr>
+                        <tr class="pad0 mar0 table-header"
+                            *ngIf="ratingRulesModel?.sectionList?.length > 0 && !ratingRulesModel.noSectionFoundFlag">
+                            <th class="checkbox-column table-header-checkbox">
+                                <p-tableHeaderCheckbox data-attr="viewagreement-ratingrules-secheader-checkbox" appShortcut focusKey="alt+1"></p-tableHeaderCheckbox>
+                            </th>
+                            <th *ngFor="let thisCol of ratingRulesModel?.tableSectionColumns" pResizableColumn
+                                class="tooltip" pTooltip={{thisCol.label}} tooltipPosition="top">
+                                {{thisCol.label}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-data let-rowIndex="rowIndex">
+
+                        <tr  [attr.data-attr]="'viewagreement-ratingrules-secrow-tr-' +  rowIndex" [pSelectableRow]="rowData">
+                            <td class="checkbox-column width10">
+                                <p-tableCheckbox  [attr.data-attr]="'viewagreement-ratingrules-secheader-checkbox-' +  rowIndex" [value]="rowData"></p-tableCheckbox>
+                            </td>
+                            <td class="ui-resizable-column"
+                                *ngFor="let thisCol of ratingRulesModel.tableSectionColumns">
+                                <span class="capitalize-first-word newLine" class="tooltip"
+                                    pTooltip={{data[thisCol.value]}}
+                                    tooltipPosition="top">{{ data[thisCol.value] }}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="pull-right mar-top20"
+                [ngClass]="{'footer-part': ratingRulesModel?.isAgreementDefault || (!ratingRulesModel.isShowContract && !ratingRulesModel.isShowSection)}">
+                <button type="text" pButton label="Cancel" (click)="onCancel()" class="ui-button-secondary mar-right15"
+                    data-attr="viewagreement-ratingrule-cancel-button" appShortcut="ctrl+alt+2"></button>
+                <button type="text" pButton label="Save" (click)="onSave()" class="ui-button-primary mar-right15"
+                    data-attr="viewagreement-ratingrule-save-button" appShortcut="ctrl+alt+1"></button>
+            </div>
+        </form>
+    </div>
+</div>
+<p-dialog data-attr="viewagreement-ratingrules-confirmation-dialog" [(visible)]="ratingRulesModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+    [minY]="70" [baseZIndex]="10005" [closable]="false">
+    <p-header>
+        <span class="title capitalizeTitle">Confirmation</span>
+        <a data-attr="viewagreement-ratingrules-cancel-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)"
+            role="button" (click)="popupCancel()">
+            <span class="pi pi-times"></span>
+        </a>
+    </p-header>
+    <span *ngIf='!ratingRulesModel.isShowAffliationMessage'>You are about to lose all the changes. Do you want to
+        proceed?</span>
+    <span *ngIf='ratingRulesModel.isShowAffliationMessage'>All the selected data in the component would be lost if
+        navigated to the other tab. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="popupCancel()" class="ui-button-secondary" label="No"
+            data-attr="viewagreement-ratingrule-popupno-button"></button>
+        <button type="button" pButton (click)="(ratingRulesModel.selectedAffiliationValue !== ratingRulesModel.ratingRulesForm.get('affiliation').value) ?
+    affiliationChangeYes() : removeDirty()" label="Yes" class="ui-button-primary"
+            data-attr="viewagreement-ratingrule-popupyes-button"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,166 @@
+<div class="ui-g ui-fluid feature-container">
+        <div class="filter-wrapper">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 mar-top10 BotBorder">
+                    <div class="ui-g-6">
+                        <strong class="filter-heading">Filter By</strong>
+                    </div>
+                    <div class="ui-g-6 textAlign">
+                        <button data-attr="viewagreement-cargoreleasefilter-clearAllBtn-button" pButton class="ui-button-secondary clearSearch pad-left0 pad-right0"
+                            (click)="onClearAllFilters()">
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+                <div class="ui-g-12 pad0 filter-scroll filterPanels searchScrollPanel">
+                  <div class="accordionHeight custom-accordion-segment">
+                    <p-accordion data-attr="viewagreement-cargoreleasefilter-accordion" [multiple]="true" class='accordian-container'>
+                    <app-slider-filter #filtercomp [config]="filterConfig.sliderData" (slideValue)="onSlideValue($event)">
+                    </app-slider-filter>
+                    <app-radio-filter #filtercomp [config]="filterConfig.agreementData"
+                        (itemsSelected)="onListingItemsSelected($event, 'agreementRadio', 0, false)"></app-radio-filter>
+                    <app-autocomplete-filter class="topMargin" #filtercomp [config]="filterConfig.contractData"
+                        (itemsSelected)="onListingItemsSelected($event, 'selectedContract', 9, false)">
+                    </app-autocomplete-filter>
+                    <app-listing-filter #filtercomp [config]="filterConfig.businessData"
+                        (itemsSelected)="onListingItemsSelected($event, 'selectedBusinessUnit', 10, true)">
+                    </app-listing-filter>
+                    <app-listing-filter #filtercomp [config]="filterConfig.sectionData"
+                        (itemsSelected)="onListingItemsSelected($event, 'selectedSection', 11, false)"></app-listing-filter>
+                    <app-listing-filter #filtercomp *ngIf="statusFlag" [config]="filterConfig.statusData"
+                        [selectedList]="filterModel.statusSelectedList" (isCollapsed)="isStatusCollapsed($event)"
+                        (itemsSelected)="onListingItemsSelected($event, 'status', 5, false)"
+                        (resetCall)="resetEvent($event)"></app-listing-filter>
+                    <p-accordionTab data-attr="viewagreement-cargoreleasefilter-effDateRange-accordionTab" class="nopadding dateFilter"  [(selected)]="isEffecDRAccordianOpened" [ngClass]="{'no-border': isEffecDRAccordianOpened}"
+                        expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Effective Date Range</span>
+                        </p-header>
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <div class="ui-float-label ui-md-12 ui-g-12 pad-left0 pad-right0 pad-top0">
+                                    <p-calendar data-attr="viewagreement-cargoreleasefilter-effDate-calendar" appendTo="body" showIcon="true" hourFormat="12" [showOnFocus]="true"
+                                        (onBlur)="onDateRangeBlur('effectiveDate', 12, 'gte')"
+                                        (onSelect)="onDateRangeSelect('effectiveDate', 12, 'gte')"
+                                        [(ngModel)]="filterModel.effectiveDate"></p-calendar>
+                                    <label class="mar-left20 labelErrorEff">Effective Date</label>
+                                </div>
+                            </div>
+                            <span class="ui-md-12 ui-g-12 mar-bot20 greyText">to</span>
+                            <div class="ui-g-12">
+                                <div class="ui-float-label ui-md-12 ui-g-12 pad-left0 pad-right0 pad-top0">
+                                    <p-calendar data-attr="viewagreement-cargoreleasefilter-expDate-calendar" appendTo="body" showIcon="true" calendarIcon="icon-Chevron_Down"
+                                        hourFormat="12" [showOnFocus]="true"
+                                        (onSelect)="onDateRangeSelect('expirationDate', 13, 'lte')"
+                                        (onBlur)="onDateRangeBlur('expirationDate', 13, 'lte')"
+                                        [(ngModel)]="filterModel.expirationDate"></p-calendar>
+                                    <label class="mar-left20 labelErrorEff">Expiration Date</label>
+                                </div>
+                            </div>
+                            <button data-attr="viewagreement-cargoreleasefilter-dateReset-button" class="icon-text-button reset-color pad-top10"
+                                (click)="onResetDateRange('effectiveDate', 'expirationDate', 12 ,13)">Reset</button>
+                        </div>
+                    </p-accordionTab>
+                    <app-listing-filter #filtercomp [config]="filterConfig.updatedByData"
+                        (itemsSelected)="onListingItemsSelected($event, 'selectedUpdatedByData', 8, false)">
+                    </app-listing-filter>
+                    <p-accordionTab data-attr="viewagreement-cargoreleasefilter-updatedOn-accordionTab" class="nopadding dateFilter"  [(selected)]="isUpdatedOnAccordianOpened" [ngClass]="{'no-border': isUpdatedOnAccordianOpened}"
+                        expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Updated On</span>
+                        </p-header>
+                        <div class="ui-g pad-top0">
+                            <div class="ui-g-12 ">
+                                <span class="greyText">Date</span>
+                                <p-calendar data-attr="viewagreement-cargoreleasefilter-updatedDate-calendar"  appendTo="body" [(ngModel)]="filterModel.updatedDateValue" showOnFocus="true"
+                                    showIcon="true" dateFormat="mm/dd/yy" placeholder="Date"
+                                    (onBlur)="onDateSelected(7,  'updatedDateValue', 'updatedTimeValue')"
+                                    (onSelect)="onDateSelected(7,  'updatedDateValue', 'updatedTimeValue')"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="ui-g">
+                            <div class="ui-g-12 pad-top10">
+                                <span class="greyText">Time</span>
+                                <p-calendar data-attr="viewagreement-cargoreleasefilter-updatedTime-calendar" [(ngModel)]="filterModel.updatedTimeValue" appendTo="body" placeholder="Time"
+                                    [disabled]="updatedTimeDisabled" [showIcon]="true" [timeOnly]="true"
+                                    icon="icon-Circle_Clock" hourFormat="12"
+                                    (onBlur)="onDateSelected(7, 'updatedDateValue', 'updatedTimeValue')"
+                                    (onClose)="onDateSelected(7, 'updatedDateValue', 'updatedTimeValue')"></p-calendar>
+                            </div>
+                            <button  data-attr="viewagreement-cargoreleasefilter-updatedTimeReset-button" class="icon-text-button reset-color pad-top10"
+                                (click)="onResetTimeStamp('updatedDateValue', 'updatedTimeValue', 7 )">Reset</button>
+                        </div>
+                    </p-accordionTab>
+                    <app-listing-filter #filtercomp [config]="filterConfig.lastUpdateProgramData"
+                        (itemsSelected)="onListingItemsSelected($event, 'LastUpdateProgram', 6 , false)">
+                    </app-listing-filter>
+                    <app-listing-filter #filtercomp [config]="filterConfig.createdByData"
+                        (itemsSelected)="onListingItemsSelected($event, 'selectedCreatedByData', 4, false)">
+                    </app-listing-filter>
+                    <p-accordionTab  data-attr="viewagreement-cargoreleasefilter-createdOn-accordionTab" class="nopadding dateFilter"  [(selected)]="isCreatedOnAccordianOpened" [ngClass]="{'no-border': isCreatedOnAccordianOpened}"
+                        expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Created On</span>
+                        </p-header>
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <span class="greyText">Date</span>
+                                <p-calendar  data-attr="viewagreement-cargoreleasefilter-createdDate-calendar" [(ngModel)]="filterModel.createdDateValue" appendTo="body" showIcon="true"
+                                    [showOnFocus]="true"
+                                    (onBlur)="onDateSelected(3, 'createdDateValue', 'createdTimeValue')" placeholder="Date"
+                                    hourFormat="12" (onSelect)="onDateSelected(3, 'createdDateValue', 'createdTimeValue')">
+                                </p-calendar>
+                            </div>
+                        </div>
+                        <div class="ui-g">
+                            <div class="ui-g-12 pad-top10">
+                                <span class="greyText">Time</span>
+                                <p-calendar  data-attr="viewagreement-cargoreleasefilter-createdTime-calendar" [(ngModel)]="filterModel.createdTimeValue" appendTo="body" placeholder="Time"
+                                    [disabled]="createdTimeDisabled" [showIcon]="true" [timeOnly]="true"
+                                    icon="icon-Circle_Clock" hourFormat="12"
+                                    (onBlur)="onDateSelected(3, 'createdDateValue', 'createdTimeValue')"
+                                    (onClose)="onDateSelected(3, 'createdDateValue', 'createdTimeValue')"></p-calendar>
+    
+                            </div>
+                            <button data-attr="viewagreement-cargoreleasefilter-createdTimeReset-button" class="icon-text-button reset-color pad-top10"
+                                (click)="onResetTimeStamp('createdDateValue', 'createdTimeValue', 3 )">Reset</button>
+                        </div>
+                    </p-accordionTab>
+                    <app-listing-filter #filtercomp [config]="filterConfig.createdProgramData"
+                        (itemsSelected)="onListingItemsSelected($event, 'CreateProgram', 2, false)"></app-listing-filter>
+                    <p-accordionTab  data-attr="viewagreement-cargoreleasefilter-originEffDateRange-accordionTab" class="nopadding dateFilter"  [(selected)]="isOriginalEffAccordianOpened" [ngClass]="{'no-border': isOriginalEffAccordianOpened}"
+                        expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+                        <p-header class="header-style">
+                            <span class="filter-title">Original Effective Date Range</span>
+                        </p-header>
+                        <div class="ui-g Textstyle">
+                            <div class="ui-g-12">
+                                <div class="ui-float-label ui-md-12 ui-g-12 pad-left0 pad-right0 pad-top0">
+                                    <p-calendar  data-attr="viewagreement-cargoreleasefilter-originalEffDate-calendar" appendTo="body" showIcon="true" hourFormat="12"
+                                        (onBlur)="onDateRangeBlur('originalEffectiveDate', 14, 'gte')" [showOnFocus]="true"
+                                        (onSelect)="onDateRangeSelect('originalEffectiveDate',  14, 'gte')"
+                                        [(ngModel)]="filterModel.originalEffectiveDate"></p-calendar>
+                                    <label class="labelError mar-left20">Original Effective Date</label>
+                                </div>
+                            </div>
+                            <span class="ui-md-12 ui-g-12 mar-bot20 pad-left8  Textto greyText">to</span>
+                            <div class="ui-g-12">
+                                <div class="ui-float-label ui-md-12 ui-g-12 pad-left0 pad-right0 pad-top0">
+                                    <p-calendar data-attr="viewagreement-cargoreleasefilter-originalExpDate-calendar" appendTo="body" showIcon="true" calendarIcon="icon-Chevron_Down"
+                                        hourFormat="12" [showOnFocus]="true"
+                                        (onBlur)="onDateRangeBlur('originalExpirationDate', 15, 'lte')"
+                                        (onSelect)="onDateRangeSelect('originalExpirationDate', 15, 'lte')"
+                                        [(ngModel)]="filterModel.originalExpirationDate"></p-calendar>
+                                    <label class="labelError mar-left20">Original Expiration Date</label>
+                                </div>
+                            </div>
+                            <button data-attr="viewagreement-cargoreleasefilter-originalDateReset-button" class="icon-text-button reset-color pad-top10"
+                                (click)="onResetDateRange('originalEffectiveDate', 'originalExpirationDate', 14 ,15)">Reset</button>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>

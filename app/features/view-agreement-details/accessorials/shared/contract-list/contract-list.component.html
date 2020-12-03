@@ -1,0 +1,66 @@
+<div [ngClass]="{'loader': contractListModel.loading}" [appJbhLoader]="contractListModel.loading"></div>
+<p-growl [(value)]="msgs"></p-growl>
+<div class="page-scroll ui-fluid  contract-custom-cls">
+    <p-table #dt class="main-content contractListTable" [value]="contractListModel.contractList" [scrollable]="true"
+        [resizableColumns]="true" scrollHeight="150px" [(selection)]="contractListModel.selectedContract"
+        [globalFilterFields]="['contractName','effectiveDate','expirationDate']" [filterDelay]="0"
+        (onFilter)="onFilter($event.filteredValue.length)" selectionMode="multiple" datakey="customerAgreementContractID"
+        (onHeaderCheckboxToggle)="onHeaderCheckboxToggle()" (onRowSelect)="onRowSelect($event)"
+        (onRowUnselect)="onRowUnselect($event)" sortMode="multiple" [multiSortMeta]="multiSortMeta"
+        (onSort)="onSort($event)">
+        <ng-template pTemplate="caption">
+            <div class="ui-g  header-height table-caption">
+                <div class="ui-md-9 ui-lg-9 tableName">Contracts</div>
+                <div class="iconsHolder ui-g-3 ui-md-3 pull-right pad0">
+                    <div appShortcut class="pull-right pad0 width93">
+                        <div class="ui-inputgroup pad0 ui-g-12 getGridValuesInput">
+                            <span class="ui-inputgroup-addon">
+                                <i class="fa fa-search"> </i>
+                            </span>
+                            <input type="text" pInputText placeholder="Search" appShortcut="alt+s"
+                                (keyup)="dt.filterGlobal($event.target.value, 'contains')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup *ngIf="contractListModel?.tableColumns.length > 0">
+                <col *ngFor="let thisCol of contractListModel.tableColumns">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr *ngIf="contractListModel.filteredValuesLength === 0 ">
+                <td colspan="4">
+                    <div class="ui-g-12 message-wrapper">
+                        <span class="display-middle">No results found</span>
+                    </div>
+                </td>
+            </tr>
+            <tr class="pad0 mar0 table-header" *ngIf="contractListModel.filteredValuesLength !== 0">
+                <th class="checkbox-column table-header-checkbox contractHeaderRow" *ngIf="!detailedViewFlag">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let thisCol of contractListModel.tableColumns" pResizableColumn
+                    [pSortableColumn]="thisCol.property" class="contractHeaderRow textDot">
+                    <span>
+                        {{thisCol.name}}
+                        <p-sortIcon [field]="thisCol.property" class="pad-right10"></p-sortIcon>
+                    </span>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <tr>
+                <td class="checkbox-column width10 contractDataRow ui-resizable-column" *ngIf="!detailedViewFlag">
+                    <p-tableCheckbox [value]="rowData" name="checkBox" (click)="$event.stopPropagation()">
+                    </p-tableCheckbox>
+                </td>
+                <td *ngFor="let col of contractListModel.tableColumns" colspan="thisCol.colspan"
+                    class="contractDataRow textDot ui-resizable-column" title={{rowData[col.property]}}>
+                    <span> {{rowData[col.property]}}</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -1,0 +1,22 @@
+<div class="settingsWrapper">
+  <div class="ui-g pad-left5">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 breadcrumb-wrapper pad-bot0">
+      <p-breadcrumb data-attr="viewagreement-fueldetails-overflow-breadcrumb" [model]="fuelDetailViewModel?.breadCrumbList"></p-breadcrumb>
+    </div>
+    <div class="ui-md-12 ui-lg-12 ui-g-12 capacity-heading mar-left10 pad0">
+      <h1 class="nopadding">{{agreementData?.customerAgreementName}}
+        <button appShortcut="ctrl+alt+o" class="icon-Menu_Overflow icon-button pad10 overflow-menu"
+          data-attr="viewagreement-fueldetails-overflow-menu"></button>
+      </h1>
+    </div>
+  </div>
+  <div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper pad0">
+    <div class="ui-md-3 ui-g-3">
+      <app-fuel-summary-view></app-fuel-summary-view>
+    </div>
+    <div class="ui-md-9 ui-g-9">
+      <app-fuel-calculation-view [fuelProgramId]="fuelDetailViewModel.fuelProgramID"></app-fuel-calculation-view>
+      <app-fuel-price-view [fuelProgramId]="fuelDetailViewModel.fuelProgramID"></app-fuel-price-view>
+    </div>
+  </div>
+</div>

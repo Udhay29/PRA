@@ -1,0 +1,265 @@
+<div [ngClass]="{'loader': fuelCalculationDetailModel?.isPageLoading}"
+  [appJbhLoader]="fuelCalculationDetailModel?.isPageLoading">
+</div>
+<div class="ui-g ui-md-12 pad-bot0 pad-left0 pad-top0 pad-right15">
+  <div class="ui-g-12 pad0 dropshadow borderValue overview-wrapper">
+    <div class=" ui-g-12 pad-bot20 pad-top15 pad-left15 fuel-haul-heading">
+      <span class="">Fuel Calculation Detail</span>
+    </div>
+    <div class="ui-g-12 pad-left10">
+      <div class="ui-g-12">
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Calculation Date Type</label>
+          <span
+            class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationDateType?.fuelCalculationDateTypeName}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Charge Type</label>
+          <span class="content-text">{{fuelCalculationDetailModel?.chargeType}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Rounding Digit</label>
+          <span
+            class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelRoundingDecimal?.fuelRoundingDecimalNumber}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Calculation Type</label>
+          <span
+            class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationType?.fuelCalculationTypeName}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Rate Type</label>
+          <span
+            class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelRateType?.fuelRateTypeName}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Fuel Type</label>
+          <span
+            class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelType?.fuelTypeName}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Currency</label>
+          <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCurrencyCode}}</span>
+        </span>
+        <span class="ui-g-6 pad0">
+          <label class="content-text heading-text">Dray Discount</label>
+          <ng-container
+            *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelDiscountType?.fuelDiscountTypeName; else notShowDrayDiscount">
+            <label
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelDiscountType?.fuelDiscountTypeName}}</label>
+          </ng-container>
+          <ng-template #notShowDrayDiscount>
+            <span class="content-text">- -</span>
+          </ng-template>
+        </span>
+        <span class="ui-g-12 pad0">
+          <label class="content-text heading-text">Roll up</label>
+          <ng-container *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.rollUpIndicator === 'Y'">
+            <span class="content-text">Yes</span>
+          </ng-container>
+          <ng-container *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.rollUpIndicator === 'N'">
+            <span class="content-text">No</span>
+          </ng-container>
+        </span>
+        <span class="ui-g-12 border-bottom"></span>
+        <div
+          *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName === 'Flat'">
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Calculation Method</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName}}</span>
+          </span>
+          <span class="ui-g-6 pad0 pad-bot10">
+            <label class="content-text heading-text">Fuel Surcharge Amount</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.flatConfiguration?.fuelSurchargeAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+        </div>
+        <div
+          *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName === 'Formula'">
+          <span class="ui-g-12 pad0">
+            <label class="content-text heading-text">Calculation Method</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName}}</span>
+          </span>
+          <span class="ui-g-12 border-bottom"></span>
+          <span class="ui-g-12 pad0">
+            <label class="content-text heading-text">Fuel Surcharge Factor</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.formulaConfiguration?.fuelSurchargeFactorAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Incremental Charge</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.formulaConfiguration?.incrementChargeAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Implementation Price</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.formulaConfiguration?.implementationAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Increment Interval</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.formulaConfiguration?.incrementIntervalAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0 pad-bot10">
+            <label class="content-text heading-text">Cap</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.formulaConfiguration?.capAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+        </div>
+        <div
+          *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName === 'Refrigerated'">
+          <span class="ui-g-12 pad0">
+            <label class="content-text heading-text">Calculation Method</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName}}</span>
+          </span>
+          <span class="ui-g-12 border-bottom"></span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Implementation Price</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.implementationAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Burn Rate per Hour</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.burnRatePerHourQuantity
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-12 border-bottom"></span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Distance Per Hour</label>
+            <span
+              class="content-text pad-right5">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.distancePerHourQuantity}}</span>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.unitOfLengthMeasurement?.unitOfLengthMeasurementCode}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Loading/Unloading Hours</label>
+            <ng-container
+              *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.loadUnloadHourQuantity; else notShowLoadUnloadHrs">
+              <span
+                class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.loadUnloadHourQuantity}}</span>
+            </ng-container>
+            <ng-template #notShowLoadUnloadHrs>
+              <span class="content-text">- -</span>
+            </ng-template>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Distance Rounding</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.travelTimeHourRoundingType?.fuelRoundingTypeName}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Service Hours Addon</label>
+            <ng-container
+              *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourAddonQuantity; else notShowServiceAddon">
+              <span
+                class="content-text pad-right5">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourAddonQuantity}}</span>
+              <ng-container
+                *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourAddonQuantity > 1; else hours">
+                <span class="content-text">Hours</span>
+              </ng-container>
+              <ng-template #hours><span class="content-text">Hour</span></ng-template>
+            </ng-container>
+            <ng-template #notShowServiceAddon>
+              <span class="content-text">- -</span>
+            </ng-template>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Add Hours After Distance</label>
+            <ng-container
+              *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourAddonDistanceQuantity; else notShowAddHours">
+              <span
+                class="content-text pad-right5">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourAddonDistanceQuantity}}</span>
+              <span
+                class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.unitOfLengthMeasurement?.unitOfLengthMeasurementCode}}</span>
+            </ng-container>
+            <ng-template #notShowAddHours>
+              <span class="content-text">- -</span>
+            </ng-template>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Service Hours Rounding</label>
+            <ng-container
+              *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourRoundingType?.fuelRoundingTypeName; else notShowServiceHrsRound">
+              <span
+                class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.serviceHourRoundingType?.fuelRoundingTypeName}}</span>
+            </ng-container>
+            <ng-template #notShowServiceHrsRound>
+              <span class="content-text">- -</span>
+            </ng-template>
+          </span>
+          <span class="ui-g-12 border-bottom"></span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Distance Unit</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.unitOfLengthMeasurement?.unitOfLengthMeasurementCode}}</span>
+          </span>
+          <span class="ui-g-6 pad0 pad-bot10">
+            <label class="content-text heading-text">Fuel Quantity Basis</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.reeferConfiguration?.unitOfVolumeMeasurement?.unitOfVolumeMeasurementCode}}</span>
+          </span>
+        </div>
+        <div
+          *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName === 'Distance Per Fuel Quantity'">
+          <span class="ui-g-12 pad0">
+            <label class="content-text heading-text">Calculation Method</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName}}</span>
+          </span>
+          <span class="ui-g-12 border-bottom"></span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Distance Per Fuel Quantity</label>
+            <span
+              class="content-text pad-right5">{{fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.distancePerFuelQuantity}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Implementation Price</label>
+            <span class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.implementationAmount
+              | currency:'USD':'symbol':'1.2-4'}}</span>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Addon Amount</label>
+            <ng-container
+              *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.addonAmount; else notShowAddonAmt">
+              <span
+                class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.addonAmount}}</span>
+            </ng-container>
+            <ng-template #notShowAddonAmt>
+              <span class="content-text">- -</span>
+            </ng-template>
+          </span>
+          <span class="ui-g-6 pad0">
+            <label class="content-text heading-text">Distance Basis</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.unitOfLengthMeasurement?.unitOfLengthMeasurementCode}}</span>
+          </span>
+          <span class="ui-g-12 pad0 pad-bot10">
+            <label class="content-text heading-text">Fuel Quantity Unit</label>
+            <span
+              class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.distancePerFuelQuantityConfiguration?.unitOfVolumeMeasurement?.unitOfVolumeMeasurementCode}}</span>
+          </span>
+        </div>
+        <div class="pad-bot5"
+          *ngIf="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName === 'Increment'">
+          <div class="ui-g-12">
+            <span class="pad0">
+              <label class="content-text heading-text">Calculation Method</label>
+              <span
+                class="content-text">{{fuelCalculationDetailModel?.fuelCalulationDetails?.fuelCalculationMethodType?.fuelCalculationMethodTypeName}}</span>
+            </span>
+            <div class="pad-top10">
+              <app-fuel-incremental-view
+                [incrementalDetails]="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelIncrementalPriceDTOs"
+                [roundingDigit]="fuelCalculationDetailModel?.fuelCalulationDetails?.fuelRoundingDecimal?.fuelRoundingDecimalNumber">
+              </app-fuel-incremental-view>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

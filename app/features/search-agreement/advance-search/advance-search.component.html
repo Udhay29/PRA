@@ -1,0 +1,172 @@
+<div [ngClass]="{'loader': advanceSearchModel.isPageLoading}" [appJbhLoader]="advanceSearchModel?.isPageLoading"></div>
+<p-growl [(value)]="msgs"></p-growl>
+<div class="ui-g-12 pad0 filter-wrapper dropshadow">
+  <form class="filter-form typeahead-float-label" [formGroup]="advanceSearchModel.advanceSearchForm">
+    <div>
+      <h2 class="filter-title pad-left10">Search</h2>
+      <button data-attr="createagreement-advsearch-clear-button"pButton class="ui-button-secondary clearSearch pull-right mar-top10 mar-right10"
+        (click)="onClearSearch()">Clear
+        Search
+      </button>
+    </div>
+    <p-scrollPanel [style]="{ height: 'calc(100vh - 296px)'}" styleClass="custom" class="searchScrollPanel"
+      #searchScrollPanel>
+      <div class="ui-g-12 fav-back-color">
+        <p-dropdown data-attr="createagreement-advsearch-favoriteSearches-dropdown" class="ui-g-12 favSearch" [style]="{ width: 'calc(100% - 30px)'}" name="favorites"
+          formControlName="favoriteSearches" placeholder="Select from Favorites" [autoWidth]="false"
+          [autoDisplayFirst]="false"></p-dropdown>
+        <span class="icon-Heart favIcon text-gray"></span>
+      </div>
+      <div class="ui-g-12 mar-top16">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'mar-bot5px': advanceSearchModel.advanceSearchForm.get('agreementType').dirty && advanceSearchModel.advanceSearchForm.controls['agreementType'].invalid && !advanceSearchModel.isAgreementType}">
+          <p-autoComplete data-attr="createagreement-advsearch-agreementType-autoComplete" class="ui-g-12"
+            spellcheck="false" [size]="51" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.filteredAgreementType" formControlName="agreementType" field="label"
+           (completeMethod)="onSearchAgreementType($event['query'])" (onSelect)="onChangeAgreementType($event)" [dropdown]="true" (onClear)="onClearAgreementType($event.target['value'])" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="agreementType">Agreement Type</label>
+
+        <div class="errormsg err-message pad-left10 clearFix" [ngClass]="{'error-height': advanceSearchModel.advanceSearchForm.controls['agreementType'].dirty &&  advanceSearchModel.advanceSearchForm.controls['agreementType'].invalid && !advanceSearchModel.isAgreementType}" *ngIf="advanceSearchModel.advanceSearchForm.controls['agreementType'].dirty &&  advanceSearchModel.advanceSearchForm.controls['agreementType'].invalid && !advanceSearchModel.isAgreementType">
+          <span>Provide a valid Agreement Type</span>
+        </div>
+        <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.advanceSearchForm.get('agreementType').touched && advanceSearchModel.advanceSearchForm.get('agreementType')['errors']?.required}">
+            <p-message severity="error" text="Provide a Agreement Type" *ngIf="advanceSearchModel.advanceSearchForm.get('agreementType').touched && advanceSearchModel.advanceSearchForm.get('agreementType')['errors']?.required"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-AgreementName-autoComplete" class="ui-g-12" spellcheck="false" size="50" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.agreementNameList" formControlName="agreement" field="AgreementName"
+            (onSelect)="onChangeSearchFields()" (completeMethod)="onSearchAgreementName($event.query)" name="agreement"
+            [forceSelection]="true" (onClear)="onClearValue($event.target['value'], 'agreement')"
+            emptyMessage="No results found"></p-autoComplete>
+          <label for="accountName">Agreement</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}">
+            <p-message severity="error" text="Provide a Agreement" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-contract-autoComplete" class="ui-g-12" spellcheck="false" size="50" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.contractNameList" formControlName="contract" field="Contract"
+            (onSelect)="onChangeSearchFields()" (completeMethod)="onSearchContract($event.query)" name="contract"
+            [forceSelection]="true" (onClear)="onClearValue($event.target['value'], 'contract')"
+            emptyMessage="No results found"></p-autoComplete>
+          <label for="contract">Contract</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}">
+            <p-message severity="error" text="Provide a Contract" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-billTo-autoComplete" class="ui-g-12" spellcheck="false" size="50" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.billToList" formControlName="billTo" field="BillToCode"
+            (onSelect)="onChangeSearchFields()" (completeMethod)="onSearchBillTo($event.query)" name="billTo"
+            [forceSelection]="true" (onClear)="onClearValue($event.target['value'], 'billTo')"
+            emptyMessage="No results found"></p-autoComplete>
+          <label for="billTo">Bill To</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}">
+            <p-message severity="error" text="Provide a Bill To" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-carrierCode-autoComplete" class="ui-g-12" spellcheck="false" [disabled]=true size="50"
+            [style]="{ width: 'calc(100% - 25px)'}" [suggestions]="advanceSearchModel.agreementList"
+            formControlName="carrierCode" field="OrganizationName" name="carrierCode" [forceSelection]="true"
+            (onClear)="onClearValue($event.target['value'], 'carrierCode')" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="carrierCode">Carrier Code</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}">
+            <p-message severity="error" text="Provide a Carrier Code" *ngIf="advanceSearchModel.isShowError">
+            </p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <div class="ui-float-label ui-g-12 pad-left0">
+          <p-autoComplete data-attr="createagreement-advsearch-codeStatus-autoComplete" class="ui-g-12" spellcheck="false" [size]="51" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.filteredCodeStatus" formControlName="codeStatus" field="label"
+            (completeMethod)="onSearchCodeStatus($event.query)"
+            (onBlur)="onSearchTeamsRemove($event.target['value'], 'codeStatus')" [forceSelection]="true"
+            [dropdown]="true" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="codeStatus">Code Status</label>
+        </div>
+       </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0">
+          <p-autoComplete data-attr="createagreement-advsearch-operationalTeam-autoComplete" class="ui-g-12" spellcheck="false" [ngClass]="{'addon-error': advanceSearchModel.isShowError}"
+            [size]="51" [style]="{ width: 'calc(100% - 25px)'}" [suggestions]="advanceSearchModel.filteredTeamsList"
+            field="label" formControlName="operationalTeam" (completeMethod)="onSearchTeams($event.query)"
+            (onSelect)="onChangeSearchFields()"
+            (onBlur)="onSearchTeamsRemove($event.target['value'], 'operationalTeam')" name="operationalTeam"
+            [forceSelection]="true" [dropdown]="true" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="operationalTeam">Select Team</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}">
+            <p-message severity="error" text="Provide a Team" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0 drop-bottom" *ngIf="!advanceSearchModel.isCarrierFlag">
+        <div class="ui-float-label ui-g-12 pad-left0 autoComplete-bottom-margin">
+          <p-autoComplete data-attr="createagreement-advsearch-agreementStatus-autoComplete" class="ui-g-12" spellcheck="false" [size]="51" [style]="{ width: 'calc(100% - 25px)'}"
+            [suggestions]="advanceSearchModel.filteredAgreementStatus" formControlName="agreementStatus" field="label"
+            (completeMethod)="onSearchAgreementStatus($event.query)"
+            (onBlur)="onSearchTeamsRemove($event.target['value'], 'agreementStatus')" [forceSelection]="true"
+            [dropdown]="true" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="agreementStatus">Agreement Status</label>
+        </div>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-accountName-autoComplete" class="ui-g-12" spellcheck="false"  size="50" [style]="{ width: 'calc(100% - 25px)'}" [suggestions]="advanceSearchModel.carrierAgreementNameList" formControlName="carrierAgreement" field="CarrierAgreementName" (onSelect)="onChangeSearchFields()" (completeMethod)="onSearchCarrierAgreementName($event.query)"  name="carrierAgreement" [forceSelection]="true" (onClear)="onClearValue($event.target['value'], 'carrierAgreement')" emptyMessage="No results found"></p-autoComplete>
+          <label for="accountName">Agreement</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}" >
+            <p-message severity="error" text="Provide a Agreement" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0" *ngIf="advanceSearchModel.isCarrierFlag">
+        <span class="ui-float-label ui-g-12 pad-left0" [ngClass]="{'addon-error': advanceSearchModel.isShowError}">
+          <p-autoComplete data-attr="createagreement-advsearch-carrier-autoComplete" class="ui-g-12" spellcheck="false"  size="50" [style]="{ width: 'calc(100% - 25px)'}" [suggestions]="advanceSearchModel.carrierList" formControlName="carrier" field="CarrierName"  (onSelect)="onSelectCarrier($event)" (completeMethod)="onSearchCarrier($event.query)" (onSelect)="onChangeSearchFields()"  name="carrier" [forceSelection]="true" (onClear)="onClearValue($event.target['value'], 'carrier')" emptyMessage="No results found"></p-autoComplete>
+          <label for="carrier">Carriers</label>
+          <div class="clearFix" [ngClass]="{'error-height': advanceSearchModel.isShowError}" >
+            <p-message severity="error" text="Provide a Carrier" *ngIf="advanceSearchModel.isShowError"></p-message>
+          </div>
+        </span>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0 drop-bottom" *ngIf="advanceSearchModel.isCarrierFlag">
+        <div class="ui-float-label ui-g-12 pad-left0 autoComplete-bottom-margin">
+          <p-autoComplete data-attr="createagreement-advsearch-carrierStatus-autoComplete" class="ui-g-12" spellcheck="false" [disabled]=advanceSearchModel.carrierStatusFlag [size]="51" [style]="{ width: 'calc(100% - 25px)'}"
+             [suggestions]="advanceSearchModel.carrierFilteredCarrierStatus" formControlName="carrierStatus" field="label" name="carrierStatus"
+             (completeMethod)="onSearchCarrierStatus($event.query, 'carrierStatus')" (onBlur)="onSearchTeamsRemove($event.target['value'], 'carrierStatus')" [forceSelection]="true" [dropdown]="true" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="carrierStatus">Carrier Status</label>
+        </div>
+      </div>
+      <div class="ui-g-12 mar-top5 pad-top0 drop-bottom" *ngIf="advanceSearchModel.isCarrierFlag">
+        <div class="ui-float-label ui-g-12 pad-left0 autoComplete-bottom-margin">
+          <p-autoComplete data-attr="createagreement-advsearch-CarrierAgreementStatus-autoComplete" class="ui-g-12" spellcheck="false" [size]="51" [style]="{ width: 'calc(100% - 25px)'}"
+             [suggestions]="advanceSearchModel.carrierFilteredAgreementStatus" formControlName="CarrierAgreementStatus" field="label" name="CarrierAgreementStatus"
+             (completeMethod)="onSearchCarrierStatus($event.query , 'CarrierAgreementStatus')" (onBlur)="onSearchTeamsRemove($event.target['value'], 'CarrierAgreementStatus')" [forceSelection]="true" [dropdown]="true" emptyMessage="No results found">
+          </p-autoComplete>
+          <label for="CarrierAgreementStatus">Agreement Status</label>
+        </div>
+      </div>
+    </p-scrollPanel>
+    <div appShortcut class="ui-g-12 pad0 filter-footer">
+      <div class="ui-g-11 favoritesFooter pad-right7">
+        <button data-attr="createagreement-advsearch-addtofav-button"pButton appShortcut="ctrl+alt+2" class="mar-right20 ui-button-secondary"
+          label="Add To Favorites"></button>
+        <button data-attr="createagreement-advsearch-search-button"pButton appShortcut="ctrl+alt+1" label="Search" (click)="onClickSearch()"></button>
+      </div>
+    </div>
+  </form>
+</div>

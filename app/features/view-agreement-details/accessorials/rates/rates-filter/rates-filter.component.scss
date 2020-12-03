@@ -1,0 +1,240 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+
+.filterOptions {
+  text-decoration: none;
+  color: $primary-blue;
+  @include getTypographyStyles("h5");
+}
+
+.filter-wrapper {
+  background: $white;
+  border-radius: 5px;
+  padding: 0;
+  -webkit-box-shadow: 0 0 6px $grey-dark27;
+  box-shadow: 0 0 6px $grey-dark27;
+  border-collapse: separate;
+}
+.clearSearch {
+  @include getTypographyStyles("body1");
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent;
+  border: 0px;
+  color: $primary-blue;
+}
+.buttonLink {
+  background-color: transparent;
+  color: $blue;
+  border: none;
+}
+
+.dropshadow {
+  background-color: $grey-lite88;
+}
+
+.filter-wrapper .filter-heading {
+  @include getTypographyStyles("h5");
+  color: $grey-dark66;
+}
+
+
+.pheader {
+  @include getTypographyStyles("body2");
+  color: $grey-dark66;
+}
+
+.pheadermain {
+  @include getTypographyStyles("body1");
+  padding-bottom: 20px;
+  margin-top: 20px;
+
+} 
+
+.main-container-wrapper .form-wrapper.showfiltercls {
+  box-shadow: none;
+}
+
+.filterIconFocus > a:hover,
+.overflowMenuFocus > a:hover {
+  text-decoration: none;
+}
+
+.filterIconFocus:focus,
+.overflowMenuFocus:focus {
+  outline-color: -webkit-focus-ring-color auto 5px;
+}
+.date-field-float {
+  margin-top: 17px;
+  label {
+      margin-top: 0px !important;
+      top: 38%;
+      left: 19px;
+  }
+  .ui-inputwrapper-focus~label {
+      top: calc(-.75em - 3px);
+      left: -4px !important;
+      font-size: 12px;
+  }
+  .ui-inputwrapper-filled~label {
+      top: calc(-.75em - 3px);
+      left: -4px !important;
+      font-size: 12px;
+  }
+}
+.filter-common-style {
+  /deep/ .reset-color {
+    background-color: $white;
+    text-decoration: none;
+    color: $blue;    
+    margin-bottom:5px;
+    border: 0;
+    z-index: 9;
+    &:focus{
+      border:none;
+      outline: none;
+    }
+  }
+
+  /deep/ .icon-Money {
+    color: $black;
+    padding-top: 3px;
+  }
+  /deep/ .ui-inputgroup.ui-search-group {
+    .ui-inputgroup-addon {
+      position: absolute;
+      z-index: 1;
+    }
+  }
+  /deep/ .ui-autocomplete .ui-inputtext {
+    padding-left: 36px !important;
+  }
+  .filterPanels /deep/ .ui-panel .ui-panel-content-wrapper .ui-panel-content {
+    padding: 10px 20px 20px 20px;
+  }
+
+  /deep/ .ui-panel {
+    border-radius: 0px !important;
+  }
+
+  /deep/ .ui-panel .ui-panel-content-wrapper {
+    border-top: none;
+  }
+
+  .filterPanels /deep/ .ui-panel .ui-panel-titlebar-icon {
+    float: none;
+  }
+  .filterPanels /deep/ ul {
+    list-style-type: none;
+    padding-left: 0px;
+  }
+}
+
+
+.filter-common-style .filter-wrapper{
+  float: left;
+  width: 100%;
+}
+.effective-date /deep/.ui-datepicker{
+  top:100% !important;
+}
+
+.searchScrollPanel /deep/a:hover, a:active {
+  text-decoration: none; 
+}
+.addon-error {
+  span {
+      border-color: $red !important;
+      background-color: $red-lite90 !important;
+  }
+  input {
+      border-color: $red !important;
+      background-color: $red-lite90 !important;
+      border-right: 1px solid $red !important;
+  }
+}
+.borderAlign {
+  border-bottom: 1px solid $grey-lite70;
+}
+:host ::ng-deep .custom-accordion-segment .ui-accordion .ui-accordion-header a .ui-accordion-toggle-icon {
+  float: right;
+  line-height: 1em;
+  color: $black-opacity70;
+  margin-right: 15px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  height: 16px;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header a p-header {
+  color: $black;
+}
+
+:host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header a p-header::after {
+  color: $black !important;
+}
+
+:host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header {
+  background-color: $white;
+  border-bottom: solid 1px $grey-lite70;
+  padding: 0px;
+}
+
+:host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header a {
+  padding-left: 15px;
+  height: 50px;
+}
+
+:host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header:hover {
+  background-color: $white;
+}
+
+.custom-accordion ::ng-deep .ui-autocomplete-token {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 18px;
+  @include getTypographyStyles("body3");
+}
+@media only screen and (min-width: 300px) and (max-device-width: 1100px) {
+
+  :host ::ng-deep .custom-accordion .ui-accordion .ui-accordion-header {
+    padding: 1% 6% 10% 6%;
+  }
+}
+
+.custom-accordion-border {
+  /deep/ .ui-accordion-header {
+    border-bottom: none !important;
+  }
+}
+
+.custom-accordion {
+ /deep/ .ui-accordion {
+    .ui-accordion-content-wrapper {
+      .ui-accordion-content {
+        padding-top: 0;
+        padding-bottom: 20px;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+    }
+  }
+}
+.radioButton /deep/ label.ui-radiobutton-label{
+  padding-left: 5px !important;
+}
+.lineheight50 {
+  line-height: 50px;
+}
+.clearfilterbuttonn {
+    padding-top: 2px;
+    padding-left: 20px;
+}
+
+.filterCursor {
+  &:hover {
+    cursor: pointer;
+  }
+}

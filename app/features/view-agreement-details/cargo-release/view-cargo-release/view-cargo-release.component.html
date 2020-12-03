@@ -1,0 +1,109 @@
+<div class="split-wrapper">
+    <div class="ui-g-12 pad0 dropshadow split-container view-form-content">
+        <div class="split-header">
+            <span class="tableName">
+        Cargo Release Details
+      </span>
+            <button data-attr="viewagreement-viewcargorelease-closeBtn-button" class="icon-button icon-Menu_Close close-position iconColorChange" (click)="onClose()"></button>
+        </div>
+        <div class="split-body">
+            <div class="ui-md-6 ui-g-6 pad-bot0">
+                <label class="label-style">Cargo Release</label>
+                <p>${{cargoReleaseModel.viewData?.cargoAmount}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-bot0">
+                <label class="label-style">Agreement Default</label>
+                <p>{{cargoReleaseModel.viewData?.agreementDefault}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6  pad-top0 pad-bot0">
+                <label class="label-style">Contract</label>
+                <p *ngIf="cargoReleaseModel.viewData?.customerContractName">{{cargoReleaseModel.viewData?.customerContractName}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.customerContractName">--</p>
+            </div>
+            <div class="ui-md-6 ui-g-6  pad-top0 pad-bot0">
+                <label class="label-style">Section</label>
+                <p *ngIf="cargoReleaseModel.viewData?.customerSectionName">{{cargoReleaseModel.viewData?.customerSectionName}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.customerSectionName">--</p>
+            </div>
+            <div class="ui-md-12 ui-g-12 pad-top0 pad-bot0">
+                <label class="label-style">Business Unit</label>
+                <p *ngIf="cargoReleaseModel.viewData?.businessUnitData"></p>
+                <p *ngIf="cargoReleaseModel.viewData?.businessUnitData">{{cargoReleaseModel.viewData?.businessUnitData}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.businessUnitData">--</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Effective Date</label>
+                <p *ngIf="cargoReleaseModel.viewData?.effectiveDate">{{cargoReleaseModel.viewData?.effectiveDate}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Expiration Date</label>
+                <p *ngIf="cargoReleaseModel.viewData?.expirationDate">{{cargoReleaseModel.viewData?.expirationDate}}</p>
+            </div>
+            <div class="ui-md-12 ui-g-12 pad-top0 pad-bot0">
+                <label class="label-style">Status</label>
+                <p *ngIf="cargoReleaseModel.viewData?.status">{{cargoReleaseModel.viewData?.status}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Original Effective Date</label>
+                <p *ngIf="cargoReleaseModel.viewData?.originalEffectiveDate">{{cargoReleaseModel.viewData?.originalEffectiveDate}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Original Expiration Date</label>
+                <p *ngIf="cargoReleaseModel.viewData?.originalExpirationDate">{{cargoReleaseModel.viewData?.originalExpirationDate}}</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Created By</label>
+                <p *ngIf="cargoReleaseModel.viewData?.createdUser">{{cargoReleaseModel.viewData?.createdUser}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.createdUser">--</p>
+            </div>
+            <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                <label class="label-style">Created On</label>
+                <p *ngIf="cargoReleaseModel.viewData?.createdDate">{{cargoReleaseModel.viewData?.createdDate}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.createdDate">--</p>
+            </div>
+            <div class="ui-md-12 ui-g-12 border-class pad-top0 pad-bot0">
+                <label class="label-style">Program</label>
+                <p *ngIf="cargoReleaseModel.viewData?.createdProgram">{{cargoReleaseModel.viewData?.createdProgram}}</p>
+                <p *ngIf="!cargoReleaseModel.viewData?.createdProgram">--</p>
+            </div>
+            <div class="ui-md-12 ui-g-12 pad-left0 pad-top0 pad-bot0">
+                <h3 class="ui-md-12 ui-g-12 pad-top0 pad-bot0">Last Version</h3>
+                <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                    <label class="label-style">Last Modified By</label>
+                    <p *ngIf="cargoReleaseModel.viewData?.updatedUser">{{cargoReleaseModel.viewData?.updatedUser}}</p>
+                    <p *ngIf="!cargoReleaseModel.viewData?.updatedUser">--</p>
+                </div>
+                <div class="ui-md-6 ui-g-6 pad-top0 pad-bot0">
+                    <label class="label-style">Last Modified On</label>
+                    <p *ngIf="cargoReleaseModel.viewData?.updatedDate">{{cargoReleaseModel.viewData?.updatedDate}}</p>
+                    <p *ngIf="!cargoReleaseModel.viewData?.updatedDate">--</p>
+                </div>
+                <div class="ui-md-12 ui-g-12 pad-top0 pad-bot0">
+                    <label class="label-style">Program</label>
+                    <p *ngIf="cargoReleaseModel.viewData?.updatedProgram">{{cargoReleaseModel.viewData?.updatedProgram}}</p>
+                    <p *ngIf="!cargoReleaseModel.viewData?.updatedProgram">--</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-footer">
+            <div class="pull-right footerAlign">
+                <a data-attr="viewagreement-viewcargorelease-history-anchor" class="inactivate-link mar-right20" appShortcut="ctrl+alt+3">History</a>
+                <p-splitButton data-attr="viewagreement-viewcargorelease-inactivate-splitButton" icon="pi pi-file" appShortcut="ctrl+alt+2" label="Inactivate" class="inactivateButton" styleClass="ui-button-secondary" [model]="cargoReleaseModel.buttonItems"></p-splitButton>
+                <button data-attr="viewagreement-viewcargorelease-edit-button" type="text" pButton label="Edit" appShortcut="ctrl+alt+1" class="ui-button-primary mar-left15"></button>
+            </div>
+        </div>
+        <p-dialog data-attr="viewagreement-viewcargorelease-confirmation-dialog" header="Inactivate Cargo Release" [(visible)]="cargoReleaseModel.inactivateFlag" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+            <span>Do You want to proceed? If Yes, then select the date to inactivate this Cargo Release</span>
+            <div class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 mar-top20">
+                <p-calendar data-attr="viewagreement-viewcargorelease-expDate-calendar" [showIcon]="true" name="expirationDate" appendTo="body" [baseZIndex]="100000" [yearNavigator]="true" yearRange="1900:2099"></p-calendar>
+                <label for="expirationDate" class="pad-left20">Expiration Date</label>
+            </div>
+            <p-footer>
+                <button data-attr="viewagreement-viewcargorelease-cancel-button" type="button" pButton (click)="cargoReleaseModel.inactivateFlag=false" class="ui-button-secondary" label="Cancel"></button>
+                <button data-attr="viewagreement-viewcargorelease-inactivate-button" type="button" pButton label="Inactivate" class="ui-button-primary"></button>
+            </p-footer>
+        </p-dialog>
+
+    </div>
+</div>

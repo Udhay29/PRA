@@ -1,0 +1,44 @@
+<div class="ui-g" [formGroup]="signatureForm">
+  <div class="ui-g-6 pad0" *ngIf="masterData && masterData['signatureLine']">
+    <div class="heading mar-bot30 width100" *ngIf="masterData && masterData['signatureLine'] && masterData['signatureLine']['length']">Signature</div>
+    <div *ngFor="let signature of masterData['signatureLine']; let i=index;" class="heading6" [ngClass]="{'mar-bot30': i !== masterData['signatureLine']['length']}">
+      <span class="line-style">Line {{i+1}} </span>{{signature['name']}}
+    </div>
+    <div *ngIf="!masterData['signatureLine']['length']" class="heaading6 mar-bot30">
+      No signature was found in Master template.
+    </div>
+  </div>
+  <div class="ui-g-6 pad0" [ngClass]="{'ui-g-12': (!masterData || (masterData && !masterData['signatureLine']['length']))}">
+    <div *ngIf="masterData && masterData['signatureLine'] && masterData['signatureLine']['length']" class="heading mar-bot30 width100">Signature</div>
+    <ng-container formArrayName="signatureLine" *ngFor="let signature of signatureForm.controls.signatureLine['controls']; let i=index;">
+      <ng-container [formGroupName]="i">
+        <div class="pad0 ui-float-label width100 text-line-div" [ngClass]="{'mar-top30': i}">
+          <input class="width100" type="text" pInputText formControlName="text" />
+          <label class="label-style ui-g-12 pad0 errorAlign">
+            <span>Line {{i+1}}</span>
+            <span class="optional-text pull-right" *ngIf="checkRequiredLineStatus('signatureLine', i)" [ngClass]="{'pad-right22': signatureForm.controls.signatureLine['length'] === 1, 'custom-float-label-multiple': signatureForm.controls.signatureLine['length'] > 1}">optional</span>
+          </label>
+          <em class="icon-Circle_Remove_Solid remove-icon remove-icon-pad" *ngIf="signatureForm.controls.signatureLine['length'] > 1"
+            (click)="removeControl(i, 'signatureLine', 'signatureSave')"></em>
+        </div>
+        <div class="ui-g-12 pad0" [ngClass]="{'height25': i === signatureForm.controls.signatureLine['controls']['length'] - 1, 'custom-sig-pad-bot': i !== signatureForm.controls.signatureLine['length'] -1}">
+          <p-message severity="error" [text]="getSignatureError('signatureLine', 'signatureSave')" *ngIf="signatureForm.controls.signatureLine['controls'][i]['controls']['text'].touched &&
+      signatureForm.controls.signatureLine['controls'][i]['controls']['text'].invalid">
+          </p-message>
+        </div>
+      </ng-container>
+    </ng-container>
+    <div class="ui-g-12 pad0" *ngIf="signatureForm.controls.signatureLine['length'] < 6">
+      <button pButton type="button" label="Add Line ({{signatureForm.controls.signatureLine.length}}/6)" class="ui-button-tertiary pad0"
+        icon="jbh-icon icon-Circle_Add_Solid" (click)="addControl('signatureLine', 'signatureSave')"></button>
+    </div>
+  </div>
+</div>
+<p-dialog [header]="emailTemplateModel.popUpHeader" [(visible)]="emailTemplateModel.isShowPopUp" [modal]="true"
+  [responsive]="true" (onHide)="onCancel()" [width]="450" [minWidth]="300"  [minY]="70"  [baseZIndex]="10000">
+  <span>{{emailTemplateModel.popUpText}}</span>
+  <p-footer>
+    <button type="button" pButton (click)="onCancel()" label="No" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="onProceed()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

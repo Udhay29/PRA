@@ -1,0 +1,75 @@
+<form [formGroup]="settingForm">
+  <div class="ui-md-12 ui-g-12 ui-lg-12 pad-top0 text-field-float">
+    <span class="ui-md-6 ui-g-6 ui-lg-6 pad-left0">
+      <h3 class="heading-style">Set Dates by Super User</h3>
+      <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6">
+        <input formControlName="superUserMaxBackDate" pattern="[0-9 ]*" maxlength="86" style="width:87%;" (blur)="onNullCheckValidate($event.target?.value, 'superUserMaxBackDate')" type="text" pInputText />
+        <label for="superUserMaxBackDate">Maximum Back-date</label>
+        <span class="label-style mar-left5">Days</span>
+        <div class="error-class-height">
+          <p-message severity="error"  text="Provide a Maximum Back-date"  *ngIf="settingForm.get('superUserMaxBackDate').touched && settingForm.get('superUserMaxBackDate')['errors']?.required"></p-message>
+          <p-message severity="error"  text="Provide a valid Maximum Back-date"  *ngIf="settingForm.get('superUserMaxBackDate').touched && settingForm.get('superUserMaxBackDate')['errors']?.pattern"></p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 pad-right0">
+        <input formControlName="superUserMaxBackDateFuture" pattern="[0-9 ]*" style="width:87%;" type="text" (blur)="onNullCheckValidate($event.target?.value, 'superUserMaxBackDateFuture')" pInputText />
+        <label for="superUserMaxBackDateFuture">Future Date</label>
+        <span class="label-style mar-left5">Days</span>
+        <div class="error-class-height">
+          <p-message severity="error"  text="Provide a Future Date"  *ngIf="settingForm.get('superUserMaxBackDateFuture').touched && settingForm.get('superUserMaxBackDateFuture')['errors']?.required"></p-message>
+          <p-message severity="error"  text="Provide a valid Future Date"  *ngIf="settingForm.get('superUserMaxBackDateFuture').touched && settingForm.get('superUserMaxBackDateFuture')['errors']?.pattern"></p-message>
+        </div>
+      </span>
+    </span>
+    <span class="ui-md-6 ui-g-6 ui-lg-6 pad-left0">
+      <h3 class="heading-style">Set Dates by User</h3>
+      <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6">
+        <input formControlName="userMaxBackDate" type="text" pattern="[0-9 ]*" (blur)="onNullCheckValidate($event.target?.value, 'userMaxBackDate')" style="width:87%;" pInputText />
+        <label for="userMaxBackDate">Maximum Back-date</label>
+        <span class="label-style mar-left5">Days</span>
+        <div class="error-class-height">
+          <p-message severity="error"  text="Provide a Maximum Back-date"  *ngIf="settingForm.get('userMaxBackDate').touched && settingForm.get('userMaxBackDate')['errors']?.required"></p-message>
+          <p-message severity="error"  text="Provide a valid Maximum Back-date"  *ngIf="settingForm.get('userMaxBackDate').touched && settingForm.get('userMaxBackDate')['errors']?.pattern"></p-message>
+        </div>
+      </span>
+      <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6">
+        <input formControlName="userMaxBackDateFuture" pattern="[0-9 ]*" (blur)="onNullCheckValidate($event.target?.value, 'userMaxBackDateFuture')" type="text" style="width:87%;" pInputText />
+        <label for="userMaxBackDateFuture">Future Date</label>
+        <span class="label-style mar-left5">Days</span>
+        <div class="error-class-height">
+          <p-message severity="error"  text="Provide a Future Date"  *ngIf="settingForm.get('userMaxBackDateFuture').touched && settingForm.get('userMaxBackDateFuture')['errors']?.required"></p-message>
+          <p-message severity="error"  text="Provide a valid Future Date"  *ngIf="settingForm.get('userMaxBackDateFuture').touched && settingForm.get('userMaxBackDateFuture')['errors']?.pattern"></p-message>
+        </div>
+      </span>
+    </span>
+  </div>
+  <div class="ui-md-12 ui-g-12 ui-lg-12 pad-top0">
+    <h3 class="heading-style">Cargo Release</h3>
+    <span class="ui-md-3 ui-g-3 ui-lg-3 group-style currency-field-float">
+      <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error': (settingForm.get('cargoReleaseDefault').touched && (settingForm.get('cargoReleaseDefault')['errors']?.required || settingForm.get('cargoReleaseDefault')['errors']?.pattern || configurableModel.cargoReleaseFieldInvalid))}">
+        <span class="ui-inputgroup-addon">$</span>
+        <input formControlName="cargoReleaseDefault" style="width:100%;" pattern="[0-9., ]*" (blur)="validateCurrency($event.target.value, 'cargoReleaseDefault')"
+          pInputText />
+        <label for="cargoReleaseDefault">Default Cargo Release</label>
+      </span>
+      <div class="error-class-height">
+        <p-message severity="error"  text="Provide a Default Cargo Release"  *ngIf="settingForm.get('cargoReleaseDefault').touched && settingForm.get('cargoReleaseDefault')['errors']?.required"></p-message>
+        <p-message severity="error"  text="Provide a valid Default Cargo Release"  *ngIf="settingForm.get('cargoReleaseDefault').touched && settingForm.get('cargoReleaseDefault')['errors']?.pattern"></p-message>
+        <p-message severity="error"  text="Default Cargo Release cannot be more than Maximum Cargo Release value."  *ngIf="settingForm.get('cargoReleaseDefault').touched && !settingForm.get('cargoReleaseDefault')['errors']?.required && !settingForm.get('cargoReleaseDefault')['errors']?.pattern && configurableModel.cargoReleaseFieldInvalid"></p-message>
+      </div>
+    </span>
+    <span class="ui-md-3 ui-g-3 ui-lg-3 group-style currency-field-float">
+      <span class="ui-inputgroup ui-float-label" [ngClass]="{'addon-error': (settingForm.get('cargoReleaseMax').touched && (settingForm.get('cargoReleaseMax')['errors']?.required || settingForm.get('cargoReleaseMax')['errors']?.pattern || configurableModel.cargoReleaseFieldInvalid))}">
+        <span class="ui-inputgroup-addon">$</span>
+        <input formControlName="cargoReleaseMax" pattern="[0-9., ]*" style="width:100%;" (blur)="validateCurrency($event.target.value, 'cargoReleaseMax')"
+          pInputText />
+        <label for="cargoReleaseMax">Maximum Cargo Release</label>
+      </span>
+      <div class="error-class-height">
+        <p-message severity="error"  text="Provide a Maximum Cargo Release"  *ngIf="settingForm.get('cargoReleaseMax').touched && settingForm.get('cargoReleaseMax')['errors']?.required"></p-message>
+        <p-message severity="error"  text="Provide a valid Maximum Cargo Release"  *ngIf="settingForm.get('cargoReleaseMax').touched && settingForm.get('cargoReleaseMax')['errors']?.pattern"></p-message>
+        <p-message severity="error"  text="Default Cargo Release cannot be more than Maximum Cargo Release value."  *ngIf="settingForm.get('cargoReleaseMax').touched && !settingForm.get('cargoReleaseMax')['errors']?.required && !settingForm.get('cargoReleaseMax')['errors']?.pattern && configurableModel.cargoReleaseFieldInvalid"></p-message>
+      </div>
+    </span>
+  </div>
+</form>

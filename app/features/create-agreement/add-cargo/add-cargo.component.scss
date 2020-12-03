@@ -1,0 +1,115 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.table-caption {
+    min-height: 30px;
+}
+
+/deep/.cargotable .ui-table-caption {
+    border-bottom: 1px solid $grey-lite70 !important;
+}
+
+.displaymiddle {
+    height: calc(100vh - 300px);
+    padding-top: 20vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    @include getTypographyStyles("h2");
+}
+
+.emptyMsgText {
+    @include getTypographyStyles("display3");
+    color: $grey-dark27;
+}
+
+.table-header {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+}
+
+/deep/.ui-table-tfoot {
+    border-top: 1px solid $grey-lite70 !important;
+}
+
+.width12 {
+    width: 12px !important;
+}
+
+.minimum-column-width {
+    box-sizing: border-box;
+    width: 154px !important;
+    white-space: initial;
+    word-break: break-word;
+}
+
+.minimum-column-width:first-child {
+    width: 197px;
+}
+
+.header-bold {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+    padding-left: 10px;
+}
+
+.button-pad {
+    padding: 13px 15px 13px 13px;
+}
+
+.tableHeight {
+    height: 80vh;
+}
+
+.cargo-custom-cls {
+    /deep/.tableSplitWrapper .ui-table .ui-table-scrollable-body {
+        min-height: calc(100vh - 379px) !important;
+    }
+    /deep/ .tableWithSplit .ui-table .ui-table-scrollable-body {
+        min-height: calc(100vh - 318px) !important;
+    }
+    /deep/.ui-table-scrollable-footer-table { width: 100% !important;}
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.cargotable /deep/.ui-table-scrollable-wrapper{
+/deep/.ui-table-scrollable-header /deep/.ui-table-scrollable-header-table /deep/.ui-sortable-column,
+  /deep/.ui-table-scrollable-body /deep/.ui-table-scrollable-body-table td
+  {
+    width:100%;
+    white-space: nowrap;
+  }
+  .firstth, .firsttd{
+      width: 10px !important;
+      text-overflow: inherit;
+  }
+  /deep/.ui-table-scrollable-footer /deep/.ui-table-scrollable-footer-table{
+    min-width: 100%;
+    colgroup{
+        float: left;
+        width: 100%;
+    }
+  }
+}
+
+.ui-g-6 .cargotable{
+    /deep/.ui-table-scrollable-header-table, /deep/.ui-table-scrollable-body-table{
+        min-width: 800px !important;
+    }
+}
+.ui-g-6.no-Info .cargotable{
+    /deep/.ui-table-scrollable-header-table, /deep/.ui-table-scrollable-body-table{
+        min-width: 100% !important;
+    }
+}

@@ -1,0 +1,60 @@
+<div [ngClass]="{'loader': groupmodel.loading }" [appJbhLoader]="groupmodel.loading"></div>
+<div class="ui-g ui-fluid">
+    <div class="ui-md-12">
+        <p-table class="groupsTable" [value]="groupmodel.tableValue">
+            <ng-template pTemplate="caption">
+                <div class="ui-g">
+                    <span class="">Group List</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th [style]="{'width':'75px'}" pTooltip="{{groupmodel.column[0]}}" tooltipPosition="top">{{groupmodel.column[0]}}</th>
+                    <th [style]="{'width':'25px'}" pTooltip="{{groupmodel.column[1]}}" tooltipPosition="top">{{groupmodel.column[1]}}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData>
+                <tr>
+                    <td [pEditableColumn]="rowData" pTooltip="{{rowData.lineHaulPriorityGroupName}}" tooltipPosition="top"
+                        (onEditComplete)="onEditComplete(rowData.lineHaulPriorityGroupName,rowIndex)">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input [ngClass]="{'error-cell':groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID) || rowData.lineHaulPriorityGroupName === '' || groupmodel.editedGroupIDs.includes(rowData.lineHaulPriorityGroupID) }"
+                                    type="text" (keydown.Tab)="onCellValueChange(rowData,rowIndex,event)"
+                                    (keydown.shift.tab)="onCellValueChange(rowData,rowIndex,event)" (keydown.Enter)="onCellValueChange(rowData,rowIndex,event)"
+                                    (blur)="onCellValueChange(rowData,rowIndex,event)" tooltipPosition="top"
+                                    [(ngModel)]="rowData.lineHaulPriorityGroupName">
+                                <p-message severity="error" text="Duplicates are not allowed" *ngIf="groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID)"></p-message>
+                                <p-message severity="error" text="Edit Not allowed" *ngIf="groupmodel.editedGroupIDs.includes(rowData.lineHaulPriorityGroupID) && !groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID) "></p-message>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <div class="error-cell-output" [ngClass]="{'error-cell': groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID) || rowData.lineHaulPriorityGroupName === '' || groupmodel.editedGroupIDs.includes(rowData.lineHaulPriorityGroupID)} ">{{rowData.lineHaulPriorityGroupName}}
+                                </div>
+                                <p-message severity="error" text="Duplicates are not allowed" *ngIf="groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID)"></p-message>
+                                <p-message severity="error" text="Edit Not allowed" *ngIf="groupmodel.editedGroupIDs.includes(rowData.lineHaulPriorityGroupID) && !groupmodel.duplicateGroupIds.includes(rowData.lineHaulPriorityGroupID) "></p-message>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="non-edittable-column" pTooltip="{{rowData.lineHaulGroupPriorityNumber}}" tooltipPosition="top">
+                        {{rowData.lineHaulGroupPriorityNumber}}
+                    </td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+        <p-dialog header="Confirmation" [(visible)]="linehaulPrioritymodel.isPopupVisible" [modal]="true" [responsive]="true"
+            [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+            <span>You are about to lose all the changes. Do you want to proceed?</span>
+            <p-footer>
+                <button type="button" pButton (click)="onClickNo()" class="ui-button-secondary" label=" No"></button>
+                <button type="button" pButton (click)="onClickYes()" label="Yes" class="ui-button-primary"></button>
+            </p-footer>
+        </p-dialog>
+    </div>
+</div>
+<div class="ui-g footer">
+    <div class="pull-right button-align">
+        <button type="button" pButton (click)="onCancel()" class="ui-button-secondary mar-right15 btn-height" label="Cancel"></button>
+        <button type="button" pButton pSaveEditableRow (click)="onClickSave()" label="Save" class="ui-button-primary btn-height"></button>
+    </div>
+</div>

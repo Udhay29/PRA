@@ -1,0 +1,48 @@
+<div [ngClass]="{'loader': agreementDetailsModel.pageLoading}" [appJbhLoader]="agreementDetailsModel?.pageLoading"></div>
+<div class="ui-g">
+  <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper">
+    <form [formGroup]="agreementDetailsModel.agreementDetailsForm">
+      <span class="ui-float-label pad-top5">
+       <label class="top-5" for="agreementType">Agreement Type</label>
+        <p-selectButton data-attr="createagreement-agreementDetails-agreementType-selectButton" id="agreementType" [options]="agreementDetailsModel.agreementTypeList"
+        formControlName="agreementType" name="agreementType" (onChange)="agreementTypeChanged($event)"></p-selectButton>
+      </span>
+      <div *ngIf="agreementDetailsModel.isCustomerAgreement">
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 ui-fluid typeahead-float pad-left0">
+          <p-autoComplete data-attr="createagreement-agreementDetails-accountName-autoComplete" id="accountNameField" [suggestions]="agreementDetailsModel.accountNameList" 
+          (completeMethod)="onAccountSearch($event.query)" field="OrganizationName" formControlName="accountName"
+          name="accountName" size="100" [forceSelection]="true" (onClear)="onClearAccount($event)" spellcheck="false"
+          [style]="{'width': '100%'}"></p-autoComplete>
+          <label for="accountName">Account Name (Code)</label>
+          <div class="error-class-height">
+            <p-message severity="error" text="Provide an Account Name" *ngIf="agreementDetailsModel.agreementDetailsForm.get('accountName').touched && agreementDetailsModel.agreementDetailsForm.get('accountName')['errors']?.required"></p-message>
+          </div>
+        </span>
+        <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 typeahead-float-nested-label">
+          <p-autoComplete data-attr="createagreement-agreementDetails-teams-autoComplete" formControlName="teams" name="teams" [suggestions]="agreementDetailsModel.teamList" (completeMethod)="onSearchTeam($event['query'])" [multiple]="true" size="75" field="teamName" [forceSelection]="true" spellcheck="false"></p-autoComplete>
+          <label class="ui-md-12 ui-lg-12 ui-g-12" for="teams">
+		        <span>Teams</span>
+			      <span class="pull-right mar-right20">optional</span>
+		      </label>
+        </span>
+      </div>
+      <div *ngIf="agreementDetailsModel.isCarrierAgreement">
+        <app-carrier-agreement [agreementDetailsModel]="agreementDetailsModel" (loaderEvent)="loader($event)"></app-carrier-agreement>
+      </div>
+      <div *ngIf="!agreementDetailsModel.isCustomerAgreement && agreementDetailsModel.isRailAgreement">
+        {{agreementDetailsModel.agreementDetailsForm.controls['agreementType'].value}} Agreement
+      </div>
+    </form>
+  </div>
+  <div class="footer-part wrapper" *ngIf="agreementDetailsModel.isCustomerAgreement">
+    <a data-attr="createagreement-agreementDetails-saveExit-a" class="inactivate-link mar-right15" href="javascript:void(0)" (click)="onSave('search')">Save and Exit</a>
+    <a data-attr="createagreement-agreementDetails-next-a" class="inactivate-link" (click)="onSave('next')" href="javascript:void(0)">Next</a>
+  </div>
+</div>
+<p-dialog data-attr="createagreement-agreementDetails-confirmation-dialog" header="Confirmation" [(visible)]="agreementDetailsModel.isShowPopup" [modal]="true" [responsive]="true" [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <span>You are about to lose all the changes. Do you want to proceed?</span>
+  <p-footer>
+    <button data-attr="createagreement-agreementDetails-no-button" type="button" pButton (click)="onClickPopupNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="createagreement-agreementDetails-yes-button" type="button" pButton (click)="onClickPopupYes()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

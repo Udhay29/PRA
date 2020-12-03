@@ -1,0 +1,30 @@
+<p-accordion [multiple]="true" class='accordian-container'>
+<p-accordionTab [selected]="!isPanelClosed" [attr.data-attr]="'sliderFilter-' +  filterConfig?.title + '-accordionTab'" class="nopadding dateFilter" [(selected)]="isSliderFilterAccordianOpened" [ngClass]="{'no-border': isSliderFilterAccordianOpened}" 
+expandIcon="icon-Chevron_Down" collapseIcon="icon-Chevron_Up">
+  <p-header class="header-style">
+    <span class="filter-title">{{filterConfig?.title}}</span>
+  </p-header>
+  <div class="ui-g">
+      <div class="ui-g-12 ui-inputgroup">
+          <span class="ui-inputgroup-addon ">
+            <em class="icon-Money"  [attr.data-attr]="'sliderFilter-' +  filterConfig?.title + '-icon'"></em>
+          </span>
+          <input  [attr.data-attr]="'sliderFilter-' +  filterConfig?.title + '-input'" type="number" (blur)="handleChange($event,false)" [(ngModel)]="sliderVal" pInputText placeholder="Search">
+        </div>
+    <div class="value-container" *ngIf="!hideRange">
+      <div *ngIf="range">
+        <span *ngIf="sliderVal && sliderVal.length > 0">{{sliderVal[0]}} - {{sliderVal[1]}}</span>
+      </div>
+      <div *ngIf="!range">
+        <span>{{sliderVal}}</span>
+      </div>
+    </div>
+    <p-slider class="ui-g-12" [(ngModel)]="sliderVal" [min]="min" [max]="max" [range]="range" (onChange)="handleChange($event, true)"></p-slider>
+    <div class="label-container">
+      <span class="pull-left">{{min}}</span>
+      <span class="pull-right">{{max}}</span>
+    </div>
+    <button [attr.data-attr]="'sliderFilter-' +  filterConfig?.title + '-button'" class="icon-text-button reset-color" (click)="onReset()">Reset</button>
+  </div>
+</p-accordionTab>
+</p-accordion>

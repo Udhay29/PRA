@@ -1,0 +1,336 @@
+<div #top></div>
+<div [ngClass]="{'loader': createRatesModel.loading}" [appJbhLoader]="createRatesModel.loading"></div>
+<div class="ui-g ui-fluid mar-left10 ui-md-12 pad-bot0 breadcrumb">
+    <p-breadcrumb class="pad-left0 ui-md-12 breadCrumbList pad-bot0" [model]="createRatesModel?.breadCrumbList">
+    </p-breadcrumb>
+    <div class="ui-g-12 pad-bot0 pad-left0">
+        <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left0 pad-bot0">
+            <h1 class="text-uppercase headingAlign">
+                CREATE STANDARD RATE SETUP
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="ui-g-12 align-error-panel" *ngIf="createRatesModel?.errorMsg">
+    <p-messages closable="true" [value]="createRatesModel.inlineErrormessage" class="duplicate-err-msg"></p-messages>
+</div>
+<div class="ui-g-12 pad-left15 pad-top0">
+    <div class="accordionHeight">
+        <p-accordion [multiple]="true">
+            <form [formGroup]="createRatesModel?.ratesForm" autocomplete="off">
+                <p-accordionTab class="accord-color accordionIcon" header="Setup" selected="true">
+                    <app-rate-setup #rateSetup (rollupChange)='onRollUpChanged($event)'
+                        (waivedChange)='onWaivedChanged($event)' (passthroughChange)='onPassthroughChange($event)'
+                        (chargeTypeChange)='onChargeTypeChange($event)' (selectedBuSo)=selectedBuSoOnly($event)></app-rate-setup>
+                </p-accordionTab>
+                <p-accordionTab class="accord-color accordionIcon" header="Additional Options" selected="true">
+                    <div class="ui-g pad-bot8">
+                        <app-rates-optional-attributes #optionalFields class="optionalFields"
+                            [chargeType]="rateSetup?.createRatesModel.buSoBasedOnChargeType" (buSo)=busoselect($event)
+                            (selectedBuSo)="selectedBuSoOnly($event)" [selectedChargeType]="rateSetup.createRatesModel.setUpForm.get('chargeType').value" (isBusinessUnitShow)="onBusinessUnitShow($event)">
+                        </app-rates-optional-attributes>
+                    </div>
+                </p-accordionTab>
+                <div class="mar-top20 mar-bot20 position-rel cursor-pointer" *ngIf="!createRatesModel?.alternateCharge">
+                    <span (click)=addAlternateCharge()><em class="icon-Circle_Add_Solid iconColor"></em><span
+                            class="pad-left10 alternateChargeFont">
+                            Add Alternate Charge (optional)</span></span>
+                </div>
+                <div class="position-rel">
+                    <p-accordionTab class="accord-color accordionIcon" *ngIf="createRatesModel?.alternateCharge"
+                        header="Alternate Charge" selected="createRatesModel?alternateCharge">
+                        <div class="alternateChargeContent">
+                            Use the alternate charge when the following are exceeded:
+                        </div>
+                        <div class="ui-g mar-top30">
+                            <div class="ui-g-3 pad-left0 pad-bot0 pad-top0">
+                                <div class="ui-float-label setWidth">
+                                    <input formControlName="quantity" class="width_value width100" id="float-input"
+                                        type="text" pInputText (blur)="onQuantityBlur($event.target?.value)"
+                                        [ngClass]="{'errorMsg': (createRatesModel?.ratesForm.controls.quantity.touched && createRatesModel?.ratesForm.controls.quantity.invalid)}">
+                                    <label for="float-input">Quantity</label>
+                                </div>
+                                <div class="errorHeight setWidth">
+                                    <p-message severity="error" text="Provide Quantity"
+                                        *ngIf="(createRatesModel?.ratesForm.controls.quantity.touched && createRatesModel?.ratesForm.controls.quantity.invalid)">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 pad-bot0 pad-top0">
+                                <div class="ui-float-label setWidth">
+                                    <p-autoComplete formControlName="quantityType"
+                                        [suggestions]="createRatesModel.alternateChargeQuantityFiltered"
+                                        [style]="{'width':'100%'}" [dropdown]="true" class="width_value width100"
+                                        field="label" (completeMethod)="onTypeQuantityType($event)"
+                                        (onSelect)="onSelectQuantityType($event)">
+                                    </p-autoComplete>
+                                    <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                                        Quantity Type
+                                    </label>
+                                </div>
+                                <div class="errorHeight setWidth">
+                                    <p-message severity="error" text="Provide Quantity Type"
+                                        *ngIf="(createRatesModel?.ratesForm.controls.quantityType.invalid && createRatesModel?.ratesForm.controls.quantityType.touched)">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="ui-g-3 pad-bot0 pad-top0">
+                                <span class="ui-float-label setWidth">
+                                    <p-autoComplete formControlName="alternateChargeType" [style]="{'width':'100%'}"
+                                        field="label" [dropdown]="true" emptyMessage="No records found"
+                                        [forceSelection]="true"
+                                        [suggestions]="createRatesModel.alternateChargeTypeFiltered"
+                                        (completeMethod)="onTypeAlternateChargeType($event)"
+                                        (onClear)="onAlternateChargeClear($event)" class="width_value width100"
+                                        (onSelect)="onSelectAlternateChargeType($event)"></p-autoComplete>
+                                    <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                                        Alternate Charge Type
+                                    </label>
+                                </span>
+                                <div class="errorHeight setWidth">
+                                    <p-message severity="error" text="Provide Alternate Charge Type"
+                                        *ngIf="(createRatesModel?.ratesForm.controls.alternateChargeType.invalid && createRatesModel?.ratesForm.controls.alternateChargeType.touched)">
+                                    </p-message>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                            <span (click)="removeCharges()"><em
+                                    class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                <span class="remove-rate-btn  remove-rate-btn-txt pad-left10">Remove
+                                    Charge</span></span>
+                        </div>
+                    </p-accordionTab>
+                </div>
+                <p-accordionTab class="accord-color docAccord" header="Documentation" selected="true">
+                    <div class="ui-g">
+                        <div class="ui-g-6 docTextDiv pad-right11">
+                            <span>Legal</span>
+                            <div class="textAreaWrapper" *ngIf="createRatesModel.docIsLegalText">
+                                <textarea [(ngModel)]="createRatesModel.legalTextArea"
+                                    [ngModelOptions]="{standalone: true}" class="textArea" maxlength="6000"
+                                    disabled="true" rows="5" cols="100" pInputTextarea></textarea>
+                            </div>
+                        </div>
+                        <div class="ui-g-6 docTextDiv pad-left11">
+                            <span>Instructional</span>
+                            <div class="textAreaWrapper" *ngIf="createRatesModel.docIsInstructionalText">
+                                <textarea [(ngModel)]="createRatesModel.instructionalTextArea" class="textArea"
+                                    maxlength="6000" [ngModelOptions]="{standalone: true}" disabled="true" rows="5"
+                                    cols="100" pInputTextarea></textarea>
+                            </div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class = "ui-g-12 pad-bot10 pad-left0 docTextDiv"><span class="pad-left0">Attachments</span></div>
+                            <div *ngIf="createRatesModel.docIsLegalText">
+                                <div class="ui-g-12 pad0" *ngFor = "let attach of createRatesModel.attachments;let index=index"
+                                [ngClass]="{'attachment-container':index==createRatesModel.attachments.length -1}">
+                                    <span class="ui-g-3 pad-left0 textwrap">{{attach['documentName']}}</span>
+                                    <span class="ui-g-3 attachment-field textwrap">{{attach['accessorialAttachmentTypeName']}}</span>
+                                    <span class="ui-g-3 attachment-field">Added on {{this.timeZone.convertToLocalMilitaryUpdatedTime(attach['createTimestamp'])}}</span>
+                                    <span class="ui-g-2 attachment-field textwrap">Added by {{attach['createUserID']}}</span>
+                                    <div class="ui-g-1 pad0">
+                                        <button class="icon-text-button reset-color pull-right">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 pad-top10 pad-bot15">
+                            <button type="text" pButton label="Refresh" (click)="onRefresh()"
+                                class="ui-button-secondary pull-right"
+                                *ngIf="!createRatesModel.docIsLegalText"></button>
+                            <div class="clearfix"></div>
+                            <span class="refreshedText pull-right" *ngIf="createRatesModel.docIsLegalText"><em
+                                    class="icon-Circle_Check_Solid"></em>Refreshed</span>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                <div class="mar-top20 pad-bot20">
+                <span class="mar-top20 pad-bot20 cursor-pointer"
+                    *ngIf="!createRatesModel.isAddRateClicked && !createRatesModel.isAddStairStepClicked">
+                    <span (click)='onAddRates()'><em class="icon-Circle_Add_Solid iconColor"></em> <span
+                            class="add-rate-btn pad-left10">Add
+                            Rates</span></span>
+                </span>
+                <div *ngIf="createRatesModel.isAddRateClicked" class="position-rel">
+                    <p-accordionTab header="Rates" selected="false">
+                        <div class="ui-g pad0">
+                            <div class=" ui-g-12  pad-top0 pad-left0 pad-right0 pad-bot20">
+                                <app-add-rates #addRates [buSo]="createRatesModel.buSo"
+                                    [checkBoxAttributes]="rateSetup.createRatesModel.CheckBoxAttributes">
+                                </app-add-rates>
+                            </div>
+                        </div>
+                        <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                            <span (click)='removeAllRates()'><em
+                                    class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                <span class="remove-rate-btn remove-rate-btn-txt pad-left10">Remove All
+                                    Rates</span></span>
+                        </div>
+                        <div *ngIf="!createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="mar-top15 pad-bot20 cursor-pointer addChargesText">
+                                        <span (click)='onAdditonalChargesClicked()'><em
+                                                class="icon-Circle_Add_Solid iconColor"></em> <span
+                                                class="pad-left10 textAlign">Add
+                                                Additional Charges</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="createRatesModel.isAdditionalChargesClicked">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 pad0 pad-top15 pad-bot20">
+                                        <app-additional-charges
+                                            [selectedChargeType]="rateSetup?.createRatesModel.setUpForm.get('chargeType').value"
+                                            [chargeTypeValues]="rateSetup.createRatesModel.chargeCodeBUCombination"
+                                            (removeAll)="removeAllAdditionalCharges()"
+                                            [selectedBuSo]="createRatesModel.selectedBuSo"
+                                            [editAdditionalChargeResponse]="createRatesModel.editAdditionalChargeResponse"
+                                            [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                            #addCharges>
+                                        </app-additional-charges>
+                                    </div>
+                                </div>
+                            </div>
+                    </p-accordionTab>
+                </div>
+                <span class="mar-top20 pad-bot20 cursor-pointer mar-left125"
+                    *ngIf="!createRatesModel.isAddStairStepClicked && !createRatesModel.isAddRateClicked">
+                    <span (click)='onAddStairStepRates()'><em class="icon-Circle_Add_Solid iconColor"></em> <span
+                            class="add-rate-btn pad-left10">Add Stair-Step Rate</span>
+                    </span>
+                </span>
+                <div *ngIf="createRatesModel.isAddStairStepClicked" class="position-rel">
+                    <p-accordionTab header="Stair-Step Rate" selected="false" #myDiv>
+                        <div class="ui-g pad0">
+                            <div class=" ui-g-12 pad0">
+                                <app-add-stair-step #addStairStepRates [buSo]="createRatesModel?.buSo"
+                                    [isEditAccessorialStairStepRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                    [addStairStepRateEditResponse]=" createRatesModel?.addStairStepRateEditResponse"
+                                    [editAccessorialWholeResponse]="createRatesModel?.editAccessorialWholeResponse">
+                                </app-add-stair-step>
+                            </div>
+                        </div>
+                        <div class="pad-top20 pad-bot20 cursor-pointer remove-rate ">
+                            <span (click)='removeAllStairStepRates()'><em
+                                    class="icon-Circle_Remove_Solid remove-rate-btn vertical-align-middle"></em>
+                                <span class="remove-rate-btn remove-rate-btn-txt pad-left10">Remove All
+                                    Rates</span></span>
+                        </div>
+                        <div *ngIf="!createRatesModel.isAdditionalChargesClicked">
+                            <div class="ui-g">
+                                <div class="mar-top15 pad-bot20 cursor-pointer addChargesText">
+                                    <span (click)='onAdditonalChargesClicked()'><em
+                                            class="icon-Circle_Add_Solid iconColor"></em> <span
+                                            class="pad-left10 textAlign">Add
+                                            Additional Charges</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="createRatesModel.isAdditionalChargesClicked">
+                            <div class="ui-g">
+                                <div class="ui-g-12 pad0 pad-top15 pad-bot20">
+                                    <app-additional-charges
+                                        [selectedChargeType]="rateSetup?.createRatesModel.setUpForm.get('chargeType').value"
+                                        [chargeTypeValues]="rateSetup.createRatesModel.chargeCodeBUCombination"
+                                        (removeAll)="removeAllAdditionalCharges()"
+                                        [selectedBuSo]="createRatesModel.selectedBuSo"
+                                        [editAdditionalChargeResponse]="createRatesModel.editAdditionalChargeResponse"
+                                        [isEditAccessorialRateClicked]="createRatesModel?.isEditAccessorialRateClicked"
+                                        #addCharges>
+                                    </app-additional-charges>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </div>
+            </div>
+            </form>
+        </p-accordion>
+    </div>
+    <p-footer class="pull-right footer clearfix">
+        <button type="text" pButton label="Cancel" (click)="onRateCancel()" class="ui-button-secondary"
+            appShortcut="ctrl+alt+2"></button>
+        <button type="text" appShortcut="ctrl+alt+1" pButton label="Save" class="ui-button-primary mar-left15"
+            (click)="onSaveRateSetUp()"></button>
+    </p-footer>
+    <p-dialog header="Save Options" [(visible)]="createRatesModel.isShowSavePopup" [modal]="true" [responsive]="true"
+        [width]="475" [minWidth]="470"  [minY]="70"  [baseZIndex]="10000">
+        <span class="saveHeaderPopup">Save & Close</span><span>Save current rate setup and return to Standards
+            Rates.</span>
+        <p-footer>
+            <button type="button" pButton (click)="savePopupNo()" label="Cancel" class="ui-button-secondary"></button>
+            <button type="button" pButton (click)="savePopupYes()" label="Save & Close"
+                class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="createRatesModel.rateCancel" [modal]="true" [responsive]="true"
+        [width]="350" [minWidth]="450" [minY]="70" [baseZIndex]="10000">
+        <span>Are you sure you would like to cancel without saving your work?</span>
+        <p-footer>
+            <button type="button" (click)="onHidePop('rateCancel')" pButton class="ui-button-secondary"
+                label="No"></button>
+            <button type="button" pButton (click)="onDontSave()" label="Yes" class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="No Documentation Found" [(visible)]="createRatesModel.noDocumentationFound" [modal]="true"
+        [responsive]="true" [width]="350" [minWidth]="500"  [minY]="70"  [baseZIndex]="10000">
+        <div class="noDocPopup">
+            <div class="headerDetails">Standard accessorial legal text not found. Please set up standard accessorial
+                documentation to proceed.</div>
+            <div>
+                <span class="header">Create Documentation</span>
+                <span class="details">Exit the rate setup without saving and create documentation.</span>
+            </div>
+            <div>
+                <span class="header">Cancel</span>
+                <span class="details">Return to the rate setup and continue making changes.</span>
+            </div>
+        </div>
+        <p-footer>
+            <button type="button" pButton (click)="noDocFoundPopupNo()" label="Cancel"
+                class="ui-button-secondary"></button>
+            <button type="button" pButton (click)="noDocFoundPopupYes()" label="Create Documentation"
+                class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="createRatesModel.isAlternateChargeChange" [modal]="true"
+        [responsive]="true" [width]="450" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+        <div>Are you sure you would like to remove the Alternate Charge?</div>
+        <p-footer>
+            <button type="button" pButton (click)="retainAlternateCharge()" class="ui-button-secondary"
+                label="No"></button>
+            <button type="button" pButton (click)="removeAlternateCharge()" label="Yes"
+                class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="createRatesModel.rateNavigateCancel" [modal]="true" [responsive]="true"
+        [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+        <span>You are about to lose all the changes. Do you want to proceed?</span>
+        <p-footer>
+            <button type="button" pButton (click)="onHidePop('rateNavigateCancel')" class="ui-button-secondary"
+                label="No"></button>
+            <button type="button" pButton (click)="onDontSaveNavigate()" label="Yes" class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="createRatesModel.addStairRateCancel" [modal]="true" [responsive]="true"
+        [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+        <span>Are you sure you would like to remove all of the rates?</span>
+        <p-footer>
+            <button type="button" pButton (click)="createRatesModel.addStairRateCancel=false"
+                class="ui-button-secondary" label="No"></button>
+            <button type="button" pButton (click)="onRemoveStairStepRates()" label="Yes"
+                class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Confirmation" [(visible)]="createRatesModel.addRateCancel" [modal]="true" [responsive]="true"
+        [width]="450" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+        <span>Are you sure you would like to remove all of the rates?</span>
+        <p-footer>
+            <button type="button" pButton (click)="createRatesModel.addRateCancel=false" class="ui-button-secondary"
+                label="No"></button>
+            <button type="button" pButton (click)="onRemoveRates()" label="Yes" class="ui-button-primary"></button>
+        </p-footer>
+    </p-dialog>
+</div>

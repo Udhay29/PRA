@@ -1,0 +1,97 @@
+<div [ngClass]="{'loader': fuelModel.loading}" [appJbhLoader]="fuelModel.loading"></div>
+<p-tabView class="ui-g">
+    <p-tabPanel header="Fuel Programs">
+    </p-tabPanel>
+    <p-tabPanel header="Calendar" disabled="true">
+    </p-tabPanel>
+</p-tabView>
+<div class="ui-g ui-fluid fuelWrapper">
+    <div class="ui-md-12">
+        <p-table class="full-width" #fuelTable [value]="fuelModel?.fuelList" [paginator]="fuelModel.isPaginatorFlag" (onLazyLoad)="loadGridData($event)" [rows]="fuelModel.tableSize" [lazy]="true" [loading]="fuelModel.isShowLoader" [customSort]="true" [rowsPerPageOptions]="[25,50,75,100]"
+            [first]="fuelModel.pageStart" [totalRecords]="fuelModel.gridDataLength" [scrollable]="true" [style]="{width: '100%'}" scrollHeight="calc(100vh - 480px)" [resizableColumns]="true" (onRowSelect)="onRowSelect($event)" [ngClass]="{'emptyTable': !fuelModel?.fuelList?.length && !fuelModel.searchFlag, 'tableWrapper': fuelModel?.fuelList?.length,
+       'emptyTableWrapper': !fuelModel?.fuelList?.length && fuelModel.searchFlag,'empty-caption': !fuelModel?.fuelList?.length }" columnResizeMode="expand" selectionMode="single" datakey="AgreementID">
+            <ng-template pTemplate="caption">
+                <div *ngIf="fuelModel.gridDataLength !== 0  || fuelModel.searchFlag" class="ui-g table-caption">
+                    <div class="mar-top3 ui-md-4">
+                        <span class="tableName">Fuel Programs</span>
+                    </div>
+                    <div class="pad0 pull-right ui-md-8">
+                        <div class="grid-icons pull-right pad-top0">
+                            <div appShortcut class="mar-top5">
+                                <button data-attr="viewagreement-fuel-filter-button" appShortcut="ctrl+alt+f" [ngClass]="{'filterColor': fuelModel.filterFlag}" class="icon-Filter_Solid icon-button iconColorChange" (click)="onFilterClick()" appShortcut="ctrl+alt+f"></button>
+                                <button data-attr="viewagreement-fuel-menu-button" appShortcut=" ctrl+alt+o" class="icon-Menu_Overflow icon-button iconColorChange pad0" (click)="menu.toggle($event)" appShortcut="ctrl+alt+o"></button>
+                            </div>
+                            <p-menu data-attr="viewagreement-fuel-headermenu-menu" #menuOverlay #menu popup="popup" [model]="fuelModel.dropdownValue" styleClass="menu-overlay" appendTo="body">
+                            </p-menu>
+                        </div>
+                        <div class="ui-inputgroup pad-top0 mar-right10 pull-right search-box">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input data-attr="viewagreement-fuel-search-input" type="text" pInputText placeholder="Search" appShortcut="alt+s" (keyup)="getGridValues($event)">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="fuelModel?.tableColumns.length > 0">
+                    <col>
+                    <col *ngFor="let thisCol of fuelModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr *ngIf="!fuelModel.noResultFoundFlag">
+                    <th class="table-header-checkbox">
+                        <p-tableHeaderCheckbox data-attr="viewagreement-fuel-row-checkbox" [ngClass]="checkBoxAlign">
+                        </p-tableHeaderCheckbox>
+                    </th>
+                    <th class="min-col-width" [style.width]="thisCol.width" *ngFor="let thisCol of fuelModel.tableColumns" pResizableColumn [pSortableColumn]="thisCol.name" pTooltip={{thisCol.name}} tooltipPosition="top">
+                        {{thisCol.name}}
+                        <p-sortIcon data-attr="viewagreement-fuel-header-sorticon" [field]="thisCol.name"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="fuelModel.noResultFoundFlag" class="noHoverColor">
+                    <td class="messageDisplay">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10" *ngIf="fuelModel.searchFlag">No records found</h4>
+                            <h4 class="emptyMsgText mar0 mar-bot10" *ngIf="!fuelModel.searchFlag">No information found to display</h4>
+                            <p-splitButton data-attr="viewagreement-fuel-createBtnEmpty-splitButton" n class="" *ngIf="!fuelModel.searchFlag" label="Create Fuel Program" (onClick)="onCreateFuel()"></p-splitButton>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="fuelModel.tableColumns" let-rowIndex="rowIndex">
+                <tr [attr.data-attr]="'viewagreement-fuel-tablerow-tr-' +  rowIndex" [pSelectableRow]="rowData" *ngIf="!fuelModel.noResultFoundFlag">
+                    <td class="width20 ui-resizable-column">
+                        <p-tableCheckbox [attr.data-attr]="'viewagreement-fuel-row-checkbox-' +  rowIndex" [ngClass]="checkBoxAlign" [value]="rowData" name="checkBox" (click)="$event.stopPropagation()" (onChange)="onchange($event)">
+                        </p-tableCheckbox>
+                    </td>
+                    <td *ngFor="let col of fuelModel.tableColumns" [style.width]="col.colWidth" class="mincolwidth textwrap ui-resizable-column">
+                        <span *ngIf="(rowData[col.property]  || rowData[col.property] == '0') && (col.property === 'FuelSurchargeFactor' || col.property === 'FuelSurchargeAmount' || col.property === 'IncrementalCharge' 
+            || col.property === 'ImplementationPrice' || col.property === 'IncrementInterval' || col.property === 'Cap' 
+            || col.property === 'AddonAmount' || col.property === 'BurnRatePerHour' )">$</span>
+                        <span *ngIf="rowData[col.property] !== null &&  rowData[col.property] !== undefined"><span *ngIf="col.property !== 'BillToAccount' && col.property !== 'BusinessUnitsandServiceOffering' && col.property !== 'Carrier' && col.property !== 'Contract'
+            && col.property !== 'Section' && col.property !== 'Region'" pTooltip={{rowData[col.property]}}
+                tooltipPosition="top"> {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'BillToAccount'" pTooltip={{rowData.billtoListTooltip}} tooltipPosition="top">
+                {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'BusinessUnitsandServiceOffering'" pTooltip={{rowData.busoListTooltip}} tooltipPosition="top"> {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'Contract'" pTooltip={{rowData.contractListTooltip}} tooltipPosition="top">
+                {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'Section'" pTooltip={{rowData.sectionListTooltip}} tooltipPosition="top"> {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'Carrier'" pTooltip={{rowData.carrierListTooltip}} tooltipPosition="top">
+                {{rowData[col.property]}}</span>
+                        <span class="capitalize-first-word newLine" *ngIf="col.property == 'Region'" pTooltip={{rowData.regionListTooltip}} tooltipPosition="top"> {{rowData[col.property]}}</span></span>
+                        <span *ngIf="rowData[col.property] == null || rowData[col.property] == undefined" pTooltip="--" tooltipPosition="top">--</span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <span class="pull-right pad-right10 pad4" *ngIf="fuelModel.gridDataLength !== 0  || fuelModel.searchFlag">
+          <p-splitButton data-attr="viewagreement-fuel-createBtn-splitButton" label="Create Fuel Program"
+            class="ui-button-primary mar-top5 mar-left5 absPosition" (onClick)="onCreateFuel()"></p-splitButton>
+        </span>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="ui-md-12 ui-lg-12 ui-g-12 tabs-wrapper pad0">
+
+  <div class="ui-md-3 ui-g-3" *ngIf="fuelPriceModel.filterFlag">
+    <app-fuel-filter (filterSelected)="loadGridBasedOnFilter($event)"></app-fuel-filter>
+  </div>
+  <div [ngClass]="{'ui-md-9 ui-g-9': fuelPriceModel.filterFlag}" class="parentDiv">
+    <p-table class="main-contentx" #tt
+      [ngClass]="{'noResultHeight': fuelPriceModel.filterFlag && !fuelPriceModel.gridListValues.length,'noResult': !fuelPriceModel.gridListValues.length, 'data': fuelPriceModel.gridListValues.length}"
+      selectionMode="single" [paginator]="fuelPriceModel.gridListValues.length > 0" [rows]="25" sortMode="single"
+      [value]="fuelPriceModel.gridListValues" [columns]="fuelPriceModel.tableColumns" [rowsPerPageOptions]="[25,50,100]"
+      [lazy]="true" [resizableColumns]="true" columnResizeMode="expand" (onPage)="onPage()"
+      (onLazyLoad)="loadConfigValuesLazy($event)" [scrollable]="true" [style]="{width:'100%'}"
+      [loading]="fuelPriceModel.loading" scrollHeight="calc(100vh - 375px)" [totalRecords]="fuelPriceModel.totalRecords"
+      [responsive]="true" sortMode="multiple" [multiSortMeta]="fuelPriceModel.multiSortMeta">
+
+      <ng-template pTemplate="caption">
+        <div class="ui-g table-caption">
+          <div class="ui-g-6 ui-md-6 pad-top15">
+            <span class="tableName">Fuel Price</span>
+          </div>
+          <div class="ui-g-6 ui-md-6 pad-top15 pad-right0 caption-right">
+            <div class="grid-icons">
+              <span class="filter-menu-icon">
+                <button *ngIf="fuelPriceModel.gridListValues.length || fuelPriceModel.filterNoresultFlag"
+                  appShortcut="ctrl+alt+f" class="icon-Filter_Solid icon-button buttonStyle Active pad0"
+                  (click)="onFilterClick()" [ngClass]="{'filterColor': fuelPriceModel.filterFlag}"></button></span>
+
+              <span class="filter-menu-icon"> <button *ngIf="fuelPriceModel.gridListValues.length"
+                  appShortcut=" ctrl+alt+o" class="icon-Menu_Overflow icon-button buttonStyle dot-position pad0"
+                  (click)='menu.toggle($event)'></button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p-menu #menuOverlay #menu popup="popup" styleClass="menu-overlay arrowtopbox font12"
+          [model]="fuelPriceModel?.menuItemList" appendTo="body">
+          <a #downloadExcel></a>
+        </p-menu>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="fuelPriceModel?.gridListValues.length > 0">
+          <col *ngFor="let thisCol of fuelPriceModel.tableColumns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr *ngIf="fuelPriceModel.gridListValues.length > 0">
+          <th class="minimum-column-width {{col.columnWidth}} headerHeight" (click)="onSortSelect(col)" pResizableColumn
+            *ngFor="let col of columns" [pSortableColumn]="col.property" [ngClass]="{ 'thDisplay': !col.isVisible}">
+            {{col.name}}
+            <p-sortIcon [field]="col.property"></p-sortIcon>
+          </th>
+        </tr>
+        <tr
+          *ngIf="fuelPriceModel.noResultFlag && !fuelPriceModel.filterNoresultFlag && !fuelPriceModel.gridListValues.length">
+          <div class="ui-g-12 message-wrapper">
+            <span class="display-middle">No information was found to display</span>
+          </div>
+        </tr>
+        <tr *ngIf="!fuelPriceModel.gridListValues.length && fuelPriceModel.filterNoresultFlag">
+          <div class="ui-g-12 message-wrapper">
+            <span class="display-middle">No results found</span>
+          </div>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData">
+          <td class="minimum-column-widthdata {{thisCol.columnWidth}}"
+            *ngFor="let thisCol of fuelPriceModel.tableColumns">
+            <span class="capitalize-first-word" pTooltip="{{rowData[thisCol.property]}}"
+              tooltipPosition="top">{{ rowData[thisCol.property] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

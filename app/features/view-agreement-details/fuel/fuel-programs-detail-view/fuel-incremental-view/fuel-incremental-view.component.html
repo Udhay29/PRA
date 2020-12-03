@@ -1,0 +1,27 @@
+<div class="tableBorder">
+  <p-table [columns]="fuelCalculationDetailModel.cols" [resizableColumns]="true" columnResizeMode="expand" [scrollable]="true"
+    scrollHeight="230px" [value]="fuelCalculationDetailModel.incrementalDetails" (sortFunction)="customSort($event)"
+    [customSort]="true">
+    <ng-template pTemplate="caption">
+      <span class="ui-g-9"></span>
+      <span class="ui-g-3 pad-right20 pad-top8">
+        <button data-attr="viewagreement-fuelIncr-excelexp-button" pButton type="button" label="Export to Excel" class="ui-button-secondary pull-right clearSearch pad0"></button>
+      </span>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td>{{rowData.fuelBeginAmount}}</td>
+        <td>{{rowData.fuelEndAmount}}</td>
+        <td>{{rowData.fuelSurchargeAmount}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

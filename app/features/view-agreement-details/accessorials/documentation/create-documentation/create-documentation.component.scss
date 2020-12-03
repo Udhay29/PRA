@@ -1,0 +1,285 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.headingAlign {
+    margin-top: 0 !important;
+}
+
+.cargoRelease /deep/ .ui-selectbutton .ui-button.ui-state-default {
+    min-width: 204px !important;
+}
+
+.documentationType /deep/ {
+    .ui-dropdown,
+    .ui-float-label {
+        width: 100% !important;
+    }
+}
+
+.documentationLevel /deep/ .ui-selectbutton.ui-buttonset.ui-widget.ui-corner-all {
+    width: 100% !important;
+}
+
+.doc-type-accordian /deep/ .ui-accordion-content {
+    padding: 15px 20px 0px 20px !important;
+    margin-bottom: 10px;
+}
+.breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+}
+.optional-accordian /deep/ .ui-accordion-content {
+    padding: 25px 20px !important;
+    margin-bottom: 10px;
+}
+
+.fileupload-accordian /deep/ .ui-accordion-content {
+    padding: 15px 20px !important;
+    margin-bottom: 10px;
+}
+
+.accordian-container /deep/ .ui-accordion {
+    padding-right: 10px !important;
+}
+
+.documentationLevel /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted {
+    width: 33.33% !important;
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    padding-bottom: 0px;
+}
+
+.labelAlign {
+    padding-left: 8px !important;
+}
+
+.date-field-float {
+    margin-top: 16px;
+    label {
+        margin-top: 0px !important;
+        top: 27%;
+        left: 37px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.65em - 2px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.65em - 2px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+}
+
+.optionalFields {
+    width: 100%;
+}
+
+.grey {
+    color: rgb(147, 147, 147);
+}
+
+.selectedTabLabel {
+    margin-bottom: 3px;
+    margin-top: 0px;
+}
+
+.textArea {
+    min-height: 300px;
+    padding-left: 10px;
+    resize: none;
+}
+
+.textAreaWrapper {
+    margin-top: 7px;
+    width: 100%;
+}
+
+.textName {
+    padding-left: 0;
+    padding-top: 15px;
+}
+
+.displayBlock {
+    display: block;
+}
+
+.errorHeight {
+    height: 18px;
+}
+
+.errorAlign {
+    position: absolute;
+    top: 18px !important;
+}
+
+.documentCategory /deep/ .ui-button:not(.ui-button-icon-only) {
+    min-width: 105px !important;
+}
+
+.documentCategory /deep/ .ui-selectbutton .ui-button .ui-button-text {
+    padding: 0px 12px 0px 12px;
+}
+
+.textAreaValue {
+    position: absolute;
+    top: 12px !important;
+    left: 10px;
+}
+
+.textAreaValue /deep/.ui-float-label textarea:active~label:not(.char-limit),
+.ui-float-label textarea:focus~label:not(.char-limit),
+.ui-float-label textarea.ui-state-filled~label:not(.char-limit),
+.ui-float-label textarea:-webkit-autofill~label:not(.char-limit) {
+    top: -10px !important;
+}
+
+.accordian-container /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+    padding-bottom: 0px !important;
+}
+
+.errorHeight /deep/ .ui-message.ui-messages-error {
+    padding-top: 0px;
+}
+
+.footer {
+    padding: 35px 20px 10px 20px;
+}
+
+.documentationCalendar {
+    .errorMsg /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9;
+    }
+}
+
+p-dialog {
+    .saveHeaderPopup {
+        color: $grey-dark27;
+        padding-right: 7px;
+    }
+}
+
+.accordionHeight {
+    min-height: calc(100vh - 279px);
+}
+
+textarea.ui-state-filled~label,
+textarea:focus~label {
+    top: calc(-0.75em - 6px) !important;
+    left: 10px;
+    font-size: 12px;
+}
+
+.dashedBorder {
+    position: relative;
+    height: 110px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    background: #efefef;
+    margin-bottom: 20px;
+    .dropArea {
+        height: 100%;
+    }
+    /deep/ .ui-messages.ui-messages-error {
+        display: none;
+    }
+    /deep/ .ui-fileupload-buttonbar {
+        top: 28%;
+        right: 50%;
+        position: absolute;
+        z-index: 1;
+    }
+    /deep/ .ui-fileupload-files {
+        display: none;
+    }
+    /deep/ .ui-fileupload-content .ui-progressbar {
+        display: none;
+    }
+    /deep/ .ui-fileupload,
+    /deep/ .ui-fileupload-content {
+        height: 100%;
+    }
+    /deep/ .ui-button-icon-left.ui-clickable.pi.pi-plus {
+        display: none;
+    }
+    .dragDropText {
+        color: rgb(147, 147, 147);
+        font-size: 15px;
+        position: absolute;
+        top: 28%;
+        left: 51%;
+    }
+}
+.loader1 {
+    position: absolute !important;
+    z-index: 888888888;
+    width: 100%;
+    height: 100%;
+}
+.removeAttachLoader {
+    position: absolute !important;
+    z-index: 888888888;
+    width: 100%;
+    height: calc(100% - 30px);
+}
+.fileDisplay {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    display: table;
+    width: 100%;
+    .filename {
+        width: 100%;
+        vertical-align: middle;
+        display: table-cell;
+    }
+    .delete {
+        display: table-cell;
+        vertical-align: middle;
+        cursor: pointer;
+        float: none;
+    }
+}
+
+.nobullet {
+    list-style-type: none;
+}
+
+.attachment-list {
+    .verticalAlignment{
+    display: table;
+    }
+    .autuCompleteVetical{
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
+    }
+    /deep/ .ui-autocomplete,
+    /deep/ .ui-float-label {
+        width: 100%;
+    }
+    .ui-float-label .ui-inputwrapper-focus~label,
+    .ui-float-label .ui-inputwrapper-filled~label {
+        top: -0.75em !important;
+    }
+    .label-style-without-pmessage {
+        top: 36% !important;
+    }
+    .label-style-with-pmessage {
+        top: 36% !important;
+    }
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 100px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,46 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.table-caption {
+    min-height: 30px;
+}
+
+/deep/.tableWrapper .ui-table-caption {
+    border-bottom: 1px solid $grey-lite48 !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.tableWrapper /deep/ .ui-table.ui-widget{
+    border: 1px solid $grey-lite48;
+    border-radius: 5px;
+}
+
+.buttonStyle {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    opacity: 0.3;
+}
+
+.contract-custom-cls {
+    /deep/.tableWrapper .ui-table .ui-table-scrollable-body {
+        height: calc(100vh - 492px) !important;
+    }
+}
+.displaymiddle {
+    height: 57vh;
+    padding-top: 15vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.alignHeading {
+    text-align: center;
+    position: relative;
+    top: 10px;
+}

@@ -1,0 +1,93 @@
+@import '../../node_modules/ngx-prime-theme/theme/_breakpoints.scss';
+
+$mdMaxHeight: 500px;
+
+.main-container {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /**  Platform Left Nav Integration CSS Changes  **/
+  height: 100%;
+  width: 100%;
+}
+
+.main {
+  position: relative;
+  -webkit-transition:0.3s all ease-in-out;
+  -moz-transition:0.3s all ease-in-out;
+  -ms-transition:0.3s all ease-in-out;
+  -o-transition:0.3s all ease-in-out;
+  transition:0.3s all ease-in-out;
+  /**  Platform Left Nav Integration CSS Changes  **/
+  height: 100%;
+  margin-left: 250px;
+}
+
+@media( min-width:768px ) {
+  .sidebar-locked .main {
+    position: relative;
+    left: 0;
+  }
+  .main {
+    padding: 0 15px;
+    /**  Platform Left Nav Integration CSS Changes  **/
+    &.sidebar-left-unlocked {
+      margin-left: 50px;
+    }
+  }
+  /**  Platform Left Nav Integration CSS Changes  **/
+  .un-pinned {
+    width: 50px;
+  }
+}
+
+@media(max-width: 767px) {
+  .main {
+    padding: 0 10px;
+    /**  Platform Left Nav Integration CSS Changes  **/
+    &.sidebar-left-unlocked {
+      margin-left: 0;
+    }
+  }
+  /**  Platform Left Nav Integration CSS Changes  **/
+  .un-pinned {
+    width: 50px;
+  }
+}
+
+/*prevent user selection highlighting*/
+i {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/**  Platform Left Nav Integration CSS Changes  **/
+.router-container {
+  transition: margin 400ms ease;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sidebar-unpinned {
+  margin-left: -200px;
+}
+
+@media screen and (max-width: $xsMaxWidth) {
+  .un-pinned {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $smMaxWidth), screen and (max-height: $mdMaxHeight) {
+  .main {
+    padding: 0;
+  }
+}
+
+/deep/.navigation-menu-item-container{
+  padding: 0 !important;
+  margin: 0 !important;
+}

@@ -1,0 +1,142 @@
+<div [ngClass]="{'loader': standardOptionalAttributesModel.loading}"
+    [appJbhLoader]="standardOptionalAttributesModel.loading"></div>
+<div class='optional-attributes-container'>
+    <div class='optional-fields'>
+        <form [formGroup]="standardOptionalAttributesModel.optionalForm" autocomplete="off">
+            <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-bot10 pad-left0 pad-right0">
+                <div class="ui-g-12 ui-lg-12 ui-md-12 pad-left0 pad-right0">
+                    <span class="ui-float-label">
+                        <p-autoComplete [suggestions]="standardOptionalAttributesModel.chargeTypeFiltered"
+                            formControlName="chargeType" [dropdown]="true" (completeMethod)="onTypeChargeCode($event)" [multiple]="true" (onUnselect)="onUnSelectChargeType($event['value'])"
+                            (onSelect)="onSelectChargeCode($event)" [style]="{'width':'100%'}" field="label"
+                            [inputStyle]="{'width':'100%'}" [forceSelection]="true" 
+                            emptyMessage="No records found"></p-autoComplete>
+                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                            <span>Charge Type</span>
+                            <span class="optional-text pad-right40 pull-right">optional</span>
+                        </label>
+                    </span>
+                </div>                
+            </div>
+
+            <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-bot5 pad-left0 pad-right0">
+                <div class="ui-g-9 ui-lg-9 ui-md-9 pad-left0">
+                    <div class='ui-float-label'>
+                        <p-multiSelect [options]="standardOptionalAttributesModel.businessUnitData" filter="false"
+                            [style]="{'width':'100%'}" field="label" maxSelectedLabels="1" defaultLabel=""
+                            [inputStyle]="{'width':'100%'}" formControlName="businessUnit"
+                            [ngClass]="{'ui-inputwrapper-filled': standardOptionalAttributesModel.businessUnitAdded}"
+                            (onChange)="onBusinessUnitSelected($event)" (onPanelHide)="onBusinessUnitBlur()"
+                            resetFilterOnHide="true">
+                        </p-multiSelect>
+                        <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign"
+                            [ngClass]="{'top48': !standardOptionalAttributesModel.businessUnitAdded}">
+                            <span>Business Unit and Service Offering</span>
+                            <span class="optional-text pull-right pad-right40">optional</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="ui-g-3 ui-lg-3 ui-md-3 height10px pad-right0"
+                    [ngClass]="{'posRelative': standardOptionalAttributesModel.serviceLevelAdded}">
+                    <div class="ui-md-12 ui-lg-12 ui-g-12 pad-left0 pad-right0"
+                        [ngClass]="{'service-level-field-doc {
+                            ': standardOptionalAttributesModel.serviceLevelAdded , 'ui-float-label pad-right0 top4': !standardOptionalAttributesModel.serviceLevelAdded}">
+                        <span *ngIf="standardOptionalAttributesModel.serviceLevelAdded"
+                            class="service-level-field-color" style="padding-left: 10px;">Service Level</span>
+                        <p-multiSelect [options]="standardOptionalAttributesModel.serviceLevel" filter="false"
+                            maxSelectedLabels="1" [style]="{'width':'100%'}" defaultLabel="" resetFilterOnHide="true"
+                            formControlName="serviceLevel" resetFilterOnHide="true"
+                            (onChange)="onServiceLevelSelected($event)"
+                            [ngClass]="{'ui-inputwrapper-filled': standardOptionalAttributesModel.serviceLevelAdded}"
+                            optionLabel="label">
+                        </p-multiSelect>
+                        <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign"
+                            [ngClass]="{'labelAlign': !standardOptionalAttributesModel.serviceLevelAdded}">
+                            <span *ngIf="!standardOptionalAttributesModel.serviceLevelAdded">Service Level</span>
+                            <span *ngIf="!standardOptionalAttributesModel.serviceLevelAdded"
+                                class="optional-text pull-right pad-right40">optional</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row pad-bot5 pad-left0 pad-right0">
+                <div class="ui-g-3 ui-lg-3 ui-md-3  pad-left0">
+                    <div class='ui-float-label'>
+                        <p-multiSelect [options]="standardOptionalAttributesModel.operationalService" filter="false"
+                            maxSelectedLabels="1" [style]="{'width':'100%'}" defaultLabel="" resetFilterOnHide="true"
+                            formControlName="requestedService" (onChange)="onOperationalServiceSelected($event)"
+                            [ngClass]="{'ui-inputwrapper-filled': standardOptionalAttributesModel.operationalServiceAdded}">
+                        </p-multiSelect>
+                        <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign"
+                            [ngClass]="{'top48': !standardOptionalAttributesModel.operationalServiceAdded}">
+                            <span>Requested Service</span>
+                            <span class="optional-text pull-right pad-right40">optional</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="ui-g-3 ui-lg-3 ui-md-3 pad-bot10">
+                    <span class="ui-float-label">
+                        <p-autoComplete [suggestions]="standardOptionalAttributesModel.equipmentCategoryFiltered"
+                            formControlName="equipmentCategory" [style]="{'width':'100%'}" field="label"
+                            [inputStyle]="{'width':'100%'}" [dropdown]="true"
+                            (completeMethod)="onTypeEquipmentCategory($event)"
+                            (onSelect)="onSelectEquipmentCategory($event)"
+                            (onClear)="onEquipmentClear($event, 'equipmentCategory')" emptyMessage="No records found"
+                            (onBlur)="onEquipmentBlur($event, 'equipmentCategory')" [forceSelection]="true">
+                        </p-autoComplete>
+                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                            <span>Equipment Category</span>
+                            <span class="optional-text pad-right40 pull-right">optional</span>
+                        </label>
+                    </span>
+                </div>
+                <div class="ui-g-3 ui-lg-3 ui-md-3">
+                    <span class="ui-float-label">
+                        <p-autoComplete [suggestions]="standardOptionalAttributesModel.equipmentTypeFiltered"
+                            [autoDisplayFirst]="false" [style]="{'width':'100%'}" field="value"
+                            [inputStyle]="{'width':'100%'}" [dropdown]="true"
+                            (completeMethod)="onTypeEquipmentType($event)" [forceSelection]="true"
+                            (onSelect)="onSelectEquipmentType($event)" formControlName="equipmentType"
+                            emptyMessage="No records found" (onBlur)="onEquipmentBlur($event, 'equipmentType')"
+                            (onClear)="onEquipmentClear($event, 'equipmentType')"></p-autoComplete>
+                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                            <span>Equipment Type</span>
+                            <span class="optional-text pad-right40 pull-right">optional</span>
+                        </label>
+                    </span>
+                </div>
+                <div class="ui-g-3 ui-lg-3 ui-md-3 pad-right0">
+                    <span class="ui-float-label">
+                        <p-autoComplete [suggestions]="standardOptionalAttributesModel.equipmentLengthFiltered"
+                            [autoDisplayFirst]="false" formControlName="equipmentLength" [style]="{'width':'100%'}"
+                            field="value" [inputStyle]="{'width':'100%'}"
+                            (onClear)="onEquipmentClear($event, 'equipmentLength')" [dropdown]="true"
+                            (completeMethod)="onTypeEquipmentLength($event)" emptyMessage="No records found">
+                        </p-autoComplete>
+                        <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0">
+                            <span>Equipment Length</span>
+                            <span class="optional-text pad-right40 pull-right">optional</span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-12 ui-md-12 optional-row  pad-left0 pad-right0">
+                <div class="ui-g-12 ui-lg-12 ui-md-12  pad-left0 pad-right0">
+                    <div class='ui-float-label'>
+                        <p-autoComplete [suggestions]="standardOptionalAttributesModel.carrierSuggestions"
+                            [multiple]="true" [forceSelection]="true" field="label"
+                            (completeMethod)="onCarrierCompleteMethod($event)" emptyMessage="No carrier is found"
+                            formControlName="carriers">
+                        </p-autoComplete>
+                        <label for="operationalService" class="label-style ui-g-12 pad0 errorAlign">
+                            <span>Carrier (Code)</span>
+                            <span class="optional-text pull-right pad-right22">optional</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

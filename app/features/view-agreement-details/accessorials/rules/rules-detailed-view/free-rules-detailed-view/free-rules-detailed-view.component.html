@@ -1,0 +1,210 @@
+<div class="ui-g">
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Free Type</label>
+            <span class="mar-left10 textColor wordBreak" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName">
+{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName}}</span>
+            <span class="mar-left10 textColor wordBreak" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'">
+            <label class="label-style">Date Type</label>
+            <span class="mar-left10 textColor wordBreak" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName">
+{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName}}</span>
+            <span class="mar-left10 textColor wordBreak" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&& freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Specific'">
+            <label class="label-style">Name of Day </label>
+            <span class="mar-left10 textColor wordBreak" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRulecalendarNameofDay">
+{{freeRuleDetailModel.freeruleValues.accessorialFreeRulecalendarNameofDay}}</span>
+            <span class="mar-left10 textColor wordBreak" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRulecalendarNameofDay">--</span>
+        </div>
+
+
+        <h4 *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Event'">Day of Event</h4>
+
+
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Event'">
+            <label class="label-style">Free Amount
+            </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierName">
+{{freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierName}} </span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierName">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Event'&& freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierName!='Day Free'">
+            <label class="label-style">Day of Event Time
+            </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierTime">{{freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierTime}}
+
+</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialDayOfEventFreeRuleModifierTime">--</span>
+        </div>
+        <h4 *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity'">Additional Details</h4>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity'">
+            <label class="label-style">Start Free Time on Customer Requested Delivery Date
+            </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.requestedDeliveryDateIndicator">
+{{freeRuleDetailModel.freeruleValues.requestedDeliveryDateIndicator}} </span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.requestedDeliveryDateIndicator">--</span>
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Event'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Event Name</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTypeName">{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTypeName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTypeName">--</span>
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&& freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Specific'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Month</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarMonth">{{freeRuleDetailModel.freeruleValues.calendarMonth}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarMonth">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Day of Month</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarDayOfMonth">{{freeRuleDetailModel.freeruleValues.calendarDayOfMonth}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarDayOfMonth">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&& freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Specific'">
+            <label class="label-style">Year</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarYear">{{freeRuleDetailModel.freeruleValues.calendarYear}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarYear">--</span>
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&& freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Holiday'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Country</label>
+            <span class="mar-left10 textColor">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Holiday</label>
+            <span class="mar-left10 textColor">--</span>
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&& freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Relative'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Timeframe</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarTimeframe">{{freeRuleDetailModel.freeruleValues.calendarTimeframe}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarTimeframe">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.calendarTimeframe=='Weekly'">
+            <label class="label-style">Day of Week</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarDayofWeek">{{freeRuleDetailModel.freeruleValues.calendarDayofWeek}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarDayofWeek">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.calendarTimeframe=='Monthly'">
+            <label class="label-style">Month</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarMonth">{{freeRuleDetailModel.freeruleValues.calendarMonth}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarMonth">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.calendarTimeframe=='Monthly'">
+            <label class="label-style">Frequency</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.AppliesToOccurence">{{freeRuleDetailModel.freeruleValues.AppliesToOccurence}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.AppliesToOccurence">--</span>
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.calendarTimeframe=='Monthly'">
+            <label class="label-style">Day</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.calendarDayofWeek">{{freeRuleDetailModel.freeruleValues.calendarDayofWeek}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.calendarDayofWeek">--</span>
+        </div>
+    </div>
+
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Quantity Type </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleQuantityTypeName">{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleQuantityTypeName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleQuantityTypeName">--</span>
+        </div>
+    </div>
+
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Event'">
+
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Free Time</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName">{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName">--</span>
+
+        </div>
+        <h4 *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName=='Day of Event and Day After'">Day After Event</h4>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName=='Day of Event and Day After'">
+            <label class="label-style">Free Amount</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierName">{{freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierName">--</span>
+
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleEventTimeFrameTypeName=='Day of Event and Day After'&& freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierName!='Day Free'">
+            <label class="label-style">Day of Event Time</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierTime">{{freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierTime}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialDayAfterEventFreeRuleModifierTime">--</span>
+
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Apply If</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName">{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName">--</span>
+
+        </div>
+
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName=='Day of Event'||freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName=='Day After Event'">
+            <label class="label-style">Event Name
+        </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeEventName">{{freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeEventName}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeEventName">--</span>
+
+        </div>
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName!='Always' && freeRuleDetailModel.freeruleValues.calendarTimeframe=='Weekly'">
+            <label class="label-style">Applies to Occurence
+        </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.AppliesToOccurence">{{freeRuleDetailModel.freeruleValues.AppliesToOccurence}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.AppliesToOccurence">--</span>
+
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Quantity</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeQuantity">{{freeRuleDetailModel.freeruleValues.accessorialFreeQuantity}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.accessorialFreeQuantity">--</span>
+
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity' && freeRuleDetailModel.freeruleValues.accessorialFreeRuleQuantityTypeName=='Distance'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Timeframe</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.freeRuleQuantityDistanceTypeCode">{{freeRuleDetailModel.freeruleValues.freeRuleQuantityDistanceTypeCode}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.freeRuleQuantityDistanceTypeCode">--</span>
+        </div>
+    </div>
+    <div class="ui-g-3 ui-float-label fieldWidth pad-right0 pad-bot0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Quantity' && freeRuleDetailModel.freeruleValues.accessorialFreeRuleQuantityTypeName=='Time'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <label class="label-style">Timeframe</label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.freeRuleQuantityTimeTypeCode">{{freeRuleDetailModel.freeruleValues.freeRuleQuantityTimeTypeCode}}</span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.freeRuleQuantityTimeTypeCode">--</span>
+        </div>
+    </div>
+    <div class="ui-md-12 ui-lg-12 pad-bot0 ui-float-label fieldWidth pad-right0" *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleTypeName=='Calendar'&&freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarApplyIfTypeName!='Always'">
+        <div class="ui-md-12 ui-lg-12 pad-left0 pad-bot0">
+            <h4>Additional Details</h4>
+            <h4>
+                <span class="mar-top0 mar-bot11 chosen-day">The following applies to the chosen
+                    <ng-Container *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Specific'">
+                        Day of Month.
+                        </ng-Container>
+                        <ng-Container *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Relative'&& freeRuleDetailModel.freeruleValues.calendarTimeframe=='Weekly'">
+                            Day of Week.
+                            </ng-Container>
+                            <ng-Container *ngIf="freeRuleDetailModel.freeruleValues.accessorialFreeRuleCalendarTypeName=='Relative'&& freeRuleDetailModel.freeruleValues.calendarTimeframe=='Monthly'">
+                                Day.
+                                </ng-Container>
+                                </span>
+            </h4>
+            <label class="label-style">Cannot Be First Chargeable Day
+        </label>
+            <span class="mar-left10 textColor" *ngIf="freeRuleDetailModel.freeruleValues.firstDayChargeableIndicator">
+{{freeRuleDetailModel.freeruleValues.firstDayChargeableIndicator}} </span>
+            <span class="mar-left10 textColor" *ngIf="!freeRuleDetailModel.freeruleValues.firstDayChargeableIndicator">--</span>
+        </div>
+    </div>
+</div>

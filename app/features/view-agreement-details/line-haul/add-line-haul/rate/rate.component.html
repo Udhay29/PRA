@@ -1,0 +1,169 @@
+<div class="wrapper ui-g-12 ui-md-12">
+    <div class="ui-g-12 dropshadow rate-container pad-left0 pad-right0">
+
+        <div class="rate-header">
+            <span class="title">
+                Rate
+            </span>
+        </div>
+
+        <div class='rate-body'>
+            <div class="ui-g identifier">
+                <form [formGroup]="rateModel.rateForm" autocomplete="off">
+                    <div class="ui-g-12 source-items">
+                        <div class="ui-float-label rowAlign  ui-md-3 ui-g-3 pad-right5">
+                            <input data-attr="viewagreement-linehaul-rate-sourceIdentifier-input" type="text" pInputText formControlName='sourceIdentifier'
+                                (blur)="onSourceIdenfiterBlur($event.target?.value)" maxlength="9">
+                            <label class="label-style ui-md-11 ui-lg-11 ui-g-11 pad0">
+                                <span>Source Identifier</span>
+                                <span class="optional-text pad-right20 pull-right">optional</span>
+                            </label>
+                            <div class="error-class-height">
+                                <p-message *ngIf="rateModel.rateForm.get('sourceIdentifier').touched &&
+                                    rateModel.rateForm.get('sourceIdentifier').invalid" severity="error"  
+                                    text="Provide a valid Source Identifier"></p-message>
+                            </div>
+                        </div>
+
+                        <div class="ui-float-label rowAlign ui-md-3 ui-g-3 pad-right5">
+                            <input data-attr="viewagreement-linehaul-rate-sourceLineHaulIdentifier-input" type="text" pInputText formControlName='sourceLineHaulIdentifier'
+                                (blur)="onSourceLHIdenfiterBlur($event.target?.value)" maxlength="9">
+                            <label class="label-style ui-md-11 ui-lg-11 ui-g-11 pad0">
+                                <span>Source Line Haul Identifier</span>
+                                <span class="optional-text pad-right20 pull-right">optional</span>
+                            </label>
+                            <div class="error-class-height">
+                                <p-message *ngIf="rateModel.rateForm.get('sourceLineHaulIdentifier').touched &&
+                                    rateModel.rateForm.get('sourceLineHaulIdentifier').invalid" severity="error"  
+                                    text="Provide a valid Source Line Haul Identifier"></p-message>
+                            </div>
+                        </div>
+
+                        <div class="ui-float-label rowAlign sourcetype ui-md-3 ui-g-3 pad-right20">
+                            <input data-attr="viewagreement-linehaul-rate-sourceType-input" class="pad0" type="text" [value]='sourceType?.label' pInputText readonly>
+                            <label class="label-style ui-md-12 ui-lg-12 ui-g-12 pad0 mar-left0">
+                                <span>Source Type</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12">
+                        <div class='table-container rate-contain' formArrayName="rates">
+                            <p-table [value]="rateModel.rateForm['controls'].rates['controls']" class="table-shadow">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Minimum Amount</th>
+                                        <th>Maximum Amount</th>
+                                        <th class='currency'>Currency</th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-rate let-rowIndex="rowIndex">
+                                    <tr [formGroupName]="rowIndex">
+                                        <td class='rate-type-dropdown dropdown cell-align'>
+                                            <p-autoComplete  [attr.data-attr]="'viewagreement-linehaul-rate-rateType-autocomplete-' +  rowIndex" placeholder="Type" formControlName='type'
+                                                [suggestions]="rateModel.rateTypeSuggestion" name="rateType"
+                                                (completeMethod)="onTypeRateType($event)" [dropdown]="true"
+                                                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label"
+                                                (onBlur)="onautoCompleteBlur($event, 'type', rowIndex)"
+                                                [forceSelection]="true" (onClear)="onClearValue('type', rowIndex)">
+                                            </p-autoComplete>
+                                            <div class="messageClass">
+                                                <p-message severity="error" text="Provide a Rate Type"
+                                                  *ngIf="rateModel.rateForm.controls.rates.at(rowIndex).get('type').touched && rateModel.rateForm.controls.rates.at(rowIndex).get('type')['errors']?.required">
+                                                </p-message>
+                                              </div>
+                                        </td>
+                                        <td class="cell-padding cell-align"
+                                            [ngClass]="{'pad-left10': rate.get('currency').value?.value}">
+                                            <span class="ui-inputgroup"
+                                                [ngClass]="{'addon-error': rate.get('amount').touched && rate.get('amount').invalid}">
+                                                <span class="ui-inputgroup-addon mar-right8"
+                                                    *ngIf="rate.get('currency').value?.value">$</span>
+                                                <input  [attr.data-attr]="'viewagreement-linehaul-rate-amount-input-' +  rowIndex" type="text" formControlName='amount' pInputText
+                                                    placeholder="Amount"
+                                                    (blur)="validateAmount($event.target?.value, rowIndex, 'amount')"
+                                                    (input)="amountFieldEntered()">
+                                            </span>
+                                            <div class="messageClass">
+                                                <p-message severity="error" text="Provide a Amount"
+                                                  *ngIf="rateModel.rateForm.controls.rates.at(rowIndex).get('amount').touched && rateModel.rateForm.controls.rates.at(rowIndex).get('amount')['errors']?.required">
+                                                </p-message>
+                                              </div>
+                                        </td>
+                                        <td class="cell-padding cell-align"
+                                            [ngClass]="{'pad-left10': rate.get('currency').value?.value}">
+                                            <span class="ui-inputgroup"
+                                                [ngClass]="{'addon-error': rate.get('minAmount').touched && rate.get('minAmount').invalid}">
+                                                <span class="ui-inputgroup-addon mar-right8"
+                                                    *ngIf="rate.get('currency').value?.value">$</span>
+                                                <input  [attr.data-attr]="'viewagreement-linehaul-rate-minAmount-input-' +  rowIndex" type="text" formControlName='minAmount' pInputText
+                                                    placeholder="Minimum Amount"
+                                                    (blur)="validateAmount($event.target?.value, rowIndex, 'minAmount')"
+                                                    (input)="amountFieldEntered()">
+                                            </span>
+                                        </td>
+                                        <td class="cell-padding cell-align"
+                                            [ngClass]="{'pad-left10': rate.get('currency').value?.value}">
+                                            <span class="ui-inputgroup"
+                                                [ngClass]="{'addon-error': rate.get('maxAmount').touched && rate.get('maxAmount').invalid}">
+                                                <span class="ui-inputgroup-addon mar-right8"
+                                                    *ngIf="rate.get('currency').value?.value">$</span>
+                                                <input  [attr.data-attr]="'viewagreement-linehaul-rate-maxAmount-input-' +  rowIndex" type="text" formControlName='maxAmount' pInputText
+                                                    placeholder="Maximum Amount"
+                                                    (blur)="validateAmount($event.target?.value, rowIndex, 'maxAmount')"
+                                                    (input)="amountFieldEntered()">
+                                            </span>
+                                        </td>
+                                        <td class='currency-dropdown rate-type-dropdown dropdown cell-align'>
+                                            <p-autoComplete  [attr.data-attr]="'viewagreement-linehaul-rate-currency-autocomplete-' +  rowIndex" placeholder="Currency" formControlName='currency'
+                                                [suggestions]="rateModel.currencySuggestion" name="currencyType"
+                                                (completeMethod)="onTypeCurrency($event)" [dropdown]="true"
+                                                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label"
+                                                [forceSelection]="true" (onSelect)='onCurrencyChange($event.value)'
+                                                (onBlur)="onautoCompleteBlur($event, 'currency', rowIndex)" (onClear)="onClearValue('currency', rowIndex)">
+                                            </p-autoComplete>
+                                            <div class="messageClass">
+                                                <p-message severity="error" text="Provide a Currency Type"
+                                                  *ngIf="rateModel.rateForm.controls.rates.at(rowIndex).get('currency').touched && rateModel.rateForm.controls.rates.at(rowIndex).get('currency')['errors']?.required">
+                                                </p-message>
+                                              </div>
+                                        </td>
+                                        <td>
+                                            <em data-attr="viewagreement-linehaul-rate-addRate-icon" class="icon-Circle_Add_Solid addrow pad-right15"
+                                                (click)='addRate(rowIndex)'></em>
+                                            <em data-attr="viewagreement-linehaul-rate-removeRate-icon"  class="icon-Circle_Remove_Solid removerow"
+                                                *ngIf="rateModel.rateForm['controls'].rates['controls'].length > 1" (click)='removeRate(rowIndex)'></em>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 group-itemize-container" *ngIf='rateModel.isMoreThanOneRate'>
+                        <div class="ui-md-3 ui-g-3 pad-right20">
+                            <p-autoComplete data-attr="viewagreement-linehaul-rate-groupRateType-autocomplete" placeholder="Group Rate Type" formControlName='groupRateType'
+                                class='group-rate-cb' [suggestions]="rateModel.groupRateTypeSuggestion"
+                                name="groupRateType" [forceSelection]="true"
+                                (completeMethod)="onTypeGroupRateType($event)" [dropdown]="true"
+                                [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" field="label"
+                                (onSelect)="onGroupTypeChange($event.value)" (onClear)="onClearGroupDownDropDown()">
+                            </p-autoComplete>
+                        </div>
+                        <div class="ui-md-3 ui-g-3 pad-right20">
+                            <p-checkbox data-attr="viewagreement-linehaul-rate-isGroupRateItemize-checkbox" *ngIf="rateModel.rateForm.get('groupRateType').value?.value === 1"
+                                class='group-checkbox' binary="true" label="Group Rate Itemize"
+                                formControlName='isGroupRateItemize'>
+                            </p-checkbox>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

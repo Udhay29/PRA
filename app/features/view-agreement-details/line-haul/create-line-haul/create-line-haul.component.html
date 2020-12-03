@@ -1,0 +1,71 @@
+<div *ngIf="!createLineHaulModel.laneCardFlag">
+  <div class="ui-g ui-fluid mar-left10 ui-md-12">
+    <p-breadcrumb data-attr="viewagreement-linehaul-createlinehaul-breadcrumb" class="pad-left10 ui-md-12 breadCrumbList pad-bot0" [model]="createLineHaulModel?.breadCrumbList"></p-breadcrumb>
+    <div class="ui-g">
+      <div class="ui-md-12 ui-lg-12 ui-g-12 wrapper pad-left10">
+        <h1 class="text-uppercase headingAlign">{{createLineHaulModel?.agreementDetails?.customerAgreementName}} - ADD
+          LINE HAUL
+        </h1>
+      </div>
+      <div class="ui-md-12 lineHaulBody">
+        <form [formGroup]="createLineHaulModel?.lineHaulForm" autocomplete="off">
+          <div class="ui-md-12">
+            <div class="ui-md-7 ui-lg-7 ui-g-7 pad0">
+              <div>
+                <label class="labelText pad-left10">Data Source</label>
+              </div>
+              <p-selectButton data-attr="viewagreement-linehaul-createlinehaul-lineHaulSourceType-selectButton" [options]="createLineHaulModel?.lineHaulSourceType" formControlName="lineHaulSourceType"
+                (onChange)="onButtonSelected($event.value)"></p-selectButton>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="ui-g-12" *ngIf="createLineHaulModel?.errorMsg">
+            <p-messages closable="true" [value]="createLineHaulModel.inlineErrormessage" class="ui-g-12 errorMsgAlign"></p-messages>
+          </div>
+          <div class="ui-md-8 ui-lg-8 ui-g-8 pad-top20">
+            <div class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 mar-top20 pad-left0 pad-right10 lineHaulCalendar">
+              <p-calendar data-attr="viewagreement-linehaul-createlinehaul-effectiveDate-calendar" formControlName="effectiveDate" [ngClass]="{'errorMsg':createLineHaulModel?.inValidEffDate || createLineHaulModel?.inValidDate}"
+                [showIcon]="true" name="effectiveDate" appendTo="body" yearRange="1900:2099" dateFormat="mm/dd/yy"
+                (onSelect)="onDateSelected($event, 'effectiveDate')" [showOnFocus]="true" (onBlur)="typedDateValidate($event,'effectiveDate')"
+                [disabledDates]="createLineHaulModel?.disabledEffectiveDate" [minDate]="createLineHaulModel?.effectiveMinDate"
+                [maxDate]="createLineHaulModel?.effectiveMaxDate"></p-calendar>
+              <label class="label-style" [ngClass]="{'labelAlign': (createLineHaulModel?.lineHaulForm.get('effectiveDate').touched && createLineHaulModel?.lineHaulForm.get('effectiveDate')['errors']?.required) || (createLineHaulModel?.lineHaulForm.get('effectiveDate').touched && createLineHaulModel?.lineHaulForm.get('effectiveDate')['errors']?.invalid)}"
+                for="effectiveDate">Effective Date</label>
+              <p-message severity="error" text="Provide Effective Date" *ngIf="createLineHaulModel?.lineHaulForm.get('effectiveDate').touched && createLineHaulModel?.lineHaulForm.get('effectiveDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide a valid date" *ngIf="createLineHaulModel?.lineHaulForm.get('effectiveDate').touched && createLineHaulModel?.lineHaulForm.get('effectiveDate')['errors']?.invalid"></p-message>
+            </div>
+            <div class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 mar-top20 pad-left0 lineHaulCalendar">
+              <p-calendar data-attr="viewagreement-linehaul-createlinehaul-expirationDate-calendar" formControlName="expirationDate" [ngClass]="{'errorMsg':createLineHaulModel?.inValidExpDate || createLineHaulModel?.inValidDate}"
+                [showIcon]="true" name="expirationDate" appendTo="body" yearRange="1900:2099" (onSelect)="onDateSelected($event, 'expirationDate')"
+                [showOnFocus]="true" (onBlur)="typedDateValidate($event,'expirationDate')" [minDate]="createLineHaulModel?.expirationMinDate"
+                [maxDate]="createLineHaulModel?.expirationMaxDate" [disabledDates]="createLineHaulModel?.disabledExpirationDate"></p-calendar>
+              <label class="label-style" for="expirationDate" [ngClass]="{'labelAlign': (createLineHaulModel?.lineHaulForm.get('expirationDate').touched && createLineHaulModel?.lineHaulForm.get('expirationDate')['errors']?.required) || (createLineHaulModel?.lineHaulForm.get('expirationDate').touched && createLineHaulModel?.lineHaulForm.get('expirationDate')['errors']?.invalid)}">Expiration
+                Date</label>
+              <p-message severity="error" text="Provide Expiration Date" *ngIf="createLineHaulModel?.lineHaulForm.get('expirationDate').touched && createLineHaulModel?.lineHaulForm.get('expirationDate')['errors']?.required"></p-message>
+              <p-message severity="error" text="Provide a  valid date" *ngIf="createLineHaulModel?.lineHaulForm.get('expirationDate').touched && createLineHaulModel?.lineHaulForm.get('expirationDate')['errors']?.invalid"></p-message>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="footer">
+        <button data-attr="viewagreement-linehaul-createlinehaul-cancel-button" type="text" appShortcut="ctrl+alt+2" pButton label="Cancel" (click)="onDateRangeCancel()" class="ui-button-secondary "></button>
+        <button data-attr="viewagreement-linehaul-createlinehaul-continue-button" type="text" appShortcut="ctrl+alt+1" pButton label="Continue" (click)="onDateRangeContinue()" class="ui-button-primary mar-left15"></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="createLineHaulModel.laneCardFlag">
+  <app-add-line-haul #linehaulForm [dateValues]="createLineHaulModel" [sectionData]="createLineHaulModel.sectionData"
+    (backFlag)="onClickBackLane()" (confirmationFlag)="onClickConfirmationCancel()" [isConfirmationContinue]="createLineHaulModel?.isContinue"
+    (sectionDate)="getSectionDate($event)">
+  </app-add-line-haul>
+</div>
+<p-dialog data-attr="viewagreement-linehaul-createlinehaul-saveChanges-dialog" header="Save Changes?" [(visible)]="createLineHaulModel.isCancel" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <div>You will lose the Line Haul information as you leave without saving.</div>
+  <div>Do you like to save the Line Haul as a draft before you leave?</div>
+  <p-footer>
+    <button data-attr="viewagreement-linehaul-createlinehaul-dontSave-button" type="button" pButton (click)="onDateRangeCancellation()" class="ui-button-secondary" label="Don't Save"></button>
+    <button data-attr="viewagreement-linehaul-createlinehaul-saveDraft-button" type="button" pButton (click)="onDateRangeSave()" label="Save Draft" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

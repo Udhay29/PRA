@@ -1,0 +1,38 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+
+.heading5 {
+    @include getTypographyStyles("h5");    
+}
+
+.heading6 {
+    @include getTypographyStyles("h6");    
+}
+
+.remove-icon-color {
+    color: $red;
+    padding-top: 1em;
+}
+
+.custom-order-list-index {
+    width: 4%;
+    padding-top: 0.5em;
+    padding-left: 1em;
+}
+
+.custom-order-list {
+    /deep/ .ui-orderlist .ui-orderlist-list {
+        height: 5em;
+        overflow: inherit;
+    }
+}
+
+.error-cell {
+    /deep/ .ui-inputtext {
+        border: 1px solid $red !important;
+        background-color: $red-lite90;
+    }
+    /deep/ .ui-button-icon-left {
+        color: $red;
+    }
+}

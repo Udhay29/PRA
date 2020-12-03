@@ -1,0 +1,80 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_dropshadow.scss';
+.split-wrapper {
+  height: 100%;
+  @include dropShadow("level2");
+}
+
+.split-container {
+  height: 100%;
+  border-radius: 6px;
+  background-color: $white;
+  .split-header {
+    height: 60px;
+    border-bottom: solid 1px $grey-lite70;
+    .title {
+      top: 15px;
+      padding: 10px;
+      position: relative;
+      color: $grey-dark66;
+      @include getTypographyStyles("h2");
+    }
+    .close-position {
+      float: right;
+      margin: 15px;
+    }
+  }
+  .split-body {
+    width: 100%;
+    padding: 20px 10px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 408px);
+  }
+  .split-footer {
+    height: 60px;
+    position: relative;
+    border-top: solid 1px $grey-lite70;
+  }
+}
+
+.sub-title {
+  color: $grey-dark66;
+  @include getTypographyStyles("h3");
+}
+
+.border-line {
+  border-bottom: solid 1px $grey-lite70;
+}
+
+.heading-text {
+  color: $grey-dark27;
+}
+.text-wrap {
+  word-wrap: break-word;
+}
+
+.content-text {
+  display: block;
+  font-family: "Helvetica Neue LT Pro 55 ROMAN",Helvetica,Arial,Sans-Serif;
+  font-size: .75rem;
+  line-height: 1rem;
+  letter-spacing: .01rem;
+  text-transform: none;
+}
+.text-size {
+  font-size: 14px;
+}
+.split-size {
+  /deep/.ui-menu.ui-menu-dynamic {
+    width: 119px;
+  }
+  /deep/ span.ui-menuitem-text {
+    font-size: 14px;
+  }
+}
+.wordBreak{
+  word-break: break-all;
+}

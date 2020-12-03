@@ -1,0 +1,51 @@
+<div class="ui-g">
+    <div class="ui-g-6 pad-right11">
+        <span class="docTextDiv">Legal</span>
+        <div class="textAreaWrapper" *ngIf="viewDocumentationModel.docIsLegalText">
+            <textarea [(ngModel)]="viewDocumentationModel.legalTextArea" [ngModelOptions]="{standalone: true}" class="textArea" maxlength="6000" disabled="true" rows="5" cols="100" pInputTextarea></textarea>
+        </div>
+    </div>
+    <div class="ui-g-6 pad-left11">
+        <span class="docTextDiv">Instructional</span>
+        <div class="textAreaWrapper" *ngIf="viewDocumentationModel.docIsInstructionalText">
+            <textarea [(ngModel)]="viewDocumentationModel.instructionalTextArea" class="textArea" maxlength="6000" [ngModelOptions]="{standalone: true}" disabled="true" rows="5" cols="100" pInputTextarea></textarea>
+        </div>
+    </div>
+    <div class="ui-g-12">
+        <div class = "ui-g-12 pad-bot10 pad-left0"><span class="docTextDiv pad-left0">Attachments</span></div>
+        <div *ngIf="viewDocumentationModel.docIsLegalText">
+            <div class="ui-g-12 pad0" *ngFor = "let attach of viewDocumentationModel.attachments;let index=index"
+            [ngClass]="{'attachment-container':index==viewDocumentationModel.attachments.length -1}">
+                <span class="ui-g-3 pad-left0 textwrap">{{attach['documentName']}}</span>
+                <span class="ui-g-3 attachment-field textwrap">{{attach['accessorialAttachmentTypeName']}}</span>
+                <span class="ui-g-3 attachment-field">Added on {{this.timeZone.convertToLocalMilitaryUpdatedTime(attach['createTimestamp'])}}</span>
+                <span class="ui-g-2 attachment-field textwrap">Added by {{attach['createUserID']}}</span>
+                <div class="ui-g-1 pad0">
+                    <button  class="icon-text-button reset-color pull-right">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12">
+        <button type="button" pButton label="Refresh" (click)="onRefresh()" class="ui-button-secondary pull-right" *ngIf="!viewDocumentationModel.docIsLegalText"></button>
+        <div class="clearfix"></div>
+        <span class="refreshedText pull-right" *ngIf="viewDocumentationModel.docIsLegalText"><em class="icon-Circle_Check_Solid"></em>Refreshed</span>
+    </div>
+</div>
+<p-dialog header="No Documentation Found" [(visible)]="viewDocumentationModel.noDocumentationFound" [modal]="true" [responsive]="true" [width]="350" [minWidth]="500"  [minY]="70"  [baseZIndex]="10000">
+    <div class="noDocPopup">
+        <div class="headerDetails">{{documenationContext?.documentationContent}}</div>
+        <div>
+            <span class="header">Create Documentation</span>
+            <span class="details">{{documenationContext?.documentationText}}</span>
+        </div>
+        <div>
+            <span class="header">Cancel</span>
+            <span class="details">{{documenationContext?.cancelText}}</span>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton (click)="noDocFoundPopupNo()" label="Cancel" class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="noDocFoundPopupYes()" label="Create Documentation" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,32 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.carrier-section {
+  /deep/.ui-table .ui-table-caption.ui-widget-header {
+    border-bottom: 1px solid #e3e3e3 !important;
+  }
+  /deep/.ui-table-tfoot {
+    border-top: 1px solid $grey-lite70 !important;
+  }
+}
+.table-caption {
+  min-height: 30px;
+}
+.message-wrapper {
+  height: calc(100vh - 442px);
+  @include getTypographyStyles("h2");
+  color: $grey-dark27;
+  padding-top: 0;
+}
+.displaymiddle {
+  height: calc(100vh - 420px);
+  padding-top: 10vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.table-footer {
+  height: 47px !important;
+}
+.table-name {
+  padding: 2px 5px !important;
+}

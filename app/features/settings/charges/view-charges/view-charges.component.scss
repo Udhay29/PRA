@@ -1,0 +1,218 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.displaymiddle {
+    height: 57vh;
+    padding-top: 20vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.buttonStyle {
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    color: #939393;
+}
+
+.filterColor {
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+}
+
+.buttonStyle:hover {
+    color: $blue;
+}
+
+.sortIcon {
+    position: relative !important;
+    float: right;
+}
+
+.tableStyle {
+    height: calc(100vh - 250px);
+    /deep/.ui-table {
+        height: 100%;
+    }
+    /deep/.ui-table .ui-table-frozen-view .ui-table-scrollable-body {
+        -webkit-box-shadow: 5px 0 6px -5px $grey-dark27;
+        box-shadow: 5px 0 6px -5px $grey-dark27;
+        z-index: 2;
+    }
+    /deep/.ui-table-scrollable-wrapper {
+        min-height: calc(100vh - 400px);
+        border-bottom: 1px solid #e3e3e3;
+    }
+    /deep/.ui-table .ui-table-caption.ui-widget-header {
+        border-bottom: 1px solid #e3e3e3 !important;
+        padding: 0 10px;
+    }
+    /deep/.tableWrapper .ui-table-scrollable-body {
+        min-height: calc(100vh - 300px) !important;
+    }
+    /deep/.ui-table-scrollable-footer {
+        float: right;
+    }
+    /deep/.ui-table-scrollable-footer-table {
+        width: auto !important;
+    }
+    /deep/.ui-table .ui-paginator-bottom.ui-paginator {
+        max-height: 60px;
+        padding-top: 18px !important;
+    }
+}
+
+tr {
+    height: 60px;
+}
+
+.pad-right10 {
+    padding-right: 10px;
+}
+
+.pad-top10 {
+    padding-top: 10px;
+}
+
+.tableFooter {
+    height: 60px !important;
+}
+
+.table-header {
+    @include getTypographyStyles("h6");
+    color: $grey-dark66;
+}
+
+.header-column-width {
+    width: 140px;
+    white-space: initial;
+    word-break: break-all;
+}
+
+.row-column-width {
+    width: 150px;
+    white-space: initial;
+    word-break: break-all;
+}
+
+.displaybold {
+    font-size: 12px;
+    font-weight: bold !important;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.newLine {
+    white-space: pre !important;
+}
+
+.tableHeading {
+    top: 15px;
+    position: relative;
+}
+
+.button-width {
+    width: 150px;
+}
+
+.textWrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.displaymidheight {
+    height: calc(100vh - 418px);
+    padding-top: 12vh;
+}
+
+.row-hover {
+    cursor: pointer;
+    background: #e6f7ff !important;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.loader+section /deep/.ui-table /deep/.ui-table-unfrozen-view /deep/.ui-table-scrollable-body {
+    min-height: 250px;
+}
+
+.message-wrapper {
+    height: calc(100vh - 442px);
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+.filterClass {
+    /deep/.ui-table .ui-table-caption.ui-widget-header {
+        border-bottom: 1px solid #e3e3e3 !important;
+        padding: 0 10px;
+    }
+    /deep/.tableWrapper .ui-table-scrollable-body {
+        min-height: calc(100vh - 450px) !important;
+        border-bottom: 1px solid #efefef;
+    }
+    /deep/.ui-table-scrollable-body {
+        min-height: calc(100vh - 450px) !important;
+        max-height: calc(100vh - 450px) !important;
+    }
+    /deep/.tableSplitWrapper .ui-table-scrollable-body {
+        min-height: calc(100vh - 335px) !important;
+    }
+    /deep/.ui-table-caption {
+        border-bottom: 1px solid $grey-lite70 !important;
+    }
+    /deep/.ui-table-scrollable-footer-table {
+        width: 100% !important;
+    }
+    /deep/ .ui-panel-content {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    /deep/ .filter-common-style /deep/ .ui-autocomplete /deep/ .ui-inputtext {
+        padding-left: 36px !important;
+    }
+}
+
+.filter-label-column {
+    /deep/.ui-float-label {
+        >label {
+            left: 20px;
+        }
+        /deep/.ui-inputwrapper-filled+label,
+        /deep/.ui-inputwrapper-focus+label {
+            left: -5px;
+        }
+    }
+    /deep/.ui-panel-titlebar-icon:hover {
+        text-decoration: none;
+    }
+}
+
+.btnMargin {
+    margin-top: -2px;
+}
+
+.pad0 {
+    padding-bottom: 0px;
+}

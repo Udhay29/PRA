@@ -1,0 +1,127 @@
+@import '~ngx-prime-theme/theme/colors';
+@import '../../../../node_modules/ngx-prime-theme/theme/_typography.scss';
+
+/*
+ * Sidebar-Left
+ */
+ #sidebar-left {
+  position: fixed;
+  top: 50px;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 225px;
+  z-index: 1000;
+  padding: 0 20px;
+  color: $grey;
+  background-color: $blue-dark75;
+  -webkit-transform: translateX(-225px);
+  -moz-transform: translateX(-225px);
+  -ms-transform: translateX(-225px);
+  -o-transform: translateX(-225px);
+  transform: translateX(-225px);
+  -webkit-transition:0.3s all ease-in-out;
+  -moz-transition:0.3s all ease-in-out;
+  -ms-transition:0.3s all ease-in-out;
+  -o-transition:0.3s all ease-in-out;
+  transition:0.3s all ease-in-out;
+
+  &.sidebar-left-open {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition:0.3s all ease-in-out;
+    -moz-transition:0.3s all ease-in-out;
+    -ms-transition:0.3s all ease-in-out;
+    -o-transition:0.3s all ease-in-out;
+    transition:0.3s all ease-in-out;
+  }
+}
+
+@media (min-width: 768px) {
+  #sidebar-left {
+    -webkit-transform: translateX(-175px);
+    -moz-transform: translateX(-175px);
+    -ms-transform: translateX(-175px);
+    -o-transform: translateX(-175px);
+    transform: translateX(-175px);
+    -webkit-transition:0.3s all ease-in-out;
+    -moz-transition:0.3s all ease-in-out;
+    -ms-transition:0.3s all ease-in-out;
+    -o-transition:0.3s all ease-in-out;
+    transition:0.3s all ease-in-out;
+  }
+}
+
+/*
+ * Sidebar-Left: Navigation
+ *
+ */
+.nav-sidebar-header,
+.app-sidebar {
+  margin-right: -20px;
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.app-sidebar {
+  z-index: 1000;
+  background-color: #0a0a0a;
+  padding: 10px;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  transition: all 0.30s ease-in-out;
+}
+
+.app-tile {
+  float: left;
+  background-color: #2b313d;
+  margin: 10px;
+  height: 80px;
+  width: 80px;
+}
+
+.app-tile-name {
+  margin: 0 auto;
+  text-align: center;
+  width: 80px;
+  line-height: 80px;
+  position: relative;
+  display: block;
+}
+
+.nav-sidebar-header {
+  font-size: 14px;
+  color: #fff;
+  background-color: $blue-dark75;
+  padding: 15px 20px 15px 15px;
+  margin-bottom: 0;
+
+  i {
+    position: relative;
+    right: -3px;
+    cursor: pointer;
+  }
+}
+
+.tos-footer {
+  position: fixed;
+  bottom: 3%;
+  width: auto;
+  .terms-service {
+    @include getTypographyStyles("body2");
+    opacity: 0.7;
+  }
+  a {
+    opacity: 1;
+  }
+  .copyright {
+    @include getTypographyStyles("body3");
+  }
+}
+
+.terms-service a {
+  cursor: pointer;
+}

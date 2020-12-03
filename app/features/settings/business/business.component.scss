@@ -1,0 +1,38 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+
+.container {
+  /deep/ .ui-table.ui-widget {
+      border: 1px solid #e3e3e3 !important;
+  }
+  /deep/ .ui-table-caption.ui-widget-header {
+      border: 1px solid #C9C9C9;
+      padding-left: 15px;
+      border-radius: 5px 5px 0 0;
+  }
+  .borderColor {
+      border: 1px solid #C9C9C9 !important;
+  }
+}
+.tableHeading {
+  @include getTypographyStyles("h2");
+  margin-top: 7px;
+}
+.text-gray {
+    color: #c9c9c9;
+}
+.pad25 {
+  padding: 25px;
+}
+
+.business-table{
+    /deep/ .ui-table-wrapper tbody > tr{
+        border-left:1px solid #C9C9C9;
+        border-right:1px solid #C9C9C9;
+        p.pad-left15{
+            padding-top: 13px;
+            padding-bottom: 12px;
+            cursor: pointer;
+            margin: 0;
+        }
+    }
+}

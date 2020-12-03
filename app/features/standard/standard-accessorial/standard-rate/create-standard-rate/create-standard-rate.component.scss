@@ -1,0 +1,291 @@
+@import "~ngx-prime-theme/theme/_typography.scss";
+@import "~ngx-prime-theme/theme/_colors.scss";
+.headingAlign {
+    margin-top: 0 !important;
+}
+
+.documentationLevel /deep/ .ui-button.ui-widget.ui-state-default.ui-button-text-only.ng-star-inserted {
+    width: 33.33% !important;
+}
+
+.breadCrumbList /deep/ .ui-breadcrumb.ui-widget.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    padding-bottom: 0px;
+}
+
+.width_value /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    width: 100%;
+}
+.width_value /deep/ .ui-autocomplete .ui-inputtext {
+    width: 100%;
+}
+.labelAlign {
+    padding-left: 8px !important;
+}
+
+.width_value {
+    width: 100%;
+}
+
+.date-field-float-eff {
+    margin-top: 17px;
+    label {
+        margin-top: 0px !important;
+        top: 27%;
+        left: 37px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.65em - 2px);
+        left: 10px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.75em - 3px);
+        left: 10px !important;
+        font-size: 12px;
+    }
+}
+
+.date-field-float-exp {
+    margin-top: 17px;
+    label {
+        margin-top: 0px !important;
+        top: 27%;
+        left: 37px !important;
+    }
+    .ui-inputwrapper-focus~label {
+        top: calc(-0.65em - 2px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.75em - 3px);
+        left: 15px !important;
+        font-size: 12px;
+    }
+}
+
+.currency {
+    .ui-inputwrapper-filled~label,
+    .ui-inputwrapper-focus~label {
+        position: absolute !important;
+        top: -4px !important;
+        left: 10px !important;
+    }
+}
+
+.optionalFields {
+    width: 100%;
+}
+
+.footer {
+    padding: 40px 20px;
+}
+
+.errorHeight {
+    height: 18px;
+}
+
+.ratesCalendar {
+    .errorMsg /deep/ .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+        border-color: #cc2d24 !important;
+        background-color: #faeae9;
+    }
+}
+
+.documentationLevel /deep/ .ui-selectbutton.ui-buttonset.ui-widget.ui-corner-all {
+    width: 85% !important;
+}
+
+p-dialog {
+    .saveHeaderPopup {
+        color: $grey-dark27;
+        padding-right: 7px;
+    }
+    .noDocPopup {
+        .headerDetails {
+            padding-bottom: 14px;
+        }
+        .header {
+            color: $grey-dark27;
+        }
+        .details {
+            padding-left: 7px;
+        }
+    }
+}
+
+.accordionHeight {
+    min-height: calc(100vh - 279px);
+    /deep/ .ui-accordion .ui-accordion-content-wrapper .ui-accordion-content {
+        margin-bottom: 15px;
+        padding-bottom: 4px;
+    }
+}
+
+.fieldWidth /deep/.ui-dropdown.ui-widget.ui-state-default.ui-corner-all.ui-helper-clearfix {
+    width: 100% !important;
+}
+
+.chargeAlign {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+}
+
+.setWidth {
+    width: 100%;
+}
+
+.alternateChargeFont {
+    color: $primary-blue;
+    font-family: "Helvetica Neue LT Pro 65 Medium", Helvetica, Arial, Sans-Serif;
+    position: absolute;
+    top: -1px;
+    font-size: 14px;
+}
+
+.iconColor {
+    color: $primary-blue;
+}
+
+.alternateChargeContent {
+    font-family: "Helvetica Neue LT Pro 55 Roman", Helvetica, Arial, Sans-Serif;
+}
+
+.icon-align {
+    vertical-align: middle;
+}
+
+.accordionIcon /deep/ span.ui-accordion-toggle-icon.pi.pi-fw.pi-caret-down {
+    bottom: 1px !important;
+}
+
+.add-rate-btn {
+    color: $primary-blue;
+    font-family: "Helvetica Neue LT Pro 65 Medium", Helvetica, Arial, Sans-Serif;
+    position: absolute;
+    font-size: 14px;
+}
+
+.remove-rate {
+    position: absolute;
+    right: 60px;
+    top: -6px;
+}
+
+.remove-rate-btn {
+    @include getTypographyStyles("h4");
+    color: $white !important;
+}
+
+.docAccord /deep/ .ui-accordion-content {
+    min-height: 130px !important;
+}
+
+.docAccord {
+    .docTextDiv span {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .textArea {
+        min-height: 140px;
+        margin-top: 15px;
+        padding-left: 0px;
+        padding-top: 0px;
+        resize: none;
+        border-color: $white;
+        width: 100%;
+    }
+    .refreshedText {
+        color: $primary-blue;
+        font-size: 1.1em;
+        font-weight: 100;
+        .icon-Circle_Check_Solid {
+            position: relative;
+            top: 2px;
+            right: 6px;
+        }
+    }
+}
+
+.align-error-panel {
+    margin-top: -10px;
+}
+
+.errorMsgAlign /deep/.ui-messages ul {
+    padding: 0.2rem 2rem 0 !important;
+}
+
+.duplicate-err-msg /deep/ .ui-messages ul li {
+    .ui-messages-summary {
+        display: inherit !important;
+        margin-bottom: 6px;
+        margin-left: 10px;
+    }
+    .ui-messages-detail {
+        margin-left: 22px;
+    }
+}
+
+.duplicate-err-msg /deep/ .ui-messages-close {
+    color: red;
+}
+
+.duplicate-err-msg /deep/ .ui-messages .ui-messages-icon.pi.pi-times {
+    font-size: 2rem !important;
+}
+
+.remove-rate-btn-txt {
+    position: relative;
+    bottom: 2px;
+    right: 4px;
+}
+.addChargesText{
+    @include getTypographyStyles("h4");
+    color: $primary-blue;        
+    .textAlign {
+        position: relative;
+        bottom: 2px;
+    }
+}
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 100px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.mar-left125{
+    margin-left: 125px;
+}
+.breadcrumb {
+    /deep/ li.ui-breadcrumb-chevron.pi.pi-chevron-right.ng-star-inserted {
+        vertical-align: bottom !important;
+    }
+}
+.reset-color {
+    color: $blue;
+    cursor: pointer;
+    border:0px;
+    text-decoration: none;
+    position: relative;
+    top: 6px;
+    background-color: $white;
+    padding: 0px;
+}
+.attachment-field {
+    color :$grey;
+}
+.attachment-container {
+    border-bottom: 1px solid $grey;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

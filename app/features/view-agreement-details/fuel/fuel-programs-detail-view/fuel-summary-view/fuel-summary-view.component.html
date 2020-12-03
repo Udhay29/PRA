@@ -1,0 +1,186 @@
+<div class="ui-g ui-md-12 pad-top0 pad-left10">
+  <div class="ui-g-12 pad0 dropshadow borderValue overview-wrapper">
+    <div class=" ui-g-12 fuel-haul-heading-pad fuel-haul-heading pad-bot20">
+      <span class="">Program Summary</span>
+    </div>
+    <div class="ui-g-12 pad-top0">
+      <div class="ui-g-12 pad-top10">
+        <span class="ui-g-12 pad-top0 pad-bot0">
+          <span class="text-align">
+            <label class="label-style">Program Name</label>
+            <span class="fuel-values pad-left10">{{summaryModel?.summaryData?.FuelProgram?.FuelProgramName}}
+            </span>
+          </span>
+          <span class="text-align">
+            <label class="label-style">Effective Date</label>
+            <span class="fuel-values pad-left10">{{summaryModel?.summaryData?.EffectiveDate}}
+            </span>
+          </span>
+          <span class="text-align">
+            <label class="label-style">Expiration Date</label>
+            <span class="fuel-values pad-left10">{{summaryModel?.summaryData?.ExpirationDate}}
+            </span>
+          </span>
+          <span class="text-align">
+            <label class="label-style">Business Unit and Service Offering</label>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.businessUnit; let k=index">
+              <span class="fuel-values" *ngIf="k<2">{{col}}
+              </span>
+              <span *ngIf="k==2" class="fuel-values" (mouseenter)="businessUnit.toggle($event)"
+                (mouseleave)="businessUnit.toggle($event)">+ {{summaryModel?.summaryData?.businessUnit.length-2}}
+              </span>
+            </p>
+          </span>
+          <p-overlayPanel #businessUnit class="businessOverlay">
+            <span class="label-style">Business Unit and Service Offering</span>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.businessUnit; let k=index">
+              <span class="fuel-values">{{col}}
+              </span>
+            </p>
+          </p-overlayPanel>
+          <span class="text-align">
+            <label class="label-style">Carrier</label>
+            <div *ngIf="summaryModel?.summaryData?.carrier.length">
+              <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.carrier; let k=index">
+                <span class="fuel-values" *ngIf="k<2">{{col}}
+                </span>
+                <span *ngIf="k==2" class="fuel-values" (mouseenter)="carrier.toggle($event)"
+                  (mouseleave)="carrier.toggle($event)">+ {{summaryModel?.summaryData?.carrier.length-2}}
+                </span>
+              </p>
+            </div>
+            <span *ngIf="!summaryModel?.summaryData?.carrier.length" class="pad-left10 fuel-values">-
+              -</span>
+          </span>
+          <p-overlayPanel #carrier class="businessOverlay">
+            <span class="label-style">Carrier</span>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.carrier; let k=index">
+              <span class="fuel-values">{{col}}
+              </span>
+            </p>
+          </p-overlayPanel>
+          <span class="text-align">
+            <label class="label-style">Contracts</label>
+            <div *ngIf="summaryModel?.summaryData?.ContractAssociations.length">
+              <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.ContractAssociations; let k=index">
+                <span class="fuel-values" *ngIf="k<2">{{col}}
+                </span>
+                <span *ngIf="k==2" class="fuel-values" (mouseenter)="contracts.toggle($event)"
+                  (mouseleave)="contracts.toggle($event)">+ {{summaryModel?.summaryData?.ContractAssociations.length-2}}
+                </span>
+              </p>
+            </div>
+            <span *ngIf="!summaryModel?.summaryData?.ContractAssociations.length" class="pad-left10 fuel-values">-
+              -</span>
+          </span>
+          <p-overlayPanel #contracts class="businessOverlay">
+            <span class="label-style">Contracts</span>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.ContractAssociations; let k=index">
+              <span class="fuel-values">{{col}}
+              </span>
+            </p>
+          </p-overlayPanel>
+          <span class="text-align">
+            <label class="label-style">Section</label>
+            <div *ngIf="summaryModel?.summaryData?.SectionAssociations.length">
+              <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.SectionAssociations; let k=index">
+                <span class="fuel-values" *ngIf="k<2">{{col}}
+                </span>
+                <span *ngIf="k==2" class="fuel-values" (mouseenter)="section.toggle($event)"
+                  (mouseleave)="section.toggle($event)">+ {{summaryModel?.summaryData?.SectionAssociations.length-2}}
+                </span>
+              </p>
+            </div>
+            <span *ngIf="!summaryModel?.summaryData?.SectionAssociations.length" class="pad-left10 fuel-values">-
+              -</span>
+          </span>
+          <p-overlayPanel #section class="businessOverlay">
+            <span class="label-style">Section</span>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.SectionAssociations; let k=index">
+              <span class="fuel-values">{{col}}
+              </span>
+            </p>
+          </p-overlayPanel>
+          <span class="text-align">
+            <label class="label-style">Bill To Accounts</label>
+            <div *ngIf="summaryModel?.summaryData?.BillToAccountAssociations.length">
+              <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.BillToAccountAssociations; let k=index">
+                <span class="fuel-values" *ngIf="k<2">{{col}}
+                </span>
+                <span *ngIf="k==2" class="fuel-values" (mouseenter)="billtoAccount.toggle($event)"
+                  (mouseleave)="billtoAccount.toggle($event)">+
+                  {{summaryModel?.summaryData?.BillToAccountAssociations.length-2}}
+                </span>
+              </p>
+            </div>
+            <span *ngIf="!summaryModel?.summaryData?.BillToAccountAssociations.length" class="pad-left10 fuel-values">-
+              -</span>
+          </span>
+          <p-overlayPanel #billtoAccount class="businessOverlay">
+            <span class="label-style">Bill To Accounts</span>
+            <p class="mar0" *ngFor="let col of summaryModel?.summaryData?.BillToAccountAssociations; let k=index">
+              <span class="fuel-values">{{col}}
+              </span>
+            </p>
+          </p-overlayPanel>
+          <span class="text-align">
+            <label class="label-style">Conditions</label>
+            <span class="pad-left10 fuel-values">- -
+            </span>
+          </span>
+          <span class="text-align mar-bot10 breakClass">
+            <label class="label-style mar-right10">Notes</label>
+            <span *ngIf="summaryModel?.fuelNote" class="fuel-values">{{summaryModel?.fuelNote}}
+            </span>
+            <span *ngIf="!summaryModel?.fuelNote" class="fuel-values">- -
+            </span>
+          </span>
+          <span class="text-align borderAlign">
+            <p class="label-style mar-top5 mar-bot5">Updated By</p>
+            <label class="user-image-style" *ngIf="summaryModel?.summaryData?.FuelProgram?.LastUpdateProgramName">
+              <span
+                class="fsize">{{summaryModel?.summaryData?.FuelProgram?.LastUpdateProgramName | returnInitialsFromName}}
+              </span>
+            </label>
+            <span class="mar0 fuel-values" class="fuel-values pad-left5">
+              {{summaryModel?.summaryData?.FuelProgram?.LastUpdateProgramName}}
+            </span>
+            <span class="label-style"> ({{summaryModel?.summaryData?.FuelProgram?.LastUpdateUserID}})
+            </span>
+          </span>
+          <span class="text-align pad-top5">
+            <label class="label-style">Updated On</label>
+            <span class="fuel-values pad-left10">{{summaryModel?.summaryData?.FuelProgram?.LastUpdateDate}}
+            </span>
+          </span>
+          <span class="text-align">
+            <p class="label-style mar-top5 mar-bot5">Created By</p>
+            <label class="user-image-style" *ngIf="summaryModel?.summaryData?.FuelProgram?.CreateProgramName">
+              <span class="fsize">{{summaryModel?.summaryData?.FuelProgram?.CreateProgramName | returnInitialsFromName}}
+              </span>
+            </label>
+            <span class="mar0 fuel-values"
+              class="fuel-values pad-left5">{{summaryModel?.summaryData?.FuelProgram?.CreateProgramName}}</span>
+            <span class="label-style"> ({{summaryModel?.summaryData?.FuelProgram?.CreateUserID}})
+            </span>
+          </span>
+          <span class="text-align pad-top5">
+            <label class="label-style">Created On</label>
+            <span class="fuel-values pad-left10">{{summaryModel?.summaryData?.FuelProgram?.CreatedDate}}
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-12 pad0 historyAlign historyFont">
+      <p class="pad-left10 mar-top15 mar-bot15">History
+        <span class="icon-Chevron_Next arrowAlign"></span>
+      </p>
+    </div>
+    <div  data-attr="viewagreement-fuelviewsummary-excelexp-button" class="ui-g-12 pad0 historyAlign historyFont" (click)="fuelPriceNavigate()">
+      <p class="pad-left10 mar-top15 mar-bot15">Fuel Price
+        <span class="icon-Chevron_Next arrowAlign"></span>
+      </p>
+    </div>
+  </div>
+</div>

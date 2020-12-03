@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-md-12 ui-lg-12 ui-g-12 pad-bot0 breadcrumb">
+      <p-breadcrumb [model]="linehaulPrioritymodel.breadCrumbList"></p-breadcrumb>
+    </div>
+    <div class="ui-md-12 ui-lg-12 ui-g-12 capacity-heading mar-left10 pad0">
+      <h1 class="nopadding">PRECEDENCE</h1>
+    </div>
+  </div>
+  <p-tabView class="ui-g-12 leftMargin" (onChange)="handleChange($event.index)"
+    [activeIndex]="linehaulPrioritymodel.selectedIndex">
+    <p-tabPanel header="PRIORITY">
+      <app-priority [linehaulPrioritymodel]="linehaulPrioritymodel" #tabOneRef
+        *ngIf="linehaulPrioritymodel.selectedIndex === 0"></app-priority>
+    </p-tabPanel>
+    <p-tabPanel header="GROUPS">
+      <app-groups #groupsComponent [linehaulPrioritymodel]="linehaulPrioritymodel" #tabTwoRef
+        *ngIf="linehaulPrioritymodel.selectedIndex === 1"> </app-groups>
+    </p-tabPanel>
+  </p-tabView>
+  <p-dialog header="Confirmation" [(visible)]="linehaulPrioritymodel.tabChangePopup" [modal]="true" [responsive]="true"
+    [width]="425" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+      <button type="button" pButton (click)="onClickNo()" class="ui-button-secondary" label=" No"></button>
+      <button type="button" pButton (click)="onClickYes()" label="Yes" class="ui-button-primary"></button>
+    </p-footer>
+  </p-dialog>
+</div>

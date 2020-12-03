@@ -1,0 +1,247 @@
+<div class="ui-g-12 pad0 dropshadow borderValue">
+  <div class=" ui-g-12 line-haul-heading-pad line-haul-heading pad-bot20">
+    <span class="">Line Haul Details</span>
+  </div>
+  <div class="ui-g-12">
+    <p-scrollPanel [style]="{ height: 'calc(100vh - 230px)'}" styleClass="custom" class="searchScrollPanel"
+      #searchScrollPanel>
+      <div class="ui-g-12 pad-top0">
+        <div class="ui-g-12 pad-left10 pad-top0 pad-bot0">
+          <label data-attr="viewagreement-linehaulOverview-effectctiveDate-label" class="label-style">Effective Date</label>
+          <span data-attr="viewagreement-linehaulOverview-effectctiveDate-value"  class="overview-values pad-left10">{{overViewModel.lineHaulOverview?.effectiveDate
+            | date:'MMM d, yyyy'}}
+          </span>
+        </div>
+        <div class="ui-g-11 pad-left10 pad-top0 pad-bot20 expiration-date-border">
+          <label  data-attr="viewagreement-linehaulOverview-expirationDate-label" class="label-style">Expiration Date</label>
+          <span data-attr="viewagreement-linehaulOverview-expirationDate-value"  class="overview-values pad-left10">{{overViewModel.lineHaulOverview?.expirationDate
+            | date:'MMM d, yyyy'}}
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 pad-top10">
+        <div *ngFor="let originData of overViewModel?.originPoints; index as i">
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === 'Address'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originAddress-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originAddressLine1-value' +  i"  class="overview-values">{{originData?.AddressLine1}},</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originAddressLine2-value' +  i"   class="overview-values">{{originData?.CityName}},
+              {{originData?.StateCode}} {{originData?.PostalCode}}
+              {{originData?.CountryCode}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === '3-Zip Region' || originData?.type === 'City State Region'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originCityStateRegion-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originCityStateRegion-value' +  i"  class="overview-values">{{originData?.regionDisplay}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === 'City,State'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originCityState-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originCityState-value' +  i"  class="overview-values">{{originData?.CityName}}, {{originData?.State}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === 'State'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originState-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originState-value' +  i"  class="overview-values">{{originData?.State}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === '2-Zip' || originData?.type === '3-Zip'
+        || originData?.type === '5-Zip' || originData?.type === '6-Zip' || originData?.type === '9-Zip'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originZip-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originZip-value' +  i" class="overview-values">{{originData?.PostalCode}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === '3-Zip Range' || originData?.type === '5-Zip Range'
+        || originData?.type === '6-Zip Range' || originData?.type === '9-Zip Range'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originZipRange-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-originZipRange-value' +  i" class="overview-values">{{originData?.PostalCodeLower}} -
+              {{originData?.PostalCodeUpper}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="originData?.type === 'Location' || originData?.type === 'Ramp'
+        || originData?.type === 'Yard'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-originLocation-label' +  i" class="label-style">Origin</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-locationCode-value' +  i" class="overview-values">{{originData?.LocationName}}({{originData?.LocationCode}}),</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-adressLane-value' +  i" class="overview-values">{{originData?.AddressLine1}},</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destCityName-value' +  i" class="overview-values">{{originData?.CityName}},
+              {{originData?.StateCode}} {{originData?.PostalCode}}
+              {{originData?.CountryCode}}</span>
+          </div>
+        </div>
+        <div *ngFor="let destinationData of overViewModel?.destinationPoints; index as i">
+          <div class="ui-g-11 pad-left10 pad-top0 pad-bot20 expiration-date-border"
+            *ngIf="destinationData?.type === 'Address'">
+            <label [attr.data-attr]="'viewagreement-linehaulOverview-destinationAddress-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationAddressLine1-label' +  i" class="overview-values">{{destinationData?.AddressLine1}},</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationAddressLine2-label' +  i" class="overview-values">{{destinationData?.CityName}},
+              {{destinationData?.StateCode}} {{destinationData?.PostalCode}}
+              {{destinationData?.CountryCode}}</span>
+          </div>
+          <div class="ui-g-11 pad-left10 pad-bot20 pad-top0 expiration-date-border" *ngIf="destinationData?.type === '3-Zip Region' || destinationData?.type === 'City State Region'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-destinationCityStateRegion-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationCityStateRegion-label' +  i" class="overview-values">{{destinationData?.regionDisplay}}</span>
+          </div>
+          <div class="ui-g-11 pad-left10 pad-bot20 pad-top0 expiration-date-border"
+            *ngIf="destinationData?.type === 'City,State'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-destinationCityState-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationCityState-value' +  i" class="overview-values">{{destinationData?.CityName}},
+              {{destinationData?.State}}</span>
+          </div>
+          <div class="ui-g-11 pad-left10 pad-bot20 pad-top0 expiration-date-border"
+            *ngIf="destinationData?.type === 'State'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-destinationState-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationState-value' +  i" class="overview-values">{{destinationData?.State}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0"
+            *ngIf="destinationData?.type === '2-Zip' || destinationData?.type === '3-Zip'
+        || destinationData?.type === '5-Zip' || destinationData?.type === '6-Zip' || destinationData?.type === '9-Zip'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-destinationZip-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationZip-value' +  i" class="overview-values">{{destinationData?.PostalCode}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="destinationData?.type === '3-Zip Range' || destinationData?.type === '5-Zip Range'
+        || destinationData?.type === '6-Zip Range' || destinationData?.type === '9-Zip Range'">
+            <label  [attr.data-attr]="'viewagreement-linehaulOverview-destinationZipRange-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationZipRange-value' +  i" class="overview-values">{{destinationData?.PostalCodeLower}} -
+              {{destinationData?.PostalCodeUpper}}</span>
+          </div>
+          <div class="ui-g-12 pad-left10 pad-bot0" *ngIf="destinationData?.type === 'Location' || destinationData?.type === 'Ramp'
+        || destinationData?.type === 'Yard'">
+            <label [attr.data-attr]="'viewagreement-linehaulOverview-destinationLocationRampYard-label' +  i" class="label-style">Destination</label><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationLocationRampYard-label' +  i" 
+              class="overview-values">{{destinationData?.LocationName}}({{destinationData?.LocationCode}}),</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationaddressLine1-label' +  i" class="overview-values">{{destinationData?.AddressLine1}},</span><br>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-destinationAddressLine2-label' +  i" class="overview-values">{{destinationData?.CityName}},
+              {{destinationData?.StateCode}} {{destinationData?.PostalCode}}
+              {{destinationData?.CountryCode}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 pad-top10">
+        <div class="ui-g-11 pad-left10 pad-top0 pad-bot20" *ngFor="let rate of overViewModel.rateValues; index as i">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-rateType-label' +  i" class="label-style">Rate Type</label>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-rateType-value' +  i" class="overview-values pad-left10">{{rate.chargeUnitTypeName}}
+          </span>
+          <div>
+            <label [attr.data-attr]="'viewagreement-linehaulOverview-rateAmount-label' +  i" class="label-style">Rate Amount</label>
+            <span [attr.data-attr]="'viewagreement-linehaulOverview-rateAmount-value' +  i" class="overview-values pad-left10">{{rate.rateAmount
+              | currency:rate.currencyCode : 'symbol-narrow': '1.2-4'}}
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-11 pad-left10 pad-top0 pad-bot0 expiration-date-border"></div>
+      </div>
+      <div class="ui-g-12 pad-top10">
+        <div class="ui-g-12 pad-left10">
+          <label  data-attr="viewagreement-linehaulOverview-section-label" class="label-style">Section</label>
+          <span data-attr="viewagreement-linehaulOverview-section-value"
+            class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.customerAgreementContractSectionName}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0 alignContract">
+          <label  data-attr="viewagreement-linehaulOverview-contract-label" class="label-style">Contract
+          </label><br>
+          <span data-attr="viewagreement-linehaulOverview-contract-value" class="overview-values">{{overViewModel?.lineHaulOverview?.customerAgreementContractName}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-priority-label" class="label-style">Priority</label>
+          <span data-attr="viewagreement-linehaulOverview-priority-value" class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.priorityLevelNumber}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-overriddenPriority-label" class="label-style">Overridden Priority</label>
+          <span class="overview-values pad-left10"
+            *ngIf="overViewModel?.lineHaulOverview?.overriddenPriority">{{overViewModel?.lineHaulOverview?.overriddenPriority}}</span>
+          <span data-attr="viewagreement-linehaulOverview-overriddenPriority-value" class="overview-values pad-left10" *ngIf="!overViewModel?.lineHaulOverview?.overriddenPriority">
+            - -</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-businessUnit-label" class="label-style">Business Unit</label>
+          <span data-attr="viewagreement-linehaulOverview-businessUnit-value" class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.financeBusinessUnitName}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-serviceOffering-label" class="label-style">Service Offering</label>
+          <span data-attr="viewagreement-linehaulOverview-serviceOffering-value" class="overview-values pad-left10">{{overViewModel?.serviceOffering}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-transitMode-label" class="label-style">Transit Mode</label>
+          <span data-attr="viewagreement-linehaulOverview-transitMode-value" class="overview-values  pad-left10">{{overViewModel?.lineHaulOverview?.transitMode}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-serviceLevel-label" class="label-style">Service Level</label>
+          <span *ngIf="overViewModel?.lineHaulOverview?.serviceLevelCode" data-attr="viewagreement-linehaulOverview-serviceLevelCode-value"
+            class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.serviceLevelCode}}
+          </span>
+          <span *ngIf="!overViewModel?.lineHaulOverview?.serviceLevelCode" class="overview-values pad-left10">- -
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-equipmentCategory-label" class="label-style">Equipment Category</label>
+          <span data-attr="viewagreement-linehaulOverview-equipmentCategory-value"
+            class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.equipmentClassificationCodeDescription}}
+          </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-equipmentType-label" class="label-style">Equipment Type</label>
+          <span class="overview-values  pad-left10" data-attr="viewagreement-linehaulOverview-equipmentType-value"
+            *ngIf="overViewModel?.lineHaulOverview?.equipmentTypeCode">{{overViewModel?.lineHaulOverview?.equipmentTypeCodeDescription}}</span>
+          <span class="overview-values  pad-left10" *ngIf="!overViewModel?.lineHaulOverview?.equipmentTypeCode">-
+            -</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-equipmentLength-label" class="label-style">Equipment Length</label>
+          <span class="overview-values pad-left10" data-attr="viewagreement-linehaulOverview-equipmentLength-value"
+            *ngIf="overViewModel?.lineHaulOverview?.equipmentLengthQuantity">{{overViewModel?.lineHaulOverview?.equipmentLengthQuantity}}
+            {{overViewModel?.lineHaulOverview?.unitOfEquipmentLengthMeasurementCode}}
+          </span>
+          <span class="overview-values pad-left10" *ngIf="!overViewModel?.lineHaulOverview?.equipmentLengthQuantity">-
+            - </span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-operationalService-label" class="label-style pad-right10">Operational Service</label><br>
+          <span *ngIf="overViewModel?.operationalServices">
+            <span class="overview-values inlineBlock" data-attr="viewagreement-linehaulOverview-operationalService-value"
+              *ngFor="let operationalService of overViewModel.operationalServices; index as i">{{operationalService}}
+              <span *ngIf="i !== overViewModel.operationalServices.length - 1">,</span>
+            </span>
+          </span>
+          <span class="overview-values" *ngIf="!overViewModel?.operationalServices?.length">- -</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0">
+          <label  data-attr="viewagreement-linehaulOverview-awardStatus-label" class="label-style">Award Status</label>
+          <span
+          data-attr="viewagreement-linehaulOverview-awardStatus-value" class="overview-values pad-left10">{{overViewModel?.lineHaulOverview?.lineHaulAwardStatusTypeName}}</span>
+        </div>
+      </div>
+      <div class="ui-g-11 pad-left10 pad-top0 pad-bot10 mar-bot10 expiration-date-border"></div>
+      <div class="ui-g-12 pad-bot20" *ngFor="let stop of overViewModel?.stopDetails; index as i">
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === 'Address'">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stopLocation-label' +  i" class="label-style">Stop {{i+1}}</label><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-adressLine1-value' +  i"  class="overview-values">{{stop?.AddressLine1}},</span><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-addressLine2-value' +  i"  class="overview-values">{{stop?.CityName}}, {{stop?.StateCode}} {{stop?.PostalCode}}
+            {{stop?.CountryCode}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === 'City,State'">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stop-label' +  i" class="label-style">Stop {{i+1}}</label><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-cityState-value' +  i"  class="overview-values">{{stop?.CityName}}, {{stop?.State}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === 'State'">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stop-label' +  i" class="label-style">Stop {{i+1}}</label><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-state-value' +  i"  class="overview-values">{{stop?.State}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === '2-Zip' || stop.stopTye === '3-Zip'
+                || stop.stopTye === '5-Zip' || stop.stopTye === '6-Zip' || stop.stopTye === '9-Zip'">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stop-label' +  i" class="label-style">Stop {{i+1}}</label>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-postalCode-value' +  i"  class="overview-values pad-left10">{{stop?.PostalCode}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === 'Location' || stop.stopTye === 'Ramp'
+                || stop.stopTye === 'Yard' ">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stop-label' +  i" class="label-style">Stop {{i+1}}</label><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-location-value' +  i" class="overview-values">{{stop?.LocationName}}({{stop?.LocationCode}}),</span><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-addressLine-value' +  i" class="overview-values">{{stop?.AddressLine1}},</span><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-addressCityNameState-value' +  i" class="overview-values">{{stop?.CityName}},{{stop?.State}}
+            {{stop?.PostalCode}},{{stop?.CountryCode}}</span>
+        </div>
+        <div class="ui-g-12 pad-left10 pad-top0" *ngIf="stop.stopTye === 'Country'">
+          <label [attr.data-attr]="'viewagreement-linehaulOverview-stop-label' +  i" class="label-style">Stop {{i+1}}</label><br>
+          <span [attr.data-attr]="'viewagreement-linehaulOverview-countryCode-value' +  i" class="overview-values">{{stop?.CountryCode}}</span>
+        </div>
+      </div>
+    </p-scrollPanel>
+  </div>
+</div>

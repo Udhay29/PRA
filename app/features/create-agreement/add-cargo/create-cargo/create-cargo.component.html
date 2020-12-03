@@ -1,0 +1,189 @@
+<div [ngClass]="{'loader': createCargoModel?.isLoader}" [appJbhLoader]="createCargoModel?.isLoader"></div>
+<div class="ui-g-12 nopadding dropshadow split-container">
+
+    <div class="split-header">
+        <div class="header">
+            <span class="title" *ngIf="createCargoModel?.rowValue.length === 0">
+                Add Agreement Cargo Release
+            </span>
+            <span class="title" *ngIf="createCargoModel?.rowValue.length > 0">
+                Edit Cargo Release
+            </span>
+            <button data-attr="createagreement-addCargo-createCargo-close-button" class="font16 icon-button icon-Menu_Close close-position iconColorChange" (click)="onClose()"></button>
+        </div>
+    </div>
+    <div class="split-body" [ngClass]="defaultAgreement ? 'default-height': 'split-height'">
+        <form [formGroup]="createCargoModel.cargoReleaseForm" autocomplete="off">
+            <div *ngIf="!defaultAgreement">
+                <label class="pull-right labelText optional" *ngIf="createCargoModel.isOptional">optional</label>
+            </div>
+            <div *ngIf="!defaultAgreement">
+                <label class="pull-right optional labelText hidelabel" *ngIf="!createCargoModel.isOptional">optional</label>
+            </div>
+            <div class="ui-md-12 ui-lg-12 ui-g-12 displaycheck mar-top10">
+                <span class="ui-md-6 ui-lg-6 ui-g-6 pad-left0 group-style">
+                    <span class="ui-inputgroup ui-float-label"
+                        [ngClass]="{'addon-error': ((createCargoModel.cargoReleaseForm.get('cargoValue').touched && createCargoModel.cargoReleaseForm.get('cargoValue')['errors']?.required) || 
+                    (createCargoModel.cargoReleaseForm.get('cargoValue').touched && createCargoModel.cargoReleaseForm.get('cargoValue')['errors']?.pattern)) || createCargoModel.cargoReleaseFlag}">
+                        <span class="ui-inputgroup-addon displayIcon">$</span>
+                <input data-attr="createagreement-addCargo-createCargo-cargoValue-input" formControlName="cargoValue" style="width:100%;" pattern="[0-9., ]*" maxlength="40" (blur)="validateCurrency($event.target.value, 'cargoValue')" pInputText />
+                <label for="cargoValue">Cargo Release</label>
+                </span>
+                <div [ngClass]="{'message-height': createCargoModel.cargoReleaseForm.get('cargoValue').touched && createCargoModel.cargoReleaseForm.get('cargoValue')['errors']}">
+                    <p-message severity="error" class="font12" [ngClass]="{'errorAlign': !defaultAgreement, 'buErrorAlign': !createCargoModel.isOptional}" text="Provide a Cargo Release" *ngIf="createCargoModel.cargoReleaseForm.get('cargoValue').touched && createCargoModel.cargoReleaseForm.get('cargoValue')['errors']?.required">
+                    </p-message>
+                    <p-message severity="error" class="font12" [ngClass]="{'errorAlign': !defaultAgreement, 'buErrorAlign': !createCargoModel.isOptional}"  text="Provide a valid Cargo Release"  *ngIf="createCargoModel.cargoReleaseForm.get('cargoValue').touched && createCargoModel.cargoReleaseForm.get('cargoValue')['errors']?.pattern">
+                        </p-message>
+                </div>
+                </span>
+                <div class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 cargoReleaseBu pad-bot0" *ngIf="!defaultAgreement">
+                    <p-multiSelect data-attr="createagreement-addCargo-createCargo-businessUnit-multiSelect" [options]="createCargoModel.businessUnit" formControlName="businessUnit" optionLabel="value" filter="false" maxSelectedLabels="1" defaultLabel="" [ngClass]="{'ui-inputwrapper-filled': createCargoModel.cargoReleaseForm?.value['businessUnit']?.length}"
+                        (onBlur)="buBlur($event)" resetFilterOnHide="true"></p-multiSelect>
+                    <label class="top-5" [ngClass]="{'businessAlign': createCargoModel.cargoReleaseForm?.value['businessUnit']?.length}" for="businessUnit">Business Unit</label>
+                </div>
+                <div [ngClass]="{'message-height buMessageAlign': createCargoModel.cargoReleaseForm.get('businessUnit').touched && createCargoModel.cargoReleaseForm.get('businessUnit')['errors']?.required}">
+                    <p-message severity="error" text="Enter Business Unit" *ngIf="createCargoModel.cargoReleaseForm.get('businessUnit').touched && createCargoModel.cargoReleaseForm.get('businessUnit')['errors']?.required">
+                    </p-message>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-12 ui-md-12 mar-top10" *ngIf="defaultAgreement">
+                <label class="labelText">Effective Range</label>
+                <label class="timeLabel">{{createCargoModel.effectiveDate}} to
+                    {{createCargoModel.expirationDate}}</label>
+            </div>
+            <div class="ui-md-12 ui-g-12 ui-lg-12 pad-left0" *ngIf="!defaultAgreement">
+                <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 mar-top10 pad-right3 date-field-float" *ngIf="!defaultAgreement">
+                    <p-calendar data-attr="createagreement-addCargo-createCargo-effectiveDate-calendar"
+                        formControlName="effectiveDate" [showIcon]="true" name="effectiveDate" appendTo="body"
+                        yearRange="1900:2099" dateFormat="mm/dd/yy" [minDate]="createCargoModel.effectiveMinDate"
+                        [showOnFocus]="true" (onBlur)="onTypeDate($event.srcElement['value'], 'effectiveDate');"
+                        (onSelect)="onDateSelected($event, 'effectiveDate')"
+                        [maxDate]="createCargoModel.effectiveMaxDate"
+                        [ngClass]="{'addon-error': createCargoModel.effError}"></p-calendar>
+                    <label for="effectiveDate" class="leftPlace">Effective Date</label>
+                    <div
+                        [ngClass]="{'message-height': createCargoModel.cargoReleaseForm.get('effectiveDate').touched && createCargoModel.cargoReleaseForm.get('effectiveDate')['errors']}">
+                        <p-message severity="error" text="Enter Effective Date"
+                            *ngIf="createCargoModel.cargoReleaseForm.get('effectiveDate').touched && createCargoModel.cargoReleaseForm.get('effectiveDate')['errors']?.required && !createCargoModel.effError">
+                        </p-message>
+                        <p-message severity="error" text="Provide a valid date"
+                            *ngIf="(createCargoModel.cargoReleaseForm.get('effectiveDate').touched && createCargoModel.cargoReleaseForm.get('effectiveDate')['errors']?.invalid) || createCargoModel.effError">
+                        </p-message>
+                    </div>
+                </span>
+                <span class="ui-float-label ui-md-6 ui-lg-6 ui-g-6 mar-top10 pad-left7 date-field-float" *ngIf="!defaultAgreement">
+                    <p-calendar data-attr="createagreement-addCargo-createCargo-expirationDate-calendar"
+                        formControlName="expirationDate" [showIcon]="true" name="expirationDate" yearRange="1900:2099"
+                        (onSelect)="onDateSelected($event, 'expirationDate')"
+                        (onBlur)="onTypeDate($event.srcElement['value'], 'expirationDate');" [showOnFocus]="true"
+                        appendTo="body" [minDate]="createCargoModel.expirationMinDate"
+                        [maxDate]="createCargoModel.expirationMaxDate"
+                        [ngClass]="{'addon-error': createCargoModel.expError}">
+                    </p-calendar>
+                    <label for="expirationDate" class="leftPlace">Expiration Date</label>
+                    <div
+                        [ngClass]="{'message-height': createCargoModel.cargoReleaseForm.get('expirationDate').touched && createCargoModel.cargoReleaseForm.get('expirationDate')['errors']}">
+                        <p-message severity="error" text="Enter Expiration Date"
+                            *ngIf="createCargoModel.cargoReleaseForm.get('expirationDate').touched && createCargoModel.cargoReleaseForm.get('expirationDate')['errors']?.required && !createCargoModel.expError">
+                        </p-message>
+                        <p-message severity="error" text="Provide a valid date"
+                            *ngIf="(createCargoModel.cargoReleaseForm.get('expirationDate').touched && createCargoModel.cargoReleaseForm.get('expirationDate')['errors']?.invalid) || createCargoModel.expError">
+                        </p-message>
+                    </div>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-lg-12 ui-md-12 ui-tabview cargoRelease pad-top0" *ngIf="!defaultAgreement">
+                <div class="div-height">
+                    <label class="labelText mar-left10">Level</label>
+                </div>
+                <p-selectButton data-attr="createagreement-addCargo-createCargo-agreementType-selectButton" [options]="createCargoModel.agreementType" (onOptionClick)="onSelectType($event)" formControlName="agreementType"></p-selectButton>
+            </div>
+            <div class="ui-md-12 ui-lg-12 ui-g-12 mar-top20" *ngIf="!defaultAgreement && createCargoModel.isSection">
+                <p-table #dt [value]="createCargoModel.filteredSectionsList" [scrollable]="true" scrollHeight="calc(100vh - 305px)" selectionMode="multiple" [columns]="createCargoModel.sectionTableColumns" (onRowSelect)="onRowSelect($event)" [(selection)]="createCargoModel.selectedSectionsList"
+                    [lazy]="false">
+                    <ng-template pTemplate="caption">
+                        <div class="ui-g codes-table-caption">
+                            <div class="ui-md-6 ui-lg-6">
+                                <span class="section-header">Sections
+                                    <span
+                                        *ngIf="createCargoModel.isSection">({{createCargoModel?.filteredSectionsList?.length}})</span>
+                                </span>
+                            </div>
+                            <div class="ui-md-6 ui-lg-6">
+                                <div class="searchHolder">
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <i class="icon-Search"></i>
+                                        </span>
+                                        <input id="codeSearchText" appShortcut="" autocomplete="off" [ngModelOptions]="{standalone: true}" type="text" pInputText placeholder="Search" [(ngModel)]="createCargoModel.searchInputValue" (input)="onSearch($event)" data-attr="createagreement-addCargo-createCargo-cargoValue-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr *ngIf="createCargoModel?.sectionsList?.length === 0">
+                            <td colspan="2">
+                                <div class="codesdisplaymiddle"></div>
+                            </td>
+                        </tr>
+                        <tr class="pad0 mar0 table-header" *ngIf="createCargoModel?.sectionsList?.length > 0">
+                            <th class="width10"></th>
+                            <th class="minimum-column-width  header-bold" *ngFor="let thisCol of columns">
+                                {{thisCol.label}} </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData">
+                            <td class="width10">
+                                <p-tableRadioButton [value]="rowData" appShortcut focusKey="alt+1"></p-tableRadioButton>
+                            </td>
+                            <td class="minimum-column-width" *ngFor="let thisCol of columns">
+                                <span class="capitalize-first-word">{{ rowData[thisCol.field] }}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="ui-md-12 ui-lg-12 ui-g-12 pad-left0" *ngIf="!defaultAgreement && createCargoModel.isContract">
+                <div class="ui-float-label ui-md-12 ui-lg-12 ui-g-12 mar-top15">
+                    <p-autoComplete data-attr="createagreement-addCargo-createCargo-contract-autoComplete" [suggestions]="createCargoModel.contractCargoValues" (completeMethod)="onTypeContractCargo($event)" formControlName="contract" name="contract" field="value" [dropdown]="true"
+                        (onSelect)="onSelectContract($event)"></p-autoComplete>
+                    <label class="top-5 pad-left2" for="contract">Contract</label>
+                    <p-message severity="error" text="Enter Contract" *ngIf="createCargoModel.cargoReleaseForm.get('contract').touched && createCargoModel.cargoReleaseForm.get('contract')['errors']?.required">
+                    </p-message>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="split-footer">
+        <span class="pull-right button-align">
+            <a data-attr="createagreement-addCargo-createCargo-delete-a"
+                *ngIf="screensName === 'edit' && this.createCargoModel.cargoType!== 'agreement'"
+                class="inactivate-link mar-right20" (click)="onClickDelete()">Delete</a>
+            <button data-attr="createagreement-addCargo-createCargo-cancel-button" type="text" pButton label="Cancel"
+                (click)="onClose()" class="ui-button-secondary"></button>
+            <button data-attr="createagreement-addCargo-createCargo-save-button" type="text" pButton label="Save"
+                (click)="onSave()" class="ui-button-primary mar-left15"></button>
+        </span>
+    </div>
+
+</div>
+
+
+<p-dialog data-attr="createagreement-addCargo-createCargo-save-dialog" header="Save Changes?" [(visible)]="createCargoModel.isCancel" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You made changes to the agreement that was not saved</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-createCargo-dontSave-button" type="button" pButton (click)="onClickNo('cancel')" class="ui-button-secondary" label="Don't Save"></button>
+        <button data-attr="createagreement-addCargo-createCargo-confirmSave-button" type="button" pButton (click)="onClickYes('cancel')" label="Save" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>
+<p-dialog data-attr="createagreement-addCargo-createCargo-delete-dialog" header="Delete Cargo Release" [(visible)]="createCargoModel.isDelete" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <span>You are about to delete the cargo releases. Do you want to proceed?</span>
+    <p-footer>
+        <button data-attr="createagreement-addCargo-createCargo-cancelDelete-button" type="button" pButton (click)="onClickNo('delete')" class="ui-button-secondary" label="Cancel"></button>
+        <button data-attr="createagreement-addCargo-createCargo-delete-button" type="button" pButton (click)="onClickYes('delete')" label="Delete" class="ui-button-primary"></button>
+    </p-footer>
+</p-dialog>

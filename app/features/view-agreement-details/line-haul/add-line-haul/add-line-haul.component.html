@@ -1,0 +1,44 @@
+<p-steps class="linehaul-steps" [model]="addLineHaulModel.stepsList" [readonly]="false"
+  [activeIndex]="addLineHaulModel.activeIndex" (activeIndexChange)="onIndexChange($event)">
+</p-steps>
+<h1 class="pad-left25">{{dateValues?.agreementDetails?.customerAgreementName}} - ADD LINE HAUL</h1>
+<div [ngClass]="{'loader': addLineHaulModel.loading}" [appJbhLoader]="addLineHaulModel.loading">
+  <app-lane-card #laneCard [expirationDate]="dateValues" (typeId)="getTypeValues($event)"> </app-lane-card>
+  <app-stops #stops></app-stops>
+  <app-overview #overview [sectionData]="addLineHaulModel.sectionValues" [editSectionDate]="dateValues"
+    [priorityData]="this.addLineHaulModel.typeId" (sectionID)="getSelectedSection($event)"></app-overview>
+  <app-rate #rate [sourceType]="dateValues?.sourceValue" [selectedSection]="addLineHaulModel.selectedSection">
+  </app-rate>
+  <div class="clearfix"></div>
+  <div class="footer ui-md-12">
+    <div class="ui-md-offset-9 ui-md-5 pull-right mar-top20">
+      <div class="pull-right mar-right20 aremove">
+        <a data-attr="viewagreement-linehaul-addlinehaul-cancel-anchor" class="inactivate-link" appShortcut="ctrl+alt+3" (click)="onLaneCardCancel()"
+          appShortcut="ctrl+alt+3">Cancel</a>
+        <button data-attr="viewagreement-linehaul-addlinehaul-back-button" type="text" pButton label="Back" appShortcut="ctrl+alt+2" (click)="onLaneCardBack()"
+          class="ui-button-secondary mar-left15"></button>
+        <button data-attr="viewagreement-linehaul-addlinehaul-continue-button" type="text" pButton label="Continue" appShortcut="ctrl+alt+1"
+          (click)="onLaneCardContinue(); addLineHaulModel.isSaveDraft= false;"
+          class="ui-button-primary mar-left15"></button>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<p-dialog data-attr="viewagreement-linehaul-addlinehaul-saveChanges-dialog" header="Save Changes?" [(visible)]="addLineHaulModel.isCancel" [modal]="true" [responsive]="true"
+  [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <div>You will lose the Line Haul information as you leave without saving.</div>
+  <div>Do you like to save the Line Haul as a draft before you leave?</div>
+  <p-footer>
+    <button data-attr="viewagreement-linehaul-addlinehaul-dontsave-button" type="button" pButton (click)="onDontSave()" class="ui-button-secondary" label="Don't Save"></button>
+    <button data-attr="viewagreement-linehaul-addlinehaul-save-button" type="button" pButton (click)="onSave()" label="Save Draft" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>
+<p-dialog data-attr="viewagreement-linehaul-addlinehaul-Confirmation-dialog" header="Confirmation" [(visible)]="addLineHaulModel.isBack" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <div>You are about to lose all the changes. Do you want to proceed.</div>
+  <p-footer>
+    <button data-attr="viewagreement-linehaul-addlinehaul-popupno-button" type="button" pButton (click)="onLaneCardConfirmationNo()" class="ui-button-secondary" label="No"></button>
+    <button data-attr="viewagreement-linehaul-addlinehaul-popupyes-button" type="button" pButton (click)="onLaneCardNo()" label="Yes" class="ui-button-primary"></button>
+  </p-footer>
+</p-dialog>

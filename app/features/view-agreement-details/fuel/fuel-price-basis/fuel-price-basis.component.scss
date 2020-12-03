@@ -1,0 +1,102 @@
+@import '~ngx-prime-theme/theme/_typography.scss';
+@import '~ngx-prime-theme/theme/_colors.scss';
+.radio-pad {
+  /deep/ .ui-radiobutton-label {
+    padding: 13px;
+    margin-right: 0px !important;
+  }
+  /deep/.ui-radiobutton {
+    margin-right: 0px !important;
+  }
+}
+
+.bottom-line {
+    border-bottom: solid 2px $grey-lite70;
+}
+
+.drop-down-float {
+    margin-top: 17px !important;
+    label {
+        margin-top: 0px !important;
+        top: 30%;
+        left: 17px;
+    }
+    .ui-inputwrapper-focus~label,
+    .ui-inputwrapper-filled~label {
+        top: calc(-0.75em - 3px);
+        left: 15px;
+        font-size: 12px;
+    }
+    .ng-valid~label {
+        top: calc(-0.75em - 3px);
+        left: 15px;
+        font-size: 12px;
+    }
+}
+
+.footer {
+    bottom: 0;
+    right: 2%;
+    padding: 20px 15px;
+    /deep/ .ui-button {
+        font-family: "Helvetica Neue LT Pro 65", Helvetica, Arial, sans-serif;
+    }
+    .backBtn {
+        border: 1px solid #c9c9c9;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .backBtn:hover {
+        color: #c9c9c9;
+        border: 1px solid #c9c9c9;
+    }
+    .cancelBtn {
+        min-width: 80px;
+        margin-right: 25px;
+    }
+}
+
+.borderNone {
+    border: none !important;
+}
+
+.loader {
+    position: fixed !important;
+    z-index: 888888888;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.add-link {
+    color: $black-opacity40;
+    text-decoration: none;
+}
+
+.remove-icon {
+    color: $red;
+    cursor: pointer;
+}
+
+.wrap-class {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-space {
+    margin-left: 8px;
+}
+.table-header {
+  @include getTypographyStyles("h6");
+  color: $grey-dark66;
+}
+.middle-align {
+  vertical-align: middle;
+}
+.regionAveragingTable /deep/.ui-table table tbody>tr>td:not(:first-child){
+    border-left: none !important;
+}

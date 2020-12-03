@@ -1,0 +1,129 @@
+<form [formGroup]="freeEventTypeModel?.freeEventTypeForm" autocomplete="off">
+  <div class="ui-g">
+    <div class="ui-g-4 ui-float-label fieldWidth displayBlock">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+        name="freeTypeEventName" formControlName="freeTypeEventName" emptyMessage="No records found"
+        [forceSelection]="true" (completeMethod)="onTypeEventName($event)"
+        [suggestions]="freeEventTypeModel.freeTypeEventNameFiltered"
+        (onSelect)="onSelectEventName($event)"
+        (onBlur)="onEventNameTypeBlur($event, 'freeTypeEventName')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="freeTypeEventName" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('freeTypeEventName')['errors']?.required
+              || freeEventTypeModel?.freeEventTypeForm.get('freeTypeEventName')['errors']?.touched)}">
+        <span>Event Name</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Event Name" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('freeTypeEventName').touched
+             && freeEventTypeModel.freeEventTypeForm.get('freeTypeEventName')['errors']?.required">
+        </p-message>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="ui-g-4 ui-float-label fieldWidth displayBlock">
+      <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+        name="freeTimeEvent" formControlName="freeTimeEvent" emptyMessage="No records found" [forceSelection]="true"
+        (onSelect)="onSelectEventFreeTime($event)" (completeMethod)="onTypeFreeTime($event)"
+        [suggestions]="freeEventTypeModel.freeTypeEventFreeTimeFiltered"
+        (onBlur)="onEventNameTypeBlur($event, 'freeTimeEvent')"></p-autoComplete>
+      <label class="label-style freeTypeAlign" for="freeTimeEvent" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('freeTimeEvent')['errors']?.required
+              || freeEventTypeModel?.freeEventTypeForm.get('freeTimeEvent')['errors']?.touched)}">
+        <span>Free Time</span>
+      </label>
+      <div class="errorHeight">
+        <p-message severity="error" text="Select Free Time" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('freeTimeEvent').touched
+             && freeEventTypeModel?.freeEventTypeForm.get('freeTimeEvent')['errors']?.required">
+        </p-message>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="ui-g mar-left34">
+    <div class="ui-g-6 ui-float-label fieldWidth displayBlock pad-left0 ">
+      <h2 class="mar-bot30">Day of Event</h2>
+      <div class="ui-g-6 ui-float-label fieldWidth displayBlock mar-top5 pad-left0 ">
+        <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+          name="freeAmountFirstEvent" formControlName="freeAmountFirstEvent" emptyMessage="No records found"
+          [forceSelection]="true" (onSelect)="onSelectFreeAmountFirst($event)"
+          (completeMethod)="onTypeFreeAmountFirst($event)"
+          [suggestions]="freeEventTypeModel.eventFreeAmountFirstFiltered"
+          (onBlur)="onEventNameTypeBlur($event, 'freeAmountFirstEvent')"></p-autoComplete>
+        <label class="label-style freeTypeAlign" for="freeAmountFirstEvent" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('freeAmountFirstEvent')['errors']?.required
+                    || freeEventTypeModel?.freeEventTypeForm.get('freeAmountFirstEvent')['errors']?.touched)}">
+          <span>Free Amount</span>
+        </label>
+        <div class="errorHeight">
+          <p-message severity="error" text="Select Free Amount" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('freeAmountFirstEvent').touched
+                  && freeEventTypeModel?.freeEventTypeForm.get('freeAmountFirstEvent')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="ui-g-6" *ngIf="freeEventTypeModel.isFreeRuleFirstTimeIndicator">
+        <div class="ui-float-label ui-md-12 ui-g-12 date-field-float timeAlign">
+          <p-calendar showIcon="true" calendarIcon="jbh-Circle_Clock" name="pickatimefirst" showTime="true"
+            icon="icon-Circle_Clock" [timeOnly]="true" hourFormat="12"  (onSelect)="onTimeSelected($event, 'pickatimefirst')"  
+            (onBlur)="onTimeTypeBlur($event,'pickatimefirst')" formControlName="pickatimefirst"></p-calendar>
+          <label class="label-style freeTypeAlign mar-left20" for="pickatimefirst" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('pickatimefirst')['errors']?.required
+                    || freeEventTypeModel?.freeEventTypeForm.get('pickatimefirst')['errors']?.touched)}">
+            <span>Pick a Time</span>
+          </label>
+          <div class="errorHeight">
+            <p-message severity="error" text="Select Pick a Time" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('pickatimefirst').touched
+                        && freeEventTypeModel?.freeEventTypeForm.get('pickatimefirst')['errors']?.required">
+            </p-message>
+            
+            <p-message severity="error" text="{{freeEventTypeModel.isDayAfterSelectionRuleValidationMessage}}" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond').touched
+            && freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond')['errors']?.invalid && (freeEventTypeModel?.isDayAfterSelectionRule || freeEventTypeModel?.isDayBeforeSelectionRule )">
+            </p-message>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-6 ui-float-label fieldWidth displayBlock"
+      *ngIf="freeEventTypeModel.isfreeRuleDayOfEventAndDayAfter">
+      <h2 class="mar-bot30">Day After Event</h2>
+      <div class="ui-g-6 ui-float-label fieldWidth displayBlock mar-top5">
+        <p-autoComplete [dropdown]="true" [style]="{'width':'100%'}" field="label" [inputStyle]="{'width':'100%'}"
+          name="freeAmountSecondEvent" formControlName="freeAmountSecondEvent" emptyMessage="No records found"
+          [forceSelection]="true" (onSelect)="onSelectFreeAmountSecond($event)"
+          (onBlur)="onEventNameTypeBlur($event, 'freeAmountSecondEvent')"
+          [suggestions]="freeEventTypeModel.eventFreeAmountSecondFiltered"
+          (completeMethod)="onTypeFreeAmountSecond($event)"></p-autoComplete>
+
+        <label class="label-style freeTypeAlign" for="freeAmountSecondEvent" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('freeAmountSecondEvent')['errors']?.required
+                        || freeEventTypeModel?.freeEventTypeForm.get('freeAmountSecondEvent')['errors']?.touched)}">
+          <span>Free Amount</span>
+        </label>
+        <div class="errorHeight">
+          <p-message severity="error" text="Select Free Amount" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('freeAmountSecondEvent').touched
+                      && freeEventTypeModel?.freeEventTypeForm.get('freeAmountSecondEvent')['errors']?.required">
+          </p-message>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="ui-g-6" *ngIf="freeEventTypeModel.isFreeRuleSecondTimeIndicator">
+        <div class="ui-float-label ui-md-12 ui-g-12 date-field-float timeAlign">
+          <p-calendar showIcon="true" calendarIcon="jbh-Circle_Clock" name="pickatimesecond"
+          (onSelect)="onTimeSelected($event, 'pickatimesecond')"  
+          (onBlur)="onTimeTypeBlur($event,'pickatimesecond')" icon="icon-Circle_Clock" showTime="true"
+            [timeOnly]="true" hourFormat="12"  formControlName="pickatimesecond"></p-calendar>
+          <label class="label-style freeTypeAlign mar-left20" for="pickatimesecond" [ngClass]="{'labelAligns': (freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond')['errors']?.required
+                    || freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond')['errors']?.touched)}">
+            <span>Pick a Time</span>
+          </label>
+          <div class="errorHeight">
+            <p-message severity="error" text="Select Pick a Time" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond').touched
+                        && freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond')['errors']?.required">
+            </p-message>
+            <p-message severity="error" text="{{freeEventTypeModel.isDayAfterSelectionRuleValidationMessage}}" *ngIf="freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond').touched
+            && freeEventTypeModel?.freeEventTypeForm.get('pickatimesecond')['errors']?.invalid && (freeEventTypeModel?.isDayAfterSelectionRule 
+            || freeEventTypeModel?.isDayBeforeSelectionRule)">
+            </p-message>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

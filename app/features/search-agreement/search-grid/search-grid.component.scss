@@ -1,0 +1,100 @@
+@import "~ngx-prime-theme/theme/_colors.scss";
+@import "~ngx-prime-theme/theme/_typography.scss";
+.grid-wrapper {
+    border-radius: 6px;
+    background: $white;
+    height: 100%;
+}
+
+.headerCaption {
+    background-color: #ffffff;
+}
+
+.mincolwidth {
+    width: 150px;
+    white-space: initial;
+}
+
+.headpad {
+    padding-right: 10px !important;
+}
+
+.table-heading {
+    @include getTypographyStyles("h6");
+}
+
+.thDisplay {
+    display: none;
+}
+
+.textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes ui-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+}
+
+.tableHeading {
+    @include getTypographyStyles("h2");
+}
+
+.display-middle {
+    position: relative;
+    text-align: center;
+    display: block;
+    top: 40%;
+}
+
+.message-wrapper {
+    height: calc(100vh - 304px);
+    @include getTypographyStyles("h2");
+    color: $grey-dark27;
+    padding-top: 0;
+}
+
+.tableStyle {
+    /deep/.ui-table .ui-table-caption.ui-widget-header {
+        border-bottom: 1px solid #e3e3e3 !important;
+        padding: 0 10px;
+    }
+    /deep/.data .ui-table-scrollable-body {
+        min-height: calc(100vh - 344px) !important;
+    }
+    /deep/.noData .ui-table-scrollable-body {
+        min-height: calc(100vh - 243px) !important;
+    }
+    /deep/.ui-table p-paginator .ui-paginator-bottom.ui-paginator,
+    .ui-table .ui-table-summary {
+        min-height: 60px;
+        border-top: 1px solid #e3e3e3 !important;
+    }
+}
+
+.custom-line-height {
+    line-height: 3rem;
+}
+
+.search-table {
+    /deep/ .ui-table-scrollable-header,
+    /deep/ .ui-table-scrollable-body {
+        table {
+            min-width: 100%;
+        }
+    }
+}

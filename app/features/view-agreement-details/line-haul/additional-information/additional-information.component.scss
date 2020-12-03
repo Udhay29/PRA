@@ -1,0 +1,21 @@
+@import '~ngx-prime-theme/theme/_colors.scss';
+@import '~ngx-prime-theme/theme/_typography.scss';
+.filter-wrapper {
+    background: $white;
+    border-radius: 5px;
+    padding: 0;
+    height: calc(100vh - 165px);
+}
+
+/deep/.linehaul-steps {
+    .ui-steps {
+        .ui-steps-item {
+            width: 33.33% !important;
+            text-align: center !important;
+        }
+    }
+}
+
+.setWidth {
+    width: 74.1%;
+}

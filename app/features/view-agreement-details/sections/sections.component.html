@@ -1,0 +1,110 @@
+<div class="ui-g ui-fluid filterClass">
+    <div class="ui-g-3 ui-md-3 filter-label-column" [ngClass]="{'hideFilter':(!sectionsModel.isFilterEnabled)}">
+        <app-sections-filter *ngIf="sectionsModel.isFilterEnabled" (loadData)="filterGridData($event)" [agreementID]="agreementID" [sourceData]="sectionsModel.sourceData">
+        </app-sections-filter>
+    </div>
+    <div [ngClass]="{'ui-g-9': sectionsModel.isFilterEnabled, 'ui-g-6': sectionsModel.isSplitView || sectionsModel.isShowSectionsCreation, 'ui-g-12': !sectionsModel.isSplitView  && !sectionsModel.isFilterEnabled &&!sectionsModel.isShowSectionsCreation }"
+        class="page-scroll">
+        <p-table #sectionTable [ngClass]="{'no-table': (!isSectionSearch && !sectionsModel.gridDataLength),
+    'noresultHeight': sectionsModel.noResultFoundFlag}" class="full-width tableWrapper sectionListTable" [value]="sectionsModel.sectionList" selectionMode="single" [paginator]="setPaginator()" (onLazyLoad)="loadSectionsValuesLazy($event)" (onPage)="loadGridData($event)"
+            [rows]="sectionsModel.tableSize" [lazy]="true" [loading]="sectionsModel.isShowLoader" [customSort]="true" [rowsPerPageOptions]="[25,50,75,100]" [first]="sectionsModel.pageStart" [totalRecords]="sectionsModel.gridDataLength" (onRowSelect)="onRowSelect($event)"
+            (onRowUnselect)="onRowSelect($event)" scrollable="true" scrollHeight="calc(100vh - 445px)" [resizableColumns]="true" [sortField]="'Section Name'" [sortOrder]="1">
+            <ng-template pTemplate="caption">
+                <div class="ui-g table-caption pad-bot0 height100">
+                    <div class="tableHeading mar-top10" [ngClass]="{'ui-md-6': sectionsModel.isSplitView , 'ui-md-8': !sectionsModel.isSplitView}">
+                        <span class="tableName">Sections</span>
+                    </div>
+                    <div class="pad-bot0" [ngClass]="{'ui-md-6': sectionsModel.isSplitView, 'ui-md-4': !sectionsModel.isSplitView }">
+                        <div class="grid-icons iconsHolderSearch pull-right pad-top0">
+                            <div appShortcut class="mar-top5">
+                                <button data-attr="viewagreement-section-filter-button" appShortcut="ctrl+alt+f" (click)="onFilterClick()" [ngClass]="{'filterColor': sectionsModel.isFilterEnabled}" class="icon-Filter_Solid icon-button iconColorChange"></button>
+                                <button data-attr="viewagreement-section-menu-button" appShortcut=" ctrl+alt+o" class="icon-Menu_Overflow icon-button iconColorChange"></button>
+                            </div>
+                            <p-menu data-attr="viewagreement-section-menu-pmenu" #menuOverlay popup="popup" styleClass="menu-overlay" appendTo="body">
+                                <a #downloadExcel></a>
+                            </p-menu>
+                        </div>
+                        <div class="ui-inputgroup pad-top0 mar-right10 pull-right alignPos searchWidth">
+                            <span class="ui-inputgroup-addon"><em class="fa fa-search"></em></span>
+                            <input data-attr="viewagreement-section-search-input" type="text" pInputText placeholder="Search" appShortcut="alt+s" (focus)="checkOnFocus(true)" (keyup)="getGridValues($event, 'searchBox')">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup *ngIf="sectionsModel?.tableColumns.length > 0">
+                    <col *ngFor="let thisCol of sectionsModel.tableColumns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr class="pad0 mar0 table-header" *ngIf="!sectionsModel.noResultFoundFlag">
+                    <th class="text-bold min-col-width" *ngFor="let thisCol of sectionsModel.tableColumns" pResizableColumn [pSortableColumn]="thisCol.property" (click)="loadGridData(thisCol)">
+                        <span class="pad-right21" pTooltip={{thisCol.name}} tooltipPosition="top"> {{thisCol.name}}
+                            <p-sortIcon data-attr="viewagreement-section-sort-sorticon-{{thisCol.name}}" [field]="thisCol.property" class="sortIcon"></p-sortIcon>
+                        </span>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr *ngIf="sectionsModel.noResultFoundFlag" class="noHoverColor">
+                    <td class="messageDisplay">
+                        <div class="displaymiddle mar-bot20">
+                            <h4 class="emptyMsgText mar0 mar-bot10" *ngIf="isSectionSearch">No records found</h4>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr [attr.data-attr]="'viewagreement-section-sectionTable-tr-' +  rowIndex" [pSelectableRow]="rowData" *ngIf="!sectionsModel.noResultFoundFlag">
+                    <td class="mincolwidth ui-resizable-column textwrap" *ngFor="let col of sectionsModel.tableColumns" pTooltip="{{rowData[col.tooltip]}}" tooltipPosition="top" tooltipStyleClass="custom-tooltip">
+                        <ng-container *ngIf="col.property === 'BillingPartyCode' ">
+                            <ng-container *ngFor="let billToCode of rowData[col.property] | slice:0:2">
+                                <div class="bill-to-code-cell">
+                                    {{billToCode}}
+                                </div>
+                            </ng-container>
+                            <div class="bill-to-code-cell"  *ngIf="rowData[col.property]?.length> 2">
+                                More
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="col.property !== 'BillingPartyCode' ">
+                            {{rowData[col.property]}}
+                        </ng-container>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" class="tableFooter">
+                <span class="pull-right pad-right10 pad4" [hidden]="sectionsModel.isSplitView || sectionsModel.isShowSectionsCreation">
+                    <button data-attr="viewagreement-section-createSection-button" type="text" pButton *ngIf="!sectionsModel.isSplitView" label="Create Section"
+                        (click)="onCreateSection()" class="ui-button-primary mar-top5 mar-left5 absPosition"></button>
+                </span>
+            </ng-template>
+        </p-table>
+        <div class="noInfoMessage" *ngIf="!isSectionSearch
+     && sectionsModel.gridDataLength === 0">
+            <div class="displaymiddle mar-bot20">
+                <h4 class="emptyMsgText mar0 mar-bot10">No information was found to display</h4>
+                <button data-attr="viewagreement-section-createSection-button" type="text" pButton label="Create Section" class="ui-button-primary mar-top5 mar-left5" (click)="onCreateSection()"></button>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="sectionsModel.isSplitView">
+        <app-sections-detail [viewScreenData]="sectionsModel.detailsValue" (closeClickEvent)="closeClick($event)" (loaderEvent)="loader($event)" (sectionEditEvent)="sectionEdit($event)"></app-sections-detail>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="sectionsModel.isShowSectionsCreation">
+        <app-sections-creation #sectionItemRef [splitScreenData]="sectionsModel.splitScreenData" (splitCloseEvent)="splitClose($event)" (loaderEvent)="loader($event)"></app-sections-creation>
+    </div>
+</div>
+<p-dialog data-attr="viewagreement-section-confirmation-dialog" [(visible)]="sectionsModel.isShowPopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10005" [closable]="false">
+    <p-header>
+        <span class="capitalizeTitle">Confirmation</span>
+        <a data-attr="viewagreement-section-popupCancel-anchor" [ngClass]="{'ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all':true}" href="javascript:void(0)" role="button" (click)="popupCancel()">
+            <span class="pi pi-times"></span>
+        </a>
+    </p-header>
+    <span>You are about to lose all the changes. Do you want to proceed?</span>
+    <p-footer>
+        <button type="button" pButton (click)="popupCancel()" class="ui-button-secondary" label="No" data-attr="viewagreement-section-popupno-button"></button>
+        <button type="button" pButton (click)="popupYes()" label="Yes" class="ui-button-primary" data-attr="viewagreement-section-popupyes-button"></button>
+    </p-footer>
+</p-dialog>
